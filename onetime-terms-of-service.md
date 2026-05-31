@@ -18,7 +18,7 @@ For your convenience we have presented these terms in a short non-binding summar
 | [B. Account Terms](#b-account-terms) | The basic requirements of having an account, including Organization accounts and Single Sign-On. |
 | [C. Acceptable Use](#c-acceptable-use) | The rules you must follow when using the service. |
 | [D. User-Generated Content](#d-user-generated-content) | You own the content you post. We need a limited licence to operate the service. |
-| [E. Custom Domains, Verified Email Domains, and Homepage Secrets](#e-custom-domains-verified-email-domains-and-homepage-secrets) | The rules for the resources you set up on top of your account: custom domains, verified email senders, and homepage secrets. |
+| [E. Custom Domains, Verified Email Address, and Homepage Secrets](#e-custom-domains-verified-email-domains-and-homepage-secrets) | The rules for the resources you set up on top of your account: custom domains, verified email senders, and homepage secrets. |
 | [F. Copyright and DMCA Policy](#f-copyright-infringement-and-dmca-policy) | How we handle copyright infringement claims. |
 | [G. Intellectual Property Notice](#g-intellectual-property-notice) | Our rights in the website and service. |
 | [H. API Terms](#h-api-terms) | The rules for using our APIs. |
@@ -33,7 +33,7 @@ For your convenience we have presented these terms in a short non-binding summar
 
 ## A. Definitions
 
-**Short version:** *We use these basic terms throughout the agreement, and they have specific meanings.*
+**Short version:** *We use these basic terms throughout the agreement, and they have specific meanings. You should know what we mean when we use each of the terms. There's not going to be a test on it, but it's still useful information.*
 
 These definitions are the canonical source for terminology used in both this Agreement and the Privacy Statement.
 
@@ -47,7 +47,7 @@ These definitions are the canonical source for terminology used in both this Agr
 8. "**Secret**" or "**Secret Content**" means the information you place inside a secret on the Service. Secret Content is encrypted in transit and at rest, assigned a unique access link, and automatically destroyed on first viewing, on expiry of its specified retention period, or on manual deletion via the Receipt Link — whichever happens first.
 9. "**Receipt Link**" means the unique URL provided to the creator of a Secret that displays the Secret's status and permits the holder to delete the Secret prior to it being received. Unless the Secret is protected by a passphrase, possession of the Receipt Link is sufficient to delete the associated Secret.
 10. "**Custom Domain**" means a domain you own and configure to point at our Service (for example, `secrets.example.com`). The free plan supports one Custom Domain; paid plans allow additional Custom Domains per the limits described at [onetimesecret.com/pricing](https://onetimesecret.com/pricing).
-11. "**Verified Email Domain**" means a domain for which you have completed our DNS-based verification flow so that we may send transactional email on your behalf from an address at that domain.
+11. "**Verified Email Addres**" means a domain for which you have completed our DNS-based verification flow so that we may send transactional email on your behalf from an address at that domain.
 12. "**Homepage Secret**" means a Secret created by a visitor through your Custom Domain's homepage and addressed to you. Homepage Secrets are an optional feature you may enable or disable on each Custom Domain. The page rendered to a recipient retrieving any Secret (whether a Homepage Secret or a standard Secret) is not a defined term and is referred to in plain language where relevant.
 13. "**Organization**" means a multi-user account on the Service, owned by a single legal entity and managed by one or more administrators on behalf of its members.
 14. "**SSO**" means Single Sign-On — authentication of users via your Organization's external identity provider using SAML 2.0, OIDC, or another federation protocol we support.
@@ -79,7 +79,7 @@ We have a few simple rules for accounts on Onetime Secret's Service.
 If you create an Organization, the following additional rules apply:
 
 - **Authority.** The person creating the Organization must have authority to bind the legal entity that owns it. The Organization is the User of the Service and the contracting party with us.
-- **Roles.** The Organization has at least one owner. Owners may add administrators and members. Owners and administrators have access to Organization-level configuration, billing, audit logs, member management, and any plan-specific features (such as Custom Domains, Verified Email Domains, and SSO) that the Organization's plan includes.
+- **Roles.** The Organization has at least one owner. Owners may add administrators and members. Owners and administrators have access to Organization-level configuration, billing, audit logs, member management, and any plan-specific features (such as Custom Domains, Verified Email Address, and SSO) that the Organization's plan includes.
 - **Member responsibility.** The Organization is responsible for ensuring its members comply with these Terms. The Organization owner is responsible for promptly removing or suspending member access when appropriate (for example, when a member leaves the Organization).
 - **Member data.** When the Organization adds a member, the Organization is the controller for that member's personal data within the Service for purposes of GDPR and equivalent laws. We process member data on the Organization's behalf.
 - **Billing.** The Organization is responsible for fees associated with all members and all Organization-level configuration. Member counts are governed by the Organization's plan.
@@ -111,8 +111,8 @@ Where your Organization has enabled SSO:
 This section is the canonical source for the operational details of how we hold and protect your data. The Privacy Statement summarizes these and refers here.
 
 - **IP address and request log retention.** We retain IP addresses and request logs associated with service usage for up to 30 days, after which they are permanently deleted from active systems. Logs may be purged sooner depending on traffic volume.
-- **Secret retrieval.** Due to our security-first design, we cannot retrieve or recover secrets once they have been viewed, expired, or deleted, except as outlined regarding backups. This ensures your sensitive information remains private and ephemeral.
-- **Backups.** We maintain encrypted backups for disaster recovery. Backups are retained for up to 30 days, after which they are permanently deleted on a rolling basis. When a Secret is received or expires, it is removed from the active database; encrypted Secret Content may still exist in backups for the remainder of the backup retention window. Backups are stored in a secure, isolated environment within the same regional infrastructure as the data they cover, and are accessed only:
+- **Secret retrieval.** Due to our security-first design, we cannot retrieve or recover secrets once they have been viewed, expired, or deleted, except as outlined below regarding backups. This ensures your sensitive information remains private and ephemeral.
+- **Backups.** We maintain encrypted backups for disaster recovery. Backups are retained for up to 30 days, after which they are permanently deleted on a rolling basis. When a Secret is received or expires, it is removed from the active database; encrypted Secret Content may still exist in backups for the remainder of the backup retention window. Backups are stored in a secure, isolated environment within the same regional jurisdiction as the data they cover, and are accessed only:
   1. To restore service in the event of a catastrophic failure
   2. To test the integrity of backups for the system as a whole
 
@@ -121,10 +121,10 @@ This section is the canonical source for the operational details of how we hold 
 
 ### 7. User Account Security
 
-You are responsible for keeping your account secure while you use the Service. We offer tools — multi-factor authentication, single sign-on, and others — to help you maintain account security, but the content of your account and its security are ultimately up to you.
+You are responsible for keeping your account secure while you use the Service. We offer tools like multi-factor authentication, single sign-on, and others, to help you maintain account security, but the content of your account and its security are ultimately up to you.
 
 - You are responsible for all content posted and activity that occurs under your account (including activity by other users you have authorized).
-- You are responsible for maintaining the security of your account and credentials. Onetime Secret will not be liable for any loss or damage from your failure to comply with this security obligation.
+- You are responsible for maintaining the security of your account credentials. Onetime Secret will not be liable for any loss or damage from your failure to comply with this security obligation.
 - You will promptly notify Onetime Secret if you become aware of any unauthorized use of, or access to, our Service through your account.
 
 ### 8. Additional Terms
@@ -133,7 +133,7 @@ In some situations, third parties' terms may apply to your use of Onetime Secret
 
 ## C. Acceptable Use
 
-**Short version:** *Onetime Secret hosts users from around the world, and that requires good faith. While using the Service, you must follow this Acceptable Use Policy.*
+**Short version:** *Onetime Secret hosts users from around the world, and that requires good faith. While using the Service, you must follow this Acceptable Use Policy, which includes some restrictions on content you can post, conduct on the service, and other limitations. In short, be excellent to each other.**
 
 ### 1. Compliance with Laws and Regulations
 
@@ -144,7 +144,7 @@ Your use of the Website and Service must not violate any applicable laws, includ
 You agree that you will not under any circumstances upload, post, host, or transmit any Secret Content or other Content that:
 
 - is unlawful or promotes unlawful activities;
-- contains sexually obscene material;
+- is or contains sexually obscene material;
 - is libelous, defamatory, or fraudulent;
 - is discriminatory or abusive toward any individual or group;
 - contains or installs any active malware or exploits, or uses our platform for exploit delivery (such as part of a command-and-control system); or
@@ -189,7 +189,7 @@ You agree not to engage in activity that significantly harms our users. We will 
 
 ## D. User-Generated Content
 
-**Short version:** *You own content you create, but you grant us a limited licence so we can run the service. Secret Content is treated specially.*
+**Short version:** *You own and are responsible for content you create, but you grant us a limited licence so we can run the service. Secret Content is treated specially. We have the right to remove content or close accounts if we need to.*
 
 ### 1. Responsibility for User-Generated Content
 
@@ -211,9 +211,9 @@ This license does not grant Onetime Secret the right to sell your Content or oth
 
 Secret Content is held subject to the technical constraints described in [Section B.6](#6-data-retention-and-security):
 
-- Secret Content is not accessible to us in plaintext where the secret was protected with a user-supplied passphrase.
-- Secret Content is automatically purged on first viewing, on expiry, or on deletion via the Receipt Link.
+
 - We do not access, read, scan, categorize, or analyze Secret Content.
+- Secret Content is automatically purged on first viewing, on expiry, or on deletion via the Receipt Link.
 
 ### 5. Feedback
 
@@ -222,9 +222,9 @@ Feedback you submit to us about the Service is kept confidential and not shared 
 - We do not reply to all feedback, but we read it. For non-authenticated submissions, unless you provide an email address, we have no way to contact you about your feedback.
 - We may be developing features similar to those you suggest, or may decide to do so in the future. By submitting feedback, you acknowledge that we may have similar features under development, that we have no obligation to inform you of them, and that we are free to use our own similar ideas without obligation to you.
 
-## E. Custom Domains, Verified Email Domains, and Homepage Secrets
+## E. Custom Domains and Domain-Specific Features
 
-**Short version:** *Paid plans let you set up a custom domain and verified email senders. The free plan supports one custom domain. You can also enable Homepage Secrets to receive secrets from visitors. You're responsible for the DNS records and for ensuring your use of these features is appropriate.*
+**Short version:** *Creating an account lets you set up a custom domain and configure individual features speciifc to each domain. The number of custom domains depends on the plan. You can enable features like Homepage Secrets that can be public or private for creating links using your custom domain and Incoming Secrets a destination page for visitors to send secrets directly to pre-configured addresses. You're responsible for the DNS records and for ensuring your use of these features is appropriate.*
 
 ### 1. Custom Domains
 
@@ -235,17 +235,14 @@ The free plan supports one Custom Domain. Paid plans allow you to configure addi
 - We provide SSL termination for Custom Domains via the subprocessor identified in our [Privacy Statement](https://onetimesecret.com/privacy). Custom Domains are not routed through our regional Cloudflare configuration by default. If you wish to put your Custom Domain behind Cloudflare or another edge network, you may do so through your own DNS at your discretion.
 - We may suspend a Custom Domain if it is being used in violation of these Terms or to facilitate phishing, fraud, or impersonation.
 
-### 2. Verified Email Domains
 
-Paid plans allow you to configure one or more Verified Email Domains so that we may send transactional email on your behalf from an address at your domain.
 
-- Verification is performed via DNS TXT records (such as SPF, DKIM, DMARC, and any verification records we ask you to publish to prove control of the domain). You are responsible for maintaining those records.
-- If a record becomes invalid, transactional email from your verified address may fail to deliver. We may temporarily fall back to one of our default sending domains where doing so is necessary to deliver a security-critical message.
-- You may not configure a Verified Email Domain you do not own or are not authorized to send from.
-- Misuse of Verified Email Domains — for example, configuring them in a way that enables impersonation, phishing, or spam — is prohibited and may result in suspension.
+### 2. Domain-Specific Features
 
-### 3. Homepage Secrets
 
+#### Custom Branding
+
+#### Homepage Secrets 
 Where enabled on a Custom Domain, the homepage of that domain may accept Homepage Secrets — Secrets created by visitors and addressed to you.
 
 - You may turn the Homepage Secrets feature on or off for each Custom Domain.
@@ -254,9 +251,26 @@ Where enabled on a Custom Domain, the homepage of that domain may accept Homepag
 - Visitors who submit a Homepage Secret are subject to the [Acceptable Use](#c-acceptable-use) rules.
 - We treat the contents of a Homepage Secret as Secret Content. Account-level metadata about Homepage Secrets is treated as Account Data.
 
-### 4. Confidentiality of Account Resources
 
-We treat the configuration of your Custom Domains, Verified Email Domains, Homepage Secrets settings, and SSO settings as confidential to you and to the Organization that owns them.
+#### Incoming Secrets
+
+#### SSO
+
+#### Sign-in Settings
+
+
+#### Verified Email Addresses
+On plans that allow you to configure a Verified Email Address so that we may send transactional email on your behalf from an address at your domain.
+
+- Verification is performed via DNS TXT records (such as SPF, DKIM, DMARC, and any verification records we ask you to publish to prove control of the domain). You are responsible for maintaining those records.
+- If a record becomes invalid, transactional email from your verified address may fail to deliver. We may temporarily fall back to one of our default sending domains where doing so is necessary to deliver a security-critical message.
+- You may not configure a Verified Email Addres you do not own or are not authorized to send from.
+- Misuse of Verified Email Address — for example, configuring them in a way that enables impersonation, phishing, or spam — is prohibited and may result in suspension.
+- 
+
+### 3. Confidentiality of Account Resources
+
+We treat the configuration of your Custom Domains and related feature settings including SSO settings as confidential to you and to the Organization that owns them.
 
 Onetime Secret personnel may access this configuration only:
 
@@ -264,6 +278,9 @@ Onetime Secret personnel may access this configuration only:
 - Where access is required for security reasons or to comply with legal obligations.
 
 If we have reason to believe that any of your account resources are being used in violation of the law or these Terms, we have the right to access, review, and where appropriate suspend or remove them. We may also be compelled by law to disclose configuration information.
+
+
+
 
 ## F. Copyright Infringement and DMCA Policy
 

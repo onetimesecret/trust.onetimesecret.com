@@ -1,0 +1,141 @@
+
+
+2026-05-31
+
+
+Terms of Service
+
+"- **One free personal account.** You may not maintain more than one free personal account. This rule does not apply to membership in Organization accounts.
+- **One free Organization account per legal entity.** A legal entity may not maintain more than one free Organization account."
+
+
+We allow up to 10 organizations per account (per humanaccount owner). More by request.
+
+---
+
+"Owners may add administrators and members." - ?
+
+---
+"Owners and administrators have access to Organization-level configuration, billing, audit logs, member management, and any plan-specific features (such as Custom Domains, Verified Email Domains, and SSO) that the Organization's plan includes."
+
+Admins have fewer privileges than owners. See entitlements defined in lib/onetime/models/organization_membership.rb. In general owner has the high trust activities. We use existing successful SaaS products as a reference.
+
+
+
+---
+
+
+"- **Member data.** When the Organization adds a member, the Organization is the controller for that member's personal data within the Service for purposes of GDPR and equivalent laws. We process member data on the Organization's behalf."
+
+Fact check needed. Onetime Secret the business entity is still the controllor. Organization is just a structure in the database for organizing configuration and associating records.
+
+---
+
+"We support multiple ways to sign in. Depending on your region and your Organization's configuration, available methods may include any of the following:"
+
+Improve the writing of the bullet points.
+Does MFA belong in a list of "ways to sign in"?
+---
+
+"The specific authentication methods available may vary by region, by plan tier, and over time"
+
+Contradicts the line above which mentions org configuration. Over time is a good addition but it should be in its own sentence.
+
+---
+
+"Global Elite tier may receive additional cryptographic detail in their separate agreement."
+
+Soften since that doc may not exist for every global elite customer.OR remove from data retention and security and make sure we include a more general claim elsewhere in the doc. Otherwise we risk cross references going stale.
+
+
+---
+
+"### 4. Service Usage Limits
+
+You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the Service, use of the Service, or access to the Service without our express written permission."
+
+
+We need to revisit. Integrating our API to serve their customers is totally fair game. We object to selling or re-selling custom domains or other domain-specific functionality without express written permissions from Onetime Secret.
+
+---
+
+"5. Scraping"
+
+Allow for documentation purposes on docs.onetimesecret.com/.dev, blog., etc. But no scraping of regional subdomains.
+
+
+
+---
+"7. Excessive Use on Free Services"
+
+Should include statement for paid plans. We do not enforce specific limits but monitor all usage.
+
+For customers that are primarily API integrations (i.e. they use the UI occasionally or not all other than for credentials and settings), we do not currently offer API-specific paid plans, but may do so in the future and would transition such customers to an API specific plan with comparable features and limits.
+
+---
+
+"### 4. Treatment of Secret Content"
+
+Removed: Secret Content is not accessible to us in plaintext where the secret was protected with a user-supplied passphrase.
+
+"- We do not access, read, scan, categorize, or analyze Secret Content."
+
+Should we incude, except with explicit permissions by the content owner (including the organization owner on behalf of individual members) for the purposes of debugging or demonstration? Important: use standard language here. We view Secret Content when sent to use via a secret link, addressed to us specifically.
+---
+
+"### 2. Homepage Secrets" renamed to "Domain-Specific Features"
+
+Homepage Secrets - How to shorten? Don't want to tie specific details of all aspects of a feature to this document. They change from time to time.
+
+Added Incoming Secrets, ... It's not an exhaustive list. Each one should preface with "Where/when enabled" which can be different per region or disable altogether from time to time for reasons.
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
+
+
+---
