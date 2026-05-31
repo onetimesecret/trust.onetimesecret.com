@@ -81,7 +81,7 @@ If you create an Organization, the following additional rules apply:
 - **Authority.** The person creating the Organization must have authority to bind the legal entity that owns it. The Organization is the User of the Service and the contracting party with us.
 - **Roles.** The Organization has at least one owner. Owners may add administrators and members. Owners have access to Organization-level configuration, billing, SSO settings, and member management. Administrators have access to audit logs, member management, and plan-specific features (such as Custom Domains and Verified Email Address) but cannot modify billing or SSO configuration.
 - **Member responsibility.** The Organization is responsible for ensuring its members comply with these Terms. The Organization owner is responsible for promptly removing or suspending member access when appropriate (for example, when a member leaves the Organization).
-- **Member data.** Onetime Secret is the data controller for member personal data within the Service for purposes of GDPR and equivalent laws. The Organization, through its owners and administrators, has administrative control over member accounts — including the ability to add or remove members, configure access permissions, and view Organization-level audit logs — but this administrative role does not make the Organization a data controller under applicable privacy law.
+- **Member data.** Organization owners and administrators have administrative control over member accounts — including the ability to add or remove members, configure access permissions, and view Organization-level audit logs. Data processing roles and responsibilities are defined in our [Data Processing Agreement](https://onetimesecret.com/info/dpa).
 - **Billing.** The Organization is responsible for fees associated with all members and all Organization-level configuration. Member counts are governed by the Organization's plan.
 
 ### 4. Authentication Methods
@@ -221,7 +221,7 @@ This license does not grant Onetime Secret the right to sell your Content or oth
 
 Secret Content is held subject to the technical constraints described in [Section B.6](#6-data-retention-and-security):
 
-- We do not access, read, scan, categorize, or analyze Secret Content, except: (a) with the express prior consent of the content owner; (b) at the direction of an Organization owner acting on behalf of its members, where such access is reasonably necessary for compliance, security, or administrative purposes within that Organization; or (c) for debugging, troubleshooting, or demonstration purposes, provided that access is limited to Onetime Secret personnel acting under a duty of confidentiality and is logged for audit purposes. Any access under this section is limited in scope and duration to what is reasonably necessary to accomplish the stated purpose.
+- We do not access, read, scan, categorize, or analyze Secret Content, except: (a) with the express prior consent of the content owner; (b) at the direction of an Organization owner acting on behalf of its members, where such access is reasonably necessary for compliance, security, or administrative purposes within that Organization; (c) for debugging, troubleshooting, or demonstration purposes, provided that access is limited to Onetime Secret personnel acting under a duty of confidentiality and is logged for audit purposes; or (d) when the Secret link is addressed to Onetime Secret (for example, sent to a support or team address). Any access under this section is limited in scope and duration to what is reasonably necessary to accomplish the stated purpose.
 - Secret Content is automatically purged on first viewing, on expiry, or on deletion via the Receipt Link.
 
 ### 5. Feedback
@@ -233,7 +233,7 @@ Feedback you submit to us about the Service is kept confidential and not shared 
 
 ## E. Custom Domains and Domain-Specific Features
 
-**Short version:** *Creating an account lets you set up a custom domain and configure individual features speciifc to each domain. The number of custom domains depends on the plan. You can enable features like Homepage Secrets that can be public or private for creating links using your custom domain and Incoming Secrets a destination page for visitors to send secrets directly to pre-configured addresses. You're responsible for the DNS records and for ensuring your use of these features is appropriate.*
+**Short version:** *Creating an account lets you set up a custom domain and configure individual features specific to each domain. The number of custom domains depends on the plan. You can enable features like Homepage Secrets that can be public or private for creating links using your custom domain and Incoming Secrets a destination page for visitors to send secrets directly to pre-configured addresses. You're responsible for the DNS records and for ensuring your use of these features is appropriate.*
 
 ### 1. Custom Domains
 
@@ -248,34 +248,14 @@ The free plan supports one Custom Domain. Paid plans allow you to configure addi
 
 ### 2. Domain-Specific Features
 
+Availability and configuration options are described at [onetimesecret.com/pricing](https://onetimesecret.com/pricing) and in our product documentation. This is not an exhaustive list; features may be enabled or disabled per plan, region, or Custom Domain.
 
-#### Custom Branding
-
-#### Homepage Secrets 
-Where enabled on a Custom Domain, the homepage of that domain may accept Homepage Secrets — Secrets created by visitors and addressed to you.
-
-- You may turn the Homepage Secrets feature on or off for each Custom Domain.
-- You may configure who can submit a Homepage Secret (for example, anyone, anyone on a specific email domain, or only authenticated members of your Organization).
-- You are responsible for the content of your Custom Domain's homepage, including any branding, instructions, or notices displayed there.
-- Visitors who submit a Homepage Secret are subject to the [Acceptable Use](#c-acceptable-use) rules.
-- We treat the contents of a Homepage Secret as Secret Content. Account-level metadata about Homepage Secrets is treated as Account Data.
-
-
-#### Incoming Secrets
-
-#### SSO
-
-#### Sign-in Settings
-
-
-#### Verified Email Addresses
-On plans that allow you to configure a Verified Email Address so that we may send transactional email on your behalf from an address at your domain.
-
-- Verification is performed via DNS TXT records (such as SPF, DKIM, DMARC, and any verification records we ask you to publish to prove control of the domain). You are responsible for maintaining those records.
-- If a record becomes invalid, transactional email from your verified address may fail to deliver. We may temporarily fall back to one of our default sending domains where doing so is necessary to deliver a security-critical message.
-- You may not configure a Verified Email Addres you do not own or are not authorized to send from.
-- Misuse of Verified Email Address — for example, configuring them in a way that enables impersonation, phishing, or spam — is prohibited and may result in suspension.
-- 
+- **Custom Branding** — Customize your Custom Domain's appearance. You are responsible for ensuring your branding does not infringe third-party rights or mislead visitors.
+- **Homepage Secrets** — Visitors may create Secrets addressed to you via your Custom Domain's homepage. Submissions are subject to [Acceptable Use](#c-acceptable-use); contents are treated as Secret Content.
+- **Incoming Secrets** — Visitors may send Secrets to pre-configured recipients within your Organization. Submissions are subject to [Acceptable Use](#c-acceptable-use).
+- **SSO** — Members authenticate via your Organization's identity provider. See [Section B.5](#5-single-sign-on).
+- **Sign-in Settings** — Configure which authentication methods are available to members of your Organization.
+- **Verified Email Addresses** — We send transactional email on your behalf from an address at your domain. Verification is performed via DNS records you maintain; misuse may result in suspension. 
 
 ### 3. Confidentiality of Account Resources
 
