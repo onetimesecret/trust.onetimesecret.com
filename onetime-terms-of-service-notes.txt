@@ -9,16 +9,15 @@ Terms of Service
 - **One free Organization account per legal entity.** A legal entity may not maintain more than one free Organization account."
 
 
-We allow up to 10 organizations per account (per humanaccount owner). More by request.
+We allow up to 5 organizations per account (per humanaccount owner). More by request.
 
----
-
-"Owners may add administrators and members." - ?
 
 ---
 "Owners and administrators have access to Organization-level configuration, billing, audit logs, member management, and any plan-specific features (such as Custom Domains, Verified Email Domains, and SSO) that the Organization's plan includes."
 
 Admins have fewer privileges than owners. See entitlements defined in lib/onetime/models/organization_membership.rb. In general owner has the high trust activities. We use existing successful SaaS products as a reference.
+
+"Organization Cancellation" section clearly states owners can.
 
 
 
@@ -72,6 +71,11 @@ Should include statement for paid plans. We do not enforce specific limits but m
 
 For customers that are primarily API integrations (i.e. they use the UI occasionally or not all other than for credentials and settings), we do not currently offer API-specific paid plans, but may do so in the future and would transition such customers to an API specific plan with comparable features and limits.
 
+
+
+Added text regarding API plan. But we already have language included in section H: "We may offer subscription-based access to our API for users who require high-throughput access or whose use would otherwise resemble resale of our Service.". Refer to the section instead of redundant.
+
+
 ---
 
 "### 4. Treatment of Secret Content"
@@ -92,12 +96,22 @@ Added Incoming Secrets, ... It's not an exhaustive list. Each one should preface
 
 ---
 
+"### 2. Trademarks"
+
+Can we call them "protected" trademarks when not registered.
+
 
 ---
 
+"### 2. Upgrades, Downgrades, and Changes"
+
+We need to CAREFULLY verify the statements in this section are accurate with how our Stripe integration works and to how Stripe works more generally.
 
 ---
 
+"### 3. Billing Schedule and Refunds"
+
+We may introduce Identity, Team, Identity Lite, Team Lite or similar paid plan names for multi-tenant. We should be clear that we are referring to Identity* and Team* all at the same time. Or Perhaps as a definition? "Identity Plan"
 
 ---
 

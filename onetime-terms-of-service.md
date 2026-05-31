@@ -303,11 +303,11 @@ The following names are protected trademarks of Onetime Secret:
 - "Onetime Secret"
 - "OnetimeSecret"
 - "OneTime Secret"
+- "One-Time Secret"
 - "OneTimeSecret"
 - "Onetime.co"
 - "Onetime.dev"
 - "OnetimeSecret.dev"
-- "SecretaryLinks"
 
 Use of any of our trademarks must adhere to our trademark guidelines. Any use that may cause confusion among customers or that disparages Onetime Secret is prohibited. All other trademarks, product names, company names, and logos mentioned on the Website are the property of their respective owners.
 
@@ -354,7 +354,7 @@ For our **multi-tenant paid plans** (Identity Plus, Team Plus, and any successor
 - **Monthly plans** — refundable within 30 days of the most recent monthly billing date.
 - **Annual plans** — refundable within 30 days of the most recent annual billing date.
 
-For our **single-tenant plans** (Global Elite and any other dedicated deployments), which are billed annually only, refund terms are governed by the customer's separate agreement where one is in place. Where no such separate terms have been agreed, refunds are available within 90 days of the most recent billing date.
+For our **single-tenant plans** (Global Elite and any other dedicated deployments), which are billed annually only, refund terms are governed by the customer's separate agreement where one is in place. Where no such separate terms have been agreed, refunds are available within 30 days of the most recent billing date.
 
 To request a refund, contact [support@onetimesecret.com](mailto:support@onetimesecret.com). Outside the windows described above, refunds are at our sole discretion and will not be granted except where required by applicable law.
 
@@ -465,7 +465,7 @@ You agree to indemnify, defend, and hold us harmless from and against any claims
 
 We may modify these Terms from time to time and will post the amended Terms on the Website. We encourage you to review them periodically. If we make any substantial changes, we will notify you by email to the address associated with your account or by posting a prominent notice on our pages. If you do not agree to the amended Terms, you are not authorized to use the Website. Your continued use of the Website after any amendments are posted will be deemed acceptance of the amended Terms.
 
-Minor changes that do not affect your rights or our obligations — such as typo corrections, formatting changes, clarifying language, or the addition of a new regional environment that does not change how existing users' data is processed — do not trigger advance notice and do not change the effective date above.
+Minor changes that do not affect your rights or our obligations — such as typo corrections, formatting changes, clarifying language, updates to plan features, or the addition of a new regional environment that does not change how existing users' data is processed — do not trigger advance notice and do not change the effective date above.
 
 We reserve the right to refuse our Services to anyone at any time. We also reserve the right to modify or discontinue, temporarily or permanently, the Website (or any part of it) at any time, with or without notice.
 
