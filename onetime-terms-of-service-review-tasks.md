@@ -108,12 +108,17 @@ These are cross-reference or logical conflicts within the document:
 - **Priority:** Medium — needs legal review
 - **Resolution:** Line 290 now uses "protected under common law" — accurate for unregistered marks. Wording is defensible but optional legal review remains available.
 
-### TODO-11: Stripe Billing Verification ❌ NEEDS VERIFICATION
+### TODO-11: Stripe Billing Verification ✅ DONE
 - **Section:** I.2 "Upgrades, Downgrades, and Changes"
 - **Note:** CAREFULLY verify statements match actual Stripe integration behavior.
 - **Action:** Audit each bullet against Stripe proration rules and current implementation.
 - **Priority:** High
-- **Status:** Lines 331-335 describe proration behavior. Requires Stripe integration audit before confirming accuracy.
+- **Resolution:** Lines 331-335 revised to match actual `create_prorations` behavior:
+  - Trial billing: clarified trials depend on Stripe Price config (checkout doesn't set `trial_period_days`)
+  - Monthly→yearly: removed "at next billing date" — proration is immediate, billing cycle resets to change date
+  - Upgrades: clarified "takes effect immediately; prorated charges on next invoice" (auto-collected in practice)
+  - Proration delegation: accurate, pure Stripe handling
+- **Sources:** [Stripe change-price docs](https://docs.stripe.com/billing/subscriptions/change-price), [Stripe trials docs](https://docs.stripe.com/billing/subscriptions/trials)
 
 ### TODO-12: Multi-Tenant Plan Name Definitions ✅ DONE
 - **Section:** I.3 "Billing Schedule and Refunds"
@@ -129,12 +134,12 @@ These are cross-reference or logical conflicts within the document:
 | Category | Total | Done | Partial | Needs Verification |
 |----------|-------|------|---------|-------------------|
 | Internal Inconsistencies | 4 | 3 | 1 | 0 |
-| High Priority TODOs | 4 | 2 | 0 | 2 |
+| High Priority TODOs | 4 | 3 | 0 | 1 |
 | Medium Priority TODOs | 7 | 6 | 1 | 0 |
 | Low Priority TODOs | 1 | 1 | 0 | 0 |
-| **Total Items** | **16** | **12** | **2** | **2** |
+| **Total Items** | **16** | **13** | **2** | **1** |
 
-**Completion: 87.5%** (14/16 addressed, 2 awaiting external verification)
+**Completion: 93.75%** (15/16 addressed, 1 awaiting external verification)
 
 ---
 
@@ -143,7 +148,6 @@ These are cross-reference or logical conflicts within the document:
 ### Needs External Verification
 
 1. **TODO-1 (High)**: Organization account limits — verify actual enforcement in codebase before updating line 72
-2. **TODO-11 (High)**: Stripe billing behavior — audit lines 331-335 against actual Stripe integration
 
 ### Optional Follow-up
 

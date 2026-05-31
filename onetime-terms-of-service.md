@@ -328,11 +328,11 @@ Our pricing and payment terms are available at [onetimesecret.com/pricing](https
 
 ### 2. Upgrades, Downgrades, and Changes
 
-- We will bill you when you provision a paid service, once any applicable free trial period expires.
-- If you change from a monthly billing plan to a yearly billing plan, we will bill you for a full year at the next monthly billing date.
-- If you upgrade to a higher plan, we will bill you for the upgraded plan immediately.
+- We will bill you when you provision a paid service, once any applicable free trial period expires. Trial availability depends on your plan configuration.
+- If you change your billing interval (e.g., monthly to yearly), your new billing cycle begins immediately and prorated charges are calculated and billed at the time of the change.
+- If you upgrade to a higher plan, your new plan takes effect immediately; prorated charges appear on your next invoice.
 - You may change your plan at any time by modifying it from your account or Organization settings. Removing paid services may cause you to lose access to certain Content, features, or capacity.
-- Pro-rated charges and credits for upgrades and downgrades are calculated automatically by our payment processor (Stripe) and applied according to its standard proration rules.
+- All prorated charges and credits are calculated automatically by our payment processor (Stripe) according to its standard proration rules.
 
 ### 3. Billing Schedule and Refunds
 
