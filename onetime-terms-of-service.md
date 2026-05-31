@@ -79,23 +79,24 @@ We have a few simple rules for accounts on Onetime Secret's Service.
 If you create an Organization, the following additional rules apply:
 
 - **Authority.** The person creating the Organization must have authority to bind the legal entity that owns it. The Organization is the User of the Service and the contracting party with us.
-- **Roles.** The Organization has at least one owner. Owners may add administrators and members. Owners and administrators have access to Organization-level configuration, billing, audit logs, member management, and any plan-specific features (such as Custom Domains, Verified Email Address, and SSO) that the Organization's plan includes.
+- **Roles.** The Organization has at least one owner. Owners may add administrators and members. Owners have access to Organization-level configuration, billing, SSO settings, and member management. Administrators have access to audit logs, member management, and plan-specific features (such as Custom Domains and Verified Email Address) but cannot modify billing or SSO configuration.
 - **Member responsibility.** The Organization is responsible for ensuring its members comply with these Terms. The Organization owner is responsible for promptly removing or suspending member access when appropriate (for example, when a member leaves the Organization).
-- **Member data.** When the Organization adds a member, the Organization is the controller for that member's personal data within the Service for purposes of GDPR and equivalent laws. We process member data on the Organization's behalf.
+- **Member data.** Onetime Secret is the data controller for member personal data within the Service for purposes of GDPR and equivalent laws. The Organization, through its owners and administrators, has administrative control over member accounts — including the ability to add or remove members, configure access permissions, and view Organization-level audit logs — but this administrative role does not make the Organization a data controller under applicable privacy law.
 - **Billing.** The Organization is responsible for fees associated with all members and all Organization-level configuration. Member counts are governed by the Organization's plan.
 
 ### 4. Authentication Methods
 
-We support multiple ways to sign in. Depending on your region and your Organization's configuration, available methods may include any of the following:
+We support multiple ways to sign in. Depending on your region, your Organization's configuration, and your plan tier, available methods may include:
 
 - A passphrase set on your account
 - A one-time magic link sent to your email
 - A third-party identity provider such as Google, Apple, or GitHub
 - A WebAuthn / passkey credential
 - Single Sign-On (see [Section B.5](#5-single-sign-on) below) via SAML 2.0, OIDC, or another federation protocol we support
-- Multi-factor authentication, with recovery codes for account recovery
 
-The specific authentication methods available may vary by region, by plan tier, and over time. We may add or remove supported methods without itemizing each addition or removal. Where you sign in via a third-party provider, your use of that provider is subject to that provider's own terms and privacy practices.
+Where available on your plan, you may also enable multi-factor authentication with recovery codes for account recovery.
+
+The specific authentication methods available may change over time. We may add or remove supported methods without itemizing each addition or removal. Where you sign in via a third-party provider, your use of that provider is subject to that provider's own terms and privacy practices.
 
 ### 5. Single Sign-On
 
@@ -117,7 +118,7 @@ This section is the canonical source for the operational details of how we hold 
   2. To test the integrity of backups for the system as a whole
 
   We do not access backup files to retrieve individual secrets.
-- **Cryptographic and infrastructure measures.** Our technical security measures — including TLS 1.3 in transit, AES-256-CBC for Secret Content with key material isolated from the database tier, Argon2id for credential hashing, LUKS full-disk encryption on production storage, and GPG 4096-bit asymmetric encryption of backups — are summarized in our [Privacy Statement](https://onetimesecret.com/privacy). Customers on the Global Elite tier may receive additional cryptographic detail in their separate agreement.
+- **Cryptographic and infrastructure measures.** Our technical security measures are described in our [Privacy Statement](https://onetimesecret.com/privacy). Additional detail is available upon request for customers with dedicated deployment arrangements.
 
 ### 7. User Account Security
 
@@ -162,7 +163,11 @@ While using Onetime Secret, you agree that you will not:
 
 ### 4. Service Usage Limits
 
-You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the Service, use of the Service, or access to the Service without our express written permission.
+You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the Service, use of the Service, or access to the Service without our express written permission, except as follows:
+
+- **Permitted API integration.** You may use our API (subject to [Section H](#h-api-terms)) to integrate the Service into your own applications and to provide functionality to your end users, provided you do not misrepresent the source of the Service or remove attribution where required.
+
+- **Prohibited resale of domain-specific features.** You may not resell, sublicense, or offer as a managed service to third parties any domain-specific functionality — including Custom Domains, Verified Email Addresses, Homepage Secrets, or SSO configuration — without our prior written consent.
 
 ### 5. Scraping
 
@@ -170,8 +175,11 @@ Scraping refers to extracting data from our Website via an automated process, su
 
 - Researchers may scrape public, non-personal information for research purposes, only if any publications resulting from that research are open access.
 - Archivists may scrape public data for archival purposes.
+- AI training services and search engines may scrape our documentation sites (docs.onetimesecret.com), developer resources (onetime.dev, onetimesecret.dev), and blog for indexing and training purposes.
 
 You may not scrape Onetime Secret for spamming purposes, including for the purpose of harvesting user contact information.
+
+You may not scrape our regional subdomains (eu.onetimesecret.com, ca.onetimesecret.com, uk.onetimesecret.com, us.onetimesecret.com, nz.onetimesecret.com, and any additional regional environments we may add). These subdomains host user-facing application infrastructure and are not intended for automated data collection.
 
 All use of data gathered through scraping must comply with the [Privacy Statement](https://onetimesecret.com/privacy).
 
@@ -179,9 +187,11 @@ All use of data gathered through scraping must comply with the [Privacy Statemen
 
 Misuse of Onetime Secret users' personal information is prohibited. The Service exposes only limited personal information about other users (for example, an account contact address shown to a recipient, or the owner of a Custom Domain). To the extent you obtain any such information through your use of the Service, you agree that you will only use it for the purpose for which it was made available, that you will reasonably secure it, and that you will respond promptly to complaints, removal requests, and "do not contact" requests.
 
-### 7. Excessive Use on Free Services
+### 7. Excessive Use
 
 If we determine that your usage of free services is significantly excessive in relation to other Onetime Secret customers, we reserve the right to suspend your account or throttle your service until your consumption returns to a reasonable level.
+
+Paid plans do not impose fixed usage ceilings; however, we monitor usage patterns to ensure fair access across our customer base. If your usage is materially outside typical patterns for your plan tier, we will contact you to discuss options, which may include upgrading to a higher tier or an API-specific plan. For programmatic or high-throughput access, see [Section H](#h-api-terms).
 
 ### 8. User Protection
 
@@ -211,8 +221,7 @@ This license does not grant Onetime Secret the right to sell your Content or oth
 
 Secret Content is held subject to the technical constraints described in [Section B.6](#6-data-retention-and-security):
 
-
-- We do not access, read, scan, categorize, or analyze Secret Content.
+- We do not access, read, scan, categorize, or analyze Secret Content, except: (a) with the express prior consent of the content owner; (b) at the direction of an Organization owner acting on behalf of its members, where such access is reasonably necessary for compliance, security, or administrative purposes within that Organization; or (c) for debugging, troubleshooting, or demonstration purposes, provided that access is limited to Onetime Secret personnel acting under a duty of confidentiality and is logged for audit purposes. Any access under this section is limited in scope and duration to what is reasonably necessary to accomplish the stated purpose.
 - Secret Content is automatically purged on first viewing, on expiry, or on deletion via the Receipt Link.
 
 ### 5. Feedback
@@ -298,7 +307,7 @@ Onetime Secret and our licensors, vendors, agents, and content providers retain 
 
 ### 2. Trademarks
 
-The following names are protected trademarks of Onetime Secret:
+The following names are trademarks of Onetime Secret and are protected under common law:
 
 - "Onetime Secret"
 - "OnetimeSecret"
@@ -349,7 +358,7 @@ Our pricing and payment terms are available at [onetimesecret.com/pricing](https
 
 Subscriptions are billed in advance — monthly or yearly, depending on the plan you have selected.
 
-For our **multi-tenant paid plans** (Identity Plus, Team Plus, and any successor multi-tenant tiers):
+For our **multi-tenant paid plans** (such as Identity Plus, Identity Lite, Team Plus, Team Lite, and any successor or variant multi-tenant tiers):
 
 - **Monthly plans** — refundable within 30 days of the most recent monthly billing date.
 - **Annual plans** — refundable within 30 days of the most recent annual billing date.
