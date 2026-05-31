@@ -2,142 +2,246 @@
 title: Privacy Statement
 ---
 
-Effective date: **October 22, 2024**
+Effective date: **TBD on release**
 
-Onetimesecret.com provides a service for securely sharing sensitive information. We understand that managing private data carries significant responsibility. This policy outlines how we handle information entrusted to our service.
+Onetime Secret provides a service for securely sharing sensitive information. Managing private data carries significant responsibility, and this policy describes how we handle the information entrusted to our service.
+
+This Privacy Statement applies to our standard hosted service, including the Basic, Identity Plus, and Team Plus tiers. Customers on our Global Elite tier — which provides dedicated, single-tenant deployments — may receive a separate agreement that supplements this Privacy Statement.
+
+We may also offer services under related or partner brands (for example, marked "Powered by Onetime Secret" or "by Onetime Secret"). Those services may operate under their own published policies tailored to the features they provide.
+
+This Privacy Statement and the [Terms of Service](https://onetimesecret.com/terms) are companion documents. Defined terms (such as **Secret Content**, **Account Data**, **Custom Domain**, and **Homepage Secret**) are defined in [Section A of the Terms of Service](https://onetimesecret.com/terms#a-definitions); operational details about retention, backups, and security measures are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) and summarized here.
 
 ## The short version
-We collect your information only with your consent; we only collect the minimum amount of personal information that is necessary to fulfill the purpose of your interaction with us; we don't sell it to third parties; and we only use it as this Privacy Statement describes.
 
-Of course, the short version doesn't tell you everything, so please read on for more details!
+We collect information only with your consent. We collect the minimum amount of personal information necessary to operate the service. We do not sell it. We use it only for the purposes described here.
 
-## What information onetimesecret.com collects and why
+The short version doesn't tell you everything, so please read on for the full picture.
+
+## What information we collect, and why
 
 ### Information from website browsers
 
-If you're **just browsing the website**, we collect the same basic information that most websites collect. We use common internet technologies, such as cookies and web server logs. This is stuff we collect from everybody, whether they have an account or not.
+If you're browsing the website without an account, we collect the same kind of information most websites collect: browser type, language preference, regional environment selection, color mode preference, request timestamps, and your IP address. We use common technologies including cookies, HTML5 `localStorage` and `sessionStorage`, and server logs.
 
-The information we collect about all visitors to our website includes the visitor's browser type, language preference, preferred data center location (which you choose when accessing our service via eu.onetimesecret.com or us.onetimesecret.com), color mode (e.g. dark mode), and the date and time of each visitor request. We also collect potentially personally-identifying information like Internet Protocol (IP) addresses.
-
-#### Why do we collect this?
-
-We collect this information to better understand how our website visitors use onetimesecret.com and to monitor and protect the security of the website.
+We use this information to operate the website, to monitor and protect its security, and to understand in aggregate how the service is used. Server request log retention is governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security): in summary, up to 30 days, and sooner depending on traffic volume.
 
 ### Information from users with accounts
 
-If you **create an account**, we require some basic information at the time of account creation. You will create your own user name and password, and we will ask you for a valid email account. You also have the option to give us more information if you want to, and this may include "User Personal Information."
+When you create an account we ask for a valid email address. The available sign-in methods (passphrase, magic link, SSO, passkey, third-party identity providers, multi-factor authentication, and recovery codes) are described in [Section B.4 of the Terms of Service](https://onetimesecret.com/terms#4-authentication-methods). Available methods may vary by region, by plan tier, and over time.
 
-"User Personal Information" is any information about one of our users which could, alone or together with other information, personally identify him or her. Information such as a user name and password, an email address, a real name, and a photograph are examples of "User Personal Information."
+The information we hold about your account ("**Account Data**", as defined in [Section A.7 of the Terms of Service](https://onetimesecret.com/terms#a-definitions)) may include:
 
-User Personal Information does not include aggregated, non-personally identifying information. We may use aggregated, non-personally identifying information to operate, improve, and optimize our website and service.
+- A username, display name, and email address
+- Authentication credentials, which depending on the methods you use may include a passphrase hash (we never store passphrases in plaintext), public WebAuthn / passkey credentials, recovery codes, or identity claims received from a third-party provider
+- Multi-factor authentication factors you have configured
+- Billing contact and tax information for paid plans
+- Custom Domains, Verified Email Domains, and similar configuration you set up
+- Usage metadata necessary to operate the service (account creation date, plan tier, last login timestamp, and similar)
 
-#### Why do we collect this?
+We use Account Data to identify you, to provide the services you have requested, and to communicate with you on the basis you have agreed to. We limit our use of Account Data to the purposes described in this Privacy Statement.
 
-- We need your User Personal Information to create your account, and to provide the services you request.
-- We use your User Personal Information, specifically your user name and email address, to identify you on onetimesecret.com.
-- We will use your email address to communicate with you, if you've said that's okay, **and only for the reasons you've said that's okay**. Please see our section on [email communication](#how-we-communicate-with-you) for more information.
-- We limit our use of your User Personal Information to the purposes listed in this Privacy Statement. If we need to use your User Personal Information for other purposes, we will ask your permission first.
+### Information from Organization accounts
 
-## What information onetimesecret.com does not collect
+If you create an Organization account — a workspace shared by multiple users — additional information is processed at the Organization level:
 
-We do not intentionally collect **sensitive personal information**, such as social security numbers, genetic data, health information, or religious information. Although onetimesecret.com does not request or intentionally collect any sensitive personal information, we realize that you might store this kind of information in your account, such as in a secret. If you store any sensitive personal information on our servers, you are consenting to our storage of that information on our servers, which are located in the European Union (EU) or United States (US) data centers (accessible via eu.onetimesecret.com and us.onetimesecret.com respectively), subject to applicable data protection laws.
+- The Organization's name, billing contact, and tax details
+- A list of members and their roles within the Organization
+- Custom Domains, Verified Email Domains, SSO configuration, and other settings configured for the Organization
+- An audit log of administrative actions taken within the Organization
 
-We do not intentionally collect information that is **stored in your secret** or other free-form content inputs. Information in your secret belongs to you, and you are responsible for it, as well as for making sure that your content complies with our [Terms of Service](/info/terms/). onetimesecret.com employees do not access secret unless required to for security or maintenance, or for support reasons, with the consent of the secret owner.
+The Organization's owner or designated administrator is responsible for the personal data of Organization members in the sense given to a "controller" under the GDPR. We process Organization member data on behalf of the Organization. The Organization-side rules and responsibilities are set out in [Section B.3 of the Terms of Service](https://onetimesecret.com/terms#3-organization-accounts).
 
-If you're a **child under the age of 13**, you may not have an account on onetimesecret.com. onetimesecret.com does not knowingly collect information from or direct any of our content specifically to children under 13. If we learn or have reason to suspect that you are a user who is under the age of 13, we will unfortunately have to close your account. We don't want to discourage you from learning to code, but those are the rules. Please see our [Terms of Service](/info/terms/) for information about account termination.
+### Information from Single Sign-On
+
+If your Organization enables SSO, you authenticate via your Organization's identity provider (Google Workspace, Okta, Microsoft Entra ID, or any SAML 2.0 / OIDC provider your Organization configures). We receive a limited set of identity claims — typically your email address, a stable identifier, your display name, and any group memberships your Organization has chosen to share. We do not receive or store your credentials.
+
+We log SSO authentication events for security and audit purposes. Retention applies as described in [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) — in summary, up to 30 days. Retention is based on our legitimate interest in security monitoring and audit, and is limited to what is necessary for those purposes.
+
+If your Organization disables your account at the identity provider, your active sessions are terminated and your access is revoked. Account Data within the Organization is then handled in accordance with the Organization's instructions and the cancellation rules in [Section J of the Terms of Service](https://onetimesecret.com/terms#j-cancellation-and-termination).
+
+### Secret Content
+
+**Secret Content** (defined in [Section A.8 of the Terms of Service](https://onetimesecret.com/terms#a-definitions)) is the information you place inside a secret. It is held separately from Account Data and is encrypted in transit and at rest. We do not access, read, scan, categorize, or analyze Secret Content. The lifecycle of Secret Content (purge on first viewing, expiry, or manual deletion via the Receipt Link, with up to 30 days of persistence in encrypted backups) is governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
+
+If you store sensitive personal information inside a secret, you remain responsible for that decision and for compliance with applicable law. We cannot retrieve, restore, or assist with access to a secret once it has been viewed, expired, or deleted.
+
+### Homepage Secrets
+
+If you have enabled **Homepage Secrets** on a Custom Domain (see [Section E.3 of the Terms of Service](https://onetimesecret.com/terms#3-homepage-secrets)), visitors who submit secrets through your Custom Domain's homepage are treated, for privacy purposes, in the same way as any other visitor. We do not require these visitors to have an account. Their IP address and request metadata are subject to the same retention period as other server request logs.
+
+If your configuration requires a visitor to identify themselves before submitting a Homepage Secret (for example, by providing an email address), the information they provide is associated with the resulting Homepage Secret and forms part of your Account Data.
+
+### Verified Email Domains
+
+If you configure a Verified Email Domain so we can send transactional notifications from an address on your own domain, we record the verification status and the configuration values you set. We do not host your email or read its contents. The DNS records you must publish (and your responsibility for maintaining them) are described in [Section E.2 of the Terms of Service](https://onetimesecret.com/terms#2-verified-email-domains).
+
+### What we do not collect
+
+We do not intentionally collect sensitive personal information — social security numbers, genetic data, health information, religious information — in your Account Data. We recognize that you might place such information inside a secret. If you do, that information is handled as Secret Content as described above; we do not access it.
+
+We do not intentionally collect information stored inside a secret. Information in a secret belongs to you, and you are responsible for it and for ensuring that your content complies with our [Terms of Service](https://onetimesecret.com/terms). Onetime Secret personnel do not access secrets except where strictly required for security or business continuity.
+
+If you are a child under the age of 13, you may not have an account on Onetime Secret. We do not knowingly collect information from children under 13. If we learn that an account belongs to a user under 13, we will close that account.
 
 ## How we share the information we collect
 
-We **do not** share, sell, rent, or trade User Personal Information with third parties for their commercial purposes.
+We do not share, sell, rent, or trade your Account Data with third parties for their commercial purposes. We do not disclose Account Data outside Onetime Secret except in the situations listed in this section, in the section below on Compelled Disclosure, or with your permission.
 
-We do not disclose User Personal Information outside onetimesecret.com, except in the situations listed in this section or in the section below on [Compelled Disclosure](#how-we-respond-to-compelled-disclosure).
+We do not share Secret Content with anyone. By design, we don't have meaningful access to it ourselves.
 
-We **do** share certain aggregated, non-personally identifying information with others about how our users, collectively, use onetimesecret.com, or how our users respond to our other offerings, such as our conferences or events. For example, we may compile statistics on the usage of HTTP content types across onetimesecret.com. However, we do not sell this information to advertisers or marketers.
+We may share aggregated, non-personally-identifying information about how the service is used. We do not sell any such information.
 
-We do not host advertising on onetimesecret.com. We may occasionally embed content from third party sites, such as YouTube, and that content may include ads. While we try to minimize the amount of ads our embedded content contains, we can't always control what third parties show.
+We do not host advertising on Onetime Secret.
 
-We may share User Personal Information with your permission, so we can perform services you have requested.
+### Subprocessors
 
-We may share User Personal Information with a limited number of third-party vendors who process it on our behalf to provide or improve our service, and who have agreed to privacy restrictions similar to our own Privacy Statement. Our vendors perform services such as:
-- Payment processing
-- Customer support ticketing
-- Network data transmission
-- DDoS protection and content delivery through CloudFlare
-- Other similar services
+We share Account Data, and in some cases encrypted Secret Content, with a small set of subprocessors that help us run the service. They are contractually bound to handle the data in line with this Privacy Statement.
 
-We may share User Personal Information if we are involved in a merger, sale, or acquisition. If any such change of ownership happens, we will ensure that it is under terms that preserve the confidentiality of User Personal Information, and we will notify you on our website or by email before any transfer of your User Personal Information. The organization receiving any User Personal Information will have to honor any promises we have made in our Privacy Statement or in our Terms of Service.
+| Subprocessor | Purpose | Location |
+| --- | --- | --- |
+| Cloudflare, Inc. | DDoS protection on our regional service domains (e.g. `eu.onetimesecret.com`, `ca.onetimesecret.com`), which are the entry points for free usage | Global edge network |
+| Stripe, Inc. | Payment processing for paid plans | United States (EU-US Data Privacy Framework certified) |
+| Approximated, Inc. | SSL termination for customer Custom Domains on our multi-tenant paid tiers (Identity Plus and Team Plus) | Global edge network |
+| Transactional email providers | Delivery of account, notification, and security emails | EU |
+| Regional hosting providers | Application and data hosting within each region | See "Where your data is processed", below |
 
-## Our use of cookies and tracking
+Cloudflare provides DDoS protection on the regional service domains (the entry points for free usage). Customer Custom Domains on Identity Plus and Team Plus are served via Approximated and are not routed through Cloudflare by us. The customer's own ability to place their Custom Domain behind an edge network of their choice is described in [Section E.1 of the Terms of Service](https://onetimesecret.com/terms#1-custom-domains).
+
+Hosting providers vary by region (see "Where your data is processed" below for the per-region hosting provider). We maintain a current, detailed list of subprocessors — including legal entity, address, location, purpose, and categories of data processed — at [onetimesecret.com/subprocessors](https://onetimesecret.com/subprocessors). We update that list when subprocessors change, and we provide advance notice of changes in line with our standard subprocessor notice period of 30 days.
+
+### Sharing in connection with a corporate transaction
+
+We may share Account Data if we are involved in a merger, sale, or acquisition. If any such change of ownership happens, we will ensure that it is on terms that preserve the confidentiality of Account Data, and we will notify you on the website or by email before any transfer.
+
+## Cookies and tracking
 
 ### Cookies
 
-onetimesecret.com uses cookies to make interactions with our service easy and meaningful. We use cookies (and similar technologies, like HTML5 localStorage) to keep you logged in, remember your preferences, and provide information for future development of onetimesecret.com.
+We use cookies (and similar technologies, such as HTML5 `localStorage` and `sessionStorage`) to keep you logged in, to remember your preferences, and to operate the service. The cookies we set are essential for the operation of the website or are used for performance and functionality. We do not use cookies to track you across other websites.
 
-A cookie is a small piece of text that our web server stores on your computer or mobile device, which your browser sends to us when you return to our site. Cookies do not necessarily identify you if you are merely visiting onetimesecret.com; however, a cookie may store a unique identifier for each logged in user. The cookies onetimesecret.com sets are essential for the operation of the website, or are used for performance or functionality. By using our website, you agree that we can place these types of cookies on your computer or device. If you disable your browser or device's ability to accept cookies, you will not be able to log in or use our services.
+### No third-party tracking
 
-### Third-party tracking services
+We do not use third-party analytics, product-tracking, or session-replay services such as Google Analytics, Mixpanel, Segment, Amplitude, Heap, Hotjar, FullStory, PostHog, or Plausible. We do not embed third-party tracking pixels, advertising tags, or social-media tracking. We do not build profiles of individual users or perform behavioral analysis.
 
-While we do not use Google Analytics or similar third-party tracking services for any purpose, some embedded content from third-party providers (such as video players) may set their own cookies or similar tracking technologies. These are outside of our control and are not used for our own tracking purposes. We recommend reviewing the privacy policies of these third-party providers if you have concerns about their cookies.
+### Operational logging
 
-### Tracking
+We retain server request logs and error monitoring data for up to 30 days for the purposes of security monitoring, technical diagnostics, and service improvement. Error monitoring is performed using a self-hosted instance of Sentry within the European Union, with client-side and server-side data scrubbing applied. We do not intentionally collect personal data through error reports, although some may be incidentally captured.
 
-<p class="prose dark:text-gray-300">
-We respect user privacy and do not track your online browsing activity across other online services over time. While some browsers previously offered a "Do Not Track" setting, we handle all user data with privacy in mind regardless of browser settings.
-</p>
+## How we secure your information
 
-## How onetimesecret.com secures your information
+The technical and organizational security measures applied to the Service are:
 
-onetimesecret.com takes all measures reasonably necessary to protect User Personal Information from unauthorized access, alteration, or destruction; maintain data accuracy; and help ensure the appropriate use of User Personal Information. We follow generally accepted industry standards to protect the personal information submitted to us, both during transmission and once we receive it.
+- TLS 1.3 in transit, with strong cipher suites
+- AES-256-CBC encryption of Secret Content, with key material that is never stored alongside the encrypted data in the database tier
+- Argon2id for credential hashing, applied to both account passphrases and secret passphrases
+- LUKS full-disk encryption on production storage
+- GPG 4096-bit asymmetric encryption of backups, with decryption keys held offline
+- Multi-factor authentication for administrative access
 
-To enhance security and availability, we utilize CloudFlare's services for DDoS protection and content delivery. For users on our dedicated service plans, additional security features including enhanced CloudFlare protection are available upon request (depending on the feature, additional charges may apply).
+These are summarized here for transparency. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
 
-No method of transmission, or method of electronic storage, is 100% secure. Therefore, we cannot guarantee its absolute security. For more information, see our [security disclosures](/info/security/).
+No method of transmission or storage is 100% secure, and we cannot guarantee absolute security.
 
-## onetimesecret.com's global privacy practices
-**Information that we collect will be stored and processed in either our European Union (EU) or United States (US) data centers**, accessible via eu.onetimesecret.com and us.onetimesecret.com respectively. Your data will be stored in the region you select when creating your account, in accordance with this Privacy Statement. We understand that we have users from different countries and regions with different privacy expectations, and we try to meet those needs.
+## Where your data is processed
 
-We provide the same standard of privacy protection to all our users around the world, regardless of their country of origin or location, and we are proud of the levels of notice, choice, accountability, security, data integrity, access, and recourse we provide. We work hard to comply with the applicable data privacy laws wherever we do business. Additionally, we require that if our vendors or affiliates have access to User Personal Information, they must comply with our privacy policies and with applicable data privacy laws, including signing data transfer agreements such as Standard Contractual Clause agreements.
+We operate the service in multiple regional environments. As of the effective date above, those are:
 
-In particular:
--	onetimesecret.com provides clear methods of unambiguous, informed consent at the time of data collection, when we do collect your personal data.
--	We collect only the minimum amount of personal data necessary, unless you choose to provide more. We encourage you to only give us the amount of data you are comfortable sharing.
--	We offer you simple methods of accessing, correcting, or deleting the data we have collected.
--	We provide our users notice, choice, accountability, security, and access, and we limit the purpose for processing. We also provide our users a method of recourse and enforcement. These are the Privacy Shield Principles, but they are also just good practices.
+| Region | Domain | Hosting provider |
+| --- | --- | --- |
+| EU | `eu.onetimesecret.com` | Hetzner (Germany) |
+| CA | `ca.onetimesecret.com` | *to confirm* |
+| NZ | `nz.onetimesecret.com` | *to confirm* |
+| UK | `uk.onetimesecret.com` | *to confirm* |
+| US | `us.onetimesecret.com` | *to confirm* |
 
-## Resolving Complaints
+We add further regions from time to time. The authoritative subprocessor list at [onetimesecret.com/subprocessors](https://onetimesecret.com/subprocessors) records each provider's legal entity, address, and processing scope.
 
-If you have concerns about the way onetimesecret.com is handling your User Personal Information, please let us know immediately. We want to help. You may email us directly at support@onetimesecret.com with the subject line "Privacy  Concerns." We will respond within 45 days at the latest.
+When you create an account, you choose the regional environment in which your account lives. Account Data and Secret Content created in a given region remain in that region's infrastructure throughout their lifecycle, including encrypted backups. We do not transfer Account Data or Secret Content between regions.
+
+There are two narrow exceptions, both inherent to operating the service:
+
+- **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data — Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
+- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus) operate global edge networks that terminate SSL connections close to the visitor. The encrypted application traffic is then forwarded into the appropriate regional environment for processing.
+
+Where transfers to third countries occur, they rely on appropriate safeguards under Article 46 GDPR (or its equivalent in other jurisdictions), including the EU Standard Contractual Clauses (2021 version) and the UK International Data Transfer Addendum where applicable.
+
+## Your rights and how to raise concerns
+
+We provide the same baseline of privacy protection to all our users. Some regions also give residents specific statutory rights, summarized here. Where there is any conflict, the law of your jurisdiction prevails.
+
+### Europe (EU and EEA) and the United Kingdom
+
+If you are in the EU, EEA, or UK, you have rights under the GDPR or UK GDPR, including the right to access, rectify, or erase your personal data; the right to restrict or object to processing; and the right to data portability. You also have the right to lodge a complaint with your local supervisory authority — the Information Commissioner's Office (ICO) for UK residents, or the supervisory authority in your country of residence for EU/EEA residents.
+
+### California
+
+If you are a California resident, you have rights under the California Consumer Privacy Act, as amended by the California Privacy Rights Act (collectively, the "**CCPA**"), including the right to know what personal information we collect about you, the right to delete personal information we hold about you, the right to correct inaccurate information, and the right to opt out of the sale or sharing of personal information. We do not sell or share personal information as those terms are defined in the CCPA. You may exercise these rights by emailing [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com); we will not discriminate against you for exercising them.
+
+### Canada
+
+We are based in British Columbia, Canada, and we operate in accordance with the federal Personal Information Protection and Electronic Documents Act (PIPEDA) and applicable provincial privacy laws including British Columbia's Personal Information Protection Act (PIPA), Alberta's PIPA, and Quebec's Law 25. If you are a resident of Canada, you have rights to access and correct your personal information held by us, and you may lodge a complaint with the Office of the Privacy Commissioner of Canada or the equivalent provincial commissioner.
+
+### Other regions
+
+If you are in a region not listed above, you may still have privacy rights under applicable local law. We will honor those rights to the extent they apply to our processing of your personal data.
+
+### Raising a concern
+
+If you have a concern about the way we handle your personal data, please email [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com) with the subject line "Privacy Concerns." We aim to respond within 30 days and at the latest within 45 days.
 
 ## How we respond to compelled disclosure
-onetimesecret.com may disclose personally-identifying information or other information we collect about you to law enforcement in response to a valid subpoena, court order, warrant, or similar government order, or when we believe in good faith that disclosure is reasonably necessary to protect our property or rights, or those of third parties or the public at large.
 
-In complying with court orders and similar legal processes, onetimesecret.com strives for transparency. When permitted, we will make a reasonable effort to notify users of any disclosure of their information, unless we are prohibited by law or court order from doing so, or in rare, exigent circumstances.
+We may disclose personal data in response to a valid subpoena, court order, warrant, or similar government order, or where we believe in good faith that disclosure is reasonably necessary to protect our property or rights, or those of third parties or the public.
 
-## How you can access and control the information we collect
-If you're already a onetimesecret.com user, you may access, update, alter, or delete your basic user profile information by [editing your user profile](https://onetimesecret.com.com/account) or contacting support@onetimesecret.com.
+When permitted, we will make a reasonable effort to notify users of any disclosure of their information, unless we are prohibited by law or court order from doing so, or in rare exigent circumstances.
 
-### Data Retention and Deletion
+By design, our ability to respond to such requests with respect to Secret Content is limited:
 
-onetimesecret.com will retain User Personal Information for as long as your account is active or as needed to provide you services.
+- We cannot disclose the contents of a secret that has already been purged.
+- We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase, or where the secret was encrypted client-side with a key we never receive (such as in flows where we act as a proxy for re-encrypted ciphertext).
+- We can disclose Account Data, including account email addresses, the existence of a secret, its creation timestamp, its expiry, and similar metadata, when properly compelled to do so.
 
-We may retain certain User Personal Information indefinitely, unless you delete it or request its deletion. For example, we don't automatically delete inactive user accounts, so unless you choose to delete your account, we will retain your account information indefinitely.
+## How you can access and control your information
 
-If you would like to cancel your account or delete your User Personal Information, you may do so by emailing support@onetimesecret.com. We will retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements, but barring legal requirements, we will delete your full profile (within reason) within 30 days.
+If you are an Onetime Secret user, you may access, update, or delete your account information from your account dashboard or by contacting [support@onetimesecret.com](mailto:support@onetimesecret.com).
+
+If you are a member of an Organization, your account is administered by the Organization owner or administrator. The Organization owner can disable your account, request its deletion, or export Organization data on your behalf.
+
+## Data retention and deletion
+
+The cancellation and deletion windows for Account Data, including the active record and encrypted backup retention period, are governed by [Section J.3 of the Terms of Service](https://onetimesecret.com/terms#3-upon-cancellation). In summary: up to 30 days to delete the active account record after cancellation, plus up to a further 30 days for encrypted backup copies.
+
+We retain billing records for as long as required by applicable tax and accounting law (typically six to ten years), regardless of account deletion. Billing records are limited to invoice metadata and are held by Stripe and in our accounting records.
+
+If you would like to cancel your account or delete your personal information, you may do so from your account dashboard or by emailing [support@onetimesecret.com](mailto:support@onetimesecret.com). We retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.
 
 ## How we communicate with you
 
-We will use your email address to communicate with you, if you've said that's okay, **and only for the reasons you've said that's okay**. You have a lot of control over how your email address is used and shared on and through onetimesecret.com.
+We use your email address to communicate with you only on the basis you have agreed to. Depending on your email settings, we may send notifications about new features, requests for feedback, important policy changes, security alerts, or customer support. We send marketing emails only with your consent, and there is an unsubscribe link at the bottom of each marketing email.
 
-Depending on your email settings, onetimesecret.com may occasionally send notification emails about new features, requests for feedback, important policy changes, or offer customer support. We also send marketing emails, but only with your consent. There's an unsubscribe link located at the bottom of each of the emails we send you.
+We do not embed tracking pixels or track-and-redirect links in any of our emails — transactional, service, or marketing. The only delivery signals we receive are those returned by the SMTP layer (such as hard bounces and delivery failures). Marketing emails include a one-click unsubscribe link.
 
-Our emails might contain a pixel tag, which is a small, clear image that can tell us whether or not you have opened an email and what your IP address is. We use this pixel tag to make our email more effective for you and to make sure we're not sending you unwanted email. If you prefer not to receive pixel tags, please opt out of marketing emails.
+If you have configured a Verified Email Domain for your account or Organization, we may send transactional emails on your behalf from that domain. You remain responsible for ensuring the underlying DNS records you have published are accurate.
 
 ## Changes to our Privacy Statement
-Although most changes are likely to be minor, onetimesecret.com may change our Privacy Statement from time to time. We will provide notification to Users of material changes to this Privacy Statement through our Website at least 30 days prior to the change taking effect by posting a notice on our home page or sending email to the email address specified in your onetimesecret.com primary account. For changes to this Privacy Statement that do not affect your rights, we encourage visitors to check this page frequently.
+
+We may update this Privacy Statement from time to time. We will provide notice of material changes through the Website at least 30 days before the change takes effect, by posting a notice on our home page or by sending an email to the address associated with your account.
+
+Minor changes that do not affect your rights or our obligations — such as typo corrections, formatting changes, clarifying language, or the addition of a new regional environment that does not change how existing users' data is processed — do not trigger advance notice and do not change the effective date above.
+
+## Translations
+
+We make this Privacy Statement available in multiple languages. Our translation policy and language-of-record rule are the same as those described in [Section P.4 of the Terms of Service](https://onetimesecret.com/terms#4-translations): we use a combination of professional and machine-assisted translation, translations may contain errors, and in case of any conflict between language versions, the English version of this Privacy Statement controls. If you encounter a translation that is unclear, inaccurate, or otherwise wrong, please tell us at [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com).
+
+## Source of truth
+
+This Privacy Statement is published in our public [site-policy repository](https://github.com/onetimesecret/site-policy). In the event of any discrepancy between the version of this Privacy Statement displayed on the Website and the version in the public repository at the same effective date, the version in the public repository is the authoritative version.
 
 ## License
-This Privacy Statement is licensed under this [Creative Commons Zero license](https://creativecommons.org/publicdomain/zero/1.0/). For details, see our [site-policy repository](https://github.com/onetimesecret/site-policy).
 
-## Contacting onetimesecret.com
+This Privacy Statement is licensed under the [Creative Commons Zero license](https://creativecommons.org/publicdomain/zero/1.0/). For details, see our [site-policy repository](https://github.com/onetimesecret/site-policy).
 
-Questions regarding onetimesecret.com's Privacy Statement or information practices should be directed to support@onetimesecret.com.
+## Contacting Onetime Secret
+
+Questions regarding this Privacy Statement or our information practices should be directed to [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com).
