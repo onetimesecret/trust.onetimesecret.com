@@ -256,7 +256,7 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |  |  |  |  |  |  |
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Hetzner* | EU (Germany, Finland) or US (Oregon) | All | 𐄂 | Computing resources for internal infrastructure, single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
+| *Hetzner* | EU (Germany, Finland) | All | 𐄂 | Computing resources for internal infrastructure, single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
 | *UpCloud* | UK (London) or EU (Helsinki, Amsterdam, Frankfurt) | All | ✔ | Computing resources for single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
 | *NorthFlank* | UK (London) or EU (Netherlands) | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
 | *DigitalOcean* | EU or CA (Toronto) | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
@@ -304,95 +304,17 @@ Where multiple subprocessors appear within a category, they represent alternativ
 
 ### *Subprocessor Entity Details*
 
-<table dir="ltr">
-<tbody>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><p><em><strong><strong>Name</strong></strong></em></p></th>
-<th dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><p><em><em>Address</em></em></p></th>
-<th dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><p><em><em>Jurisdiction</em></em></p></th>
-<th dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><p><em><em>Comment</em></em></p></th>
-</tr>
-&#10;<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="stripe-inc." dir="ltr"><strong><strong>Stripe, Inc.</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="oyster-point-boulevard-south-san-francisco-ca-94080-united-states" dir="ltr">354 Oyster Point Boulevard South San Francisco, CA 94080 United States</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>US</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><em><em>EU-US Data Privacy Framework certified</em></em></p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="cloudflare-inc." dir="ltr"><strong><strong>CloudFlare, Inc.</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="townsend-street-san-francisco-ca-94107-united-states" dir="ltr">101 Townsend Street, San Francisco, CA 94107, United States</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>US</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><em><em>EU-US Data Privacy Framework certified</em></em></p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="northflank-ltd" dir="ltr"><strong><strong>Northflank, Ltd</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="wenlock-road-london-england-n1-7gu-united-kingdom" dir="ltr">20-22 Wenlock Road, London, England N1 7GU, United Kingdom</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>UK</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><br />
-</p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="digitalocean-llc" dir="ltr"><strong><strong>DigitalOcean, LLC</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="avenue-of-the-americas-10th-floor-new-york-ny-10013-united-states" dir="ltr">101 Avenue of the Americas, 10th Floor, New York, NY 10013, United States</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>US</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><em><em>EU-US Data Privacy Framework certified</em></em></p></td>
-</tr>
-<tr dir="ltr" style="height: 65.3385px;">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="upcloud-ltd" dir="ltr"><strong><strong>UpCloud Ltd</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="aleksanterinkatu-15-b-7th-floor-00100-helsinki-finland" dir="ltr">Aleksanterinkatu 15 B, 7th floor, 00100 Helsinki, Finland</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>EU</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><em><em>UpCloud is ISO 27001:2022, SOC 2 Type II, certified and a member of the CISPE Code of Conduct.</em></em></p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="lettermint-b.v." dir="ltr"><strong><strong>Lettermint B.V.</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="willemsvaart-16b-unit-1.08-8019-ab-zwolle-netherlands-kvk-99337711" dir="ltr">Willemsvaart 16B, Unit 1.08, 8019 AB Zwolle, Netherlands KVK: 99337711</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>EU</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><br />
-</p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="approximated-inc." dir="ltr"><strong><strong>Approximated, Inc.</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="a-delaware-company." dir="ltr">A Delaware Company.</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>US</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><em><em>Multi-tenant only</em></em></p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="proton-ag-proton-mail" dir="ltr"><strong><strong>Proton AG (Proton Mail)</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="route-de-la-galaise-32-1228-plan-les-ouates-geneva-switzerland" dir="ltr">Route de la Galaise 32 1228 Plan-les-Ouates, Geneva Switzerland</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>Switzerland</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><br />
-</p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="hetzner-online-gmbh" dir="ltr"><strong><strong>Hetzner Online GmbH</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="industriestr.-25-91710-gunzenhausen-germany" dir="ltr">Industriestr. 25 91710 Gunzenhausen Germany</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>EU </p>
-<p>w/ US subsidiary</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><em><em>ISO 27001:2022</em></em></p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="amazon-web-services-inc.-aws" dir="ltr" style="text-align: start;"><strong><strong>Amazon Web Services, Inc. (AWS)</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="terry-avenue-north-seattle-wa-98109-5210-united-states" dir="ltr">410 Terry Avenue North Seattle, WA 98109-5210 United States</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>US</p>
-<p>w/ regional subsidiaries</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><em><em>EU-US Data Privacy Framework certified</em></em></p></td>
-</tr>
-<tr dir="ltr">
-<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="catalyst-cloud" dir="ltr"><strong><strong>Catalyst Cloud</strong></strong></h5></th>
-<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="catalyst-cloud-address" dir="ltr">Level 3, Catalyst House, 150 Willis Street, Te Aro, Wellington 6011, New Zealand</h6></td>
-<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>NZ</p></td>
-<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><br />
-</p></td>
-</tr>
-<tr dir="ltr" style="height: 73.3247px;">
-<th dir="ltr" style="width: 75px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="altcha.org" dir="ltr" style="text-align: start;"><strong><strong>Altcha.org</strong></strong></h5></th>
-<td dir="ltr" style="width: 75px; border: 1px solid black; vertical-align: top"><h6 id="bau-software-s.r.o.-lidicka-70019-brno-602-00-czechia" dir="ltr">BAU Software s.r.o. Lidicka 700/19 Brno 602 00 Czechia</h6></td>
-<td dir="ltr" style="width: 75px; border: 1px solid black; vertical-align: top"><p>EU</p></td>
-<td dir="ltr" style="width: 75px; border: 1px solid black; vertical-align: top"><p><br />
-</p></td>
-</tr>
-</tbody>
-</table>
+| ***Name*** | *Address* | *Jurisdiction* | *Comment* |
+| :--- | :--- | :--- | :--- |
+| **Hetzner Online GmbH** | Industriestr. 25 91710 Gunzenhausen Germany | EU w/ US subsidiary | *ISO 27001:2022* |
+| **Proton AG (Proton Mail)** | Route de la Galaise 32 1228 Plan-les-Ouates, Geneva Switzerland | Switzerland | |
+| **Lettermint B.V.** | Willemsvaart 16B, Unit 1.08, 8019 AB Zwolle, Netherlands KVK: 99337711 | EU | |
+| **Stripe, Inc.** | 354 Oyster Point Boulevard South San Francisco, CA 94080 United States | US | *EU-US Data Privacy Framework certified* |
+| **Northflank, Ltd** | 20-22 Wenlock Road, London, England N1 7GU, United Kingdom | UK | |
+| **UpCloud Ltd** | Aleksanterinkatu 15 B, 7th floor, 00100 Helsinki, Finland | EU | *UpCloud is ISO 27001:2022, SOC 2 Type II, certified and a member of the CISPE Code of Conduct.* |
+| **CloudFlare, Inc.** | 101 Townsend Street, San Francisco, CA 94107, United States | US | *EU-US Data Privacy Framework certified* |
+| **Approximated, Inc.** | A Delaware Company. | US | *Multi-tenant only* |
+
 
 ##### 
 
@@ -451,7 +373,7 @@ User passphrases and account credentials are protected using adaptive one-way ha
 - Salt: Randomly generated per credential, stored with the hash
 - Timing-safe comparison: Verification uses constant-time comparison to prevent timing attacks
 
-Existing credentials hashed with BCrypt (cost factor 12) remain verifiable; all new credentials are hashed with Argon2id.
+All credentials are hashed with Argon2id.
 
 *1.3 Cryptographic Key Isolation*
 
