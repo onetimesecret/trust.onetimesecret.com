@@ -15,7 +15,7 @@ For your convenience we have presented these terms in a short non-binding summar
 | Section | What can you find there? |
 | --- | --- |
 | [A. Definitions](#a-definitions) | Defined terms used throughout the agreement. |
-| [B. Account Terms](#b-account-terms) | The basic requirements of having an account, including Organization accounts and Single Sign-On. |
+| [B. Account Terms](#b-account-terms) | The basic requirements of having an account, including Organizations and Single Sign-On. |
 | [C. Acceptable Use](#c-acceptable-use) | The rules you must follow when using the service. |
 | [D. User-Generated Content](#d-user-generated-content) | You own the content you post. We need a limited licence to operate the service. |
 | [E. Custom Domains, Verified Email Address, and Homepage Secrets](#e-custom-domains-verified-email-domains-and-homepage-secrets) | The rules for the resources you set up on top of your account: custom domains, verified email senders, and homepage secrets. |
@@ -54,7 +54,7 @@ These definitions are the canonical source for terminology used in both this Agr
 
 ## B. Account Terms
 
-**Short version:** *Accounts must be created by humans, you must be 13 or over, you must provide a valid email address, and you may not have more than one free personal account. You are responsible for your account and for keeping it secure. Organization accounts have additional rules.*
+**Short version:** *Accounts must be created by humans, you must be 13 or over, you must provide a valid email address, and you may not have more than one free personal account. You are responsible for your account and for keeping it secure. Organizations have additional rules.*
 
 ### 1. Required Information
 
@@ -68,13 +68,13 @@ We have a few simple rules for accounts on Onetime Secret's Service.
 
 - **Humans only.** You must be a human to create an account. Accounts registered by bots or other automated methods are not permitted.
 - **Machine accounts.** A machine account is an account set up by a human who accepts these Terms on behalf of the account, provides a valid email address, and remains responsible for its actions. A machine account is used exclusively for performing automated tasks. Multiple individuals may direct a machine account, but the account owner is ultimately responsible for the machine's actions. You may maintain no more than one free machine account.
-- **One free personal account.** You may not maintain more than one free personal account. This rule does not apply to membership in Organization accounts.
+- **One free personal account.** You may not maintain more than one free personal account. This rule does not apply to membership in Organizations.
 - **Organization.** An account owner may create up to five Organizations. Additional Organizations are available by request.
 - **Age.** You must be at least 13 years old. If you are a resident of a country whose minimum age is older, you are responsible for complying with your country's laws.
 - **One human per login.** Login credentials are intended for individual use and should not be shared. Where multiple people in the same Organization need access, the Organization owner can add them as members of the Organization.
 - **Verifying you are on the official Service.** It is your responsibility to verify you are accessing the Service via an official Onetime Secret domain. Configuring a Custom Domain (see [Section E.1](#1-custom-domains)) is the recommended way to give your users a verifiable, branded entry point and to reduce phishing risk.
 
-### 3. Organization Accounts
+### 3. Organizations
 
 If you create an Organization, the following additional rules apply:
 
