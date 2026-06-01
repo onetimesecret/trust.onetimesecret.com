@@ -6,9 +6,11 @@ This Data Processing Agreement ("*Agreement*" or "*DPA*") forms part of the Cont
 
 This Agreement governs the specific requirements of Data Protection Laws to the extent that Company’s use of Onetime Secret's services implies the processing of Personal Data subject to Data Protection Laws.
 
-This Agreement aligns with our Privacy Policy where applicable, while addressing the specific data protection requirements for our Global Elite tier services, which operate on logically separated instances.
+This Agreement aligns with our Privacy Policy where applicable, while addressing the specific data protection requirements for all service tiers. The Processor offers multiple tiers with different architectural characteristics, as described in Schedule A.
 
 The term of this Agreement shall follow the term of the Principal Agreement. Terms not defined herein shall have the meaning as set forth in the Principal Agreement.
+
+This Agreement does not apply to self-hosted deployments of the Processor's open-source software. Where the Company operates its own instance of the software, no data processing relationship with the Processor arises in connection with that deployment.
 
 ### *WHEREAS*
 
@@ -194,7 +196,7 @@ c\) Data collected in other regions shall remain within the infrastructure of th
 
 This regional data localization policy applies throughout the entire processing lifecycle. The Processor maintains segregated regional processing environments (including separate EU and UK environments) and implements technical and organizational measures to prevent unauthorized cross-regional transfers.
 
-12.2) not transfer or authorize the transfer of Data to countries outside the EU and/or the European Economic Area (EEA) and/or Switzerland. In exceptional circumstances where such transfer becomes absolutely necessary for the performance of the Agreement or to protect vital interests, the Processor must obtain prior written consent from the Company and ensure appropriate safeguards are in place. In such limited cases, the Parties shall rely on EU approved standard contractual clauses (2021 version) or other approved transfer mechanisms to ensure the personal data remains adequately protected.
+12.2) ensure that Company Personal Data collected within a given regional environment is not transferred to infrastructure outside that region, with the following limited exception: billing data (limited to payment and invoicing information) is processed by Stripe, Inc. in the United States, as listed in Schedule A. For Company Personal Data originating from EU, EEA, UK, or Swiss data subjects, this transfer is covered by Stripe's certification under the EU-US Data Privacy Framework, the UK Extension to the EU-US Data Privacy Framework, and the Swiss-US Data Privacy Framework. Where an applicable transfer mechanism is invalidated, the Parties shall cooperate to implement an alternative approved mechanism (such as EU Standard Contractual Clauses, 2021 version) without undue delay.
 
 12.3) not engage in automated individual decision-making, including profiling, as defined under Article 22 of the GDPR, in connection with Company Personal Data.
 
@@ -209,6 +211,8 @@ This regional data localization policy applies throughout the entire processing 
 13.1) disclosure is required by law;
 
 13.2) the relevant information is already in the public domain through no fault of the Parties.
+
+*Acceptance.* This Agreement is automatically incorporated into and forms part of the Principal Agreement upon the Company's acceptance of the Terms of Service. A separate countersigned copy of this Agreement is available upon request but is not required for the Agreement to take effect.
 
 *Liability.* The liability of each party under this Agreement shall be subject to the exclusions and limitations of liability set out in the Principal Agreement, including Sections L (Disclaimer of Warranties), M (Limitation of Liability), and N (Release and Indemnification) of the Terms of Service.
 
@@ -252,7 +256,7 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |  |  |  |  |  |  |
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Hetzner* | EU (Germany, Helsinki) | All | 𐄂 | Computing resources for internal infrastructure, single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
+| *Hetzner* | EU (Germany, Finland) or US (Oregon) | All | 𐄂 | Computing resources for internal infrastructure, single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
 | *UpCloud* | UK (London) or EU (Helsinki, Amsterdam, Frankfurt) | All | ✔ | Computing resources for single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
 | *NorthFlank* | UK (London) or EU (Netherlands) | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
 | *DigitalOcean* | EU or CA (Toronto) | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
@@ -429,22 +433,25 @@ This Schedule describes the technical and organizational measures implemented by
 
 Secret Content is encrypted at rest using the following cryptographic scheme:
 
-- Algorithm: AES-256-CBC (Advanced Encryption Standard with 256-bit key in Cipher Block Chaining mode)
-- Key Derivation: Encryption keys are derived using SHA-256 from a combination of: (i) a system-level secret not stored alongside encrypted data; (ii) a unique object identifier; and (iii) where applicable, a user-supplied passphrase
-- Initialization Vector: Randomly generated per encryption operation
-- Implementation: OpenSSL cryptographic library via audited wrapper
+- Algorithm: XChaCha20-Poly1305 authenticated encryption (with AES-256-GCM as an available alternative)
+- Key Derivation: Encryption keys are derived using BLAKE2b from a combination of: (i) a system-level secret not stored alongside encrypted data; and (ii) a context string incorporating the object class and unique identifier
+- Nonce: Randomly generated per encryption operation
+- Additional Authenticated Data (AAD): The object class and identifier are bound as AAD, ensuring ciphertext cannot be transplanted between records
+- Implementation: Familia encrypted-fields library
 
-The encryption key is not stored and must be reconstructed from its component inputs at decryption time. The database server does not hold the complete key material necessary to decrypt Secret Content.
+The encryption key is not stored and must be reconstructed from its component inputs at decryption time. The database server does not hold the key material necessary to decrypt Secret Content.
+
+Where a user supplies a passphrase when creating a Secret, the passphrase is verified as an access-control gate before decryption is performed. The passphrase hash is stored separately from the encrypted content using the same credential hashing described in Section 1.2 below. The passphrase is not incorporated into the encryption key derivation; it controls authorization to decrypt, not the cryptographic ability to do so.
 
 *1.2 Authentication Credential Protection*
 
 User passphrases and account credentials are protected using adaptive one-way hashing:
 
-- Algorithm: BCrypt with cost factor 12, providing approximately 2^12 iterations of the underlying Blowfish cipher
+- Algorithm: Argon2id (winner of the Password Hashing Competition), providing resistance to GPU-based and side-channel attacks
 - Salt: Randomly generated per credential, stored with the hash
 - Timing-safe comparison: Verification uses constant-time comparison to prevent timing attacks
 
-The Processor is transitioning new passphrase storage to Argon2id, the winner of the Password Hashing Competition (PHC), which provides enhanced resistance to GPU-based and side-channel attacks.
+Existing credentials hashed with BCrypt (cost factor 12) remain verifiable; all new credentials are hashed with Argon2id.
 
 *1.3 Cryptographic Key Isolation*
 
