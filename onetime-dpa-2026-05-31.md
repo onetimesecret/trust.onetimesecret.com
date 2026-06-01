@@ -212,7 +212,9 @@ This regional data localization policy applies throughout the entire processing 
 
 13.2) the relevant information is already in the public domain through no fault of the Parties.
 
-*Acceptance.* This Agreement is automatically incorporated into and forms part of the Principal Agreement upon the Company's acceptance of the Terms of Service. A separate countersigned copy of this Agreement is available upon request but is not required for the Agreement to take effect.
+*Acceptance.* This Agreement is automatically incorporated into and forms part of the Principal Agreement upon the Company's acceptance of the Terms of Service. No signature is required for this Agreement to take effect.
+
+*Authority.* If you are accepting this Agreement on behalf of the Company, you warrant that: (a) you have full legal authority to bind the Company to this Agreement; (b) you have read and understand this Agreement; and (c) you agree, on behalf of the Company, to this Agreement.
 
 *Liability.* The liability of each party under this Agreement shall be subject to the exclusions and limitations of liability set out in the Principal Agreement, including Sections L (Disclaimer of Warranties), M (Limitation of Liability), and N (Release and Indemnification) of the Terms of Service.
 
@@ -227,15 +229,6 @@ Notwithstanding the completion of the Engagement, termination of the Principal A
 ## 15. Change in Privacy Laws
 
 Notwithstanding anything to the contrary in the Agreement (including this DPA), in the event of a change in Privacy Laws or a determination or order by a government authority or competent court affecting this DPA or the lawfulness of any processing activities under this DPA, we reserve the right to make any amendments to this DPA as are reasonably necessary to ensure continued compliance with Privacy Laws or compliance with any such orders.
-
-### IN WITNESS WHEREOF, this Agreement is entered into with effect from the date first set out below.
-
-| **Controller** | | **Processor** |
-|----------------|---|---------------|
-| Signature ______________________________ | | Signature ______________________________ |
-| Name _________________________________ | | Name _________________________________ |
-| Title __________________________________ | | Title __________________________________ |
-| Date Signed ____________________________ | | Date Signed ____________________________ |
 
 ------------------------------------------------------------------------
 
@@ -468,11 +461,4 @@ This assessment is documented and to be reviewed annually.
 
 In case of any conflict or inconsistency between the provisions of this UK Addendum and the Principal DPA or any other agreement between the parties, the provisions of this UK Addendum shall prevail to the extent of such conflict or inconsistency in relation to the processing of personal data subject to UK Data Protection Laws.
 
-IN WITNESS WHEREOF, this UK Addendum is entered into and becomes a binding part of the Principal DPA with effect from the date of the last signature below.
-
-| **Controller** | | **Processor** |
-|----------------|---|---------------|
-| Signature ______________________________ | | Signature ______________________________ |
-| Name _________________________________ | | Name _________________________________ |
-| Title __________________________________ | | Title __________________________________ |
-| Date Signed ____________________________ | | Date Signed ____________________________ |
+This UK Addendum is effective upon the Company's acceptance of the Principal DPA in accordance with Section 13 of that agreement.
