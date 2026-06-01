@@ -65,7 +65,7 @@ We should decide whether to list subprocessors here or in the DPA. In the DPA, i
 
 IMPORTANT
 
-"We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase" -- We need to examine Familia v2.9.1 codebase, encrypted fields feature for how the extra field data is utilized. [ed: for ontext, Before familia v2, onetimesecret codebase included the passphrase in the encryption key so we literally could not decrypt it without that value. I believe we implemented the extra AAC fields (sp?) where the values are associated to tthe encrypted contents and need to be present in order to decrypt but I'm not sure if we are actually doing that, which would be in the onetimesecret codebase where values are passed to familia methods)
+"We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase" -- We need to examine Familia v2.9.1 codebase, encrypted fields feature for how the extra field data is utilized. [ed: for ontext, Before familia v2, onetimesecret codebase included the passphrase in the encryption key so we literally could not decrypt it without that value. I believe we implemented the extra AAD fields (sp?) where the values are associated to tthe encrypted contents and need to be present in order to decrypt but I'm not sure if we are actually doing that, which would be in the onetimesecret codebase where values are passed to familia methods)
 
 ---
 
