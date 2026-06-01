@@ -8,6 +8,8 @@ Onetime Secret provides a service for securely sharing sensitive information. Ma
 
 This Privacy Statement applies to our standard hosted service, including the Basic, Identity Plus, and Team Plus tiers. Customers on our Global Elite tier — which provides dedicated, single-tenant deployments — may receive a separate agreement that supplements this Privacy Statement.
 
+This Privacy Statement does not apply to self-hosted deployments of our open-source software. If you operate your own instance, no data processing relationship with us arises in connection with that deployment.
+
 We may also offer services under related or partner brands (for example, marked "Powered by Onetime Secret" or "by Onetime Secret"). Those services may operate under their own published policies tailored to the features they provide.
 
 This Privacy Statement and the [Terms of Service](https://onetimesecret.com/terms) are companion documents. Defined terms (such as **Secret Content**, **Account Data**, **Custom Domain**, and **Homepage Secret**) are defined in [Section A of the Terms of Service](https://onetimesecret.com/terms#a-definitions); operational details about retention, backups, and security measures are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) and summarized here.
@@ -66,11 +68,11 @@ If your Organization disables your account at the identity provider, your active
 
 If you store sensitive personal information inside a secret, you remain responsible for that decision and for compliance with applicable law. We cannot retrieve, restore, or assist with access to a secret once it has been viewed, expired, or deleted.
 
-### Homepage Secrets
+### Homepage Secrets and Incoming Secrets
 
-If you have enabled **Homepage Secrets** on a Custom Domain (see [Section E.3 of the Terms of Service](https://onetimesecret.com/terms#3-homepage-secrets)), visitors who submit secrets through your Custom Domain's homepage are treated, for privacy purposes, in the same way as any other visitor. We do not require these visitors to have an account. Their IP address and request metadata are subject to the same retention period as other server request logs.
+If you have enabled **Homepage Secrets** or **Incoming Secrets** on a Custom Domain (see [Section E.3 of the Terms of Service](https://onetimesecret.com/terms#3-homepage-secrets)), visitors who submit secrets through your Custom Domain are treated, for privacy purposes, in the same way as any other visitor. We do not require these visitors to have an account. Their IP address and request metadata are subject to the same retention period as other server request logs.
 
-If your configuration requires a visitor to identify themselves before submitting a Homepage Secret (for example, by providing an email address), the information they provide is associated with the resulting Homepage Secret and forms part of your Account Data.
+If your configuration requires a visitor to identify themselves before submitting a secret (for example, by providing an email address), the information they provide is associated with the resulting secret and forms part of your Account Data. If you have configured Incoming Secrets with designated recipients, recipient email addresses are stored in hashed form to prevent enumeration.
 
 ### Verified Email Addresses
 
@@ -138,6 +140,7 @@ The technical and organizational security measures applied to the Service are:
 - LUKS full-disk encryption on production storage
 - GPG 4096-bit asymmetric encryption of backups, with decryption keys held offline
 - Multi-factor authentication for administrative access
+- Strict Content Security Policy, HTTP Strict Transport Security (HSTS), and inclusion in browser HSTS preload lists across all domains
 
 These are summarized here for transparency. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
 
@@ -164,6 +167,7 @@ There are two narrow exceptions, both inherent to operating the service:
 - **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data — Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
 - **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate SSL connections close to the visitor. The encrypted application traffic is then forwarded into the appropriate regional environment for processing.
 
+Other than the two exceptions described above, we do not transfer personal data outside the jurisdiction in which it was collected.
 
 ## Your rights and how to raise concerns
 
@@ -191,7 +195,7 @@ If you have a concern about the way we handle your personal data, please email [
 
 ## How we respond to compelled disclosure
 
-We may disclose personal data in response to a valid subpoena, court order, warrant, or similar government order, or where we believe in good faith that disclosure is reasonably necessary to protect our property or rights, or those of third parties or the public.
+We may disclose personal data in response to a valid subpoena, court order, warrant, or similar government order issued by a court or authority with jurisdiction over the data in question, or where we believe in good faith that disclosure is reasonably necessary to protect our property or rights, or those of third parties or the public. For data held in the European Union, we apply GDPR Article 48: a third-country court order or administrative decision is not, on its own, a sufficient legal basis for disclosure unless supported by an international agreement such as a mutual legal assistance treaty.
 
 When permitted, we will make a reasonable effort to notify users of any disclosure of their information, unless we are prohibited by law or court order from doing so, or in rare exigent circumstances.
 
@@ -199,7 +203,7 @@ By design, our ability to respond to such requests with respect to Secret Conten
 
 - We cannot disclose the contents of a secret that has already been purged.
 - We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase, or where the secret was encrypted client-side with a key we never receive (such as in flows where we act as a proxy for re-encrypted ciphertext).
-- We can disclose Account Data, including account email addresses, the current or previous existence of a secret key (not the contents), its creation timestamp, its expiry, and similar metadata, when properly compelled to do so. Depending on the configuration of the regional site, we may also be able to confirm whether the secret identifier was generated by us (using FEDERATED_SECRET I think?)
+- We can disclose Account Data, including account email addresses, the current or previous existence of a secret key (not the contents), its creation timestamp, its expiry, and similar metadata, when properly compelled to do so.
 
 ## How you can access and control your information
 
@@ -217,7 +221,7 @@ If you would like to cancel your account or delete your personal information, yo
 
 ## How we communicate with you
 
-We do not send marketing emails.
+We do not send marketing emails. We may include brief product information in non-security-related transactional emails such as read notifications. These communications are not marketing emails and do not require separate consent.
 
 We do not embed tracking pixels or track-and-redirect links in any of our emails — transactional or service. The only delivery signals we receive are those returned by the SMTP layer (such as hard bounces and delivery failures).
 
