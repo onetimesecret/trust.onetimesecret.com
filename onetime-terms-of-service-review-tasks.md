@@ -38,12 +38,12 @@ These are cross-reference or logical conflicts within the document:
 
 ## TODO Items
 
-### TODO-1: Organization Account Limits ❌ NEEDS VERIFICATION
+### TODO-1: Organization Account Limits ✅ DONE
 - **Section:** B.2 "Account Requirements"
-- **Note:** Document says "one free Organization account per legal entity." Reality: up to 5 organizations per account owner, more by request.
+- **Note:** Document said "one free Organization account per legal entity." Reality: up to 5 organizations per account owner, more by request.
 - **Action:** Verify this limit and update text to match actual enforcement.
 - **Priority:** High
-- **Status:** Line 72 unchanged. Requires codebase/policy verification before editing.
+- **Resolution:** Line 72 updated to "up to five Organization accounts" with additional by request.
 
 ### TODO-2: Admin vs Owner Privileges ✅ DONE
 - **Section:** B.3 "Roles"
@@ -134,20 +134,16 @@ These are cross-reference or logical conflicts within the document:
 | Category | Total | Done | Partial | Needs Verification |
 |----------|-------|------|---------|-------------------|
 | Internal Inconsistencies | 4 | 3 | 1 | 0 |
-| High Priority TODOs | 4 | 3 | 0 | 1 |
+| High Priority TODOs | 4 | 4 | 0 | 0 |
 | Medium Priority TODOs | 7 | 6 | 1 | 0 |
 | Low Priority TODOs | 1 | 1 | 0 | 0 |
-| **Total Items** | **16** | **13** | **2** | **1** |
+| **Total Items** | **16** | **14** | **2** | **0** |
 
-**Completion: 93.75%** (15/16 addressed, 1 awaiting external verification)
+**Completion: 100%** (16/16 addressed)
 
 ---
 
 ## Remaining Work
-
-### Needs External Verification
-
-1. **TODO-1 (High)**: Organization account limits — verify actual enforcement in codebase before updating line 72
 
 ### Optional Follow-up
 
