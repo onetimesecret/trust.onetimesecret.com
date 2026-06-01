@@ -84,7 +84,7 @@ All site assets on onetimesecret.com, docs., blog., regional sites, are served b
 
 ---
 
-Replace Bcrypt language with Argoon2.
+Replace Bcrypt language with Argon2. [DONE — line 137 now reads Argon2id]
 
 ---
 
@@ -92,7 +92,19 @@ DPA-specific review notes moved to onetime-dpa-notes.txt (2026-05-31).
 
 ---
 
-"## Translations" - make sure this paragraph is copacetic with the paragraoh in the terms doc. Or just refer to the terms doc.
+"## Translations" - make sure this paragraph is copacetic with the paragraph in the terms doc. Or just refer to the terms doc.
+
+---
+
+INTERNAL INCONSISTENCIES FOUND (2026-05-31 review):
+
+1. Line 93: "with who?" — literal placeholder text in publishable doc. BLOCKER.
+2. Line 202: "FEDERATED_SECRET I think?" — editorial note in publishable text. BLOCKER.
+3. Line 190: "dependnig" — typo. BLOCKER.
+4. Line 152: "Nuremburg" — should be "Nuremberg". BLOCKER.
+5. Line 154: "Portouria, NZ" — likely should be "Porirua" (Catalyst Cloud datacenter location). Needs fact-check. BLOCKER.
+6. Lines 105 vs 165: Approximated scope disagrees. Line 105 says "Identity Plus and Team Plus". Line 165 says "Identity Plus" only. Must reconcile.
+7. Lines 221 vs 222: "We do not send marketing emails" but then "transactional, service, or marketing" in the tracking-pixel sentence. Minor — mentioning a category of email we say we don't send.
 
 ---
 
