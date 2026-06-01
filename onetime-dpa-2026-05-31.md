@@ -53,7 +53,7 @@ Unless otherwise defined herein, capitalized terms and expressions used in this 
 
 1.12) "*Secret*" or "*Secret Content*" means the sensitive information or data that a user intends to share securely through the Processor's service, that is encrypted in transit and at rest, assigned a unique access link, and automatically destroyed after it has been viewed once, after a specified time period has elapsed or after being deleted manually prior to having been received.
 
-1.13) "*Services*" means online secure services provided by the Processor, such as email, calendar, drive and other services as developed by the Processor. The details and pricing of the Services can be found on the Processor’s website.
+1.13) "*Services*" means the Processor’s secure secret-sharing and sensitive information management platform, including related features, APIs, and ancillary services. The details and pricing of the Services can be found on the Processor’s website.
 
 1.14) "*Subprocessor*" means any person appointed by or on behalf of Processor to process Personal Data on behalf of Controller in connection with the Agreement.
 
@@ -174,6 +174,10 @@ Unless otherwise specified in the Onboarding Questionnaire or required by applic
 
 Subject to this section 11, Processor shall make available to Company on request all information necessary to demonstrate compliance with this Agreement, and shall allow for and contribute to audits, including inspections, by Company or an auditor mandated by Company in relation to the Processing of the Company Personal Data by the Contracted Processors. Company shall not exercise its audit rights more than once per calendar year except following a Personal Data Breach or an instruction by a regulatory authority. Company shall give Processor at least sixty (60) days prior written notice of its intention to audit Processor pursuant to this Agreement. Audit shall be conducted during Processor’s business hours, shall not disrupt Processor’s operations and shall ensure the protection of the Company’s, Processor’s and other Data Subjects’ Personal Data. Processor and Company shall mutually agree in advance on the date, scope, duration and security and confidentiality controls applicable to the audit. Company acknowledges that the signing of a non-disclosure agreement may be required by the Controller prior to the conduction of the audit.
 
+The Processor may satisfy audit requests by providing existing documentation, including third-party audit reports, certifications (such as SOC 2 or ISO 27001), or written responses to reasonable audit questionnaires. Where the Company reasonably determines that such documentation does not adequately address its concerns, the Company may request an on-site audit in accordance with the provisions above.
+
+The requesting party shall bear the reasonable costs of any audit or inspection conducted under this section, including the Processor's internal costs of facilitating the audit. Where the Processor provides documentation in lieu of an on-site audit, the Processor shall bear its own costs.
+
 Information and audit rights of Company only arise under section 11 to the extent that the Agreement does not otherwise give them information and audit rights meeting the relevant requirements of Data Protection Law.
 
 ## 12. Data Transfer
@@ -205,6 +209,8 @@ This regional data localization policy applies throughout the entire processing 
 13.1) disclosure is required by law;
 
 13.2) the relevant information is already in the public domain through no fault of the Parties.
+
+*Liability.* The liability of each party under this Agreement shall be subject to the exclusions and limitations of liability set out in the Principal Agreement, including Sections L (Disclaimer of Warranties), M (Limitation of Liability), and N (Release and Indemnification) of the Terms of Service.
 
 *Notices.* All notices and communications given under this Agreement must be in writing and will be sent by email. Controller shall be notified by email sent to the address related to its use of the Services under the Principal Agreement. Processor shall be notified by email sent to the address: <legal@onetimesecret.com>
 
@@ -249,7 +255,8 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | *Hetzner* | EU (Germany, Helsinki) | All | 𐄂 | Computing resources for internal infrastructure, single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
 | *UpCloud* | UK (London) or EU (Helsinki, Amsterdam, Frankfurt) | All | ✔ | Computing resources for single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
 | *NorthFlank* | UK (London) or EU (Netherlands) | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
-| *DigitalOcean* | EU | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
+| *DigitalOcean* | EU or CA (Toronto) | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
+| *Catalyst Cloud* | NZ (Porirua) | All | ✔ | Computing resources for multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
 | *CloudFlare* | Global | All | 𐄂 | DNS Management (does not include "Orange Cloud" proxy) | DNS Records, DKIM/DMARC/SPF |
 
 ### Security & Network Services
@@ -365,6 +372,13 @@ Where multiple subprocessors appear within a category, they represent alternativ
 <td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>US</p>
 <p>w/ regional subsidiaries</p></td>
 <td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><em><em>EU-US Data Privacy Framework certified</em></em></p></td>
+</tr>
+<tr dir="ltr">
+<th dir="ltr" style="width: 203.946px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="catalyst-cloud" dir="ltr"><strong><strong>Catalyst Cloud</strong></strong></h5></th>
+<td dir="ltr" style="width: 247px; border: 1px solid black; vertical-align: top"><h6 id="catalyst-cloud-address" dir="ltr">Level 3, Catalyst House, 150 Willis Street, Te Aro, Wellington 6011, New Zealand</h6></td>
+<td dir="ltr" style="width: 152px; border: 1px solid black; vertical-align: top"><p>NZ</p></td>
+<td dir="ltr" style="width: 246px; border: 1px solid black; vertical-align: top"><p><br />
+</p></td>
 </tr>
 <tr dir="ltr" style="height: 73.3247px;">
 <th dir="ltr" style="width: 75px; border: 1px solid black; vertical-align: top; background-color: rgb(242, 243, 245)"><h5 id="altcha.org" dir="ltr" style="text-align: start;"><strong><strong>Altcha.org</strong></strong></h5></th>

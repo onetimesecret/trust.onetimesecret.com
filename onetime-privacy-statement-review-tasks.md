@@ -1,7 +1,7 @@
 # Privacy Statement Review Tasks
 
 Generated: 2026-06-01
-Updated: 2026-06-01
+Updated: 2026-06-01 (batch 1)
 Source: onetime-privacy-statement-notes.txt
 
 ---
@@ -10,10 +10,11 @@ Source: onetime-privacy-statement-notes.txt
 
 Publishable text containing placeholders, editorial notes, or misspellings. Must be resolved before release.
 
-### BLK-1: Placeholder "with who?" (Line 93)
+### BLK-1: Placeholder "with who?" (Line 93) — DONE
 - **Location:** "How we share the information we collect"
 - **Issue:** Literal placeholder in publishable text: "We may share aggregated, non-personally-identifying information about how the service is used with who?."
 - **Action:** Decide audience (blog, internal reports, public talks, etc.) and replace placeholder with specific language.
+- **Resolution:** Truncated to "…how the service is used." — removes the placeholder without making a new claim. If you want to name a specific audience, revisit.
 - **Priority:** Blocker
 
 ### BLK-2: Editorial Note "FEDERATED_SECRET I think?" (Line 202)
@@ -22,22 +23,20 @@ Publishable text containing placeholders, editorial notes, or misspellings. Must
 - **Action:** Determine correct technical term or remove the parenthetical. If the capability is uncertain, rewrite to avoid asserting it.
 - **Priority:** Blocker
 
-### BLK-3: Typo "dependnig" (Line 190)
+### BLK-3: Typo "dependnig" (Line 190) — DONE
 - **Location:** "Raising a concern"
 - **Issue:** "although in some cases dependnig on the request" — typo in publishable text.
-- **Action:** Fix typo. Also see TODO-4 for a full rewrite of this sentence with conventional language.
+- **Resolution:** Full sentence rewritten per TODO-4 with standard privacy-policy phrasing. Typo eliminated.
 - **Priority:** Blocker
 
-### BLK-4: Spelling "Nuremburg" (Line 152)
+### BLK-4: Spelling "Nuremburg" (Line 152) — DONE
 - **Location:** "Where your data is processed" table
-- **Issue:** Standard English spelling is "Nuremberg."
-- **Action:** Change "Nuremburg" → "Nuremberg".
+- **Resolution:** Changed "Nuremburg" → "Nuremberg".
 - **Priority:** Blocker
 
-### BLK-5: Spelling "Portouria, NZ" (Line 154)
+### BLK-5: Spelling "Portouria, NZ" (Line 154) — DONE
 - **Location:** "Where your data is processed" table
-- **Issue:** Likely should be "Porirua" (city near Wellington). Catalyst Cloud's datacenter location needs fact-check.
-- **Action:** Verify against Catalyst Cloud documentation and correct.
+- **Resolution:** Changed "Portouria" → "Porirua". Verified: Catalyst Cloud operates datacenters in Wellington, Porirua, and Hamilton per their public infrastructure page.
 - **Priority:** Blocker
 
 ---
@@ -46,26 +45,25 @@ Publishable text containing placeholders, editorial notes, or misspellings. Must
 
 Cross-reference or logical conflicts within the document.
 
-### IC-1: Approximated Scope Disagrees (Lines 105 vs 165)
+### IC-1: Approximated Scope Disagrees (Lines 105 vs 165) — DONE
 - **Location:** Subprocessors table vs "Edge networks" exception
 - **Issue:** Line 105 says Approximated provides "SSL termination for customer Custom Domains on our multi-tenant paid tiers (Identity Plus and Team Plus)." Line 165 says "Approximated (for Custom Domains on Identity Plus)" — omitting Team Plus.
-- **Action:** Reconcile. Determine which is correct and make both lines agree.
+- **Resolution:** Updated line 165 to "Identity Plus and Team Plus" to match line 105. Confirmed via billing.yaml: custom_domains entitlement is available on both paid tiers.
 - **Priority:** High
 
-### IC-2: Marketing Email Reference After No-Marketing Claim (Lines 221 vs 222)
+### IC-2: Marketing Email Reference After No-Marketing Claim (Lines 221 vs 222) — DONE
 - **Location:** "How we communicate with you"
-- **Issue:** Line 221 states "We do not send marketing emails." Line 222 then says "We do not embed tracking pixels or track-and-redirect links in any of our emails — transactional, service, or marketing." Mentioning a category we say we don't send is internally odd.
-- **Action:** Minor. Either remove "or marketing" from line 222 or reframe as future-proofing ("including any marketing emails, should we introduce them").
+- **Issue:** Line 221 states "We do not send marketing emails." Line 222 then says "or marketing" in the tracking-pixel sentence — mentioning a category we say we don't send.
+- **Resolution:** Removed "or marketing" from the tracking-pixel sentence. Now reads "transactional or service."
 - **Priority:** Low
 
 ---
 
 ## TODO Items
 
-### TODO-1: Rephrase "and over time" (Line 31)
+### TODO-1: Rephrase "and over time" (Line 31) — DONE
 - **Section:** "Information from users with accounts"
-- **Note:** "Available methods may vary by region, by plan tier, and over time." — trailing "over time" reads awkwardly.
-- **Action:** Use conventional construction, e.g. "Available methods may change over time and may vary by region and plan tier." or "Available methods may vary by region and plan tier, and are subject to change."
+- **Resolution:** Rewritten to "Available methods may change over time and may vary by region and plan tier."
 - **Priority:** Medium
 
 ### TODO-2: Clarify Multi-Tenant Domain Architecture
@@ -84,20 +82,18 @@ Cross-reference or logical conflicts within the document.
 - **Section:** "Where your data is processed"
 - **Note:** "We do not perform third country transfers. So the SCCs are not necessary or applicable." The doc avoids mentioning SCCs (good) but never affirmatively states that transfers requiring Article 46 safeguards do not occur.
 - **Action:** Add conventional language, e.g. "We do not transfer personal data to countries outside the jurisdiction in which it was collected, except as described in this section" (i.e. Stripe billing data, edge network termination). Ensure the two stated exceptions are clearly framed as not constituting third-country transfers in the GDPR sense or as covered by adequate safeguards.
-- **Priority:** Medium
+- **Priority:** High
 
-### TODO-4: Rewrite 60-Day Response Language (Line 190)
+### TODO-4: Rewrite 60-Day Response Language (Line 190) — DONE
 - **Section:** "Raising a concern"
-- **Note:** "Use standard conventional language to make the point about 60 days."
-- **Current text:** "We aim to respond within 30 days although in some cases dependnig on the request or operational circumstance may take up to 60 days."
-- **Action:** Rewrite with standard privacy-policy phrasing, e.g. "We aim to respond within 30 days of receiving your request. In complex cases, we may extend this period by up to an additional 30 days, and we will notify you of the extension and the reasons for it." Fix typo (see BLK-3).
+- **Resolution:** Rewritten with standard phrasing: "We aim to respond within 30 days of receiving your request. In complex cases, we may extend this period by up to an additional 30 days, and we will notify you of the extension and the reasons for it." BLK-3 typo eliminated in the process.
 - **Priority:** Medium
 
 ### TODO-5: Clarify "Valid Subpoena" with Jurisdiction Scoping (Line 194)
 - **Section:** "How we respond to compelled disclosure"
 - **Note:** "Clarify what valid means. For data in a jurisdiction the official order must come from that jurisdiction. Please fact check this to make sure it is a feasible and reasonable stance."
 - **Action:** (1) Fact-check whether requiring jurisdiction-matching orders is standard and defensible (consider MLAT treaties, cross-border enforcement mechanisms). (2) If feasible, add language like "issued by a court or authority with jurisdiction over the data in question." (3) Consider interaction with the regional data model — data in EU should require EU-jurisdictional orders, etc.
-- **Priority:** High — needs legal review
+- **Priority:** High 
 
 ### TODO-6: Add "Incoming Secrets" to Homepage Secrets Section (Line 69)
 - **Section:** "Homepage Secrets"
@@ -129,10 +125,9 @@ Cross-reference or logical conflicts within the document.
 - **Action:** Add bullet(s) to the security measures list, e.g.: "Strict Content Security Policy, HTTP Strict Transport Security (HSTS), and inclusion in browser HSTS preload lists across all domains."
 - **Priority:** Low
 
-### TODO-11: Verify Translations Section Against Terms of Service
+### TODO-11: Verify Translations Section Against Terms of Service — DONE (no change needed)
 - **Section:** "Translations" (Lines 232-234)
-- **Note:** "Make sure this paragraph is copacetic with the paragraph in the terms doc. Or just refer to the terms doc."
-- **Action:** Read Section P.4 of the Terms of Service. Confirm the privacy statement's summary is accurate. If it restates the same content, consider replacing with a direct reference.
+- **Resolution:** Verified. The privacy statement already references Terms P.4 directly and does not duplicate its content. The summary is accurate: both mention professional + machine-assisted translation, potential errors, English controls on conflict, and a contact address for corrections. No edit required.
 - **Priority:** Low
 
 ---
@@ -141,33 +136,68 @@ Cross-reference or logical conflicts within the document.
 
 | Category | Total | Done | Open | Needs Decision | Needs Verification |
 |----------|-------|------|------|----------------|-------------------|
-| Blockers | 5 | 0 | 5 | 0 | 1 (BLK-5) |
-| Internal Inconsistencies | 2 | 0 | 2 | 0 | 0 |
+| Blockers | 5 | 4 | 0 | 0 | 0 |
+| Internal Inconsistencies | 2 | 2 | 0 | 0 | 0 |
 | Critical TODOs | 1 | 0 | 0 | 0 | 1 (TODO-8) |
 | High Priority TODOs | 2 | 0 | 1 | 0 | 1 (TODO-5) |
-| Medium Priority TODOs | 6 | 0 | 4 | 2 (TODO-7, TODO-3) | 0 |
-| Low Priority TODOs | 2 | 0 | 2 | 0 | 0 |
-| **Total Items** | **18** | **0** | **14** | **2** | **3** |
+| Medium Priority TODOs | 6 | 2 | 2 | 2 (TODO-7, TODO-3) | 0 |
+| Low Priority TODOs | 2 | 1 | 1 | 0 | 0 |
+| **Total Items** | **18** | **9** | **4** | **2** | **2** |
 
 **Previously completed (from prior review):**
 - Bcrypt → Argon2 (line 137 now reads Argon2id)
 
-**Completion: 6%** (1/18 addressed)
+**Completed this session (batch 1):**
+- BLK-1: Removed "with who?" placeholder (truncated sentence)
+- BLK-3: Typo fixed via full rewrite (see TODO-4)
+- BLK-4: "Nuremburg" → "Nuremberg"
+- BLK-5: "Portouria" → "Porirua" (verified against Catalyst Cloud docs)
+- IC-1: Line 165 reconciled to "Identity Plus and Team Plus"
+- IC-2: Removed "or marketing" from tracking-pixel sentence
+- TODO-1: Rephrased "and over time" construction
+- TODO-4: Rewrote 60-day response language with standard phrasing
+- TODO-11: Verified — already references Terms P.4 correctly, no change needed
+
+**Completion: 56%** (10/18 addressed)
 
 ---
 
 ## Remaining Work
 
-### Immediate (before any release)
-- All 5 blockers (BLK-1 through BLK-5)
-- IC-1 (Approximated scope)
+### Blocker (before any release)
+- BLK-2: "FEDERATED_SECRET I think?" — needs decision (see findings below)
 
 ### Requires External Research
 - TODO-2: Approximated architecture documentation
 - TODO-5: Jurisdiction scoping legal fact-check
-- TODO-8: Familia v2.9.1 and OTS codebase audit
 
 ### Requires Decision
 - TODO-7: Subprocessor list placement
-- BLK-1: Aggregated info sharing audience
-- BLK-2: FEDERATED_SECRET capability and terminology
+- BLK-2: FEDERATION_SECRET capability and terminology
+- TODO-8: Critical encryption architecture finding (see below)
+
+### Requires Drafting
+- TODO-3: No-third-country-transfers statement
+- TODO-6: Add Incoming Secrets to Homepage Secrets section
+- TODO-9: Clarify product info in transactional emails
+- TODO-10: Add CSP/HSTS/Preload to security section
+
+### TODO-8 Finding (Critical)
+
+Codebase audit of Familia v2.9.1 + OTS reveals:
+
+**v1 (legacy):** Passphrase IS part of the encryption key (`encryption_key_v2` includes `passphrase_temp`). Without the passphrase, decryption is impossible. The privacy statement claim is accurate for v1.
+
+**v2 (Familia encrypted_field):** `encrypted_field :ciphertext` has NO `aad_fields`. The `transient_field :ciphertext_passphrase` is declared but never read anywhere in the OTS codebase. The encrypt-side call (`receipt.rb:218`) sets `secret.ciphertext = content` without passing the passphrase. The passphrase is only used for access control (Argon2 hash comparison via `update_passphrase`).
+
+**Conclusion:** For v2 secrets, OTS CAN decrypt passphrase-protected secrets using the system key. The passphrase is an access gate, not a cryptographic barrier.
+
+**Options:**
+- (A) Fix the code: Add `aad_fields: [:ciphertext_passphrase]` or equivalent binding so the claim becomes architecturally true for v2.
+- (B) Soften the doc: Rewrite to reflect actual v2 behavior.
+
+**Separately:** The second clause ("encrypted client-side with a key we never receive, such as in flows where we act as a proxy for re-encrypted ciphertext") describes a flow that does not appear to exist in the current codebase. This describes4 a planned feature.
+
+### BLK-2 Finding
+
+The codebase uses `FEDERATION_SECRET` (not `FEDERATED_SECRET`). Per ADR-008, it is a "cross-region email hashing for billing federation" secret — used for email hashing across instances, NOT for confirming whether a secret identifier was generated by OTS. The capability described in line 202 may not map to this mechanism. Default recommendation per original task: remove or soften the parenthetical.

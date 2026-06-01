@@ -28,7 +28,7 @@ We use this information to operate the website, to monitor and protect its secur
 
 ### Information from users with accounts
 
-When you create an account we ask for a valid email address. The available sign-in methods (passphrase, magic link, SSO, passkey, third-party identity providers, multi-factor authentication, and recovery codes) are described in [Section B.4 of the Terms of Service](https://onetimesecret.com/terms#4-authentication-methods). Available methods may vary by region, by plan tier, and over time.
+When you create an account we ask for a valid email address. The available sign-in methods (passphrase, magic link, SSO, passkey, third-party identity providers, multi-factor authentication, and recovery codes) are described in [Section B.4 of the Terms of Service](https://onetimesecret.com/terms#4-authentication-methods). Available methods may change over time and may vary by region and plan tier.
 
 The information we hold about your account ("**Account Data**", as defined in [Section A.7 of the Terms of Service](https://onetimesecret.com/terms#a-definitions)) may include:
 
@@ -90,7 +90,7 @@ We do not share, sell, rent, or trade your Account Data with third parties for t
 
 We do not share Secret Content with anyone. By design, we don't have meaningful access to it ourselves.
 
-We may share aggregated, non-personally-identifying information about how the service is used with who?. We do not sell any such information.
+We may share aggregated, non-personally-identifying information about how the service is used. We do not sell any such information.
 
 We do not host advertising on Onetime Secret.
 
@@ -149,9 +149,9 @@ We operate the service in multiple regional environments. As of the effective da
 
 | Region | Domain | Hosting provider |
 | --- | --- | --- |
-| EU | `eu.onetimesecret.com` | Hetzner (Nuremburg, Germany) |
+| EU | `eu.onetimesecret.com` | Hetzner (Nuremberg, Germany) |
 | CA | `ca.onetimesecret.com` | DigitalOcean (Toronto, Canada) |
-| NZ | `nz.onetimesecret.com` | Catalyst Cloud (Portouria, NZ) |
+| NZ | `nz.onetimesecret.com` | Catalyst Cloud (Porirua, NZ) |
 | UK | `uk.onetimesecret.com` | Upcloud (London, UK) |
 | US | `us.onetimesecret.com` | Hetzner (Oregon, USA) |
 
@@ -162,7 +162,7 @@ When you create an account, you choose the regional environment in which your ac
 There are two narrow exceptions, both inherent to operating the service:
 
 - **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data — Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
-- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus) operate global edge networks that terminate SSL connections close to the visitor. The encrypted application traffic is then forwarded into the appropriate regional environment for processing.
+- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate SSL connections close to the visitor. The encrypted application traffic is then forwarded into the appropriate regional environment for processing.
 
 
 ## Your rights and how to raise concerns
@@ -187,7 +187,7 @@ If you are in a region not listed above, you may still have privacy rights under
 
 ### Raising a concern
 
-If you have a concern about the way we handle your personal data, please email [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com) with the subject line "Privacy Concerns." We aim to respond within 30 days although in some cases dependnig on the request or operational circumstance may take up to 60 days.
+If you have a concern about the way we handle your personal data, please email [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com) with the subject line "Privacy Concerns." We aim to respond within 30 days of receiving your request. In complex cases, we may extend this period by up to an additional 30 days, and we will notify you of the extension and the reasons for it.
 
 ## How we respond to compelled disclosure
 
@@ -219,7 +219,7 @@ If you would like to cancel your account or delete your personal information, yo
 
 We do not send marketing emails.
 
-We do not embed tracking pixels or track-and-redirect links in any of our emails — transactional, service, or marketing. The only delivery signals we receive are those returned by the SMTP layer (such as hard bounces and delivery failures). 
+We do not embed tracking pixels or track-and-redirect links in any of our emails — transactional or service. The only delivery signals we receive are those returned by the SMTP layer (such as hard bounces and delivery failures).
 
 If you have configured a Verified Email Address for your account or Organization, we may send transactional emails on your behalf from that domain. You remain responsible for ensuring the underlying DNS records you have published are accurate.
 
