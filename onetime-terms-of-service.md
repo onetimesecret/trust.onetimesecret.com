@@ -287,7 +287,7 @@ Onetime Secret and our licensors, vendors, agents, and content providers retain 
 
 ### 2. Trademarks
 
-The following names are trademarks of Onetime Secret and are protected under common law:
+The following names are common law trademarks™ of Onetime Secret:
 
 - "Onetime Secret"
 - "OnetimeSecret"
