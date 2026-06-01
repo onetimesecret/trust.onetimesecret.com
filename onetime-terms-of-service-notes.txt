@@ -3,7 +3,30 @@
 2026-05-31
 
 
+
 Terms of Service
+
+
+
+- Add language specifically for non-authenticated recipients. Authenticated recipients will be covered by the terms as one of the account types (owner, invited org member, SSO org member, or org admin).
+- Be clear about Homepage Secrets, that the organization owner is responsible for the content. Incoming secrets as well. Incoming secrets we make our best effort to avoid exposing the configured email addresses (using hashed values in the form and only displaying name), but bugs can happen or misconfiguration on their part, we are not liable for exposing private email addresses.
+- configuring validated email is their responsibility. If the email address is not deliverable that is configuration on their end. Depending on the plan details and by default, the setting is limited to an email address at the custom domain (i.e. they can edit only the left of the @ sign.). Other plans allow configuring another domain like support@example.com (vs support@secrets.example.com)
+- Should be clear about the different audiences, along the lines of our frontend apps: public surface ("secret"), workspace, session pages which are mix-use.
+- Be upfront about Network CIDR/IP filtering is accomplished on multi-tenant at the application layer. Single tenant installs like Global Elite may have the option of network level, depending on terms and capabilities of the chosen hosting provider.
+- Add language that allows us to introduce automatic fulfillment of single-tenant accounts. Global Elite is manual, high-touch, hands on, fully customizable b/c we can fork the repo and make changes to the files directly even if not featurized yet. The automatic fulfilment is going to fit somehere inbetetween: an onboarding experience similar to multi-tenant but with the delivery of single tenant 1 VPS instance running web and db (low-end, configurable resources, choice of EU/US), separate 1 web and 1 db instances (mid, configurable resources and number of web instances, choice of EU/US)
+
+
+
+
+
+
+
+
+
+-------------------------
+
+
+ALREADY PROCESSED
 
 "- **One free personal account.** You may not maintain more than one free personal account. This rule does not apply to membership in Organization accounts.
 - **One free Organization account per legal entity.** A legal entity may not maintain more than one free Organization account."
