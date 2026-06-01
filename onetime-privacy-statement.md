@@ -36,7 +36,7 @@ The information we hold about your account ("**Account Data**", as defined in [S
 - Authentication credentials, which depending on the methods you use may include a passphrase hash (we never store passphrases in plaintext), public WebAuthn / passkey credentials, recovery codes, or identity claims received from a third-party provider
 - Multi-factor authentication factors you have configured
 - Billing contact and tax information for paid plans
-- Custom Domains, Verified Email Domains, and similar configuration you set up
+- Custom Domains, Verified Email Addresses, and similar configuration you set up
 - Usage metadata necessary to operate the service (account creation date, plan tier, last login timestamp, and similar)
 
 We use Account Data to identify you, to provide the services you have requested, and to communicate with you on the basis you have agreed to. We limit our use of Account Data to the purposes described in this Privacy Statement.
@@ -47,7 +47,7 @@ If you create an Organization account — a workspace shared by multiple users �
 
 - The Organization's name, billing contact, and tax details
 - A list of members and their roles within the Organization
-- Custom Domains, Verified Email Domains, SSO configuration, and other settings configured for the Organization
+- Custom Domains, Verified Email Addresses, SSO configuration, and other settings configured for the Organization
 - An audit log of administrative actions taken within the Organization
 
 The Organization's owner or designated administrator is responsible for the personal data of Organization members in the sense given to a "controller" under the GDPR. We process Organization member data on behalf of the Organization. The Organization-side rules and responsibilities are set out in [Section B.3 of the Terms of Service](https://onetimesecret.com/terms#3-organization-accounts).
@@ -72,9 +72,9 @@ If you have enabled **Homepage Secrets** on a Custom Domain (see [Section E.3 of
 
 If your configuration requires a visitor to identify themselves before submitting a Homepage Secret (for example, by providing an email address), the information they provide is associated with the resulting Homepage Secret and forms part of your Account Data.
 
-### Verified Email Domains
+### Verified Email Addresses
 
-If you configure a Verified Email Domain so we can send transactional notifications from an address on your own domain, we record the verification status and the configuration values you set. We do not host your email or read its contents. The DNS records you must publish (and your responsibility for maintaining them) are described in [Section E.2 of the Terms of Service](https://onetimesecret.com/terms#2-verified-email-domains).
+If you configure a Verified Email Address so we can send transactional notifications from an address on your own domain, we record the verification status and the configuration values you set. We do not host your email or read its contents. The DNS records you must publish (and your responsibility for maintaining them) are described in [Section E.2 of the Terms of Service](https://onetimesecret.com/terms#2-verified-email-domains).
 
 ### What we do not collect
 
@@ -90,7 +90,7 @@ We do not share, sell, rent, or trade your Account Data with third parties for t
 
 We do not share Secret Content with anyone. By design, we don't have meaningful access to it ourselves.
 
-We may share aggregated, non-personally-identifying information about how the service is used. We do not sell any such information.
+We may share aggregated, non-personally-identifying information about how the service is used with who?. We do not sell any such information.
 
 We do not host advertising on Onetime Secret.
 
@@ -108,7 +108,7 @@ We share Account Data, and in some cases encrypted Secret Content, with a small 
 
 Cloudflare provides DDoS protection on the regional service domains (the entry points for free usage). Customer Custom Domains on Identity Plus and Team Plus are served via Approximated and are not routed through Cloudflare by us. The customer's own ability to place their Custom Domain behind an edge network of their choice is described in [Section E.1 of the Terms of Service](https://onetimesecret.com/terms#1-custom-domains).
 
-Hosting providers vary by region (see "Where your data is processed" below for the per-region hosting provider). We maintain a current, detailed list of subprocessors — including legal entity, address, location, purpose, and categories of data processed — at [onetimesecret.com/subprocessors](https://onetimesecret.com/subprocessors). We update that list when subprocessors change, and we provide advance notice of changes in line with our standard subprocessor notice period of 30 days.
+Hosting providers vary by region (see "Where your data is processed" below for the per-region hosting provider). We maintain a current, detailed list of subprocessors — including legal entity, address, location, purpose, and categories of data processed in our Data Processing Agreement — at [onetimesecret.com/dpa](https://onetimesecret.com/dpa). We update that list when subprocessors change, and we provide advance notice of changes in line with our standard subprocessor notice period of 30 days.
 
 ### Sharing in connection with a corporate transaction
 
@@ -122,7 +122,7 @@ We use cookies (and similar technologies, such as HTML5 `localStorage` and `sess
 
 ### No third-party tracking
 
-We do not use third-party analytics, product-tracking, or session-replay services such as Google Analytics, Mixpanel, Segment, Amplitude, Heap, Hotjar, FullStory, PostHog, or Plausible. We do not embed third-party tracking pixels, advertising tags, or social-media tracking. We do not build profiles of individual users or perform behavioral analysis.
+We do not use third-party analytics, product-tracking, or session-replay services such as Google Analytics, Mixpanel, Segment, Amplitude, Heap, Hotjar, FullStory, PostHog, or Plausible or any other similar service. We do not embed third-party tracking pixels, advertising tags, or social-media tracking. We do not build profiles of individual users or perform behavioral analysis. 
 
 ### Operational logging
 
@@ -149,22 +149,21 @@ We operate the service in multiple regional environments. As of the effective da
 
 | Region | Domain | Hosting provider |
 | --- | --- | --- |
-| EU | `eu.onetimesecret.com` | Hetzner (Germany) |
-| CA | `ca.onetimesecret.com` | *to confirm* |
-| NZ | `nz.onetimesecret.com` | *to confirm* |
-| UK | `uk.onetimesecret.com` | *to confirm* |
-| US | `us.onetimesecret.com` | *to confirm* |
+| EU | `eu.onetimesecret.com` | Hetzner (Nuremburg, Germany) |
+| CA | `ca.onetimesecret.com` | DigitalOcean (Toronto, Canada) |
+| NZ | `nz.onetimesecret.com` | Catalyst Cloud (Portouria, NZ) |
+| UK | `uk.onetimesecret.com` | Upcloud (London, UK) |
+| US | `us.onetimesecret.com` | Hetzner (Oregon, USA) |
 
-We add further regions from time to time. The authoritative subprocessor list at [onetimesecret.com/subprocessors](https://onetimesecret.com/subprocessors) records each provider's legal entity, address, and processing scope.
+We add further regions from time to time. The authoritative subprocessor list at [onetimesecret.com/dpa](https://onetimesecret.com/dpa) records each provider's legal entity, address, and processing scope.
 
-When you create an account, you choose the regional environment in which your account lives. Account Data and Secret Content created in a given region remain in that region's infrastructure throughout their lifecycle, including encrypted backups. We do not transfer Account Data or Secret Content between regions.
+When you create an account, you choose the regional environment in which your account lives. Account Data and Secret Content created in a given jurisdiction remain in that region's infrastructure throughout their lifecycle, including encrypted backups. We do not transfer Account Data or Secret Content between regions.
 
 There are two narrow exceptions, both inherent to operating the service:
 
 - **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data — Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
 - **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus) operate global edge networks that terminate SSL connections close to the visitor. The encrypted application traffic is then forwarded into the appropriate regional environment for processing.
 
-Where transfers to third countries occur, they rely on appropriate safeguards under Article 46 GDPR (or its equivalent in other jurisdictions), including the EU Standard Contractual Clauses (2021 version) and the UK International Data Transfer Addendum where applicable.
 
 ## Your rights and how to raise concerns
 
@@ -188,7 +187,7 @@ If you are in a region not listed above, you may still have privacy rights under
 
 ### Raising a concern
 
-If you have a concern about the way we handle your personal data, please email [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com) with the subject line "Privacy Concerns." We aim to respond within 30 days and at the latest within 45 days.
+If you have a concern about the way we handle your personal data, please email [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com) with the subject line "Privacy Concerns." We aim to respond within 30 days although in some cases dependnig on the request or operational circumstance may take up to 60 days.
 
 ## How we respond to compelled disclosure
 
@@ -200,7 +199,7 @@ By design, our ability to respond to such requests with respect to Secret Conten
 
 - We cannot disclose the contents of a secret that has already been purged.
 - We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase, or where the secret was encrypted client-side with a key we never receive (such as in flows where we act as a proxy for re-encrypted ciphertext).
-- We can disclose Account Data, including account email addresses, the existence of a secret, its creation timestamp, its expiry, and similar metadata, when properly compelled to do so.
+- We can disclose Account Data, including account email addresses, the current or previous existence of a secret key (not the contents), its creation timestamp, its expiry, and similar metadata, when properly compelled to do so. Depending on the configuration of the regional site, we may also be able to confirm whether the secret identifier was generated by us (using FEDERATED_SECRET I think?)
 
 ## How you can access and control your information
 
@@ -218,11 +217,11 @@ If you would like to cancel your account or delete your personal information, yo
 
 ## How we communicate with you
 
-We use your email address to communicate with you only on the basis you have agreed to. Depending on your email settings, we may send notifications about new features, requests for feedback, important policy changes, security alerts, or customer support. We send marketing emails only with your consent, and there is an unsubscribe link at the bottom of each marketing email.
+We do not send marketing emails.
 
-We do not embed tracking pixels or track-and-redirect links in any of our emails — transactional, service, or marketing. The only delivery signals we receive are those returned by the SMTP layer (such as hard bounces and delivery failures). Marketing emails include a one-click unsubscribe link.
+We do not embed tracking pixels or track-and-redirect links in any of our emails — transactional, service, or marketing. The only delivery signals we receive are those returned by the SMTP layer (such as hard bounces and delivery failures). 
 
-If you have configured a Verified Email Domain for your account or Organization, we may send transactional emails on your behalf from that domain. You remain responsible for ensuring the underlying DNS records you have published are accurate.
+If you have configured a Verified Email Address for your account or Organization, we may send transactional emails on your behalf from that domain. You remain responsible for ensuring the underlying DNS records you have published are accurate.
 
 ## Changes to our Privacy Statement
 

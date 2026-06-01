@@ -17,13 +17,65 @@ Be clear about how our multi-tenant production domains are set up. This may need
 
 The regional sites eu.onetimesecret.com are protected by CloudFlare orange cloud DNS proxy. Since September 2024 after prolonged DDoS attack on the site, interupted service continuity. We may revisit this choice from time to time but is currently the best of the art available.
 
-Our onetime.co domain and subdomains do not use CloudFlare proxy so custom domains do not go through cloudflare's network. It is up to organization owner if they want to protect the site with cloudflare or any other similar proxy service. It can complicated the custom domain TLS certificate management and if you have problems contect support.
+Our onetime.co domain and subdomains do not use CloudFlare proxy so custom domains do not go through cloudflare's network. It is up to organization owner if they want to protect the site with cloudflare or any other similar proxy service. It can complicated the custom domain TLS certificate management and if you have problems contect support. Also mention that CloudFlare proxy performs TLS trermination as well (i.e. it's not unqie or specific to Approximated).
 
-By default we use a third party approximated.app to request and manage TLS certificates. To do this, they need to use TLS termination on their inbound proxy nodes which aperates over multicast DNS (ed: I may have the name wrong, please correct me if wrong). The nature of multicast DNS is that the nodes operate across jruisdictions (ed: research approximated docs so we can be crystal clear about the language here).
+By default we use a third party approximated.app to request and manage TLS certificates. To do this, they need to use TLS termination on their inbound proxy nodes which aperates over multicast DNS (ed: I may have the name wrong, please correct me if wrong). The nature of multicast DNS is that the nodes operate across jruisdictions (ed: research approximated docs so we can be crystal clear about the language here). This is mentioned also in "There are two narrow exceptions...". We don't want to duplicate content so one section must be the surce of truth and the rest refer to it.
 
 Depending on region and plan details, we may offer alternatives. Please contact support to inquire about the details.
 
 For single tenant installs, we manage the TLS certificates on our infrastructure, on the singletenant instances or a combination. But no thirdparty services.
+
+
+---
+
+"Where transfers to third countries occur, they rely on appropriate safeguards under Article 46 GDPR (or its equivalent in other jurisdictions), including the EU Standard Contractual Clauses (2021 version) and the UK International Data Transfer Addendum where applicable."
+
+
+We do not perform third country transfers. So the SCCs are not necessary or applicable (use standard conventional language to make this point).
+
+---
+
+"Raising a concern"
+
+use standard conventional language to make the point about 60 days.
+
+
+---
+
+"We may disclose personal data in response to a valid subpoena" - clarify what valid means. For data in a jurisdiction the official order must come from that jurisdction.
+
+Please fact check this to make sure it is a feasibla and reasonable stance.
+
+---
+
+"We may share aggregated, non-personally-identifying information about how the service is ..." - with who? On our blog, in internal reports, ...?
+
+---
+
+"If you have enabled **Homepage Secrets** on a Custom Domain" - Add Incoming Secrets
+
+---
+
+"Subprocessors"
+
+We should decide whether to list subprocessors here or in the DPA. In the DPA, it requires notice of changes and the right of refusal so maybe in this particular case it is 'okay' to have lists in both.
+
+
+---
+
+IMPORTANT
+
+"We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase" -- We need to examine Familia v2.9.1 codebase, encrypted fields feature for how the extra field data is utilized. [ed: for ontext, Before familia v2, onetimesecret codebase included the passphrase in the encryption key so we literally could not decrypt it without that value. I believe we implemented the extra AAC fields (sp?) where the values are associated to tthe encrypted contents and need to be present in order to decrypt but I'm not sure if we are actually doing that, which would be in the onetimesecret codebase where values are passed to familia methods)
+
+---
+
+
+"We use your email address to communicate with you only on the basis you have agreed to. Depending on your email settings, we may send notifications about new features, requests for feedback, important policy changes, security alerts, or customer support. We send marketing emails only with your consent, and there is an unsubscribe link at the bottom of each marketing email."
+
+
+We do not send marketing emails. However we may include product information in non-security related transactional emails (e.g. read notifications, ...)
+
+
 
 ---
 
@@ -37,6 +89,15 @@ Processor access framing. The privacy statement says "We do not access, read, sc
 
 ---
 
+All site assets on onetimesecret.com, docs., blog., regional sites, are served by our domain with strict CSF/content policy headers, HTST, Browser preload list.
+
+
+---
+
+Replace Bcrypt language with Argoon2.
+
+---
+
 Data subject rights and ephemeral data. The DPA has a dedicated section acknowledging the tension between GDPR Articles 15-17 (access, rectification, erasure) and ephemeral secrets that auto-destroy. The privacy statement's "Your rights" section lists the rights but doesn't address what happens when a data subject requests access to a secret that no longer exists. The compelled disclosure section partially covers this ("We cannot disclose the contents of a secret that has already been purged") but the rights section should probably acknowledge the same limitation.
 
 ---
@@ -45,7 +106,7 @@ Explicit no-sell/no-share statement. The privacy statement already says "We do n
 
 ---
 
-Open source as transparency measure. Comparable docs cites its open source codebase as a security/transparency measure. OTS's privacy statement doesn't mention open source status. The "Source of truth" section links to the site-policy repo but doesn't frame the service codebase itself as auditable. Could strengthen the security section or add a transparency note.
+Open source as transparency measure. An open source codebase can serve as a security/transparency measure. OTS's privacy statement doesn't mention open source status. The "Source of truth" section links to the site-policy repo but doesn't frame the service codebase itself as auditable. Could strengthen the security section or add a transparency note.
 
 ---
 
@@ -53,7 +114,7 @@ FAQ section. Comparable docs includes a practical FAQ (sharing DPA with customer
 
 ---
 
-Liability/indemnification cross-reference. Comparable docs's DPA includes mutual indemnification and a 12-month liability cap. OTS's DPA has no liability provisions. If these are in the ToS, a cross-reference from the DPA would help. If they're not in the ToS either, that's a gap. Not a privacy statement issue directly, but noting here since the privacy statement and ToS are described as companion documents.
+Liability/indemnification cross-reference. Comparable docs's DPA includes mutual indemnification and a liability cap. OTS's DPA has no liability provisions. If these are in the ToS, a cross-reference from the DPA would help. If they're not in the ToS either, that's a gap. Not a privacy statement issue directly, but noting here since the privacy statement and ToS are described as companion documents.
 
 ---
 
@@ -61,7 +122,7 @@ Post-termination data survival. The privacy statement covers retention (30 days 
 
 ---
 
-
+"## Translations" - make sure this paragraph is copacetic with the paragraoh in the terms doc. Or just refer to the terms doc.
 
 ---
 
