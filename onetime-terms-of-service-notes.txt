@@ -1,4 +1,9 @@
 
+2026-07-01
+
+
+- Add that where we say unlimited there may be a soft limit to prevent abuse, which menas they can be increased by request and no additional charge. The soft limit is about resource allocation and avoids accidental or intentional disruptions.
+
 
 2026-05-31
 

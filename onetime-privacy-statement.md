@@ -165,7 +165,7 @@ When you create an account, you choose the regional environment in which your ac
 There are two narrow exceptions, both inherent to operating the service:
 
 - **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data — Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
-- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate SSL connections close to the visitor. The encrypted application traffic is then forwarded into the appropriate regional environment for processing.
+- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is then forwarded over an encrypted channel into the appropriate regional environment for processing. Global Elite deployments do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by us within the customer's selected region.
 
 Other than the two exceptions described above, we do not transfer personal data outside the jurisdiction in which it was collected.
 
@@ -202,7 +202,7 @@ When permitted, we will make a reasonable effort to notify users of any disclosu
 By design, our ability to respond to such requests with respect to Secret Content is limited:
 
 - We cannot disclose the contents of a secret that has already been purged.
-- We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase, or where the secret was encrypted client-side with a key we never receive (such as in flows where we act as a proxy for re-encrypted ciphertext).
+- We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase.
 - We can disclose Account Data, including account email addresses, the current or previous existence of a secret key (not the contents), its creation timestamp, its expiry, and similar metadata, when properly compelled to do so.
 
 ## How you can access and control your information

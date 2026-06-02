@@ -261,7 +261,7 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |  |  |  |  |  |  |
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Approximated* | Global (DNS multicast) | Identity Plus | ✔ | Custom domain with TLS termination | Account info, application data, network-level web traffic data, IP addresses |
+| *Approximated* | Global edge network | Identity Plus, Team Plus | ✔ | Custom domain with TLS termination | Account info, application data, network-level web traffic data, IP addresses |
 | *CloudFlare* | Global | All | ✔ | Network proxy ("Orange Cloud"), Security services, Custom domain with TLS termination | Account info, application data, network-level web traffic data, IP addresses |
 
 ### Email Services

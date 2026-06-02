@@ -66,16 +66,14 @@ Cross-reference or logical conflicts within the document.
 - **Resolution:** Rewritten to "Available methods may change over time and may vary by region and plan tier."
 - **Priority:** Medium
 
-### TODO-2: Clarify Multi-Tenant Domain Architecture
-- **Section:** Subprocessors / Edge Networks / possibly Terms of Service
-- **Note:** Large item. The notes describe the full picture that the privacy statement doesn't capture:
-  1. Regional sites (eu/ca/us/etc.onetimesecret.com) use Cloudflare orange-cloud DNS proxy (since Sept 2024 DDoS).
-  2. onetime.co and subdomains do NOT use Cloudflare proxy — custom domains don't traverse Cloudflare's network. Org owners can optionally add their own proxy, which may complicate TLS cert management.
-  3. Cloudflare also performs TLS termination — this is not unique or specific to Approximated.
-  4. Approximated uses anycast (notes said "multicast DNS" — likely means anycast) for TLS cert management; nodes operate across jurisdictions. Research Approximated docs for precise language.
-  5. Single-tenant (Global Elite) uses OTS-managed infra for TLS, no third-party services.
-  6. One section should be the source of truth; others should reference it. Decide whether this belongs in the privacy statement or Terms.
-- **Action:** Research Approximated architecture. Draft language. Decide placement (privacy statement vs Terms). Ensure no duplication between sections.
+### TODO-2: Clarify Multi-Tenant Domain Architecture — DONE
+- **Section:** Edge networks exception in "Where your data is processed"
+- **Resolution:** Researched Approximated architecture (Caddy proxy clusters on Fly.io, globally distributed, auto-managed TLS via ACME). Updated the edge networks exception to be the single source of truth:
+  - Added explicit note that TLS termination at edge locations may occur outside the destination region
+  - Added Global Elite exception (no third-party edge networks; TLS on dedicated OTS-managed infrastructure)
+  - The subprocessors table and line 111 reference this section, avoiding duplication
+  - Fixed DPA Schedule A: "DNS multicast" → "Global edge network"; added Team Plus to Approximated tier scope (was "Identity Plus" only, inconsistent with IC-1 fix and billing.yaml)
+- **Note:** Implementation details (Caddy, Fly.io) intentionally omitted from policy text — they are vendor stack details that would rot. The privacy-relevant fact is stated: third-party TLS termination at globally distributed edge nodes.
 - **Priority:** High
 
 ### TODO-3: Add No-Third-Country-Transfers Statement — DONE
@@ -98,17 +96,48 @@ Cross-reference or logical conflicts within the document.
 - **Resolution:** Renamed section heading. Updated text to cover both features. Added note about recipient email hashing for Incoming Secrets (verified: IncomingConfig uses SHA256 with site secret).
 - **Priority:** Medium
 
-### TODO-7: Decide Subprocessor List Placement
+### TODO-7: Decide Subprocessor List Placement — DONE
 - **Section:** Subprocessors (Lines 101-111)
-- **Note:** "We should decide whether to list subprocessors here or in the DPA. In the DPA, it requires notice of changes and the right of refusal so maybe in this particular case it is 'okay' to have lists in both."
-- **Action:** Decide: (A) Keep both — DPA has contractual notice obligations, privacy statement has transparency obligations, arguably both serve different purposes. (B) Remove from privacy statement, reference DPA only. (C) Summary here, detailed list in DPA only. Note: line 111 already references the DPA for the detailed list.
-- **Priority:** Medium — needs decision
+- **Resolution:** Keep both. The privacy statement has a summary table for transparency; the DPA (Schedule A) has the detailed contractual list with notice obligations. Line 113 already cross-references the DPA. Both serve different audiences and legal purposes.
+- **Priority:** Medium
 
-### TODO-8: Verify Passphrase Encryption Claim Against Familia v2.9.1 Codebase
-- **Section:** "How we respond to compelled disclosure" (Line 201)
-- **Note (marked IMPORTANT):** The privacy statement claims "We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase." Before Familia v2, OTS included the passphrase in the encryption key so decryption was literally impossible without it. Familia v2 may have implemented AAD (Additional Authenticated Data) fields where values are associated with encrypted contents and must be present to decrypt — but it is unclear whether the OTS codebase actually passes those values to Familia methods.
-- **Action:** (1) Examine Familia v2.9.1 encrypted fields feature and AAD implementation. (2) Examine OTS codebase where values are passed to Familia encryption/decryption methods. (3) Confirm the privacy statement claim is architecturally accurate or correct it.
-- **Priority:** Critical — legal accuracy depends on technical verification
+### TODO-8: Resolve Passphrase Encryption Claim — NEEDS DECISION
+- **Section:** "How we respond to compelled disclosure" (Line 205)
+- **Priority:** Critical — legal accuracy depends on resolution
+
+#### Codebase Audit Complete
+
+**v1 (legacy):** Passphrase IS part of key derivation (`encryption_key_v2` includes `passphrase_temp`). Without the passphrase, decryption is impossible. Privacy statement claim is accurate for v1.
+
+**v2 (Familia encrypted_field):** `encrypted_field :ciphertext` at `secret.rb:43` has no `aad_fields`. The `transient_field :ciphertext_passphrase` is declared but never read. Encryption at `receipt.rb:218` sets `secret.ciphertext = content` without the passphrase. The passphrase is Argon2-hashed for access control only (`update_passphrase`). For v2, OTS CAN decrypt passphrase-protected secrets using only the system key.
+
+#### Critical Correction: AAD Does Not Achieve "Cannot Decrypt"
+
+The initial proposal (bind passphrase via `aad_fields`) is **cryptographically insufficient**. AAD in XChaCha20-Poly1305 is authenticated but not used for key derivation. Confidentiality depends on key + nonce; the keystream is `XChaCha20(key, nonce)`. A key-holder can recover plaintext by computing the keystream and XORing, ignoring the auth tag entirely. AAD binding only makes the *normal verifying API* refuse — it does not remove the *capability* to decrypt.
+
+The compelled-disclosure threat model assumes the key-holder is under court order. "Cannot" is a capability statement, and AAD does not remove capability.
+
+ANSWER: remove the we can't decrypt claim, but clarify that the decryption keys are not available on the database mahcine where the data is stored. 
+
+
+#### Cross-Document Inconsistency
+
+The DPA already tells the truth. Schedule C §1.1: *"The passphrase is not incorporated into the encryption key derivation; it controls authorization to decrypt, not the cryptographic ability to do so."* The privacy statement (line 205) contradicts it.
+
+Answer: remove mention n of using the passphrase in the encryption key. 
+
+
+#### Decision Required — Two Options
+
+- ~**Option A (code fix):** Put passphrase into key derivation (via Familia `build_context`), restoring the v1 property. Bigger change; needs version gate for in-flight secrets; forgotten passphrase = permanently unrecoverable data.~
+- **Option B (doc fix):** Align privacy statement to the DPA. Soften to "the passphrase is required to access the secret" or similar. No code change.
+
+ANSWER: Option B
+
+
+#### Proxy Clause — Removed
+
+The second clause ("encrypted client-side with a key we never receive, such as in flows where we act as a proxy for re-encrypted ciphertext") described a flow that does not exist in the codebase. Two code paths write `secret.ciphertext` — both receive plaintext. No API endpoint accepts pre-encrypted content. Clause removed from the privacy statement.
 
 ### TODO-9: Clarify Product Info in Transactional Emails — DONE
 - **Section:** "How we communicate with you"
@@ -135,9 +164,9 @@ Cross-reference or logical conflicts within the document.
 | Internal Inconsistencies | 2 | 2 | 0 | 0 | 0 |
 | Critical TODOs | 1 | 0 | 0 | 1 (TODO-8) | 0 |
 | High Priority TODOs | 2 | 2 | 0 | 0 | 0 |
-| Medium Priority TODOs | 6 | 5 | 0 | 1 (TODO-7) | 0 |
+| Medium Priority TODOs | 6 | 6 | 0 | 0 | 0 |
 | Low Priority TODOs | 2 | 2 | 0 | 0 | 0 |
-| **Total Items** | **18** | **16** | **0** | **2** | **0** |
+| **Total Items** | **18** | **17** | **0** | **1** | **0** |
 
 **Previously completed (from prior review):**
 - Bcrypt → Argon2 (line 137 now reads Argon2id)
@@ -161,27 +190,19 @@ Cross-reference or logical conflicts within the document.
 - TODO-9: Added product info in transactional emails clarification
 - TODO-10: Added CSP/HSTS/Preload bullet
 
-**Completion: 94%** (17/18 addressed)
+**Completed this session (batch 3):**
+- TODO-2: Enhanced edge networks section with TLS termination jurisdiction note and Global Elite exception. Fixed DPA "DNS multicast" → "Global edge network" and added Team Plus to Approximated tier scope.
+- TODO-7: Decided — keep subprocessor lists in both documents (summary in privacy statement, detail in DPA).
+- TODO-8 partial: Removed false "proxy for re-encrypted ciphertext" clause. Corrected original AAD-based fix proposal (AAD is insufficient — passphrase must enter key derivation for "cannot decrypt" to be true). Decision pending.
+
+**Completion: 94%** (17/18 addressed — TODO-8 passphrase claim awaiting decision)
 
 ---
 
 ## Remaining Work
 
-### Needs Decision
-- **TODO-7:** Subprocessor list placement — keep in both privacy statement and DPA, move to DPA only, or summary here + detail in DPA? (Line 111 already references the DPA.)
-- **TODO-2:** Multi-tenant domain architecture — large item needing Approximated docs research and a placement decision (privacy statement vs Terms). Not blocking release but the current text is incomplete.
+### TODO-8: Passphrase Claim — Decision Required
 
-### Needs Code Fix (user chose option A)
-- **TODO-8:** Bind passphrase via AAD in Familia encrypted_field so the privacy statement claim ("We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase") is architecturally true for v2 secrets. See finding below.
+The privacy statement claims "We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase." This is true for v1 secrets (passphrase in key derivation) but false for v2 (passphrase is access control only). The DPA Schedule C §1.1 already accurately describes the v2 behavior.
 
-### TODO-8 Finding (Critical — code fix, not doc fix)
-
-Codebase audit of Familia v2.9.1 + OTS reveals:
-
-**v1 (legacy):** Passphrase IS part of the encryption key (`encryption_key_v2` includes `passphrase_temp`). Without the passphrase, decryption is impossible. The privacy statement claim is accurate for v1.
-
-**v2 (Familia encrypted_field):** `encrypted_field :ciphertext` has NO `aad_fields`. The `transient_field :ciphertext_passphrase` is declared but never read anywhere in the OTS codebase. The encrypt-side call (`receipt.rb:218`) sets `secret.ciphertext = content` without passing the passphrase. The passphrase is only used for access control (Argon2 hash comparison via `update_passphrase`).
-
-**Conclusion:** For v2 secrets, OTS CAN decrypt passphrase-protected secrets using the system key. The passphrase is an access gate, not a cryptographic barrier. User decision: fix the code to match the claim.
-
-**Note:** The second clause ("encrypted client-side with a key we never receive, such as in flows where we act as a proxy for re-encrypted ciphertext") describes a flow that does not appear to exist in the current codebase. May describe a planned feature — verify before release.
+SEE ANSWER ABOVE
