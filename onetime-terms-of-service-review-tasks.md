@@ -325,3 +325,44 @@ This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TOD
 Counts: 14 changeset items covering 11 note items. APPLIED: 8 (TODO-16 through TODO-22 except TODO-20a, plus TODO-24). needs-decision: 4 (TODO-13, TODO-14, TODO-15, TODO-23, held for individual review). needs-code-verification: 2 (TODO-20a, TODO-23a). auto-apply: 0.
 
 Eight second-wave items (TODO-16, TODO-17, TODO-18, TODO-19, TODO-20, TODO-21, TODO-22, and TODO-24) have been applied to the live `onetime-terms-of-service.md` per an approved changeset. The remaining items (TODO-13, TODO-14, TODO-15, TODO-23) are held for individual review because each introduces a new legal clause or a judgment call on wording, placement, or a liability boundary, and the two implementation-dependent sub-claims (TODO-20a, TODO-23a) are isolated as needs-code-verification.
+
+---
+
+## Application Report: Second Wave Approved Changeset
+
+This section reports the work completed in applying the eight approved second-wave items to the live `onetime-terms-of-service.md`. It is a record only; the authoritative per-item status remains in each item's Disposition line and in the Second Wave Summary table above.
+
+### Items applied (8)
+
+| Item | Landed in | Anchors wired |
+|------|-----------|---------------|
+| TODO-16 | New "One Organization per customer" bullet at the end of B.3 "Organizations" | `#2-account-requirements`, `#4-service-usage-limits` |
+| TODO-17 | New subsection "### 7. Coupons and Promotions" in Section I, after I.6 | (none in draft) |
+| TODO-18 | "Unlimited features" paragraph appended to C.7 "Excessive Use" (C.7 only, not A) | (none in draft) |
+| TODO-19 | New definition item 15 "Recipient" in Section A, after item 14 (SSO) | `#b-account-terms` |
+| TODO-20 | "Responsibility for Homepage Secrets and Incoming Secrets" paragraph in E.2, after the feature list | `#c-acceptable-use` |
+| TODO-21 | Integrated into the existing "Verified Email Addresses" bullet in E.2 (no duplicate block) | (none in draft) |
+| TODO-22 | "Surfaces of the Service" framing paragraph at the end of Section A | (none in draft) |
+| TODO-24 | "Single-tenant deployment options" paragraph in I.3, after the single-tenant refund paragraph (I.3 only, not the Introduction) | (none in draft) |
+
+All target anchors resolve against existing headings and follow the document's `#<n>-<slug>` convention. Every insertion was additive: no existing subsection was renumbered and no existing cross-reference broke.
+
+### Judgment calls (recorded in the per-item Disposition lines)
+
+- **TODO-19** placed in Section A only, not D.4. Section A is the document's canonical terminology home and D.4 already relies on it; the natural D.4 hook (the anyone-with-the-link rule) belongs to held TODO-14. Copying the definition into D.4 would duplicate, and forcing a cross-reference into D.4's narrow Onetime-Secret-access content read as editorializing, so D.4 was left unchanged.
+- **TODO-21** integrated into the existing E.2 "Verified Email Addresses" bullet rather than added as a second block. Flagged definitional looseness: Definition A.11 frames "Verified Email Addres" as a *domain*, while E.2 (the existing bullet and this draft) frames it as an *address* at that domain. Treated as looseness, not a contradiction, because the existing E.2 bullet already says "an address at your domain." A.11 is outside the approved eight and was not edited.
+
+No item required a STOP; all eight applied cleanly.
+
+### Left untouched, as instructed
+
+- Sensitive held items TODO-13, TODO-14, TODO-15 (status unchanged).
+- Code-verification sub-claims TODO-20a and TODO-23a (status `needs-code-verification`, unchanged). TODO-23 also left held (`needs-decision`), as it was not among the approved eight.
+- The document's effective-date line and all pre-existing content, including pre-existing em-dashes (for example the SSO definition and the E.2 feature-bullet separators) and the `Addres` typo in Definition 11. No em-dashes were introduced by any insertion.
+
+### Tracker updates made for this changeset
+
+- Each applied item's Disposition line changed to "APPLIED ..." with a one-line location note.
+- The eight corresponding rows in the Second Wave Summary table set to APPLIED.
+- The counts line corrected (APPLIED: 8; needs-decision: 4; needs-code-verification: 2).
+- The two prose statements that previously claimed nothing had been applied (the Second Wave intro and the paragraph closing the summary) reconciled to reflect the eight applications.
