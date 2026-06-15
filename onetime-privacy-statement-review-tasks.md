@@ -101,7 +101,7 @@ Cross-reference or logical conflicts within the document.
 - **Resolution:** Keep both. The privacy statement has a summary table for transparency; the DPA (Schedule A) has the detailed contractual list with notice obligations. Line 113 already cross-references the DPA. Both serve different audiences and legal purposes.
 - **Priority:** Medium
 
-### TODO-8: Resolve Passphrase Encryption Claim — NEEDS DECISION
+### TODO-8: Resolve Passphrase Encryption Claim — DONE
 - **Section:** "How we respond to compelled disclosure" (Line 205)
 - **Priority:** Critical — legal accuracy depends on resolution
 
@@ -162,11 +162,11 @@ The second clause ("encrypted client-side with a key we never receive, such as i
 |----------|-------|------|------|----------------|-------------------|
 | Blockers | 5 | 5 | 0 | 0 | 0 |
 | Internal Inconsistencies | 2 | 2 | 0 | 0 | 0 |
-| Critical TODOs | 1 | 0 | 0 | 1 (TODO-8) | 0 |
+| Critical TODOs | 1 | 1 | 0 | 0 | 0 |
 | High Priority TODOs | 2 | 2 | 0 | 0 | 0 |
 | Medium Priority TODOs | 6 | 6 | 0 | 0 | 0 |
 | Low Priority TODOs | 2 | 2 | 0 | 0 | 0 |
-| **Total Items** | **18** | **17** | **0** | **1** | **0** |
+| **Total Items** | **18** | **18** | **0** | **0** | **0** |
 
 **Previously completed (from prior review):**
 - Bcrypt → Argon2 (line 137 now reads Argon2id)
@@ -193,16 +193,12 @@ The second clause ("encrypted client-side with a key we never receive, such as i
 **Completed this session (batch 3):**
 - TODO-2: Enhanced edge networks section with TLS termination jurisdiction note and Global Elite exception. Fixed DPA "DNS multicast" → "Global edge network" and added Team Plus to Approximated tier scope.
 - TODO-7: Decided — keep subprocessor lists in both documents (summary in privacy statement, detail in DPA).
-- TODO-8 partial: Removed false "proxy for re-encrypted ciphertext" clause. Corrected original AAD-based fix proposal (AAD is insufficient — passphrase must enter key derivation for "cannot decrypt" to be true). Decision pending.
+- TODO-8: Resolved passphrase encryption claim (Option B — doc fix). Removed false "we cannot decrypt" claim from compelled disclosure section. Replaced with honest architectural description: key isolation between app/DB tiers + passphrase as access-control gate (not key derivation). Cross-references DPA Schedule C. Aligns with DPA §1.1 which already stated the truth. Proxy clause was removed in prior batch.
 
-**Completion: 94%** (17/18 addressed — TODO-8 passphrase claim awaiting decision)
+**Completion: 100%** (18/18 addressed)
 
 ---
 
 ## Remaining Work
 
-### TODO-8: Passphrase Claim — Decision Required
-
-The privacy statement claims "We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase." This is true for v1 secrets (passphrase in key derivation) but false for v2 (passphrase is access control only). The DPA Schedule C §1.1 already accurately describes the v2 behavior.
-
-SEE ANSWER ABOVE
+None. All 18 items resolved.
