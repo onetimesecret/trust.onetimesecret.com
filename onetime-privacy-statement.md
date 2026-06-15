@@ -135,7 +135,7 @@ We retain server request logs and error monitoring data for up to 30 days for th
 The technical and organizational security measures applied to the Service are:
 
 - TLS 1.3 in transit, with strong cipher suites
-- AES-256-CBC encryption of Secret Content, with key material that is never stored alongside the encrypted data in the database tier
+- XChaCha20-Poly1305 authenticated encryption of Secret Content (with AES-256-GCM as an available alternative), with key material that is never stored alongside the encrypted data in the database tier
 - Argon2id for credential hashing, applied to both account passphrases and secret passphrases
 - LUKS full-disk encryption on production storage
 - GPG 4096-bit asymmetric encryption of backups, with decryption keys held offline
