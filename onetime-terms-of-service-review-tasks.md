@@ -157,7 +157,7 @@ These are cross-reference or logical conflicts within the document:
 Generated: 2026-06-14
 Source: onetime-terms-of-service-notes.txt (notes dated 2026-06-01 through 2026-06-14, plus the unprocessed 2026-05-31 block above the "ALREADY PROCESSED" divider)
 
-This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TODO-12, all complete). None of the second-wave items is a cross-reference contradiction, so all are numbered TODO-13 onward; no new IC- items were required. Of the drafted items below, eight (TODO-16, TODO-17, TODO-18, TODO-19, TODO-20, TODO-21, TODO-22, and TODO-24) have been applied to the live `onetime-terms-of-service.md` per an approved changeset; their per-item Disposition lines record where each landed. The remaining items (TODO-13, TODO-14, TODO-15, TODO-23) are held for individual review, and the two sub-claims (TODO-20a, TODO-23a) remain held pending code verification. None of these items is auto-apply.
+This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TODO-12, all complete). None of the second-wave items is a cross-reference contradiction, so all are numbered TODO-13 onward; no new IC- items were required. Of the drafted items below, eight (TODO-16, TODO-17, TODO-18, TODO-19, TODO-20, TODO-21, TODO-22, and TODO-24) have been applied to the live `onetime-terms-of-service.md` per an approved changeset; their per-item Disposition lines record where each landed. TODO-13 (account inactivity removal) has been relocated to the Privacy Statement (see Privacy review-tasks TODO-12), since it is a data-retention matter rather than a contractual term. The remaining items (TODO-14, TODO-15, TODO-23) are held for individual review, and the two sub-claims (TODO-20a, TODO-23a) remain held pending code verification. None of these items is auto-apply.
 
 ### TODO-13: Account Inactivity Removal
 - **Section:** J "Cancellation and Termination" (new subsection); cross-reference from B.6 "Data Retention and Security"
@@ -166,7 +166,8 @@ This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TOD
 - **Drafted text:**
   > **Inactive accounts.** An account that has not been signed in to for more than five years may be subject to removal. Where this applies, removal may occur automatically, without prior notice and without any action required on your part. Signing in to the account resets this period. Removal of an inactive account is subject to the data-retention practices described in [Section B.6](#6-data-retention-and-security) and in our [Privacy Statement](https://onetimesecret.com/privacy).
 - **Priority:** not assigned (second-wave changeset)
-- **Disposition:** needs-decision
+- **Disposition:** RELOCATED — not a ToS clause. Moved to the Privacy Statement (see Privacy review-tasks TODO-12).
+- **Resolution (2026-06-14):** Account inactivity removal is a data-retention matter, and the Privacy Statement is its canonical home (its "Data retention and deletion" section governs retention windows and deletion mechanics). Stating it in the Terms would fragment the retention story across two documents and frame a privacy obligation as a contractual term. GDPR storage-limitation (Art 5(1)(e)) treats data no longer needed as a retention concern. The Terms remain silent on inactivity removal; the drafted text and the open questions (notice obligation, defensibility of five years) move with it.
 - **Rationale:** The note questions whether automatic removal is within regulatory compliance and whether it reads default-safe or as an incursion on user rights, and flags that regulation and policy may change across the five-year window. The load-bearing word is "may," not "will": the draft states a reserved right rather than a guaranteed action, so it stays accurate even if enforcement is not active. Marked needs-decision because notice obligations under GDPR and equivalent regimes, the defensibility of five years, and whether to notify before removal are legal judgment calls.
 
 ### TODO-14: Recipient and Delivery Non-Guarantee
@@ -307,7 +308,7 @@ This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TOD
 
 | Item | Source | Target Section | Disposition |
 |------|--------|----------------|-------------|
-| TODO-13 | 2026-06-14 | J (+ B.6 xref) | needs-decision |
+| TODO-13 | 2026-06-14 | RELOCATED → Privacy Statement | RELOCATED (see Privacy TODO-12) |
 | TODO-14 | 2026-06-13 | D.4 / new D clause (+ L xref) | needs-decision |
 | TODO-15 | 2026-06-11 | C.4 | needs-decision |
 | TODO-16 | 2026-06-11 | B.3 (+ B.2, C.4 xref) | APPLIED (B.3 bullet) |
@@ -322,9 +323,9 @@ This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TOD
 | TODO-23a | 2026-05-31 | B.6 / E (sub-claim) | needs-code-verification |
 | TODO-24 | 2026-05-31 | Intro / I.3 | APPLIED (I.3) |
 
-Counts: 14 changeset items covering 11 note items. APPLIED: 8 (TODO-16 through TODO-22 except TODO-20a, plus TODO-24). needs-decision: 4 (TODO-13, TODO-14, TODO-15, TODO-23, held for individual review). needs-code-verification: 2 (TODO-20a, TODO-23a). auto-apply: 0.
+Counts: 14 changeset items covering 11 note items. APPLIED: 8 (TODO-16 through TODO-22 except TODO-20a, plus TODO-24). RELOCATED: 1 (TODO-13 → Privacy Statement, see Privacy review-tasks TODO-12). needs-decision: 3 (TODO-14, TODO-15, TODO-23, held for individual review). needs-code-verification: 2 (TODO-20a, TODO-23a). auto-apply: 0.
 
-Eight second-wave items (TODO-16, TODO-17, TODO-18, TODO-19, TODO-20, TODO-21, TODO-22, and TODO-24) have been applied to the live `onetime-terms-of-service.md` per an approved changeset. The remaining items (TODO-13, TODO-14, TODO-15, TODO-23) are held for individual review because each introduces a new legal clause or a judgment call on wording, placement, or a liability boundary, and the two implementation-dependent sub-claims (TODO-20a, TODO-23a) are isolated as needs-code-verification.
+Eight second-wave items (TODO-16, TODO-17, TODO-18, TODO-19, TODO-20, TODO-21, TODO-22, and TODO-24) have been applied to the live `onetime-terms-of-service.md` per an approved changeset. TODO-13 (account inactivity removal) was relocated to the Privacy Statement (see Privacy review-tasks TODO-12), since inactivity removal is a data-retention matter rather than a contractual term. The remaining items (TODO-14, TODO-15, TODO-23) are held for individual review because each introduces a new legal clause or a judgment call on wording, placement, or a liability boundary, and the two implementation-dependent sub-claims (TODO-20a, TODO-23a) are isolated as needs-code-verification.
 
 ---
 
