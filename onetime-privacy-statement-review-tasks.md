@@ -238,3 +238,22 @@ Items mirrored from the Data Processing Agreement into the privacy statement so 
 
 - **Rationale:** Splits the verbs. Makes sell/rent/trade an absolute commitment (the qualifier wrongly narrowed it). Retains "for their own commercial purposes" for the verb "share" because it is load-bearing: the subprocessors clause and the corporate-transaction clause describe OTS sharing Account Data; a blanket "we do not share Account Data with third parties" would contradict those clauses.
 - **Why needs-decision:** Broadening sell/rent/trade to an absolute commitment and re-scoping "share" is a substantive legal judgment, not a mechanical mirror. Requires sign-off before editing the live document.
+
+---
+
+## Relocated from Terms of Service
+
+### TODO-12: Account Inactivity Removal Policy
+- **Source:** ToS second-wave note 2026-06-14, relocated here by decision on 2026-06-14 (account inactivity removal is a data-retention matter; the Privacy Statement is its canonical home, not the Terms). See ToS review-tasks TODO-13.
+- **Section:** "Data retention and deletion" — new "Inactive accounts" paragraph, alongside the existing retention windows.
+- **Note:** Disclose that accounts inactive for an extended period (proposed: five years) may be subject to removal; signing in resets the period; removal is governed by the data-retention practices already described in this section.
+- **Drafted text (reframed from the ToS draft into the Privacy Statement's we/you voice; notice line still open):**
+
+  > **Inactive accounts.** If you do not sign in to your account for more than five years, we may remove it as part of our data-retention practices. Where this applies, removal may occur automatically and without separate notice. Signing in resets this period.
+
+- **Open questions (carried from the original note):**
+  - **Notice:** should we attempt to notify the account holder at their registered email before removal? A notify-attempt strengthens the user-rights posture; "without separate notice" is simpler but more exposed. (This was the crux of the original ToS decision.)
+  - **Window:** is five years defensible, recognizing that regulation and our own policy may change across it (hence "may," not "will")?
+  - **Legal basis:** GDPR storage-limitation (Art 5(1)(e)) supports deleting data no longer needed, which favors having an inactivity-removal policy; the residual question is notice, not whether removal is permitted.
+- **Disposition:** needs-decision (notice question open; not yet applied to the live Privacy Statement).
+- **Priority:** Medium
