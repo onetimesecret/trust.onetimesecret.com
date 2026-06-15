@@ -51,25 +51,23 @@ Unless otherwise defined herein, capitalized terms and expressions used in this 
 
 1.10) "*Global Elite*" means the premium tier service offered by the Processor, which operates on logically separated instances and provides enhanced security and customized solutions for organizations prioritizing privacy and compliance.
 
-1.11) "*Onboarding Questionnaire*" means the form used to collect responses from Global Elite customers at the start of engagement, delivered and collected through a subprocessor (see Schedule A). The link to this questionnaire and its contents may change from time to time.
+1.11) "*Secret*" or "*Secret Content*" means the sensitive information or data that a user intends to share securely through the Processor's service, that is encrypted in transit and at rest, assigned a unique access link, and automatically destroyed after it has been viewed once, after a specified time period has elapsed or after being deleted manually prior to having been received.
 
-1.12) "*Secret*" or "*Secret Content*" means the sensitive information or data that a user intends to share securely through the Processor's service, that is encrypted in transit and at rest, assigned a unique access link, and automatically destroyed after it has been viewed once, after a specified time period has elapsed or after being deleted manually prior to having been received.
+1.12) "*Services*" means the Processor’s secure secret-sharing and sensitive information management platform, including related features, APIs, and ancillary services. The details and pricing of the Services can be found on the Processor’s website.
 
-1.13) "*Services*" means the Processor’s secure secret-sharing and sensitive information management platform, including related features, APIs, and ancillary services. The details and pricing of the Services can be found on the Processor’s website.
+1.13) "*Subprocessor*" means any person appointed by or on behalf of Processor to process Personal Data on behalf of Controller in connection with the Agreement.
 
-1.14) "*Subprocessor*" means any person appointed by or on behalf of Processor to process Personal Data on behalf of Controller in connection with the Agreement.
+1.14) "*Receipt Link*" means the unique URL provided to the creator of a Secret that displays the Secret's status (whether it has been received, expired, or remains pending) and permits the holder to Purge the Secret prior to receipt. The Receipt Link does not provide access to the Secret Content. Unless the Secret is protected by a passphrase, possession of the Receipt Link is sufficient to exercise deletion rights over the associated Secret.
 
-1.15) "*Receipt Link*" means the unique URL provided to the creator of a Secret that displays the Secret's status (whether it has been received, expired, or remains pending) and permits the holder to Purge the Secret prior to receipt. The Receipt Link does not provide access to the Secret Content. Unless the Secret is protected by a passphrase, possession of the Receipt Link is sufficient to exercise deletion rights over the associated Secret.
+1.15) "*Purged*" or "*Purged Secret*" means a Secret that has been viewed by its recipient, has met or exceeded its specified retention period, or has been deleted by the holder of the associated Receipt Link, and is therefore no longer accessible through the Processor's service. For clarity, Purged Secrets may temporarily remain in encrypted backup systems for the Backup Retention Period in accordance with Section 10.
 
-1.16) "*Purged*" or "*Purged Secret*" means a Secret that has been viewed by its recipient, has met or exceeded its specified retention period, or has been deleted by the holder of the associated Receipt Link, and is therefore no longer accessible through the Processor's service. For clarity, Purged Secrets may temporarily remain in encrypted backup systems for the Backup Retention Period in accordance with Section 10.
+1.16) "*Account Data*" means Personal Data associated with a Company's or user's account, including email addresses, authentication credentials, billing information, and usage metadata, but excluding Secret Content.
 
-1.17) "*Account Data*" means Personal Data associated with a Company's or user's account, including email addresses, authentication credentials, billing information, and usage metadata, but excluding Secret Content.
+1.17) "*Backup Retention Period*" means thirty (30) days, being the maximum period during which encrypted backup copies may be retained following deletion from active systems, after which they are automatically deleted.
 
-1.18) "*Backup Retention Period*" means thirty (30) days, being the maximum period during which encrypted backup copies may be retained following deletion from active systems, after which they are automatically deleted.
+1.18) "*Operational Retention Period*" means thirty (30) days, being the standard period applied to: (a) server request logs, error monitoring data, and similar diagnostic information before automatic deletion; and (b) post-termination Account Data retention to facilitate data export requests.
 
-1.19) "*Operational Retention Period*" means thirty (30) days, being the standard period applied to: (a) server request logs, error monitoring data, and similar diagnostic information before automatic deletion; and (b) post-termination Account Data retention to facilitate data export requests.
-
-1.20) "*Subprocessor Notice Period*" means thirty (30) days, being the minimum advance notice provided to the Company before the Processor engages any new Subprocessor.
+1.19) "*Subprocessor Notice Period*" means thirty (30) days, being the minimum advance notice provided to the Company before the Processor engages any new Subprocessor.
 
 The terms, "*Commission*", "*Controller*", "*Data Subject*", "*Member State*", "*Personal Data*", "*Personal Data Breach*",\* \*"*Processing*" and "*Supervisory Authority*" shall have the same meaning as in the GDPR or other applicable Data Protection Law, and their cognate terms shall be construed accordingly.
 
@@ -170,7 +168,7 @@ Processor shall provide reasonable assistance to Company with any data protectio
 
 In case of cessation of any Service involving the Processing of Company Personal Data, the Processor shall delete all Company Personal Data to the extent permitted by applicable laws and in accordance with Processor’s Terms and Conditions and Privacy Policy. Should the Company require a copy of their data, they must request it before the deletion of their account; requests made after the account has been deleted can no longer be considered.
 
-Unless otherwise specified in the Onboarding Questionnaire or required by applicable law, Processor shall retain Account Data for the duration of the Agreement plus the Operational Retention Period thereafter to facilitate any requested data exports. Backup copies shall be maintained for the Backup Retention Period, after which they will be automatically deleted in accordance with our standard procedures.
+Unless required by applicable law, Processor shall retain Account Data for the duration of the Agreement plus the Operational Retention Period thereafter to facilitate any requested data exports. Backup copies shall be maintained for the Backup Retention Period, after which they will be automatically deleted in accordance with our standard procedures.
 
 ## 11. Audit rights
 
@@ -230,6 +228,14 @@ Notwithstanding the completion of the Engagement, termination of the Principal A
 
 Notwithstanding anything to the contrary in the Agreement (including this DPA), in the event of a change in Privacy Laws or a determination or order by a government authority or competent court affecting this DPA or the lawfulness of any processing activities under this DPA, we reserve the right to make any amendments to this DPA as are reasonably necessary to ensure continued compliance with Privacy Laws or compliance with any such orders.
 
+## Frequently Asked Questions
+
+**Can I share this DPA with my compliance, legal, or audit team?** Yes. This DPA is a standard part of our Terms of Service and may be shared freely within your organization and with your auditors, legal advisors, and compliance personnel. It is published publicly, so there is no confidentiality restriction on the document itself.
+
+**How do I get a signed or countersigned copy?** A signature is not required for this DPA to be binding (see the *Acceptance* provision in Section 13). If your organization requires a countersigned copy for its records, contact us at <legal@onetimesecret.com> and we will provide one on request.
+
+**Is this DPA automatically accepted?** Yes. This DPA is automatically incorporated into and forms part of the Principal Agreement upon your acceptance of the Terms of Service. No separate signature or action is required for it to take effect.
+
 ------------------------------------------------------------------------
 
 ## Schedule A - List of Approved Subprocessors
@@ -238,7 +244,7 @@ Onetime Secret engages subprocessors based on functional requirements and custom
 
 Service tier affects subprocessor availability and architecture:
 
-*Global Elite (Premium Tier):* customers receive logically dedicated environments (e.g., secrets.yourcompany.com) with isolated application stacks and database instances, though underlying cloud resources may be virtualized. These customers may substitute alternative subprocessors within each functional category as documented in their Onboarding Questionnaire.
+*Global Elite (Premium Tier):* customers receive logically dedicated environments (e.g., secrets.yourcompany.com) with isolated application stacks and database instances, though underlying cloud resources may be virtualized.
 
 *Identity Plus (Mid-Tier)*: operates on multi-tenant infrastructure (e.g., eu.onetimesecret.com) with secure compartmentalization between customers. Custom domain functionality requires third-party network infrastructure that terminates SSL/TLS connections outside the Processor's direct control, as detailed in the Network & Security category below.
 
@@ -288,13 +294,6 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
 | *Stripe* | US/EU | All | 𐄂 | Payment processing, invoicing, fraud detection, tax reporting, payment links, checkout services. | Account info, app data, network traffic |
 
-### Forms & Data Processing
-
-|  |  |  |  |  |  |
-|----|----|----|----|----|----|
-| **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Altcha* | EU | Global Elite | ✔ | Onboarding questionnaire | Account info, app data, network traffic |
-
 ### *Subprocessor Entity Details*
 
 | ***Name*** | *Address* | *Jurisdiction* | *Comment* |
@@ -310,31 +309,6 @@ Where multiple subprocessors appear within a category, they represent alternativ
 
 
 ##### 
-
-------------------------------------------------------------------------
-
-## Schedule B - Processing Implementation and Customization
-
-#### *1. Applicability*
-
-This schedule defines how customizations are documented and maintained for *Global Elite* customers. *Identity Plus* deployments operate on standardized configurations without customer-specific modifications.
-
-#### *2. Specification*
-
-All Global Elite implementation requirements are captured through our Onboarding Questionnaire (<https://eu.altcha.org/form/1jt133ieuzcT8mgjDdhKt>). The completed questionnaire becomes part of this Agreement and specifies:
-
-- Selected subprocessors from available alternatives (see Schedule A)
-- Regional hosting preferences
-- Email delivery configuration (including option to disable)
-- Any customer-specific technical requirements
-
-#### *3. Documentation*
-
-Customizations are established through the Onboarding Questionnaire and subsequent written correspondence between the parties in accordance with Section 13, except that for this Schedule the Processor may contact the Controller from any @onetimesecret.com address. Such correspondence constitutes the authoritative record of agreed configurations. Where a customer-specific addendum is prepared, it summarizes but does not supersede the underlying correspondence.
-
-#### *4. Retention*
-
-All customization documentation is maintained for the duration of the service agreement plus five (5) years following termination to support regulatory compliance verification and audit requirements.
 
 ------------------------------------------------------------------------
 
@@ -413,6 +387,7 @@ All data transmitted between clients and the Processor's infrastructure is prote
 - Annual review of cryptographic implementations against current security guidance
 - Incident response procedures as described in Section 8 of the Principal DPA
 - Regular assessment of subprocessor security practices
+- Source code transparency: The core application is published as open-source software, allowing the Company and independent parties to inspect the Processor's data-handling and cryptographic implementations. This provides an additional, verifiable layer of transparency beyond the descriptions in this Schedule.
 
 ------------------------------------------------------------------------
 

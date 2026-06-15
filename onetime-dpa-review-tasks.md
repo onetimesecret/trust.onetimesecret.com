@@ -65,24 +65,28 @@ Source: onetime-dpa-notes.txt, onetime-privacy-statement-notes.txt, cross-docume
 - **Issue:** DPA §7.3 acknowledges the tension between GDPR Articles 15-17 and auto-purging secrets. The privacy statement's "Your rights" section lists rights but doesn't address what happens when a data subject requests access to a secret that no longer exists.
 - **Action:** Add acknowledgement to privacy statement "Your rights" section, mirroring the DPA §7.3 language.
 - **Priority:** Medium
+- **Status:** IN PROGRESS — Being mirrored into the privacy statement by the sibling privacy-side pass; DPA §7.3 (source) is unchanged by this DPA pass.
 
 ### DPA-3: No-Sell/No-Share Qualifier
 - **Source:** dpa-notes
 - **Issue:** Privacy statement says "not for their commercial purposes" — qualifier may narrow the commitment unintentionally.
 - **Action:** Decide whether "for their commercial purposes" qualifier is intentional. If not, remove it.
 - **Priority:** Medium
+- **Status:** NEEDS-DECISION — Whether the "for their commercial purposes" qualifier is intentional is a substantive scope judgment, not a mechanical edit. Remains open; not actioned by this DPA pass (privacy-statement text).
 
 ### DPA-4: Open Source as Transparency Measure
 - **Source:** dpa-notes
 - **Issue:** Neither doc mentions the open-source service codebase as a security/transparency measure. "Source of truth" references the site-policy repo only.
 - **Action:** Consider adding a transparency note in the security section or source-of-truth section referencing the auditable codebase.
 - **Priority:** Low
+- **Status:** DONE — Added "Source code transparency" bullet to DPA Schedule C §6 (Organizational Measures); factual basis corroborated by DPA intro line 13 (open-source software). Drafted clause applied per instruction; recommend sign-off. Privacy-statement mirror handled by the sibling privacy-side pass.
 
 ### DPA-5: FAQ Section for DPA
 - **Source:** dpa-notes
 - **Issue:** No FAQ addressing common questions ("can I share this with my compliance team," "how do I get a signed copy," "is the DPA auto-accepted").
 - **Action:** Draft FAQ section or standalone FAQ page.
 - **Priority:** Low
+- **Status:** DONE — Added "Frequently Asked Questions" section after Section 15 (before Schedule A) with three Q&A entries (DPA-5a share with compliance team, DPA-5b signed/countersigned copy mirroring resolved DPA-7 with no countersigning fee, DPA-5c auto-acceptance mirroring §13 Acceptance clause). Drafted clauses applied per instruction; recommend sign-off.
 
 ### DPA-6: Liability/Indemnification Cross-Reference
 - **Source:** dpa-notes
@@ -117,6 +121,7 @@ Source: onetime-dpa-notes.txt, onetime-privacy-statement-notes.txt, cross-docume
 - **Issue:** DPA commits to processor obligations surviving until all data is deleted, with confidentiality continuing indefinitely (§14). Privacy statement doesn't echo this.
 - **Action:** Decide whether privacy statement should reference the indefinite confidentiality commitment or leave it in the DPA only.
 - **Priority:** Low
+- **Status:** IN PROGRESS — Being mirrored into the privacy statement by the sibling privacy-side pass; DPA §14 (source) is unchanged by this DPA pass.
 
 ### DPA-11: Schedule C Key Derivation — Verify Against Codebase
 - **Source:** dpa-notes, privacy-statement-notes
@@ -124,5 +129,25 @@ Source: onetime-dpa-notes.txt, onetime-privacy-statement-notes.txt, cross-docume
 - **Action:** Verify against onetimesecret and Familia v2.9.1 codebase. Update whichever doc is inaccurate.
 - **Priority:** High — requires code verification
 - **Status:** DONE — Code verified against Familia v2.3.3. Updated Schedule C §1.1: algorithm is XChaCha20-Poly1305 (not AES-256-CBC), key derivation is BLAKE2b (not SHA-256), passphrase is access control only (not part of key derivation). Privacy statement claim "cannot decrypt passphrase-protected secrets" is misleading for server-side encryption and needs separate update.
+
+---
+
+## Global Elite Stripping
+
+Boundary review of every Global-Elite-related passage in onetime-dpa-2026-05-31.md. Removals strip Global-Elite-only onboarding/questionnaire/substitution plumbing; the Global Elite tier itself is retained as a documented premium tier. Review the keep/remove boundary below.
+
+| ID | Section | Passage | Bucket | Action taken |
+| :--- | :--- | :--- | :--- | :--- |
+| GE-1 | §1.10 Definitions | "*Global Elite*" tier definition | keep | Unchanged. Defines the premium tier referenced by retained Schedule A/C rows. |
+| GE-2 | §1.11 Definitions | "*Onboarding Questionnaire*" definition | remove | DONE — Removed §1.11; renumbered former §1.12–§1.20 down to §1.11–§1.19. No body text references definitions by number, so no dangling refs. |
+| GE-3 | §10 Deletion/return | "unless otherwise specified in the Onboarding Questionnaire or" carve-out | remove | DONE — Removed the orphaned cross-ref fragment only; retention rule and "required by applicable law" exception retained. |
+| GE-4 | Schedule A intro | "...alternatives that Global Elite customers may select during onboarding" | needs-decision | NOT ACTIONED — Left verbatim. Who selects subprocessors (customer vs Processor) is a factual product claim requiring a human decision; the candidate "Processor may engage" recast is flagged, not applied. Decide before finalizing GE-5 framing. |
+| GE-5 | Schedule A GE block | Sentence 1 (dedicated-environment architecture) / sentence 2 (subprocessor substitution via OQ) | remove | DONE — Kept sentence 1 (mirrors Identity Plus description). Removed sentence 2 (OQ substitution plumbing). |
+| GE-6 | Schedule A Backup & Storage | AWS (S3) Global Elite geo-located backups row | keep | Unchanged. Documents a real premium-tier subprocessor; coupled to retained Schedule C §3. (Trailing comma in Categories cell is a cosmetic typo, left as-is.) |
+| GE-7 | Schedule A Forms & Data Processing | Altcha row ("Onboarding questionnaire") | remove | DONE — Removed the Altcha row and its sole-row "Forms & Data Processing" heading; Altcha not in entity-details table, so no second orphan. |
+| GE-8 | Schedule B (entire) | Processing Implementation and Customization, incl. live Altcha form URL and 5-year retention | remove | DONE — Removed Schedule B in full, leaving a single horizontal rule between Schedule A and Schedule C. No surviving section cross-references Schedule B. |
+| GE-9 | Schedule C §3 | Geo-located AWS S3 (Frankfurt) backups, 30-day expiry | keep | Unchanged. Organizational security control consistent with GE-6 and regional isolation policy. |
+
+Orphan verification after edits: zero matches for "Onboarding Questionnaire", "Altcha", "eu.altcha.org", and "Schedule B" in the DPA. Single rule confirmed between Schedule A and Schedule C.
 
 ---
