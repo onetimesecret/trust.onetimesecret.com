@@ -1,5 +1,32 @@
 
-2026-07-01
+2026-06-14
+
+- Accounts last login date more than 5 years may be subject to removal [ed: I don't think we can say will definitively since regulation and our own policy could change in that time -- so even though it not be actively enforced, the best medicine is to keep the account active by logging in]. This process is automatic and can happen without notification or action on your part. Logging in resets the clock. [ed: is it within the bounds of regulatory compliance? would it be seen as default-safe or as an incursion on user rights]. Note that data retention policy applies.
+
+
+2026-06-13
+
+- We do not guarantee recipient will be able to access the secret. We can't: network issues can happen, processes restarted. Because we guarantee at most one reveal, we cannot also guarantee the value is fully received.
+- We do not guarantee that a secret reaches its intended target ([ed: need better language]). Insofaras, anyone with the link is considered a recipient. Use addtional protection as available, like passphrase, require login, require organization member, or use multiple secret links..
+
+2026-06-11
+
+
+- Terms specific to reselling. Must be 1 to 1.
+  - The price-parity stipulation. What you're describing, requiring a reseller to charge the same price you charge, is resale price maintenance (RPM): a supplier dictating the reseller's resale price. It's not a common clean SaaS clause, and the reason it's uncommon is that fixed resale pricing is the most legally sensitive form of vertical price restraint.
+- Define the correct procedure: to create multiple organizations under one main account, where each organization has its own subscription which represents one customer.
+
+
+On the terms cleanup itself: the gap in Section 4 isn't a missing price clause. It's the absence of a clear line between permitted procurement (one subscription bought and passed through to one named customer) and prohibited resale (one account served to multiple customers, or operating a reseller business without a separate signed agreement). Defining those two cases is what actually closes the hole you noticed, and it does it without wading into price-setting at all.
+
+2026-06-05
+
+
+- Add: We recommend not misuing coupons or promotions. Non-profit, charity, B-Corps, and education discounts are monitored. We reserve the right to terminate subscriptions using a coupon that does not match the type of company or organization.
+
+
+
+2026-06-01
 
 
 - Add that where we say unlimited there may be a soft limit to prevent abuse, which menas they can be increased by request and no additional charge. The soft limit is about resource allocation and avoids accidental or intentional disruptions.

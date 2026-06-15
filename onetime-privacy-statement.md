@@ -202,8 +202,9 @@ When permitted, we will make a reasonable effort to notify users of any disclosu
 By design, our ability to respond to such requests with respect to Secret Content is limited:
 
 - We cannot disclose the contents of a secret that has already been purged.
-- We cannot decrypt Secret Content where the secret was protected with a user-supplied passphrase.
 - We can disclose Account Data, including account email addresses, the current or previous existence of a secret key (not the contents), its creation timestamp, its expiry, and similar metadata, when properly compelled to do so.
+
+Secret Content that has not been purged is encrypted at rest. Encryption keys are not stored alongside the encrypted data; the database tier does not hold or have access to the key material needed for decryption. Where a secret was created with a user-supplied passphrase, the passphrase controls authorization to access the secret but is not part of the encryption key derivation. The technical details of these measures are described in [DPA Schedule C](https://onetimesecret.com/dpa).
 
 ## How you can access and control your information
 
