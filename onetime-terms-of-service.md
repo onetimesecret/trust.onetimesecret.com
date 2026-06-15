@@ -51,6 +51,9 @@ These definitions are the canonical source for terminology used in both this Agr
 12. "**Homepage Secret**" means a Secret created by a visitor through your Custom Domain's homepage and addressed to you. Homepage Secrets are an optional feature you may enable or disable on each Custom Domain. The page rendered to a recipient retrieving any Secret (whether a Homepage Secret or a standard Secret) is not a defined term and is referred to in plain language where relevant.
 13. "**Organization**" means a multi-user account on the Service, owned by a single legal entity and managed by one or more administrators on behalf of its members.
 14. "**SSO**" means Single Sign-On — authentication of users via your Organization's external identity provider using SAML 2.0, OIDC, or another federation protocol we support.
+15. "**Recipient**" means any person who retrieves, or attempts to retrieve, a Secret using its access link. A recipient need not hold an account. Authenticated recipients (for example an account owner, an invited Organization member, an Organization member signed in through SSO, or an Organization administrator) are also covered under the account types described in [Section B](#b-account-terms). For non-authenticated recipients, possession of the access link is what grants the ability to retrieve a Secret; we do not separately verify the identity of a non-authenticated recipient.
+
+**Surfaces of the Service.** The Service presents distinct surfaces, each with a different audience. The public surface is where a Secret is created and retrieved, and is available to any visitor, including non-authenticated recipients. The workspace is the area available to a signed-in account holder for managing their account, Organizations, and configuration. Session pages may be mixed-use, serving both signed-in and non-authenticated visitors depending on the action. References in this Agreement to a particular surface should be read accordingly.
 
 ## B. Account Terms
 
@@ -83,6 +86,7 @@ If you create an Organization, the following additional rules apply:
 - **Member responsibility.** The Organization is responsible for ensuring its members comply with these Terms. The Organization owner is responsible for promptly removing or suspending member access when appropriate (for example, when a member leaves the Organization).
 - **Member data.** Organization owners and administrators have administrative control over member accounts — including the ability to add or remove members, configure access permissions, and view Organization-level audit logs. Data processing roles and responsibilities are defined in our [Data Processing Agreement](https://onetimesecret.com/info/dpa).
 - **Billing.** The Organization is responsible for fees associated with all members and all Organization-level configuration. Member counts are governed by the Organization's plan.
+- **One Organization per customer.** A single account owner may hold more than one Organization (see [Section B.2](#2-account-requirements)). Where an account owner administers Organizations on behalf of distinct customers, each such customer must be represented by its own Organization, and each Organization carries its own subscription. This arrangement keeps one Organization aligned to one customer and is distinct from the prohibited resale described in [Section C.4](#4-service-usage-limits).
 
 ### 4. Authentication Methods
 
@@ -193,6 +197,8 @@ If we determine that your usage of free services is significantly excessive in r
 
 Paid plans do not impose fixed usage ceilings; however, we monitor usage patterns to ensure fair access across our customer base. If your usage is materially outside typical patterns for your plan tier, we will contact you to discuss options, which may include upgrading to a higher tier or an API-specific plan. For programmatic or high-throughput access, see [Section H](#h-api-terms).
 
+**"Unlimited" features.** Where we describe a feature as "unlimited," a soft limit may apply to prevent abuse and to protect the allocation of shared resources against accidental or intentional disruption. A soft limit is not a billing cap: where you reach one in the ordinary course of use, you may request an increase at no additional charge.
+
 ### 8. User Protection
 
 You agree not to engage in activity that significantly harms our users. We will resolve disputes in favor of protecting our users as a whole.
@@ -255,7 +261,9 @@ Availability and configuration options are described at [onetimesecret.com/prici
 - **Incoming Secrets** — Visitors may send Secrets to pre-configured recipients within your Organization. Submissions are subject to [Acceptable Use](#c-acceptable-use).
 - **SSO** — Members authenticate via your Organization's identity provider. See [Section B.5](#5-single-sign-on).
 - **Sign-in Settings** — Configure which authentication methods are available to members of your Organization.
-- **Verified Email Addresses** — We send transactional email on your behalf from an address at your domain. Verification is performed via DNS records you maintain; misuse may result in suspension. 
+- **Verified Email Addresses** — We send transactional email on your behalf from an address at your domain. Verification is performed via DNS records you maintain; misuse may result in suspension. Configuring a deliverable Verified Email Address is your responsibility. If a configured address is not deliverable, this is a matter of configuration on your side. By default, a Verified Email Address is limited to an address at your Custom Domain: you may set the part before the "@", while the domain remains your Custom Domain (for example, `support@secrets.example.com`). Depending on your plan, you may be able to configure an address at another domain you control (for example, `support@example.com`).
+
+**Responsibility for Homepage Secrets and Incoming Secrets.** Where you enable Homepage Secrets or Incoming Secrets, you, as the Organization owner, are responsible for the content created or received through those features and for its compliance with [Acceptable Use](#c-acceptable-use). For Incoming Secrets, we make a best effort to avoid exposing the recipient email addresses you have configured. We are not, however, liable for exposure of a configured email address that results from a defect in the Service or from misconfiguration on your part.
 
 ### 3. Confidentiality of Account Resources
 
@@ -345,6 +353,8 @@ For our **multi-tenant paid plans** (such as Identity Plus, Identity Lite, Team 
 
 For our **single-tenant plans** (Global Elite and any other dedicated deployments), which are billed annually only, refund terms are governed by the customer's separate agreement where one is in place. Where no such separate terms have been agreed, refunds are available within 30 days of the most recent billing date.
 
+**Single-tenant deployment options.** Our Global Elite tier provides a manual, high-touch, single-tenant deployment that can be tailored to a customer's requirements. We may also offer automatically provisioned single-tenant deployments, which provide a dedicated environment through an onboarding experience similar to our multi-tenant plans. Where offered, an automatically provisioned single-tenant deployment may consist of a single virtual server running the application and database together, or of separate application and database instances, with configurable resources and a choice of hosting region. The deployment options available to you, including resources and region, are described where the offering is presented.
+
 To request a refund, contact [support@onetimesecret.com](mailto:support@onetimesecret.com). Outside the windows described above, refunds are at our sole discretion and will not be granted except where required by applicable law.
 
 ### 4. Authorization
@@ -360,6 +370,10 @@ You are responsible for all fees, including taxes, associated with your use of t
 - **Payment processor.** We use Stripe as our payment processor. When you provide payment information, you provide it directly to Stripe, which operates under its own privacy policy and terms of service.
 - **Billing cycle.** We bill on the day you first signed up for a paid plan. If you change your plan, your billing day may reset.
 - **Card details.** We do not store your full credit card number on our servers. This information is stored by Stripe in accordance with PCI compliance standards. We retain only a payment token that allows us to process recurring charges.
+
+### 7. Coupons and Promotions
+
+We offer discounts and promotional pricing to certain types of organization, including non-profits, charities, B Corporations, and educational institutions. Eligibility for these discounts is monitored. We reserve the right to suspend or terminate any subscription that uses a coupon or promotion for which the account does not qualify, including where the organization type does not match the discount claimed. We ask that you not apply a coupon or promotion you are not eligible to use.
 
 ## J. Cancellation and Termination
 
