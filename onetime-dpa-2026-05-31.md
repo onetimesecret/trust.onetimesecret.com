@@ -240,7 +240,7 @@ Notwithstanding anything to the contrary in the Agreement (including this DPA), 
 
 ## Schedule A - List of Approved Subprocessors
 
-Onetime Secret engages subprocessors based on functional requirements and customer preferences. The subprocessors listed below are organized by purpose; within each category, some are required for service operation while others represent alternatives that Global Elite customers may select during onboarding.
+Onetime Secret engages subprocessors based on functional requirements and customer preferences. The subprocessors listed below are organized by purpose; within each category, some are required for service operation while others represent alternatives that the Processor may engage.
 
 Service tier affects subprocessor availability and architecture:
 
@@ -248,7 +248,7 @@ Service tier affects subprocessor availability and architecture:
 
 *Identity Plus (Mid-Tier)*: operates on multi-tenant infrastructure (e.g., eu.onetimesecret.com) with secure compartmentalization between customers. Custom domain functionality requires third-party network infrastructure that terminates SSL/TLS connections outside the Processor's direct control, as detailed in the Network & Security category below.
 
-Where multiple subprocessors appear within a category, they represent alternatives unless explicitly stated as additive. Core subprocessors (Section A) apply to all service tiers.
+Where multiple subprocessors appear within a category, they represent alternatives unless explicitly stated as additive. Core subprocessors (those not marked optional) apply to all service tiers.
 
 ### Infrastructure & Hosting
 
