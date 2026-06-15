@@ -144,6 +144,8 @@ The technical and organizational security measures applied to the Service are:
 
 These are summarized here for transparency. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
 
+Our service runs on open-source software whose source code is publicly available for independent review. This transparency allows security researchers and the public to inspect how Secret Content is encrypted, stored, and handled, rather than relying on our description of these measures alone.
+
 No method of transmission or storage is 100% secure, and we cannot guarantee absolute security.
 
 ## Where your data is processed
@@ -176,6 +178,8 @@ We provide the same baseline of privacy protection to all our users. Some region
 ### Europe (EU and EEA) and the United Kingdom
 
 If you are in the EU, EEA, or UK, you have rights under the GDPR or UK GDPR, including the right to access, rectify, or erase your personal data; the right to restrict or object to processing; and the right to data portability. You also have the right to lodge a complaint with your local supervisory authority — the Information Commissioner's Office (ICO) for UK residents, or the supervisory authority in your country of residence for EU/EEA residents.
+
+Where your personal data takes the form of Secret Content, the technical design of the service limits how some of these rights can be exercised in practice. Secrets are encrypted and are automatically purged after they are viewed, after they expire, or when they are deleted via the Receipt Link. As a result: an access request under GDPR Article 15 cannot be fulfilled for a secret that has already been purged, or where we cannot verify your relationship to the secret; rectification under Article 16 and erasure under Article 17 of Secret Content are exercised by you, or by the person who created the secret, deleting the secret via the Receipt Link or allowing it to expire; and we will cooperate with requests relating to account-level personal data, such as your email address and account metadata, as described above and in our Data Processing Agreement. We cannot retrieve, restore, or assist with access to a secret once it has been viewed, expired, or deleted.
 
 ### California
 
@@ -219,6 +223,8 @@ The cancellation and deletion windows for Account Data, including the active rec
 We retain billing records for as long as required by applicable tax and accounting law (typically six to ten years), regardless of account deletion. Billing records are limited to invoice metadata and are held by Stripe and in our accounting records.
 
 If you would like to cancel your account or delete your personal information, you may do so from your account dashboard or by emailing [support@onetimesecret.com](mailto:support@onetimesecret.com). We retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.
+
+Our duty of confidentiality with respect to information disclosed to us does not end when your account or agreement with us ends. The confidentiality obligations described in our Data Processing Agreement continue to apply after termination to any confidential information disclosed to us before termination. This continuing obligation does not extend the retention periods described above; your data is still deleted within the windows set out in this section.
 
 ## How we communicate with you
 

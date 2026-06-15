@@ -168,6 +168,8 @@ The second clause ("encrypted client-side with a key we never receive, such as i
 | Low Priority TODOs | 2 | 2 | 0 | 0 | 0 |
 | **Total Items** | **18** | **18** | **0** | **0** | **0** |
 
+Cross-document mirror items (added after the original 18, from DPA review): DPA-2, DPA-4, DPA-10 applied; DPA-3 open (needs-decision). See "Cross-Document Mirror Items (from DPA review)" below.
+
 **Previously completed (from prior review):**
 - Bcrypt → Argon2 (line 137 now reads Argon2id)
 
@@ -195,10 +197,44 @@ The second clause ("encrypted client-side with a key we never receive, such as i
 - TODO-7: Decided — keep subprocessor lists in both documents (summary in privacy statement, detail in DPA).
 - TODO-8: Resolved passphrase encryption claim (Option B — doc fix). Removed false "we cannot decrypt" claim from compelled disclosure section. Replaced with honest architectural description: key isolation between app/DB tiers + passphrase as access-control gate (not key derivation). Cross-references DPA Schedule C. Aligns with DPA §1.1 which already stated the truth. Proxy clause was removed in prior batch.
 
-**Completion: 100%** (18/18 addressed)
+**Completion: 18/18 original review items addressed.** Cross-document mirror items added separately: DPA-2, DPA-4, DPA-10 applied; DPA-3 open (needs-decision).
 
 ---
 
 ## Remaining Work
 
-None. All 18 items resolved.
+One open item: DPA-3 (needs-decision). See Cross-Document Mirror Items below. All original 18 review items remain resolved.
+
+---
+
+## Cross-Document Mirror Items (from DPA review)
+
+Items mirrored from the Data Processing Agreement into the privacy statement so the two documents stay aligned.
+
+### DPA-2: Ephemeral-data limits on data-subject rights — APPLIED
+- **Disposition:** auto-apply
+- **Placement:** Section "Your rights and how to raise concerns", subsection "Europe (EU and EEA) and the United Kingdom". Appended as a new paragraph after the existing rights/complaint paragraph, before "### California".
+- **Mirror of:** DPA section 7.3(a)(b)(c).
+- **Summary:** Acknowledges that for Secret Content the technical design limits Article 15 access, Article 16 rectification, and Article 17 erasure; erasure is exercised by the creator via the Receipt Link or expiry; account-level data requests are handled as described. Reuses existing in-corpus purged-secret wording. No new legal commitment.
+
+### DPA-4: Open-source transparency note — APPLIED
+- **Disposition:** auto-apply
+- **Placement:** Section "How we secure your information", new paragraph after the "These are summarized here for transparency..." sentence and before the "No method of transmission or storage is 100% secure" sentence.
+- **Mirror of:** DPA-4. Open-source status already asserted in-corpus (self-hosted deployments of our open-source software).
+- **Summary:** States that the service runs on open-source software whose source is publicly available for independent review. Phrased URL-free to avoid inventing an application code repository URL and to avoid miscit­ing the site-policy repository as service-code evidence. Existing crypto bullets untouched.
+
+### DPA-10: Post-termination confidentiality — APPLIED
+- **Disposition:** auto-apply
+- **Placement:** Section "Data retention and deletion", new paragraph after the existing retention paragraph ("...resolve disputes, and enforce our agreements."), before "## How we communicate with you".
+- **Mirror of:** DPA section 14, paragraph 2.
+- **Summary:** Confidentiality obligations continue after termination for information disclosed before termination. Includes a guardrail clarifying that this does not extend the 30+30 day deletion windows in the same section.
+
+### DPA-3: No-sell/share qualifier revision — NEEDS DECISION
+- **Disposition:** needs-decision (NOT applied to live document)
+- **Location:** Section "How we share the information we collect", first sentence ("We do not share, sell, rent, or trade your Account Data with third parties for their commercial purposes. We do not disclose Account Data outside Onetime Secret except...").
+- **Recommended revision:**
+
+  > We do not sell, rent, or trade your Account Data. We do not share your Account Data with third parties for their own commercial purposes. We do not disclose Account Data outside Onetime Secret except in the situations listed in this section, in the section below on Compelled Disclosure, or with your permission.
+
+- **Rationale:** Splits the verbs. Makes sell/rent/trade an absolute commitment (the qualifier wrongly narrowed it). Retains "for their own commercial purposes" for the verb "share" because it is load-bearing: the subprocessors clause and the corporate-transaction clause describe OTS sharing Account Data; a blanket "we do not share Account Data with third parties" would contradict those clauses.
+- **Why needs-decision:** Broadening sell/rent/trade to an absolute commitment and re-scoping "share" is a substantive legal judgment, not a mechanical mirror. Requires sign-off before editing the live document.
