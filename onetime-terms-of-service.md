@@ -49,7 +49,7 @@ These definitions are the canonical source for terminology used in both this Agr
 10. "**Custom Domain**" means a domain you own and configure to point at our Service (for example, `secrets.example.com`). The free plan supports one Custom Domain; paid plans allow additional Custom Domains per the limits described at [onetimesecret.com/pricing](https://onetimesecret.com/pricing).
 11. "**Verified Email Addres**" means a domain for which you have completed our DNS-based verification flow so that we may send transactional email on your behalf from an address at that domain.
 12. "**Homepage Secret**" means a Secret created by a visitor through your Custom Domain's homepage and addressed to you. Homepage Secrets are an optional feature you may enable or disable on each Custom Domain. The page rendered to a recipient retrieving any Secret (whether a Homepage Secret or a standard Secret) is not a defined term and is referred to in plain language where relevant.
-13. "**Organization**" means a multi-user account on the Service, owned by a single legal entity and managed by one or more administrators on behalf of its members.
+13. "**Organization**" means a multi-user account on the Service that represents a single customer (one legal entity), managed by one or more administrators on its behalf. An Organization may be administered by a party other than the customer it represents (for example, a contractor administering an Organization for a client), and each Organization corresponds to a single customer and carries its own subscription.
 14. "**SSO**" means Single Sign-On — authentication of users via your Organization's external identity provider using SAML 2.0, OIDC, or another federation protocol we support.
 15. "**Recipient**" means any person who retrieves, or attempts to retrieve, a Secret using its access link. A recipient need not hold an account. Authenticated recipients (for example an account owner, an invited Organization member, an Organization member signed in through SSO, or an Organization administrator) are also covered under the account types described in [Section B](#b-account-terms). For non-authenticated recipients, possession of the access link is what grants the ability to retrieve a Secret; we do not separately verify the identity of a non-authenticated recipient.
 
@@ -173,6 +173,10 @@ You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portio
 
 - **Prohibited resale of domain-specific features.** You may not resell, sublicense, or offer as a managed service to third parties any domain-specific functionality — including Custom Domains, Verified Email Addresses, Homepage Secrets, or SSO configuration — without our prior written consent.
 
+- **Serving your own customers.** You may use the Service for the benefit of your own customers, including as a contractor, agency, or managed-service provider, provided each customer is set up as its own Organization with its own subscription, so that one Organization corresponds to one customer. Used this way, no separate agreement is required.
+
+- **Prohibited resale of the Service.** Without a separate written agreement signed with Onetime Secret, you may not resell or sublicense the Service, provide it to a third party on a service-bureau basis, white-label or repackage it as your own offering, or operate a reseller business based on the Service. Placing multiple distinct customers in a single Organization or subscription, to avoid the per-Organization basis described above, is also prohibited. This is in addition to the restriction on domain-specific features above.
+
 ### 5. Scraping
 
 Scraping refers to extracting data from our Website via an automated process, such as a bot or web crawler. It does not refer to legitimate use of our API (see [Section H](#h-api-terms)). You may scrape the Website for the following reasons:
@@ -229,6 +233,8 @@ Secret Content is held subject to the technical constraints described in [Sectio
 
 - We do not access, read, scan, categorize, or analyze Secret Content, except: (a) with the express prior consent of the content owner; (b) at the direction of an Organization owner acting on behalf of its members, where such access is reasonably necessary for compliance, security, or administrative purposes within that Organization; (c) for debugging, troubleshooting, or demonstration purposes, provided that access is limited to Onetime Secret personnel acting under a duty of confidentiality and is logged for audit purposes; or (d) when the Secret link is addressed to Onetime Secret (for example, sent to a support or team address). Any access under this section is limited in scope and duration to what is reasonably necessary to accomplish the stated purpose.
 - Secret Content is automatically purged on first viewing, on expiry, or on deletion via the Receipt Link.
+
+**No guarantee of receipt or delivery.** We do not guarantee that a recipient will be able to access a Secret. Access can be affected by conditions outside our control, including network interruptions, software errors, and operational changes to our systems. Because a Secret is revealed at most once, we cannot also guarantee that its contents are fully received. We do not guarantee that a Secret reaches its intended target. Any person who holds the access link is treated as a Recipient, whether or not they are the person you intended. Where stronger assurance matters, use the additional protections available to you, which may include setting a passphrase, requiring the recipient to sign in, requiring the recipient to be a member of your Organization, or sending the contents across multiple separate Secret links.
 
 ### 5. Feedback
 
@@ -436,6 +442,8 @@ For the avoidance of doubt, in case of any dispute or ambiguity, the English ver
 Onetime Secret provides the Website and Service "as is" and "as available," without warranty of any kind. Without limiting this, we expressly disclaim all warranties, whether express, implied, or statutory, regarding the Website and Service, including without limitation any warranty of merchantability, fitness for a particular purpose, title, security, accuracy, and non-infringement.
 
 We do not warrant that the Service will meet your requirements; that the Service will be uninterrupted, timely, secure, or error-free; that the information provided through the Service is accurate, reliable, or correct; that any defects or errors will be corrected; that the Service will be available at any particular time or location; or that the Service is free of viruses or other harmful components. You assume full responsibility and risk of loss resulting from your downloading or use of files, information, or other material obtained from the Service.
+
+We do not guarantee receipt or delivery of any Secret; see [Section D.4](#4-treatment-of-secret-content).
 
 ## M. Limitation of Liability
 

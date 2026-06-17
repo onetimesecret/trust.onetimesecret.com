@@ -177,7 +177,7 @@ This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TOD
 - **Drafted text:**
   > **No guarantee of receipt or delivery.** We do not guarantee that a recipient will be able to access a Secret. Access can be affected by conditions outside our control, including network interruptions and routine restarts of our systems. Because a Secret is revealed at most once, we cannot also guarantee that its contents are fully received. We do not guarantee that a Secret reaches its intended target. Any person who holds the access link is treated as a recipient, whether or not they are the person you intended. Where stronger assurance matters, use the additional protections available to you, which may include setting a passphrase, requiring the recipient to sign in, requiring the recipient to be a member of your Organization, or sending the contents across multiple separate Secret links.
 - **Priority:** not assigned (second-wave changeset)
-- **Disposition:** needs-decision
+- **Disposition:** APPLIED — added as the "No guarantee of receipt or delivery" paragraph at the end of D.4, with a cross-reference from Section L. Per decision, "and routine restarts of our systems" was generalized to "software errors, and operational changes to our systems."
 - **Rationale:** Carries both 2026-06-13 bullets and every sub-fact: the access non-guarantee with its causes (network, restarts), the at-most-one-reveal-therefore-not-full-receipt logic, the no-guarantee-of-reaching-target statement, the anyone-with-the-link-is-a-recipient rule, and all four mitigations (passphrase, require login, require Organization member, multiple links). An earlier draft added "if the single reveal is interrupted, the Secret may already have been consumed"; this was removed because it introduces a reveal-time consumption mechanism the author did not write and which depends on unverifiable code. The note says "need better language," so the wording is a judgment call. Mitigations are phrased "may include" to keep per-plan and per-region availability out of binding text, consistent with the TODO-9 preference.
 
 ### TODO-15: Reselling: Permitted Procurement vs Prohibited Resale
@@ -189,7 +189,7 @@ This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TOD
   >
   > - **Prohibited resale.** You may not use a single account to serve multiple customers, and you may not operate a reseller business based on the Service, without a separate written agreement signed with Onetime Secret. This is in addition to the restriction on reselling domain-specific functionality described above.
 - **Priority:** not assigned (second-wave changeset)
-- **Disposition:** needs-decision
+- **Disposition:** APPLIED (2026-06-16) — after prior-art research (see onetime-terms-resale-prior-art.md), reframed per the per-Organization-billing direction: added a "Serving your own customers" carve-out and a "Prohibited resale of the Service" bullet to C.4, and tightened the A.13 "Organization" definition so one customer maps to one Organization. No price term, consistent with the field.
 - **Rationale:** The note identifies that the gap in C.4 is not a missing price clause but the absence of a clear line between permitted procurement and prohibited resale; defining both cases closes the hole without setting price. The draft contains no price-parity or price-matching term. Per the note, requiring a reseller to charge a fixed price is resale price maintenance (RPM), the most legally sensitive form of vertical price restraint, which is why no such term is drafted; that caution is confined to this rationale and kept out of the binding text. Marked needs-decision because the resale boundary and the "separate written agreement" trigger are legal judgment calls.
 
 ### TODO-16: Multiple Organizations Under One Account
@@ -309,8 +309,8 @@ This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TOD
 | Item | Source | Target Section | Disposition |
 |------|--------|----------------|-------------|
 | TODO-13 | 2026-06-14 | RELOCATED → Privacy Statement | RELOCATED (see Privacy TODO-12) |
-| TODO-14 | 2026-06-13 | D.4 / new D clause (+ L xref) | needs-decision |
-| TODO-15 | 2026-06-11 | C.4 | needs-decision |
+| TODO-14 | 2026-06-13 | D.4 paragraph (+ L xref) | APPLIED (D.4) |
+| TODO-15 | 2026-06-11 | C.4 (+ A.13 definition) | APPLIED (C.4 + A.13) |
 | TODO-16 | 2026-06-11 | B.3 (+ B.2, C.4 xref) | APPLIED (B.3 bullet) |
 | TODO-17 | 2026-06-05 | I (new I.7) | APPLIED (I.7) |
 | TODO-18 | 2026-06-01 | C.7 / A | APPLIED (C.7) |
@@ -323,7 +323,7 @@ This addendum continues the id scheme of the first wave (IC-1..IC-4, TODO-1..TOD
 | TODO-23a | 2026-05-31 | B.6 / E (sub-claim) | needs-code-verification |
 | TODO-24 | 2026-05-31 | Intro / I.3 | APPLIED (I.3) |
 
-Counts: 14 changeset items covering 11 note items. APPLIED: 8 (TODO-16 through TODO-22 except TODO-20a, plus TODO-24). RELOCATED: 1 (TODO-13 → Privacy Statement, see Privacy review-tasks TODO-12). needs-decision: 3 (TODO-14, TODO-15, TODO-23, held for individual review). needs-code-verification: 2 (TODO-20a, TODO-23a). auto-apply: 0.
+Counts: 14 changeset items covering 11 note items. APPLIED: 10 (TODO-14, TODO-15, TODO-16 through TODO-22 except TODO-20a, plus TODO-24). RELOCATED: 1 (TODO-13 → Privacy Statement, see Privacy review-tasks TODO-12). needs-decision: 1 (TODO-23, held for individual review). needs-code-verification: 2 (TODO-20a, TODO-23a). auto-apply: 0.
 
 Eight second-wave items (TODO-16, TODO-17, TODO-18, TODO-19, TODO-20, TODO-21, TODO-22, and TODO-24) have been applied to the live `onetime-terms-of-service.md` per an approved changeset. TODO-13 (account inactivity removal) was relocated to the Privacy Statement (see Privacy review-tasks TODO-12), since inactivity removal is a data-retention matter rather than a contractual term. The remaining items (TODO-14, TODO-15, TODO-23) are held for individual review because each introduces a new legal clause or a judgment call on wording, placement, or a liability boundary, and the two implementation-dependent sub-claims (TODO-20a, TODO-23a) are isolated as needs-code-verification.
 
