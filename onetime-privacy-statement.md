@@ -167,9 +167,9 @@ When you create an account, you choose the regional environment in which your ac
 There are two narrow exceptions, both inherent to operating the service:
 
 - **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data — Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
-- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is then forwarded over an encrypted channel into the appropriate regional environment for processing. Global Elite deployments do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by us within the customer's selected region.
+- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is then re-encrypted for transit into the appropriate regional environment for processing. Single tenant deployments (e.g. Global Elite) do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by us within the customer's selected region.
 
-Other than the two exceptions described above, we do not transfer personal data outside the jurisdiction in which it was collected.
+Other than the two exceptions described above, we do not transfer data outside the jurisdiction in which it was collected.
 
 ## Your rights and how to raise concerns
 

@@ -71,9 +71,9 @@ We have a few simple rules for accounts on Onetime Secret's Service.
 
 - **Humans only.** You must be a human to create an account. Accounts registered by bots or other automated methods are not permitted.
 - **Machine accounts.** A machine account is an account set up by a human who accepts these Terms on behalf of the account, provides a valid email address, and remains responsible for its actions. A machine account is used exclusively for performing automated tasks. Multiple individuals may direct a machine account, but the account owner is ultimately responsible for the machine's actions. You may maintain no more than one free machine account.
-- **One free personal account.** You may not maintain more than one free personal account. This rule does not apply to membership in Organizations.
-- **Organization.** An account owner may create up to five Organizations. Additional Organizations are available by request.
 - **Age.** You must be at least 13 years old. If you are a resident of a country whose minimum age is older, you are responsible for complying with your country's laws.
+- **One free personal account.** You may not maintain more than one free personal account. This rule does not apply to membership in Organizations.
+- **Organization**. An account owner may create up to five free Organizations. Organizations with their own subscription don't count toward this limit — there is no cap on paid Organizations. The free limit is a housekeeping measure, not a business restriction, and we'll raise it on request. Contractors and agencies managing an Organization per customer are expressly supported (see Section C.4 (#4-service-usage-limits)).
 - **One human per login.** Login credentials are intended for individual use and should not be shared. Where multiple people in the same Organization need access, the Organization owner can add them as members of the Organization.
 - **Verifying you are on the official Service.** It is your responsibility to verify you are accessing the Service via an official Onetime Secret domain. Configuring a Custom Domain (see [Section E.1](#1-custom-domains)) is the recommended way to give your users a verifiable, branded entry point and to reduce phishing risk.
 
@@ -86,7 +86,7 @@ If you create an Organization, the following additional rules apply:
 - **Member responsibility.** The Organization is responsible for ensuring its members comply with these Terms. The Organization owner is responsible for promptly removing or suspending member access when appropriate (for example, when a member leaves the Organization).
 - **Member data.** Organization owners and administrators have administrative control over member accounts — including the ability to add or remove members, configure access permissions, and view Organization-level audit logs. Data processing roles and responsibilities are defined in our [Data Processing Agreement](https://onetimesecret.com/info/dpa).
 - **Billing.** The Organization is responsible for fees associated with all members and all Organization-level configuration. Member counts are governed by the Organization's plan.
-- **One Organization per customer.** A single account owner may hold more than one Organization (see [Section B.2](#2-account-requirements)). Where an account owner administers Organizations on behalf of distinct customers, each such customer must be represented by its own Organization, and each Organization carries its own subscription. This arrangement keeps one Organization aligned to one customer and is distinct from the prohibited resale described in [Section C.4](#4-service-usage-limits).
+- **One Organization per customer.** A single account owner may hold more than one Organization (see [Section B.2](#2-account-requirements)). Where an account owner administers Organizations on behalf of distinct customers, each such customer must be represented by its own Organization, and each Organization carries its own subscription. The business arrangements this supports — and the ones that require a separate agreement — are described in [Section C.4](#4-service-usage-limits).
 
 ### 4. Authentication Methods
 
@@ -167,15 +167,17 @@ While using Onetime Secret, you agree that you will not:
 
 ### 4. Service Usage Limits
 
-You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the Service, use of the Service, or access to the Service without our express written permission, except as follows:
+The Service is designed to support a variety of business arrangements including direct use, integration into your own applications, and use on behalf of your own customers. The structure underneath all of them is the same: one Organization represents one customer, and each Organization carries its own subscription.
 
 - **Permitted API integration.** You may use our API (subject to [Section H](#h-api-terms)) to integrate the Service into your own applications and to provide functionality to your end users, provided you do not misrepresent the source of the Service or remove attribution where required.
 
-- **Prohibited resale of domain-specific features.** You may not resell, sublicense, or offer as a managed service to third parties any domain-specific functionality — including Custom Domains, Verified Email Addresses, Homepage Secrets, or SSO configuration — without our prior written consent.
+- **Serving your own customers.** You may use the Service for the benefit of your own customers, including as a contractor, agency, or managed-service provider. Set up each customer as its own Organization with its own subscription, so that one Organization corresponds to one customer. You may own and administer all of these Organizations yourself, and a given subscription may be paid by you or directly by your customer. Used this way, no separate agreement is required, and we will raise the Organization limit on request (see [Section B.2](#2-account-requirements)).
 
-- **Serving your own customers.** You may use the Service for the benefit of your own customers, including as a contractor, agency, or managed-service provider, provided each customer is set up as its own Organization with its own subscription, so that one Organization corresponds to one customer. Used this way, no separate agreement is required.
+- **Running your own instance.** The Onetime Secret application is open source under the MIT license. If none of the hosted arrangements fit — including if you want to operate the software as part of your own offering — you are free to run your own instance. Self-hosted installations are independent of the Service and are not covered by these Terms or operated, supported, or warranted by us.
 
-- **Prohibited resale of the Service.** Without a separate written agreement signed with Onetime Secret, you may not resell or sublicense the Service, provide it to a third party on a service-bureau basis, white-label or repackage it as your own offering, or operate a reseller business based on the Service. Placing multiple distinct customers in a single Organization or subscription, to avoid the per-Organization basis described above, is also prohibited. This is in addition to the restriction on domain-specific features above.
+- **One customer per subscription.** Each subscription covers exactly one customer (one legal entity). Serving multiple distinct customers through a single Organization or subscription defeats the per-customer basis described above and is not permitted.
+
+- **Resale of the hosted Service.** Reselling or sublicensing the hosted Service, providing it to third parties on a service-bureau basis, or white-labeling it as your own hosted offering requires a separate written agreement with us. The same applies to offering domain-specific functionality — Custom Domains, Verified Email Addresses, Homepage Secrets, or SSO configuration — as a managed service to third parties.
 
 ### 5. Scraping
 
@@ -308,11 +310,11 @@ The following names are common law trademarks™ of Onetime Secret:
 - "OneTime Secret"
 - "One-Time Secret"
 - "OneTimeSecret"
-- "Onetime.co"
-- "Onetime.dev"
-- "OnetimeSecret.dev"
 
-Use of any of our trademarks must adhere to our trademark guidelines. Any use that may cause confusion among customers or that disparages Onetime Secret is prohibited. All other trademarks, product names, company names, and logos mentioned on the Website are the property of their respective owners.
+[ed: I moved the domains to an official domains section]
+
+Use of any of our trademarks must adhere to our trademark guidelines. Any use that may cause confusion among customers, casual users or link recipients or that disparages Onetime Secret is prohibited. All other trademarks, product names, company names, and logos mentioned on the Website are the property of their respective owners.
+
 
 ### 3. License to Onetime Secret Policies
 

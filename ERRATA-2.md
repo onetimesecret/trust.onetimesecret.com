@@ -1,0 +1,9 @@
+# ERRATA-2.md
+---
+
+2. **Subprocessor change-notice mechanism is unrealistic**
+
+
+The 30 days is contractual folklore, not law. Art. 28(2) general authorization requires only that you inform the controller of intended changes and give an opportunity to object — no period is specified, and live DPAs range from 14 days to none. The multi-tenant problem is solved in practice by two clauses working together: the objection remedy is no-penalty termination of the affected service (you're promising an exit, not promising to halt the change), and an emergency carve-out permits immediate replacement for security or continuity with notice after the fact. Nobody actually waits 30 days to swap a failing provider.
+
+On modern variations: EDPB Opinion 22/2024 moved the bar toward your instinct — identity of the full chain (including sub-subprocessors) should be readily available at all times and proactively current, which is stricter than the notify-subscribers-only market practice and directly favors a public, dated, complete list. Meanwhile customers already treat subprocessor pages as feeds — monitoring services scrape them for diffs — and Microsoft has started differentiating notice periods by subprocessor category. So yes, the trust-centre timeline is the right move, and the git-backed version is stronger than anything the hosted platforms offer: addedAt per entry, rendered changelog, diffable YAML at a stable URL, commit history as a timestamped audit trail. The one hard constraint: it supplements notice, it doesn't replace it. Objection windows must run from a notice event, and "you could have watched our repo" is a weak answer to "inform." Given your list is short and changes rare, notify all account holders by email rather than gating behind a subscription — costs nothing, reads more honest.
