@@ -8,11 +8,13 @@ These measures are reviewed and improved on an ongoing basis, taking into accoun
 
 This document does not apply to self-hosted deployments of the Processor's open-source software, where no data processing relationship with the Processor arises.
 
+**Shared responsibility.** The Processor operates the Service on certified third-party infrastructure (the "IaaS Provider(s)", listed as Subprocessors in Schedule A of the DPA). Each measure below is marked **Subprocessor**, **Processor**, or **Shared** to identify who implements it. Physical and facility controls are the IaaS Provider's responsibility under its own certified regime; application-layer cryptography and data handling are the Processor's; network, transport, and access controls are shared.
+
 ## Data Protection at Onetime Secret
 
 - Personnel with access to Company Personal Data are vetted for reliability and are bound by confidentiality undertakings or statutory obligations of confidentiality (DPA §3).
 - External parties are engaged under confidentiality terms; Subprocessors are engaged only under agreements no less protective than the DPA (DPA §6).
-- The core application is published as open-source software, allowing the Company and independent parties to inspect the Processor's data-handling and cryptographic implementations — a verifiable layer of transparency beyond the descriptions below.
+- The core application **and its CI/security pipeline configuration** are published as open-source software, allowing the Company and independent parties to inspect and verify the Processor's data-handling, cryptographic, and quality controls — a verifiable layer of transparency beyond the descriptions below.
 
 ---
 
@@ -20,20 +22,27 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 ### 1.1 Physical Access Control
 
-*Technical:* Production systems are hosted in certified third-party data centers (e.g., Hetzner, ISO 27001:2022; UpCloud, ISO 27001:2022 / SOC 2 Type II / CISPE). The Processor operates no physical data center of its own; physical access is controlled by the hosting Subprocessor under its certified regime.
+*Responsibility: Subprocessor (IaaS Provider).*
+
+*Technical:* Production systems are hosted in certified third-party data centers (e.g., Hetzner, ISO 27001:2022; UpCloud, ISO 27001:2022 / SOC 2 Type II / CISPE). The Processor operates no physical data center of its own; physical access protection, facility surveillance, and visitor authentication are controlled by the hosting Subprocessor under its certified regime.
 
 *Organizational:* Subprocessor security practices, including physical controls, are assessed on a regular basis. Hosting is restricted to the approved Subprocessors listed in Schedule A of the DPA.
 
 ### 1.2 Logical Access and Authorization Control
 
+*Responsibility: Shared.*
+
 *Technical:*
-- Administrative access to production systems requires multi-factor authentication.
+- Administrative access to production systems requires multi-factor authentication and encrypted connections.
 - Access to cryptographic key material is restricted to essential operational processes.
 - User account credentials are protected with Argon2id adaptive one-way hashing (per-credential random salt, constant-time verification).
+- Role- and permission-based access control governs what users may do within their own account.
 
 *Organizational:* Access is granted on a least-privilege, need-to-know basis, strictly limited to individuals who require it for the purposes of the Principal Agreement. Personnel with system access are bound by confidentiality obligations (DPA §3).
 
 ### 1.3 Separation Control
+
+*Responsibility: Processor.*
 
 *Technical:*
 - Production and test/diagnostic environments are separated.
@@ -43,23 +52,43 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 *Organizational:* Regional data isolation policy (DPA §12): Company Personal Data collected within a regional environment is not transferred to infrastructure outside that region, with the sole exception of Stripe billing data (covered by the EU-US Data Privacy Framework and successor mechanisms).
 
-### 1.4 Pseudonymization and Encryption (Art. 32(1)(a))
+### 1.4 Pseudonymization and Encryption (Art. 32(1)(a); Art. 25(1))
 
-*Technical:*
+*Responsibility: Processor.*
+
+*Technical — Encryption:*
 - **Secret Content at rest:** XChaCha20-Poly1305 authenticated encryption (AES-256-GCM available as an alternative); keys derived with BLAKE2b from a system-level secret not stored alongside the data plus a context string; per-operation random nonce. The encryption key is not stored and must be reconstructed at decryption time; the database server does not hold the key material necessary to decrypt Secret Content.
 - **Passphrase-protected Secrets:** Where supplied, a user passphrase acts as an access-control gate verified before decryption; the passphrase hash is stored separately using Argon2id.
 - **Full-disk encryption:** Production storage volumes are encrypted at the block level using LUKS.
 - **Backups:** Encrypted with GPG using 4096-bit keys; decryption keys are stored offsite and are not present in the production environment.
 
+*Technical — Pseudonymization:* Account-level records are keyed by non-identifying internal identifiers rather than by personal data. On account deletion, Account Data is removed in accordance with §5 below, so retained operational records no longer resolve to an identifiable data subject.
+
 *Organizational:* Secret Content is automatically Purged on first access or expiration; the Processor does not access, categorize, or analyze Secret Content. Operational logs apply client- and server-side data scrubbing to minimize incidental personal data.
 
 ---
 
-## 2. Integrity (Art. 32(1)(b))
+## 2. Integrity
+
+### 2.1 Data Transfer Control
+
+*Responsibility: Shared.*
 
 *Technical:*
+- All data in transit is protected with TLS 1.3 and strong cipher suites.
 - Authenticated encryption (XChaCha20-Poly1305 / AES-256-GCM) provides tamper detection for Secret Content at rest; AAD binding prevents ciphertext being moved between records.
-- All data in transit is protected with TLS 1.3 and strong cipher suites, providing integrity and confidentiality of transmissions between clients and the Processor's infrastructure.
+- All backups are encrypted at rest.
+
+*Organizational:* Data processing agreements with sub-processors to ensure data security and to control measures taken (DPA §6). Data remains within the IaaS Provider infrastructure of its collection region, save for the limited exceptions documented in DPA §12.
+
+### 2.2 Input Control
+
+*Responsibility: Processor.*
+
+*Technical:*
+- Structured data input occurs through dedicated user interfaces and APIs that enforce the permission model.
+- User input is validated to reject malformed or manipulated data.
+- Application changes and relevant user actions are logged to support auditing and reconstruction.
 
 *Organizational:* The Processor does not engage in automated individual decision-making or profiling (DPA §12.3). Processing is limited to the documented instructions in DPA §2.
 
@@ -67,16 +96,22 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 ## 3. Availability, Resilience and Recoverability (Art. 32(1)(c))
 
+*Responsibility: Shared.*
+
 *Technical:*
-- Local encrypted backups retained for seven (7) days.
-- Geo-located encrypted backups (Global Elite) stored in AWS S3 (Frankfurt, EU) with automatic expiration after thirty (30) days.
+- Local encrypted backups retained for seven (7) days; geo-located encrypted backups (Global Elite) stored in AWS S3 (Frankfurt, EU) with automatic expiration after thirty (30) days.
 - Backup encryption uses an asymmetric scheme so that compromise of production systems does not expose backup contents.
+- Continuous system hardening against known attack classes, including denial-of-service.
 
 *Organizational:* Backup storage locations align with the regional data isolation policy (DPA §12). Encrypted backup copies of Purged Secrets are retained only for the Backup Retention Period (30 days), after which they are automatically deleted.
 
 ---
 
 ## 4. Procedures for Review, Assessment and Evaluation (Art. 32(1)(d), 25(1))
+
+### 4.1 Data Protection Management and Incident Response
+
+*Responsibility: Processor.*
 
 *Technical:* A self-hosted error-monitoring stack (Sentry, hosted within the EU) supports security monitoring and technical diagnostics, with data scrubbing applied to minimize incidental personal data. Server request logs are retained for the Operational Retention Period only.
 
@@ -88,9 +123,47 @@ This document does not apply to self-hosted deployments of the Processor's open-
 - Procedures to assist with Data Subject rights requests, taking into account the ephemeral nature of Secret Content (DPA §7).
 - Annual review of the Data Protection Officer and UK representative assessments (DPA §3.2; UK Addendum §3.4).
 
+### 4.2 Secure Development and Vulnerability Management
+
+*Responsibility: Processor.*
+
+*Technical:*
+- Every change is gated by a tiered automated CI pipeline before merge: static analysis and linting (Ruby and TypeScript), internationalization validation, unit test suites, and an integration test matrix exercised across multiple storage backends (PostgreSQL, SQLite) and feature configurations, followed by container build validation and end-to-end container tests.
+- Each change additionally passes independent automated code review and forward-compatibility testing against the next major language runtime.
+- API contracts are generated and diffed on each change to detect unintended interface changes.
+
+*Organizational:*
+- Dependencies are updated via Renovate with a fixed cooldown period (currently two weeks) before adoption, mitigating supply-chain risk from compromised or malicious package releases.
+- Security-flagged and high-severity dependency vulnerabilities are handled on an expedited basis through Dependabot security updates, bypassing the cooldown.
+- Because the application source and its CI configuration are open-source, these controls are independently verifiable rather than merely asserted.
+
 ---
 
-## 5. Sub-processor Compliance (Art. 28)
+## 5. Privacy by Default (Art. 25(2))
+
+*Responsibility: Processor.*
+
+- The Service is data-minimizing by design: Secret Content is ephemeral and automatically Purged on first access or expiration, so the default lifecycle of the most sensitive data is non-retention.
+- No third-party tracking, analytics, cookies, or behavioral profiling is employed, and no automated decision-making is performed (DPA §5, §12.3).
+- Account Data is limited to what is necessary to provide the Service: email address, authentication credentials, billing information, and usage metadata (DPA §1.16).
+- On account deletion, Account Data is deleted following the Operational Retention Period (30 days, retained to facilitate export requests), and encrypted backup copies are removed within the Backup Retention Period (30 days) (DPA §10).
+
+---
+
+## 6. Order Control
+
+*Responsibility: Shared.*
+
+- The Processor processes Company Personal Data only on the Controller's documented instructions (DPA §2).
+- The Controller manages its own account and users through the Service interface; credentials are created and controlled by the Controller, and only credentialed users may enter, modify, or delete data within the Controller's instance.
+- Actions the Controller cannot perform through the interface are carried out by the Processor only on written instruction.
+- Personnel access to Controller data is limited to defined operational and support circumstances under confidentiality obligations (DPA §3).
+
+---
+
+## 7. Sub-processor Compliance (Art. 28)
+
+*Responsibility: Processor.*
 
 *Technical:* Subprocessor remote access to relevant systems is controlled and limited to the services each Subprocessor provides.
 
