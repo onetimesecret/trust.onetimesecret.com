@@ -1,0 +1,126 @@
+# Retention and backup periods across policy documents
+# Source: ADR-001-retention-source-of-truth.md
+# Updated: 2026-07-02
+
+definitions:
+  backup_retention_period:
+    value: 30 days
+    source: DPA §1.17
+    description: Maximum period for encrypted backup copies after deletion from active systems
+
+  operational_retention_period:
+    value: 30 days
+    source: DPA §1.18
+    description: Server request logs, error monitoring, post-termination Account Data
+
+  subprocessor_notice_period:
+    value: 30 days
+    source: DPA §1.19
+    description: Objection window after Processor notice of new/replacement Subprocessor
+
+document_references:
+  toms:
+    local_backups:
+      value: 7 days
+      line: 102
+      note: Subset of backup_retention_period; faster recovery tier
+    geo_backups_global_elite:
+      value: 30 days
+      line: 102
+      location: AWS S3 Frankfurt
+    backup_retention_period:
+      value: 30 days
+      line: 106
+      refs: DPA §12
+    operational_retention_period:
+      value: 30 days
+      line: 116
+      refs: null
+    account_data_deletion:
+      active: 30 days
+      backup: 30 days
+      line: 150
+      refs: DPA §10
+
+  dpa:
+    backup_retention_period:
+      value: 30 days
+      line: 66
+      section: §1.17
+      canonical: true
+    operational_retention_period:
+      value: 30 days
+      line: 68
+      section: §1.18
+      canonical: true
+    subprocessor_notice_period:
+      value: 30 days
+      line: 70
+      section: §1.19
+      canonical: true
+    account_data_post_termination:
+      value: Operational Retention Period + Backup Retention Period
+      line: 177
+      section: §10
+
+  privacy_statement:
+    server_request_logs:
+      value: up to 30 days
+      line: 139
+      refs: ToS B.6
+    backup_retention:
+      value: up to 30 days
+      line: 153
+      refs: ToS B.6
+    account_data_deletion:
+      active: up to 30 days
+      backup: up to 30 days
+      line: 229
+      refs: ToS J.3
+    privacy_response:
+      value: 30 days
+      extendable: +30 days
+      line: 206
+    inactive_account_notice:
+      value: 30 days
+      line: 233
+    policy_change_notice:
+      value: 30 days
+      line: 253
+    subprocessor_notice:
+      value: 30 days
+      line: 159
+
+  tos:
+    ip_request_logs:
+      value: up to 30 days
+      line: 117
+      section: B.6
+    backup_retention:
+      value: up to 30 days
+      line: 119
+      section: B.6
+    account_data_deletion:
+      active: within 30 days
+      backup: up to 30 days
+      line: 424
+      section: J.3
+    data_export_request:
+      value: within 30 days
+      line: 430
+      section: J.3
+    refund_window:
+      value: 30 days
+      lines: [381, 382, 384]
+      section: I.2
+
+exceptions:
+  billing_records:
+    retention: as required by tax law
+    source: Privacy Statement
+    note: Not subject to 30-day consolidation
+
+  local_backups:
+    retention: 7 days
+    source: TOMs line 102
+    note: Operational tier within 30-day ceiling

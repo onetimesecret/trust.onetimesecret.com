@@ -20,9 +20,12 @@ The refund terms. The revision replaced "no refunds, no exceptions" with a 30-da
 ## Review subprocessors
 
 
-## 3. Availability, Resilience and Recoverability (Art. 32(1)(c))
 
-*Responsibility: Shared.*
+### Complete TOMs review
+
+This is the newest doc and has also had the least attention so far (July 2, 2026).
+
+In `### 3. Availability, Resilience and Recoverability (Art. 32(1)(c))`
 
 *Technical:*
 - Local encrypted backups retained for seven (7) days; geo-located encrypted backups (Global Elite) stored in AWS S3 (Frankfurt, EU) with automatic expiration after thirty (30) days.
