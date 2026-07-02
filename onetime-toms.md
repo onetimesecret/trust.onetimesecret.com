@@ -1,6 +1,6 @@
 # Technical and Organizational Measures (TOMs) — Onetime Secret
 
-Last modified: June 18, 2026
+Effective date: **TBD on release**
 
 This document describes the technical and organizational measures ("TOMs") implemented by Onetime Secret (the "Processor") pursuant to Article 32 of the GDPR to ensure a level of security appropriate to the risk. It supplements Section 4 (Security) and Schedule C of the Onetime Secret [Data Processing Agreement](./onetime-dpa-2026-05-31.md) ("DPA") and is the canonical description of those measures; capitalized terms used but not defined here have the meaning given in the DPA.
 
@@ -50,7 +50,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 - Application and data tiers are architecturally separated: application servers hold the system-level secret required for key derivation; database servers store encrypted Secret Content but do not hold or have access to that secret.
 - The object class and identifier are bound as Additional Authenticated Data (AAD), ensuring ciphertext cannot be transplanted between records.
 
-*Organizational:* Regional data isolation policy (DPA §12): Company Personal Data collected within a regional environment is not transferred to infrastructure outside that region, with the sole exception of Stripe billing data (covered by the EU-US Data Privacy Framework and successor mechanisms).
+*Organizational:* Regional data isolation policy (DPA §12): Company Personal Data collected within a regional environment is not transferred to infrastructure outside that region, with the two limited exceptions set out in DPA §12.2 — Stripe billing data (covered by the EU-US, UK Extension, and Swiss-US Data Privacy Frameworks, with Standard Contractual Clauses retained as a fallback) and transient edge-network TLS termination on the multi-tenant tiers, with traffic re-encrypted into the regional environment.
 
 ### 1.4 Pseudonymization and Encryption (Art. 32(1)(a); Art. 25(1))
 
@@ -170,7 +170,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 *Organizational:*
 - Subprocessors are engaged only under data processing agreements no less restrictive or protective than the DPA (DPA §6).
-- The Company receives at least thirty (30) days' advance notice before a new Subprocessor is engaged, with the opportunity to object (DPA §6).
+- The Company is notified by email of any intended new or replacement Subprocessor and has a thirty (30)-day objection window, during which it may terminate the affected services without penalty; in an emergency, a replacement may be engaged first with prompt notice afterward, the objection window running from that notice (DPA §6).
 - The current list of approved Subprocessors, with data location, purpose, and categories of data, is maintained in Schedule A of the DPA.
 - Subprocessor security practices are assessed on a regular basis.
 

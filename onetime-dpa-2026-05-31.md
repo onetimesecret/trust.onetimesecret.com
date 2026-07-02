@@ -314,8 +314,12 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **Stripe, Inc.** | 354 Oyster Point Boulevard South San Francisco, CA 94080 United States | US | *EU-US Data Privacy Framework certified* |
 | **Northflank, Ltd** | 20-22 Wenlock Road, London, England N1 7GU, United Kingdom | UK | |
 | **UpCloud Ltd** | Aleksanterinkatu 15 B, 7th floor, 00100 Helsinki, Finland | EU | *UpCloud is ISO 27001:2022, SOC 2 Type II, certified and a member of the CISPE Code of Conduct.* |
+| **DigitalOcean, LLC** | 101 Avenue of the Americas, 10th Floor, New York, NY 10013, United States | US | *Data located in EU or CA regions only* |
+| **Catalyst Cloud Limited** | Level 6, Catalyst House, 150 Willis Street, Te Aro, Wellington 6011, New Zealand (NZBN 9429046115577) | NZ | *New Zealand holds an EU adequacy decision* |
+| **Amazon Web Services EMEA SARL** | 38 Avenue John F. Kennedy, L-1855 Luxembourg | EU (Luxembourg) | *SES and S3; data located in EU regions* |
 | **CloudFlare, Inc.** | 101 Townsend Street, San Francisco, CA 94107, United States | US | *EU-US Data Privacy Framework certified* |
-| **Approximated, Inc.** | A Delaware Company. | US | *Multi-tenant only* |
+| **Approximated, Inc.** |2810 North Church Street Wilmington, Delaware 19802, United States | US | *Multi-tenant only* |
+| **BunnyCDN.** | BunnyWay d.o.o., Dunajska cesta 165, 1000 Ljubljana, Slovenia | EU | *Static websites and encrypted object storage* |
 
 
 ------------------------------------------------------------------------

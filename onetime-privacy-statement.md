@@ -52,7 +52,7 @@ If you create an Organization account — a workspace shared by multiple users �
 - Custom Domains, Verified Email Addresses, SSO configuration, and other settings configured for the Organization
 - An audit log of administrative actions taken within the Organization
 
-Under data protection law, our customer — the legal entity on whose behalf the Organization is created — is the "controller" of Organization members' personal data, and we process that data on the customer's behalf as a "processor". These roles are defined in our [Data Processing Agreement](https://onetimesecret.com/dpa). The Organization-side rules and responsibilities are set out in [Section B.3 of the Terms of Service](https://onetimesecret.com/terms#3-organization-accounts).
+Under data protection law, our customer — the legal entity on whose behalf the Organization is created — is the "controller" of Organization members' personal data, and we process that data on the customer's behalf as a "processor". These roles are defined in our [Data Processing Agreement](https://onetimesecret.com/dpa). The Organization-side rules and responsibilities are set out in [Section B.3 of the Terms of Service](https://onetimesecret.com/terms#3-organizations).
 
 ### Information from Single Sign-On
 
@@ -70,7 +70,7 @@ If you store sensitive personal information inside a secret, you remain responsi
 
 ### Homepage Secrets and Incoming Secrets
 
-If you have enabled **Homepage Secrets** or **Incoming Secrets** on a Custom Domain (see [Section E.3 of the Terms of Service](https://onetimesecret.com/terms#3-homepage-secrets)), visitors who submit secrets through your Custom Domain are treated, for privacy purposes, in the same way as any other visitor. We do not require these visitors to have an account. Their IP address and request metadata are subject to the same retention period as other server request logs.
+If you have enabled **Homepage Secrets** or **Incoming Secrets** on a Custom Domain (see [Section E.2 of the Terms of Service](https://onetimesecret.com/terms#2-domain-specific-features)), visitors who submit secrets through your Custom Domain are treated, for privacy purposes, in the same way as any other visitor. We do not require these visitors to have an account. Their IP address and request metadata are subject to the same retention period as other server request logs.
 
 If your configuration requires a visitor to identify themselves before submitting a secret (for example, by providing an email address), the information they provide is associated with the resulting secret and forms part of your Account Data. If you have configured Incoming Secrets with designated recipients, recipient email addresses are stored in hashed form to prevent enumeration.
 
