@@ -67,7 +67,7 @@ Unless otherwise defined herein, capitalized terms and expressions used in this 
 
 1.18) "*Operational Retention Period*" means thirty (30) days, being the standard period applied to: (a) server request logs, error monitoring data, and similar diagnostic information before automatic deletion; and (b) post-termination Account Data retention to facilitate data export requests.
 
-1.19) "*Subprocessor Notice Period*" means thirty (30) days, being the minimum advance notice provided to the Company before the Processor engages any new Subprocessor.
+1.19) "*Subprocessor Notice Period*" means thirty (30) days, being the period following the Processor's notice of a new or replacement Subprocessor during which the Company may object and terminate the affected Services as described in Section 6.
 
 The terms, "*Commission*", "*Controller*", "*Data Subject*", "*Member State*", "*Personal Data*", "*Personal Data Breach*",\* \*"*Processing*" and "*Supervisory Authority*" shall have the same meaning as in the GDPR or other applicable Data Protection Law, and their cognate terms shall be construed accordingly.
 
@@ -75,9 +75,9 @@ The terms, "*Commission*", "*Controller*", "*Data Subject*", "*Member State*", "
 
 2.1) For the purposes of this Agreement, Company Personal Data comprises two distinct categories with different processing characteristics:
 
-a\) Secret Content: encrypted, ephemeral data that is automatically Purged from active systems and may remain in encrypted backup systems for the Backup Retention Period thereafter; and
+a) Secret Content: encrypted, ephemeral data that is automatically Purged from active systems and may remain in encrypted backup systems for the Backup Retention Period thereafter; and
 
-b\) Account Data: retained for the duration of the Engagement and subject to the deletion provisions in Section 10.
+b) Account Data: retained for the duration of the Engagement and subject to the deletion provisions in Section 10.
 
 The Processor's ability to respond to certain requests or obligations under this Agreement may differ depending on which category of data is involved, as detailed in the relevant sections.
 
@@ -128,9 +128,15 @@ The Processor shall also assess the risks associated with processing activities 
 
 ## 6. Subprocessing
 
-Subject to this Agreement, the Company grants general authorization to the Processor to engage Subprocessors and disclose or transfer Company Personal Data to them. The Company acknowledges and approves the Subprocessors listed in Schedule A to this Agreement, understanding that this list may be updated by the Processor from time to time, in which case the Company shall be informed by the Processor of any changes at least the Subprocessor Notice Period prior to engaging any new Subprocessor, providing the opportunity to object to such engagement. Furthermore, the Company authorizes the Processor to disclose and transfer Personal Data to any company within its corporate group.
+Subject to this Agreement, the Company grants general authorization to the Processor to engage Subprocessors and disclose or transfer Company Personal Data to them. The Company acknowledges and approves the Subprocessors listed in Schedule A to this Agreement, understanding that this list may be updated by the Processor from time to time in accordance with this Section 6. Furthermore, the Company authorizes the Processor to disclose and transfer Personal Data to any company within its corporate group.
 
-Processor ensures that Subprocessors are subject to an agreement with Processor no less restrictive and protective than the present Agreement with respect to the protection of Company Personal Data to the extent applicable to the nature of the services provided by the Subprocessor.
+6.1) *Notice of changes.* The Processor shall give notice of the intended engagement of any new or replacement Subprocessor by email to all account holders, at the addresses associated with their use of the Services under the Principal Agreement. The Processor also maintains a current, dated Subprocessor list, with version history, in its public trust centre (a git-backed repository); that list supplements notice under this Section and does not replace it.
+
+6.2) *Objection and remedy.* If the Company objects to a new or replacement Subprocessor, the Company may, within the Subprocessor Notice Period, terminate the affected Services without penalty. Termination and the return or deletion of Company Personal Data are governed by the Principal Agreement and Section 10 of this Agreement. Such termination is the Company's remedy for an objection; the Processor is not obliged to suspend or reverse the engagement for the Services generally.
+
+6.3) *Emergency engagement.* Where reasonably necessary to preserve the security, availability, or continuity of the Services (for example, replacing a Subprocessor that has failed or suffered a security incident), the Processor may engage a new or replacement Subprocessor before giving notice, and shall notify the Company promptly after the engagement. The Company's objection right under Section 6.2 runs from that notice.
+
+6.4) Processor ensures that Subprocessors are subject to an agreement with Processor no less restrictive and protective than the present Agreement with respect to the protection of Company Personal Data to the extent applicable to the nature of the services provided by the Subprocessor.
 
 ## 7. Data Subject Rights
 
@@ -144,9 +150,9 @@ Taking into account the nature of the processing, Processor shall reasonably ass
 
 7.3) The Parties acknowledge that the technical design of the Services may limit the practical exercise of certain Data Subject rights with respect to Secret Content specifically. Secrets are encrypted and are automatically Purged after viewing or expiration. As a result:
 
-a\) Access requests (Article 15) cannot be fulfilled for Purged Secrets or for Secrets where the Processor cannot verify the requestor's relationship to the Secret;
+a) Access requests (Article 15) cannot be fulfilled for Purged Secrets or for Secrets where the Processor cannot verify the requestor's relationship to the Secret;
 
-b\) Rectification (Article 16) and erasure (Article 17) requests relating to Secret Content may be addressed by the Data Subject or Controller deleting or allowing the Secret to expire;
+b) Rectification (Article 16) and erasure (Article 17) requests relating to Secret Content may be addressed by the Data Subject or Controller deleting or allowing the Secret to expire;
 
 c\) The Processor will cooperate with Data Subject requests relating to account-level Personal Data (such as email addresses and account metadata) in accordance with Sections 7.1 and 7.2.
 
@@ -186,15 +192,19 @@ Information and audit rights of Company only arise under section 11 to the exten
 
 12.1) process and store all Data exclusively within the specific geographic region where it was initially collected (EU, UK, or other designated regions) and shall not transfer or authorize the transfer of Data between these distinct regional environments without the prior written consent of the Controller. For clarity:
 
-a\) Data collected from EU data subjects shall remain within EU infrastructure;
+a) Data collected from EU data subjects shall remain within EU infrastructure;
 
-b\) Data collected from UK data subjects shall remain within UK infrastructure;
+b) Data collected from UK data subjects shall remain within UK infrastructure;
 
 c\) Data collected in other regions shall remain within the infrastructure of that specific region.
 
 This regional data localization policy applies throughout the entire processing lifecycle. The Processor maintains segregated regional processing environments (including separate EU and UK environments) and implements technical and organizational measures to prevent unauthorized cross-regional transfers.
 
-12.2) ensure that Company Personal Data collected within a given regional environment is not transferred to infrastructure outside that region, with the following limited exception: billing data (limited to payment and invoicing information) is processed by Stripe, Inc. in the United States, as listed in Schedule A. For Company Personal Data originating from EU, EEA, UK, or Swiss data subjects, this transfer is covered by Stripe's certification under the EU-US Data Privacy Framework, the UK Extension to the EU-US Data Privacy Framework, and the Swiss-US Data Privacy Framework. Where an applicable transfer mechanism is invalidated, the Parties shall cooperate to implement an alternative approved mechanism (such as EU Standard Contractual Clauses, 2021 version) without undue delay.
+12.2) ensure that Company Personal Data collected within a given regional environment is not transferred to infrastructure outside that region, with the following limited exceptions:
+
+a) *Billing data* (limited to payment and invoicing information) is processed by Stripe, Inc. in the United States, as listed in Schedule A. For Company Personal Data originating from EU, EEA, UK, or Swiss data subjects, this transfer is covered by Stripe's certification under the EU-US Data Privacy Framework, the UK Extension to the EU-US Data Privacy Framework, and the Swiss-US Data Privacy Framework. Where an applicable transfer mechanism is invalidated, the Parties shall cooperate to implement an alternative approved mechanism (such as EU Standard Contractual Clauses, 2021 version) without undue delay.
+
+b) *Transient edge-network TLS termination.* On the multi-tenant Services, Cloudflare (for the Processor's regional service domains) and Approximated (for customer Custom Domains on the multi-tenant paid tiers) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is re-encrypted for transit into the appropriate regional environment for processing. Single-tenant deployments (e.g. Global Elite) do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by the Processor within the Company's selected region.
 
 12.3) not engage in automated individual decision-making, including profiling, as defined under Article 22 of the GDPR, in connection with Company Personal Data.
 
@@ -268,7 +278,7 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
 | *Approximated* | Global edge network | Identity Plus, Team Plus | ✔ | Custom domain with TLS termination | Account info, application data, network-level web traffic data, IP addresses |
-| *CloudFlare* | Global | All | ✔ | Network proxy ("Orange Cloud"), Security services, Custom domain with TLS termination | Account info, application data, network-level web traffic data, IP addresses |
+| *CloudFlare* | Global | All multi-tenant tiers | ✔ | Network proxy ("Orange Cloud"), security services, and TLS termination at the edge for the Processor's regional service domains (e.g. `eu.onetimesecret.com`); not used for customer Custom Domains | Account info, application data, network-level web traffic data, IP addresses |
 
 ### Email Services
 
@@ -284,8 +294,8 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |  |  |  |  |  |  |
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Hetzner (Object storage)* | EU (Germany, Finland) | All | ✔ | for | Account info, application data |
-| *AWS (S3)* | EU (Frankfurt, Ireland) | Global Elite | ✔ | S3 storage for geo-located encrypted backups | Account info, application data, |
+| *Hetzner (Object storage)* | EU (Germany, Finland) | All | ✔ | Object storage for encrypted offsite backups | Account info, application data |
+| *AWS (S3)* | EU (Frankfurt, Ireland) | Global Elite | ✔ | S3 storage for geo-located encrypted backups | Account info, application data |
 
 ### Payment Processing
 
@@ -307,8 +317,6 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **CloudFlare, Inc.** | 101 Townsend Street, San Francisco, CA 94107, United States | US | *EU-US Data Privacy Framework certified* |
 | **Approximated, Inc.** | A Delaware Company. | US | *Multi-tenant only* |
 
-
-##### 
 
 ------------------------------------------------------------------------
 

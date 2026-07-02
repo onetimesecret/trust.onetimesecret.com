@@ -135,7 +135,8 @@ This document does not apply to self-hosted deployments of the Processor's open-
 *Organizational:*
 - Dependencies are updated via Renovate with a fixed cooldown period (currently two weeks) before adoption, mitigating supply-chain risk from compromised or malicious package releases.
 - Security-flagged and high-severity dependency vulnerabilities are handled on an expedited basis through Dependabot security updates, bypassing the cooldown.
-- Because the application source and its CI configuration are open-source, these controls are independently verifiable rather than merely asserted.
+- As regular operating procedure, the production Service runs from the same public OCI images the Processor publishes. Any exception is temporary, made only when a vulnerability must be patched faster than the public release cycle allows.
+- Because the application source and its CI configuration are open-source, these controls are independently verifiable rather than merely asserted; running from the published images extends that verifiability to the deployed artifact itself.
 
 ---
 

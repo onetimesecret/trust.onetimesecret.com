@@ -18,16 +18,18 @@ policy text is dedicated to the public domain under CC0-1.0.
 
 **Accounts and Organizations**
 - Introduced Organizations: owner, administrator, and member roles; owners
-  hold billing and SSO configuration, administrators manage members, domain configuration, and audit
-  logs. 
-
-_Each Organization represents exactly one customer (one legal entity) and carries its own subscription; an account owner may create up to five._ (we need to figure this out clearly once and for all, because the current wording is still ambiguous. it should be possible for one person to have multiple organizations and also for a single legal entity to have multiple subscriptions. e.g. an IT contractor that creates an org for each of their customders and acts as the owner on their behalf; should that be one subscription or one subscription per custom of theirs? which approach encourages faster growth vs value capture?)
-  
+  hold billing and SSO configuration, administrators manage members, domain
+  configuration, and audit logs.
+- Each Organization represents one customer (one legal entity) and carries
+  its own subscription. One account owner may hold many Organizations — for
+  example, an Organization per customer they serve. The five-Organization
+  limit applies only to free Organizations, is a housekeeping measure rather
+  than a business restriction, and is raised on request; there is no cap on
+  paid Organizations.
 - One human per login. Organization membership replaces the previous shared
-  and additional-login arrangements. 
-
-_This is an important change for privacy and security controls, for secret delivery for example._
-
+  and additional-login arrangements. Per-person logins are what make the
+  privacy and security controls work: secret delivery, access controls, and
+  audit trails all assume that a login identifies one person.
 - Documented the available authentication methods (passphrase, magic link,
   social sign-in, passkeys, SSO, MFA) and how availability varies by region,
   plan, and Organization configuration, including new Single Sign-On terms.
@@ -37,14 +39,13 @@ _This is an important change for privacy and security controls, for secret deliv
   Content, Receipt Link, Account Data, Custom Domain, Verified Email Address,
   Homepage Secrets, Incoming Secrets, Organization, Recipient, and others.
 - New "Treatment of Secret Content" section: secrets are automatically purged
-  on first access or expiration, and we do not read, scan, categorize, or
-  analyze Secret Content, with several specific excemptions (owner consent,
-  Organization owner direction, 
-
-_debugging under confidentiality with audit  logging,_ (I understand the intent but the wording is weird and sounds troubling)_
-
-and secrets addressed to us).
-
+  on first access or expiration, and we do not access, read, scan,
+  categorize, or analyze Secret Content, with four specific exceptions: the
+  owner's express prior consent; the direction of an Organization owner
+  acting on behalf of its members; when you ask us to help debug a problem —
+  in which case we access only what is needed to help you, the access is
+  covered by our duty of confidentiality, and it is logged; and secrets
+  addressed to Onetime Secret itself.
 - New delivery disclaimer: we do not guarantee that a recipient can access a
   secret, that its contents are fully received (a secret reveals at most
   once), or that it reaches the intended person. Anyone holding the link is
@@ -59,20 +60,42 @@ and secrets addressed to us).
   these features.
 
 **Usage, API, and resale**
-- Expressly permitted: building the Service into your own applications via
-  the API, and contractors, agencies, and managed-service providers using the
-  Service on behalf of their customers 
-
-_(one Organization and subscription per customer)._
-
-_- Expressly prohibited: reselling, sublicensing, white-labeling, or pooling multiple customers into one Organization to avoid per-customer billing._
-
+- Service usage limits rewritten around the business arrangements the
+  Service supports, all on one structure: one Organization represents one
+  customer, and each Organization carries its own subscription.
+- Expressly supported: integrating the Service into your own applications
+  via the API (you are responsible for meeting the data-residency and
+  privacy regulations that apply to you and your customers — each regional
+  environment keeps data in its own jurisdiction), and serving your own
+  customers as a contractor, agency, or managed-service provider. You may
+  own and administer an Organization for each of your customers, and a given
+  subscription may be paid by you or directly by your customer — no separate
+  agreement needed.
+- Running your own instance is noted as an option: the application is open
+  source under the MIT license, and self-hosted installations sit outside
+  these Terms entirely.
+- The one boundary: one customer per subscription. Serving multiple distinct
+  customers through a single Organization or subscription is not permitted,
+  and reselling, sublicensing, or white-labeling the hosted Service requires
+  a separate written agreement.
+- New "Your responsibilities" subsection in Acceptable Use collects the
+  duties that are yours alone: verifying you are on an official domain (the
+  Terms now list the official Onetime Secret domains — OnetimeSecret.com/.dev,
+  Onetime.co/.dev, otshosted.com/.dev, metalbaum.com/.dev,
+  OnetimeSecretary.com/.dev, and the related brand SecretaryLinks.com,
+  together with their subdomains including the regional environments); keeping your Custom Domain's DNS records correct,
+  including the records that determine whether email sent from your verified
+  addresses is delivered; managing Organization membership, including
+  promptly removing access when someone leaves; and the content of your
+  Organization's Secrets, including through Homepage and Incoming Secrets.
 - Scraping: search engines and AI training services may crawl our
   documentation, developer sites, and blog; scraping the regional application
   domains is prohibited.
-- "Unlimited" features clarified: anti-abuse soft limits may apply; a soft
-  limit is not a billing cap, and ordinary-course(?? I am not familiar with the term) increases are free on
-  request.
+- "Unlimited" features clarified: a soft limit may apply to prevent abuse
+  and protect shared resources, but a soft limit is not a billing cap — if
+  you reach one through normal use, you can ask us to raise it at no
+  additional charge, and soft limits may also increase over time as part of
+  normal service improvements.
 - Excessive-use terms now cover paid plans: no fixed ceilings, but usage far
   outside typical patterns starts a conversation about a better-fitting plan.
 
@@ -89,18 +112,30 @@ _- Expressly prohibited: reselling, sublicensing, white-labeling, or pooling mul
   cancellation (plus up to 30 more in encrypted backups); Organization
   cancellation disables member access; a secret's lifecycle is independent of
   account cancellation.
-
-_- Single-tenant deployments may be provisioned automatically, with configurable resources and choice of hosting region, alongside the existing Global Elite tier._ I don't understand the phrasing. Alongside Global Elite tier? "May be provisioned"? Are we trying to say, we may offer this as a service?
+- Single-tenant deployment options described: Global Elite remains a manual,
+  high-touch, single-tenant deployment tailored to the customer. The Terms
+  also reserve room for a capability we may offer in the future —
+  automatically provisioned single-tenant deployments with configurable
+  resources and a choice of hosting region. This is a carve-out for a
+  possible future offering, not something offered today; where offered, the
+  available options will be described where the offering is presented.
 
 **Legal and meta**
-- Regional environments expanded from EU/US to EU, CA, NZ, UK, and US.
+- Regional environments expanded beyond the original EU and US: as of this
+  revision, EU, CA, NZ, UK, and US, with further regions added over time.
 - Backup retention extended from 14 to 30 days; backups remain in the same
   regional jurisdiction.
+- New network-level access controls disclosure: on the multi-tenant Service,
+  IP/CIDR access filtering is enforced at the application layer; single-tenant
+  deployments may offer network-level IP-range filtering depending on the
+  hosting provider. Whichever is available is clearly labelled where offered.
 - Support is provided in English; the English version of any policy or
   communication is authoritative.
-
-_- The public site-policy repository is now the authoritative source of the policy text over the copy displayed on the website._ (rename to trust center)
-
+- The policy text now has a single authoritative source: our public trust
+  centre, a git-backed repository where every change is dated and the full
+  history is reviewable. Where the copy displayed on the website and the
+  trust centre version differ at the same effective date, the trust centre
+  version controls.
 - Minor changes (typos, formatting, plan-feature updates, new regional
   environments that don't change data processing) no longer trigger advance
   notice or a new effective date.
@@ -114,8 +149,20 @@ _- The public site-policy repository is now the authoritative source of the poli
 - New sections covering data we didn't previously describe: Organization
   accounts, SSO (identity claims received, no credential storage), Homepage
   and Incoming Secrets, Verified Email Addresses, and Secret Content itself.
-- Named subprocessor table with a 30-day advance-notice commitment, replacing
-  vague vendor categories. The canonical contractual list lives in the DPA.
+- Controller/processor roles stated for Organization member data: the
+  customer — the legal entity on whose behalf the Organization is created —
+  is the controller, and we process member data on the customer's behalf as
+  processor, with the roles defined in the DPA.
+- Named subprocessor table replacing vague vendor categories, with a
+  notice-with-objection process for changes: when we plan to engage a new
+  subprocessor service, we email all account holders; if you object, you can
+  cancel the affected service without penalty during the 30-day notice
+  period (cancellation is the remedy — we may still proceed with the change
+  generally). In an emergency, we may engage a replacement first and notify
+  promptly afterward, with the same objection right running from that
+  notice. The dated, git-backed public list supplements these email notices
+  rather than replacing them; the canonical contractual list lives in the
+  DPA.
 - Security section rewritten from "industry standards" boilerplate to
   concrete measures: TLS 1.3, authenticated encryption with key material
   separated from the database tier, Argon2id credential hashing, full-disk
@@ -124,11 +171,12 @@ _- The public site-policy repository is now the authoritative source of the poli
   verified before decryption, not part of key derivation — replacing an
   earlier "we cannot decrypt passphrase-protected secrets" statement that was
   only true of a legacy scheme.
-- New data-residency section: five regional environments with named hosting
-  providers; account data and Secret Content stay in-region for their whole
-  lifecycle including backups, with two named exceptions (Stripe billing,
-  edge-network TLS termination). Added an explicit no-third-country-transfers
-  statement.
+- New data-residency section: each regional environment is listed with its
+  named hosting provider (the list is dated as of the effective date, and
+  further regions are added from time to time); account data and Secret
+  Content stay in-region for their whole lifecycle including backups, with
+  two named exceptions (Stripe billing, edge-network TLS termination). Added
+  an explicit no-third-country-transfers statement.
 - Compelled disclosure rewritten around technical reality: purged secrets
   cannot be produced, only metadata; requests must come from an authority
   with jurisdiction over the data (GDPR Article 48 for EU-held data).
@@ -138,11 +186,23 @@ _- The public site-policy repository is now the authoritative source of the poli
 - Retention changed from indefinite-until-deletion to defined windows:
   account data deleted within 30 days of cancellation plus up to 30 days in
   encrypted backups; billing records kept as tax law requires.
-
-_- Email commitments hardened: no marketing email, and no tracking pixels or  track-and-redirect links in any email we send._ (need to be more specific about no marketign emails; we don't want to exclude sending new feature announcements, security advisories, or other service-related notices. IMPORTANT NOTE: must coincide with our Company Principles in our docs site. I think we actually say "no email" like at all, so I think we could adjust that a little bit)
-
-- Response time for privacy requests: 30 days, extendable once by 30 days
-  with notice. Privacy contact is now privacy@onetimesecret.com.?? (what was the email address in october 2024?)
+- New inactive-accounts policy: an account with no successful sign-in for
+  five years may be removed. We attempt email notice at least 30 days before
+  removal (a reasonable-efforts courtesy, not a precondition), an export of
+  Account Data can be requested for 30 days after notice, and signing in
+  resets the period.
+- Email commitments hardened and made specific: we never send unsolicited
+  marketing email, and no email we send contains tracking pixels or
+  click-tracking links (the only delivery signals we receive come from the
+  SMTP layer, such as hard bounces). Email now falls into three defined
+  categories: transactional (secret links, account and billing notices — no
+  opt-out), service and security notices (security advisories, breach,
+  policy-change, and deprecation notices — sent when needed, including when
+  legally required; not marketing), and product news (strictly opt-in, rare,
+  with one-click unsubscribe).
+- Privacy contact changed from support@onetimesecret.com to
+  privacy@onetimesecret.com, and the response commitment tightened from 45
+  days to 30 days, extendable once by 30 days with notice.
 - The service's open-source code is noted as an independent way to verify our
   data-handling claims.
 
@@ -151,19 +211,23 @@ _- Email commitments hardened: no marketing email, and no tracking pixels or  tr
 First public version. Based on the agreement previously provided directly to
 dedicated-deployment (Global Elite) customers, adapted for publication:
 
-_We can do this b/c we run our multi-tenant regional environments and custom installs in the same way, with the same security and privacy controls._
-
 - Applies to all service tiers, with per-tier architecture described in
-  Schedule A. Self-hosted deployments of the open-source software are out of
-  scope — no processing relationship arises.
+  Schedule A. One DPA can cover every tier because the multi-tenant regional
+  environments and custom installs run the same way, with the same security
+  and privacy controls. Self-hosted deployments of the open-source software
+  are out of scope — no processing relationship arises.
 - Accepted automatically as part of the Terms of Service (GDPR Article 28(9)
   deemed acceptance); signature blocks removed, with a countersigned copy
   available on request. The document may be shared freely with compliance,
   legal, and audit teams.
-- Data transfers: personal data stays in the region where it was collected;
-  the sole exception is Stripe billing data under the EU-US, UK Extension,
-  and Swiss-US Data Privacy Frameworks, with Standard Contractual Clauses
-  retained as a fallback.
+- Data transfers: personal data stays in the region where it was collected,
+  with two limited exceptions: Stripe billing data under the EU-US, UK
+  Extension, and Swiss-US Data Privacy Frameworks (Standard Contractual
+  Clauses retained as a fallback), and transient edge-network TLS
+  termination on the multi-tenant tiers (Cloudflare for regional service
+  domains, Approximated for Custom Domains), with traffic re-encrypted into
+  the regional environment; single-tenant deployments use neither edge
+  network.
 - Security disclosures aligned with the actual implementation:
   XChaCha20-Poly1305 authenticated encryption with BLAKE2b key derivation,
   ciphertext bound to its record, Argon2id hashing; a user passphrase is an
@@ -171,8 +235,16 @@ _We can do this b/c we run our multi-tenant regional environments and custom ins
 - Audit provisions: documentation, certifications, or questionnaire responses
   may satisfy audit requests, with on-site audit as backstop; the requesting
   party bears audit costs.
-- 72-hour breach notification, 30-day advance notice of subprocessor changes
-  with objection right, and a corrected subprocessor schedule.
+- 72-hour breach notification, and a corrected subprocessor schedule.
+- Subprocessor changes on a notice-with-objection model: email notice to all
+  account holders of any new or replacement subprocessor, then a 30-day
+  objection window during which an objecting customer may terminate the
+  affected services without penalty (termination is the remedy; the
+  engagement need not be suspended or reversed). An emergency carve-out
+  allows engaging a replacement first — to preserve security, availability,
+  or continuity — with prompt notice after, the objection window running
+  from that notice. The public, dated, version-historied subprocessor list
+  supplements this notice; it does not replace it.
 - Includes a UK Addendum and an FAQ.
 
 ### Technical and Organizational Measures — new
@@ -188,9 +260,14 @@ description of those measures (the DPA governs the binding obligations):
   input controls, availability and backups, incident response, secure
   development (CI gates, dependency-update cooldowns against supply-chain
   risk), privacy by default, order control, and subprocessor compliance.
+- The production service runs from the same public OCI images we publish,
+  as regular operating procedure; any exception is temporary, made only when
+  a vulnerability must be patched faster than the public release cycle
+  allows.
 - Publicly shareable with no confidentiality restriction; the open-source
   application and CI configuration make the controls independently
-  verifiable.
+  verifiable, and running from the published images extends that
+  verifiability to the deployed artifact itself.
 
 ## 2024-10-22 — Terms of Service and Privacy Statement
 

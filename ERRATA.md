@@ -280,3 +280,142 @@ apply per region (cross-referenced to B.1 and the Privacy Statement), and
 the integrator is responsible for ensuring their integration meets the
 data-residency and privacy regulations that apply to them and their
 customers.
+
+## 2026-07-01 — Batch application (team pass, all reviewer-verified done)
+
+Applied across ToS, PP, DPA, TOMs, principles.md, CHANGELOG.md,
+WHATS-CHANGED.md; a read-only cross-reviewer verified every item against the
+files with a programmatic anchor check. Details per item:
+
+- **Item 2 (subprocessors).** PP Subprocessors section and DPA §6 (plus
+  definition 1.19) rewritten per ERRATA-2: email notice to all account
+  holders, 30-day objection window with no-penalty termination of the
+  affected service as the remedy (engagement need not be reversed),
+  emergency carve-out with prompt after-the-fact notice from which the
+  objection right runs, dated git-backed public list supplements (not
+  replaces) notice, "services" not "anyone". PP and DPA mechanisms match.
+  Note: DPA 6.2 deliberately omits the market-standard "reasonable
+  data-protection grounds" gate — any objection triggers the termination
+  right, which ERRATA-2's self-executing remedy makes unnecessary.
+- **Item 3 (email categories).** PP "How we communicate with you" and both
+  principles pages carry the ERRATA-3 taxonomy (Transactional / Service and
+  security notices / Product news opt-in) plus the no-tracking-pixels /
+  no-click-tracking commitment. Principles headings renamed "Our No-Email
+  Philosophy" → "Our Minimal-Email Philosophy" (no inbound links to the old
+  slug exist).
+- **Item 1 follow-on.** CHANGELOG and WHATS-CHANGED resale/Organizations
+  bullets regenerated arrangement-first from current ToS B.2/B.3/C.4.
+- **Item 4.** CHANGELOG single-tenant line now uses the ToS "may offer /
+  where offered" framing.
+- **Item 7.** CHANGELOG states the precise contact delta: support@ →
+  privacy@, 45 → 30 days (extendable once by 30 with notice).
+- **Item 8.** ToS D.4 exception (c) rewritten: access only when you ask us
+  to help debug, limited to what's needed, confidential, logged. Carried
+  into both summaries. ⚠ Substantive narrowing for sign-off: the old clause
+  also allowed self-initiated troubleshooting and "demonstration purposes";
+  those permissions are now gone.
+- **Item 9.** "Ordinary-course increases" removed from ToS C.7 and CHANGELOG.
+- **Item 10.** Deliverability duty made concrete (DNS records for your
+  Custom Domain, including records affecting verified-address email
+  delivery) in ToS C.9 and WHATS-CHANGED; all "??" flags gone.
+- **Item 11.** No hardcoded region count remains in PP (already fixed in
+  draft), CHANGELOG, or WHATS-CHANGED; counts replaced with as-of-date
+  lists plus "we add more over time".
+- **Item 12.** Summaries renamed to "trust centre" (centre spelling), no
+  link since no trust-centre URL exists yet. ⚠ Terminology lag: ToS P.5, PP
+  source-of-truth/subprocessor wording, and DPA 6.1 still say "public
+  site-policy repository" — coordinate the rename plus URL later.
+- **Item 13.** WHATS-CHANGED intro sentence fixed ("…if they disagree, the
+  agreements control").
+- **Items 114+116.** New ToS C.9 "Your Responsibilities" (appended, no
+  renumbering): relocated verify-official-Service clause out of B.2, all 10
+  official domains + subdomains/regional environments, DNS/deliverability,
+  Organization-membership, and secret-content duties, closing
+  our-responsibilities-excepted cross-reference to Section E. G.2 editor
+  note replaced with a live link to C.9. All internal anchors verified
+  resolving; two pre-existing broken references fixed (B.2 C.4 link,
+  summary-table Section E anchor). ⚠ For human check: SecretaryLinks.com is
+  named in A.3 as a related brand governed by these Terms but is absent
+  from the decided C.9 domain list.
+- **Item 14.** DPA all-tiers rationale in CHANGELOG (same runtime, same
+  controls across multi-tenant and custom installs).
+- **Item 15.** TOMs §4.2: public OCI images as regular operating procedure,
+  exceptions temporary for rapid patching; verifiability bullet extended to
+  the deployed artifact. Mirrored in WHATS-CHANGED and CHANGELOG.
+- **Item 16.** One-human-per-login rationale (secret delivery, access
+  controls, audit trails assume a login identifies one person) in ToS B.2
+  and both summaries. WHATS-CHANGED also corrected the cap description to
+  "five free Organizations (no cap on paid)".
+- **Cookie cross-check.** No discrepancy: verified against app code — only
+  cookies are session/auth; color mode is localStorage ("restMode"), locale
+  is sessionStorage, region has no client-side persistence. Principles Data
+  Minimization got one clarifying sentence (preferences live in browser
+  storage, not cookies). ⚠ Minor PP follow-ups: PP:27 lists "regional
+  environment selection" under cookies/localStorage/sessionStorage though
+  code shows no client-side persistence; PP Cookies section folds
+  localStorage into "cookies (and similar technologies)" — both adjacent
+  to, not contradicted by, the sharpened principles claim.
+- **Follow-up fixed post-review.** PP:79 stale ToS anchor
+  (#2-verified-email-domains → #2-domain-specific-features) — the one item
+  that fell between editors; corrected directly.
+
+TLS-termination item 5 remains open (pending human read of PP:170 sources);
+WHATS-CHANGED's annotation was removed without inventing a resolution — the
+bullet states the published two-service reality (Cloudflare regional,
+Approximated custom domains, Global Elite excluded).
+
+## 2026-07-01 — Sign-offs and remaining decisions applied
+
+Delano signed off on the three flagged items from the batch pass, and the
+decided-but-unapplied REMAINING_DECISIONS.md items were applied:
+
+- **Item 8 narrowing — signed off.** The ToS D.4 debugging exception stands
+  as narrowed (self-initiated troubleshooting and "demonstration purposes"
+  permissions removed). No further change.
+- **SecretaryLinks.com — added to C.9.** Listed in the official-domain list
+  as a related brand with a cross-reference to Section A, resolving the
+  A.3/C.9 inconsistency. CHANGELOG domain list updated to match.
+- **Trust centre rename — completed.** ToS P.5, PP source-of-truth and
+  subprocessor wording, and DPA 6.1 now say "trust centre"; ToS P.5 and both
+  PP spots keep the working GitHub link as the current location ("a
+  git-backed repository, currently our site-policy repository"). DPA 6.1
+  stays linkless as before. The CC0 license pointers in ToS G.3 and PP
+  License still link the repository directly — left as license-location
+  pointers, not authoritative-source claims. Swap in the real trust-centre
+  URL when one exists.
+- **CP-1 (controller/processor) — swept.** PP "Information from Organization
+  accounts" now says the customer (the legal entity behind the Organization)
+  is the controller and we process member data as processor, with roles
+  defined in the DPA — replacing the "owner or designated administrator is
+  the controller" phrasing (a natural person is not the controller; the
+  entity is). DPA was already correct (Company = Controller, WHEREAS A/B);
+  ToS is silent and defers to the DPA via B.3 "Member data". CHANGELOG and
+  WHATS-CHANGED gained matching bullets.
+- **INACT-1/INACT-2 — applied.** New "Inactive accounts" paragraph in the PP
+  "Data retention and deletion" section: inactivity = no successful sign-in
+  for five years (60 months); best-efforts email notice at least 30 days
+  before removal (courtesy, not precondition); 30-day post-notice Account
+  Data export window; signing in resets the period. ⚠ The 30-day figures
+  were left open as [N] in the decision — 30 chosen to match the document's
+  existing 30-day rhythm; flag if you want different numbers. Privacy
+  review-tasks TODO-12 marked APPLIED.
+- **TODO-23/23a — applied.** New "Network-level access controls" bullet at
+  the end of ToS B.6: multi-tenant CIDR/IP filtering enforced at the
+  application layer (code-verified per TODO-23a); single-tenant IP-range
+  filtering provider-dependent; whichever is available is clearly labelled
+  where offered. ToS review-tasks dispositions updated; CHANGELOG bullet
+  added.
+- **TLS-1 — verified and aligned.** PP:172 already matches the decision (no
+  elimination claims; Cloudflare regional, Approximated Custom Domains,
+  single-tenant excluded). Two DPA gaps fixed to match: §12.2 restructured
+  into two limited exceptions — (a) Stripe billing (unchanged text), (b)
+  transient edge-network TLS termination mirroring the PP language; and the
+  Schedule A Cloudflare Security & Network row corrected from "All /
+  Custom domain with TLS termination" to "All multi-tenant tiers /
+  ... TLS termination at the edge for the Processor's regional service
+  domains; not used for customer Custom Domains". CHANGELOG DPA transfers
+  bullet updated from "sole exception is Stripe" to both exceptions.
+
+Noted in passing, not fixed: the ToS B.3 "Member data" bullet links the DPA
+as onetimesecret.com/info/dpa while the PP uses onetimesecret.com/dpa —
+confirm which URL is canonical and align.
