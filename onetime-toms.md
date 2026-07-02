@@ -99,7 +99,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 *Responsibility: Shared.*
 
 *Technical:*
-- Local encrypted backups retained for seven (7) days; geo-located encrypted backups (Global Elite) stored in AWS S3 (Frankfurt, EU) with automatic expiration after thirty (30) days.
+- Local encrypted backups retained for seven (7) days; geo-located encrypted backups (Global Elite) stored in AWS S3 (Frankfurt, EU) with automatic expiration after thirty (30) days. Both tiers fall within the Backup Retention Period defined in DPA §1.17.
 - Backup encryption uses an asymmetric scheme so that compromise of production systems does not expose backup contents.
 - Continuous system hardening against known attack classes, including denial-of-service.
 

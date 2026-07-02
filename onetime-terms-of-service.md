@@ -112,7 +112,7 @@ Where your Organization has enabled SSO:
 
 ### 6. Data Retention and Security
 
-This section is the canonical source for the operational details of how we hold and protect your data. The Privacy Statement summarizes these and refers here.
+This section is the canonical source for the operational details of how we hold and protect your data. The Privacy Statement summarizes these and refers here. The defined retention periods (Backup Retention Period, Operational Retention Period) are in [DPA §1.17-1.18](https://onetimesecret.com/dpa#1-definitions).
 
 - **IP address and request log retention.** We retain IP addresses and request logs associated with service usage for up to 30 days, after which they are permanently deleted from active systems. Logs may be purged sooner depending on traffic volume.
 - **Secret retrieval.** Due to our security-first design, we cannot retrieve or recover secrets once they have been viewed, expired, or deleted, except as outlined below regarding backups. This ensures your sensitive information remains private and ephemeral.
