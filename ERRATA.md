@@ -269,3 +269,14 @@ can always run their own. Changes made:
 
 **Item 6 applied.** Trademark Policy retirement line removed from
 CHANGELOG.md.
+
+**Item 115 applied.** ERRATA-115.md added (assessment: clause is standard
+except the affirmative attribution duty — the atypical element). ToS
+Permitted API integration clause (C.4) rewritten: the attribution duty
+removed entirely (keeping only the standard anti-passing-off condition);
+added clear data-jurisdiction language — each regional environment stores
+and processes data within its own jurisdiction, data-residency commitments
+apply per region (cross-referenced to B.1 and the Privacy Statement), and
+the integrator is responsible for ensuring their integration meets the
+data-residency and privacy regulations that apply to them and their
+customers.
