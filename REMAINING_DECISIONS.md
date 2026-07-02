@@ -101,3 +101,97 @@ DECISION:  multi-tenant Service, CIDR/IP filtering is enforced at the applicatio
 DECISION: Do not include elimination claim in the PP/DPA text. The exception is a fact of the current architecture and will remain so for the foreseeable future. We will not make any claims about eliminating this exception in the documentation. We will update the documents in the future when that is taking place. 
 
 Be clear about: Cloudflare on regional domains only (eu.onetimesecret.com) and for the protection of the service. Use a custom domain is off cloudflare and on Approximated. We already added good language around edge-network TLS termination.
+
+
+
+## Carried over from the deleted review-tasks files (2026-07-02 final audit)
+
+The three onetime-*-review-tasks.md files were audited and deleted; their full
+content remains in git history (last committed state: commit 8d02ba6). Open
+items that survived the audit:
+
+- [x] Decision HASH-1: DPA Schedule C §1.2 and PP say unqualified "credentials
+  are hashed with Argon2id", but the code-verified state (DPA review-tasks
+  XD-1) was: Argon2id is the default for NEW credentials; legacy BCrypt
+  (cost 12) hashes are retained for verification. Either confirm legacy
+  hashes have been fully migrated (draft is then accurate) or qualify the
+  sentence (e.g. "new credentials are hashed with Argon2id; legacy hashes
+  are verified and upgraded on next use"). Related fact worth keeping: the
+  crypto claims were verified against Familia v2.3.3.
+
+  DECISION (2026-07-02): Legacy bcrypt hashes remain for accounts with no
+  successful sign-in since April 2026; upgrade to Argon2id happens on the
+  next successful authentication. Qualified sentence applied to DPA Schedule
+  C §1.2, PP security section, and TOMs §2 (Technical).
+
+- [x] Decision TODO-20b: The Incoming Secrets mechanism was code-verified
+  (TODO-20a above), but the drafted mechanism sentence was never applied to
+  ToS E.2: "configured email addresses are not rendered in the submission
+  form; only a display name is shown, and the address itself is handled as
+  a hashed value." Apply it to E.2, or affirm the omission as intentional
+  (defensible under the TODO-9 preference to keep implementation detail out
+  of binding text).
+
+  DECISION (2026-07-02): Confirmed — configured destinations are protected
+  by hashing. Mechanism sentence applied to ToS E.2.
+
+- [x] Decision DEF-1: ToS A.11 defines Verified Email Address as a *domain*
+  while E.2 treats it as an *address* at that domain. Tighten one or accept
+  the looseness. (ToS review-tasks lines 263/354, only recorded there.)
+
+  DECISION (2026-07-02): Leave as is; the looseness is accepted.
+
+Note (no action): TODO-15 deliberately omits any resale price term — resale
+price maintenance (RPM) caution; prior-art research survives as
+0616-onetime-terms-resale-prior-art.md.txt.
+
+
+
+## From the ERRATA audits (2026-07-02)
+
+- [ ] Task DOCS-1 (cross-repo, blocks deleting ERRATA-3.md and ERRATA.md):
+  the principles-page changes (heading "Our No-Email Philosophy" → "Our
+  Minimal-Email Philosophy", the three-category email taxonomy, the
+  no-tracking-in-email commitment, and the "preferences live in browser
+  storage, not cookies" clarification for data-minimization.md) were applied
+  only to a working copy `principles.md` that was deleted in commit e3aed13
+  and never ported to the live docs repo
+  (`/Users/d/Projects/dev/onetimesecret/docs.onetimesecret.com`,
+  src/content/docs/en/principles/privacy-first.md, communication.md,
+  data-minimization.md). Recover the drafted text with
+  `git show e3aed13^:principles.md` and port it.
+
+- [x] Decision BA-1: business-arrengements-we-support.md line 30 asserts a
+  "promote domain to organization" capability whose existence was never
+  code-verified. Verify the feature or reword before that page is published.
+  Note the BA page is the sole home of several ERRATA-1 commitments
+  (sponsored arrangements, payer decoupling, consolidated invoicing,
+  alias/boundary domains, spin-out path) — it must be retained or those
+  commitments re-homed.
+
+  DECISION (2026-07-02): Not needed now — future planning. Do not add the
+  promote-domain-to-organization claim to anything published in this
+  revision. The BA page retention note still applies whenever that page
+  moves toward publication.
+
+- [ ] Follow-up PP-1 (non-blocking): PP "Information from website browsers"
+  lists "regional environment selection" among collected data, but code
+  verification (ERRATA.md ~line 353) found no client-side persistence for
+  region; and the Cookies section folds localStorage into "cookies (and
+  similar technologies)". Adjacent to, not contradicted by, the code — tidy
+  when convenient.
+
+- [ ] Task TC-1 (future): CC0 license pointers in ToS G.3 and the PP License
+  section deliberately point at the GitHub repository for now; swap in the
+  real trust-centre URL when one exists (recorded in ERRATA.md ~lines
+  378-385).
+
+Done in this pass (2026-07-02): TOMs §1.3 aligned to the two DPA §12.2
+transfer exceptions; TOMs §7 subprocessor bullet aligned to the DPA §6
+notice-with-objection model; TOMs header switched to "Effective date: TBD on
+release"; DPA URL unified to onetimesecret.com/dpa (ToS B.3); stale PP
+anchors fixed (B.3 #3-organizations, E.2 #2-domain-specific-features);
+DPA-3 qualifier removed from PP (decided by Delano, sell/rent/trade now
+absolute); Catalyst Cloud / DigitalOcean / AWS EMEA rows added to the DPA
+entity-details table; ERRATA-2.md and ERRATA-115.md deleted (citations
+preserved in 0702-errata-research-citations.md.txt).

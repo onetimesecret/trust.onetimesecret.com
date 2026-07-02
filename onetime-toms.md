@@ -35,7 +35,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 *Technical:*
 - Administrative access to production systems requires multi-factor authentication and encrypted connections.
 - Access to cryptographic key material is restricted to essential operational processes.
-- User account credentials are protected with Argon2id adaptive one-way hashing (per-credential random salt, constant-time verification).
+- User account credentials are protected with Argon2id adaptive one-way hashing (per-credential random salt, constant-time verification). Legacy hashes are verified and upgraded to Argon2id on the next successful authentication.
 - Role- and permission-based access control governs what users may do within their own account.
 
 *Organizational:* Access is granted on a least-privilege, need-to-know basis, strictly limited to individuals who require it for the purposes of the Principal Agreement. Personnel with system access are bound by confidentiality obligations (DPA §3).
