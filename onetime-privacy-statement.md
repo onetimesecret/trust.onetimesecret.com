@@ -56,9 +56,9 @@ Under data protection law, our customer, the legal entity on whose behalf the Or
 
 ### Information from Single Sign-On
 
-If your Organization enables SSO, you authenticate via your Organization's identity provider (Google Workspace, Okta, Microsoft Entra ID, or any SAML 2.0 / OIDC provider your Organization configures). We receive a limited set of identity claims (typically your email address, a stable identifier, your display name, and any group memberships your Organization has chosen to share. We do not receive or store your credentials.
+If your Organization enables SSO, you authenticate via your Organization's identity provider (Google Workspace, Okta, Microsoft Entra ID, or any SAML 2.0 / OIDC provider your Organization configures). We receive a limited set of identity claims (typically your email address, a stable identifier, your display name, and any group memberships your Organization has chosen to share). We do not receive or store your credentials.
 
-We log SSO authentication events for security and audit purposes. Retention applies as described in [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) (in summary, up to 30 days. Retention is based on our legitimate interest in security monitoring and audit, and is limited to what is necessary for those purposes.
+We log SSO authentication events for security and audit purposes. Retention applies as described in [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) (in summary, up to 30 days). Retention is based on our legitimate interest in security monitoring and audit, and is limited to what is necessary for those purposes.
 
 If your Organization disables your account at the identity provider, your active sessions are terminated and your access is revoked. Account Data within the Organization is then handled in accordance with the Organization's instructions and the cancellation rules in [Section J of the Terms of Service](https://onetimesecret.com/terms#j-cancellation-and-termination).
 
@@ -185,7 +185,7 @@ We provide the same baseline of privacy protection to all our users. Some region
 
 ### Europe (EU and EEA) and the United Kingdom
 
-If you are in the EU, EEA, or UK, you have rights under the GDPR or UK GDPR, including the right to access, rectify, or erase your personal data; the right to restrict or object to processing; and the right to data portability. You also have the right to lodge a complaint with your local supervisory authority, the Information Commissioner's Office (ICO) for UK residents, or the supervisory authority in your country of residence for EU/EEA residents.
+If you are in the EU, EEA, or UK, you have rights under the GDPR or UK GDPR, including the right to access, rectify, or erase your personal data; the right to restrict or object to processing; and the right to data portability. You also have the right to lodge a complaint with your local supervisory authority (the Information Commissioner's Office for UK residents, or the supervisory authority in your country of residence for EU/EEA residents).
 
 Where your personal data takes the form of Secret Content, the technical design of the service limits how some of these rights can be exercised in practice. Secrets are encrypted and are automatically purged after they are viewed, after they expire, or when they are deleted via the Receipt Link. As a result: an access request under GDPR Article 15 cannot be fulfilled for a secret that has already been purged, or where we cannot verify your relationship to the secret; rectification under Article 16 and erasure under Article 17 of Secret Content are exercised by you, or by the person who created the secret, deleting the secret via the Receipt Link or allowing it to expire; and we will cooperate with requests relating to account-level personal data, such as your email address and account metadata, as described above and in our Data Processing Agreement. We cannot retrieve, restore, or assist with access to a secret once it has been viewed, expired, or deleted.
 

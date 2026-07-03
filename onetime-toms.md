@@ -77,7 +77,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 *Responsibility: Shared.*
 
 *Technical:*
-- All data in transit is protected with TLS 1.3 and strong cipher suites.
+- All data in transit is protected with TLS 1.3 (current configuration verifiable via SSL Labs: [onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=onetimesecret.com&hideResults=on), [eu.onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=eu.onetimesecret.com&hideResults=on), [us.onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=us.onetimesecret.com&hideResults=on), [ca.onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=ca.onetimesecret.com&hideResults=on), [uk.onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=uk.onetimesecret.com&hideResults=on)).
 - Authenticated encryption (XChaCha20-Poly1305 / AES-256-GCM) provides tamper detection for Secret Content at rest; AAD binding prevents ciphertext being moved between records.
 - All backups are encrypted at rest.
 

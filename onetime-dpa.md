@@ -1,6 +1,6 @@
 # Data Processing Agreement - Onetime Secret
 
-Effective date: TBD on release
+Effective date: **TBD on release**
 
 This Data Processing Agreement ("*Agreement*" or "*DPA*") forms part of the Contract for Services under Onetime Secret's Terms of Service (the “*Principal Agreement*") between Onetime Secret \#602 - 2892 E 10th Ave Vancouver, British Columbia Canada, Business identification number 77690 5960 (referred to as the "*Processor*") and the Company using the Processor's services (referred to as the "*Company*”).
 
