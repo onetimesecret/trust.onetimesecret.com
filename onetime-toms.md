@@ -40,6 +40,8 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 *Organizational:* Access is granted on a least-privilege, need-to-know basis, strictly limited to individuals who require it for the purposes of the Principal Agreement. Personnel with system access are bound by confidentiality obligations (DPA §3).
 
+*Known gap:* Centralized, tamper-evident audit logging for administrative access and security-relevant events is not yet implemented. Current operational logs reside in system journals on each regional environment with size-based retention.
+
 ### 1.3 Separation Control
 
 *Responsibility: Processor.*
@@ -135,6 +137,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 *Organizational:*
 - Dependencies are updated via Renovate with a fixed cooldown period (currently two weeks) before adoption, mitigating supply-chain risk from compromised or malicious package releases.
 - Security-flagged and high-severity dependency vulnerabilities are handled on an expedited basis through Dependabot security updates, bypassing the cooldown.
+- Periodic adversarial security assessments (penetration testing or third-party code audit) are conducted on the application layer; frequency and scope are determined by risk assessment and may be disclosed on request.
 - As regular operating procedure, the production Service runs from the same public OCI images the Processor publishes. Any exception is temporary, made only when a vulnerability must be patched faster than the public release cycle allows.
 - Because the application source and its CI configuration are open-source, these controls are independently verifiable rather than merely asserted; running from the published images extends that verifiability to the deployed artifact itself.
 
