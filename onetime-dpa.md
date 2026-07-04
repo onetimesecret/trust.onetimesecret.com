@@ -296,6 +296,7 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
 | *Hetzner (Object storage)* | EU (Germany, Finland) | All | ✔ | Object storage for encrypted offsite backups | Account info, application data |
 | *AWS (S3)* | EU (Frankfurt, Ireland) | Global Elite | ✔ | S3 storage for geo-located encrypted backups | Account info, application data |
+| *BunnyCDN* | EU (Slovenia) | All | ✔ | Static asset hosting and encrypted object storage for offsite backups | Account info, application data |
 
 ### Payment Processing
 
@@ -319,10 +320,12 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **Amazon Web Services, Inc.** | 410 Terry Avenue North, Seattle, WA 98109-5210, United States | US | *SES and S3; data located in US regions only* |
 | **CloudFlare, Inc.** | 101 Townsend Street, San Francisco, CA 94107, United States | US | *EU-US Data Privacy Framework certified* |
 | **Approximated, Inc.** |2810 North Church Street Wilmington, Delaware 19802, United States | US | *Multi-tenant only* |
-| **BunnyCDN.** | BunnyWay d.o.o., Dunajska cesta 165, 1000 Ljubljana, Slovenia | EU | *Static websites and encrypted object storage* |
+| **BunnyWay d.o.o. (BunnyCDN)** | Dunajska cesta 165, 1000 Ljubljana, Slovenia | EU | *Static websites and encrypted object storage* |
 
 
 ------------------------------------------------------------------------
+
+*Note: there is no Schedule B. An earlier Schedule B (a Global Elite onboarding questionnaire) has been retired; the remaining schedules keep their original letters (A and C) for continuity with prior versions of this Agreement.*
 
 ## Schedule C - Technical and Organizational Security Measures
 
