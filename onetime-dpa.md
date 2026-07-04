@@ -279,6 +279,7 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
 | *Approximated* | Global edge network | Identity Plus, Team Plus | ✔ | Custom domain with TLS termination | Account info, application data, network-level web traffic data, IP addresses |
 | *CloudFlare* | Global | All multi-tenant tiers | ✔ | Network proxy ("Orange Cloud"), security services, and TLS termination at the edge for the Processor's regional service domains (e.g. `eu.onetimesecret.com`); not used for customer Custom Domains | Account info, application data, network-level web traffic data, IP addresses |
+| *BunnyCDN* | Global edge network | All | 𐄂 | CDN and static hosting for the Processor's public websites (`onetimesecret.com`, `onetimesecret.dev`) and documentation (`docs.onetimesecret.com`, `docs.onetimesecret.dev`); does not serve Secret Content or Account Data | Network-level web traffic data, IP addresses |
 
 ### Email Services
 
@@ -296,7 +297,6 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
 | *Hetzner (Object storage)* | EU (Germany, Finland) | All | ✔ | Object storage for encrypted offsite backups | Account info, application data |
 | *AWS (S3)* | EU (Frankfurt, Ireland) | Global Elite | ✔ | S3 storage for geo-located encrypted backups | Account info, application data |
-| *BunnyCDN* | EU (Slovenia) | All | ✔ | Static asset hosting and encrypted object storage for offsite backups | Account info, application data |
 
 ### Payment Processing
 
@@ -320,12 +320,35 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **Amazon Web Services, Inc.** | 410 Terry Avenue North, Seattle, WA 98109-5210, United States | US | *SES and S3; data located in US regions only* |
 | **CloudFlare, Inc.** | 101 Townsend Street, San Francisco, CA 94107, United States | US | *EU-US Data Privacy Framework certified* |
 | **Approximated, Inc.** |2810 North Church Street Wilmington, Delaware 19802, United States | US | *Multi-tenant only* |
-| **BunnyWay d.o.o. (BunnyCDN)** | Dunajska cesta 165, 1000 Ljubljana, Slovenia | EU | *Static websites and encrypted object storage* |
+| **BunnyWay d.o.o. (BunnyCDN)** | Dunajska cesta 165, 1000 Ljubljana, Slovenia | EU | *CDN and static hosting for public websites and documentation* |
 
 
 ------------------------------------------------------------------------
 
-*Note: there is no Schedule B. An earlier Schedule B (a Global Elite onboarding questionnaire) has been retired; the remaining schedules keep their original letters (A and C) for continuity with prior versions of this Agreement.*
+## Schedule B - Processing Implementation and Customization
+
+#### *1. Applicability*
+
+This Schedule describes how processing configuration and customization are documented for single-tenant (Global Elite) deployments. Multi-tenant deployments (such as Identity Plus and Team Plus) operate on standardized configurations without customer-specific modifications, and the provisions of this Schedule do not apply to them.
+
+#### *2. Configuration*
+
+For single-tenant deployments, implementation requirements are captured through the Processor's onboarding process at the start of the engagement. The agreed configuration may specify:
+
+- Selected Subprocessors from the available alternatives listed in Schedule A;
+- Regional hosting location;
+- Email delivery configuration (including the option to disable outbound email); and
+- Any other customer-specific technical requirements.
+
+#### *3. Documentation*
+
+Configuration is established through the onboarding process and subsequent written correspondence between the Parties in accordance with Section 13, except that for the purposes of this Schedule the Processor may also contact the Controller from any @onetimesecret.com address. Such correspondence constitutes the authoritative record of the agreed configuration. Where a customer-specific addendum is prepared, it summarizes but does not supersede the underlying correspondence.
+
+#### *4. Retention*
+
+Configuration documentation is retained for the duration of the service agreement plus five (5) years following termination, to support regulatory compliance verification and audit requirements.
+
+------------------------------------------------------------------------
 
 ## Schedule C - Technical and Organizational Security Measures
 
