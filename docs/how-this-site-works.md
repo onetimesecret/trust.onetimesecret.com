@@ -1,7 +1,7 @@
 # How this site works
 
 This repo is an Astro-powered generator for Onetime Secret's trust centre
-and policy documents — think Jekyll for trust-center docs. The four legal
+and policy documents. Think Jekyll for trust-center docs. The four legal
 documents (Terms of Service, Privacy Statement, DPA, TOMs) and the trust
 site pages are all built from the same source files, so a shared fact
 exists exactly once and cannot drift between documents.
@@ -15,12 +15,12 @@ the YAML; every consumer changes together.
 
 ## Source files
 
-| File | Holds | Consumed by |
-|------|-------|-------------|
-| `src/content/policy-constants.yaml` | Retention periods, refund/export/notice windows, backup locations, tier lists, bcrypt cutoff, canonical URLs | All four MDX documents |
-| `src/content/trust.yaml` | Subprocessor list (role-based: one role per DPA Schedule A table row, plus entity details), trust-site content (flow, FAQs, documents index, audit mappings) | DPA Schedule A tables *and* the trust site's Subprocessors page — the same data, rendered twice |
-| `src/content/document-manifest.yaml` | Per-document signoff record: status, reviewed commit, date | Footer of every rendered policy document |
-| `src/pages/{terms,privacy,dpa,toms}.mdx` | The document prose — human-owned, legally reviewed text | Rendered at `/terms`, `/privacy`, `/dpa`, `/toms` |
+| File                                     | Holds                                                                                                                                                        | Consumed by                                                                                     |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `src/content/policy-constants.yaml`      | Retention periods, refund/export/notice windows, backup locations, tier lists, bcrypt cutoff, canonical URLs                                                 | All four MDX documents                                                                          |
+| `src/content/trust.yaml`                 | Subprocessor list (role-based: one role per DPA Schedule A table row, plus entity details), trust-site content (flow, FAQs, documents index, audit mappings) | DPA Schedule A tables _and_ the trust site's Subprocessors page — the same data, rendered twice |
+| `src/content/document-manifest.yaml`     | Per-document signoff record: status, reviewed commit, date                                                                                                   | Footer of every rendered policy document                                                        |
+| `src/pages/{terms,privacy,dpa,toms}.mdx` | The document prose — human-owned, legally reviewed text                                                                                                      | Rendered at `/terms`, `/privacy`, `/dpa`, `/toms`                                               |
 
 Each YAML file is validated by a strict Zod schema at build time
 (`src/lib/policy-constants.ts`, `src/lib/trust-config.ts`,
@@ -33,12 +33,12 @@ The MDX documents import the validated constants and interpolate them
 inline, preserving the legal drafting convention:
 
 ```mdx
-import { constants, spelledDays, multiTenantTiers } from '../lib/policy-constants';
+import { constants, spelledDays, multiTenantTiers } from "../lib/policy-constants";
 
-1.17) "*Backup Retention Period*" means {spelledDays(constants.retention.backup_days)}, ...
+1.17) "_Backup Retention Period_" means {spelledDays(constants.retention.backup_days)}, ...
 ```
 
-renders as: *"Backup Retention Period" means thirty (30) days, ...*
+renders as: _"Backup Retention Period" means thirty (30) days, ..._
 
 Helpers: `spelledDays(30)` → "thirty (30) days", `spelledYears(5)` →
 "five (5) years", `multiTenantTiers` → "Basic, Identity Plus, Team Plus,
