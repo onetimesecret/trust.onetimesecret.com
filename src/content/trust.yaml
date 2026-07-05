@@ -8,7 +8,7 @@
 
 meta:
   name: Onetime Secret
-  updatedAt: "2026-07-03"
+  updatedAt: "2026-07-05"
   contacts:
     email: security@onetimesecret.com
     sla: "5 business days"
@@ -21,7 +21,7 @@ meta:
 subprocessors:
   - name: Hetzner Online GmbH
     purpose: Computing resources for internal infrastructure, single-tenant and multi-tenant hosting; object storage for encrypted offsite backups.
-    location: EU (Germany, Finland)
+    location: "EU (Germany, Finland); US (Oregon) — offsite backup object storage EU only"
     since: "TBD"
     core: true
     note: ISO 27001:2022
@@ -38,7 +38,7 @@ subprocessors:
     core: true
   - name: Stripe, Inc.
     purpose: Payment processing, invoicing, fraud detection, tax reporting — billing details only, never Secret Content.
-    location: US/EU
+    location: US
     since: "TBD"
     core: true
     note: EU-US Data Privacy Framework certified
@@ -73,8 +73,8 @@ subprocessors:
     location: EU (Netherlands)
     since: "TBD"
   - name: BunnyWay d.o.o. (BunnyCDN)
-    purpose: Static websites and encrypted object storage.
-    location: EU (Slovenia)
+    purpose: CDN and static hosting for our public websites and documentation; does not serve Secret Content or Account Data.
+    location: Global edge network (EU entity, Slovenia)
     since: "TBD"
 
 # Newest first. Real history predating this site is being reconstructed
@@ -156,7 +156,7 @@ flow:
     body: The first successful read returns the secret and destroys the record in the same operation. A second visit finds nothing.
   - step: "04"
     title: Or it expires unread
-    body: If no one opens it, the record is purged at expiry. Metadata follows shortly after; encrypted backups age out on a fixed 30-day schedule, in the same regional jurisdiction.
+    body: If no one opens it, the record is purged at expiry. Metadata follows shortly after; encrypted backups age out on a fixed 30-day schedule, in the same regional jurisdiction (for Global Elite deployments, geo-located encrypted backups are stored in AWS S3 in the EU, per DPA §12.2 and Schedule C).
   - step: "05"
     title: Nothing recoverable remains
     body: There is no restore path by design. A leaked link that has already been read is inert — it fails loudly instead of quietly exposing data.

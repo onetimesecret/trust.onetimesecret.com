@@ -6,7 +6,7 @@ This Data Processing Agreement ("*Agreement*" or "*DPA*") forms part of the Cont
 
 This Agreement governs the specific requirements of Data Protection Laws to the extent that Company’s use of Onetime Secret's services implies the processing of Personal Data subject to Data Protection Laws.
 
-This Agreement aligns with our Privacy Policy where applicable, while addressing the specific data protection requirements for all service tiers. The Processor offers multiple tiers with different architectural characteristics, as described in Schedule A.
+This Agreement aligns with our Privacy Statement where applicable, while addressing the specific data protection requirements for all service tiers. The Processor offers multiple tiers with different architectural characteristics, as described in Schedule A.
 
 The term of this Agreement shall follow the term of the Principal Agreement. Terms not defined herein shall have the meaning as set forth in the Principal Agreement.
 
@@ -26,11 +26,11 @@ D\) The Parties wish to lay down their rights and obligations.
 
 ## 1. Definitions and Interpretation
 
-Unless otherwise defined herein, capitalized terms and expressions used in this DPA shall have the following meaning:
+Unless otherwise defined herein, capitalized terms and expressions used in this DPA shall have the following meaning. For clarity, "Company" refers to the customer entity that is the User or Organization under the Principal Agreement (the Terms of Service):
 
 1.1) "*Agreement*" means this Data Processing Agreement and all Schedules;
 
-1.2) "*Company Personal Data*" means any Personal Data related to the Company or Company’s customers or employees Processed in connection with the Principal Agreement;
+1.2) "*Company Personal Data*" means any Personal Data related to the Company or the Company’s customers, employees, or other members of the Company’s Organization (including contractors and other authorized users) Processed in connection with the Principal Agreement;
 
 1.3) "*Contracted Processor*" means a Subprocessor;
 
@@ -61,7 +61,7 @@ Unless otherwise defined herein, capitalized terms and expressions used in this 
 
 1.15) "*Purged*" or "*Purged Secret*" means a Secret that has been viewed by its recipient, has met or exceeded its specified retention period, or has been deleted by the holder of the associated Receipt Link, and is therefore no longer accessible through the Processor's service. For clarity, Purged Secrets may temporarily remain in encrypted backup systems for the Backup Retention Period in accordance with Section 10.
 
-1.16) "*Account Data*" means Personal Data associated with a Company's or user's account, including email addresses, authentication credentials, billing information, and usage metadata, but excluding Secret Content.
+1.16) "*Account Data*" means Personal Data associated with a Company's or user's account, including email addresses, authentication credentials or SSO claims, billing information, and usage metadata, but excluding Secret Content.
 
 1.17) "*Backup Retention Period*" means thirty (30) days, being the maximum period during which encrypted backup copies may be retained following deletion from active systems, after which they are automatically deleted.
 
@@ -99,7 +99,7 @@ The Processor's ability to respond to certain requests or obligations under this
 
 3.1) Processor shall take reasonable steps to ensure the reliability of any employee, agent or contractor of any Contracted Processor who may have access to Company Personal Data, ensuring in each case that access is strictly limited to those individuals who need to know / access the relevant Company Personal Data, as strictly necessary for the purposes of the Principal Agreement, and/or to comply with Data Protection Laws and other relevant legislation in the context of that individual's duties to the Contracted Processor, ensuring that all such individuals are subject to confidentiality undertakings or professional or statutory obligations of confidentiality.
 
-3.2) Data Protection Officer. Based on the Processor's assessment under Articles 37-39 of the GDPR, the Processor is not required to appoint a Data Protection Officer. The Processor does not engage in regular and systematic monitoring of data subjects on a large scale. With respect to Secret Content, data is encrypted at rest using keys not held by the database server. While certain secret creation methods do not provide end-to-end encryption, the Processor does not access or categorize Secret Content, and such content is automatically Purged. This assessment is reviewed annually. Data protection inquiries may be directed to: <privacy@onetimesecret.com>.
+3.2) Data Protection Officer. Based on the Processor's assessment under Articles 37-39 of the GDPR, the Processor is not required to appoint a Data Protection Officer. The Processor does not engage in regular and systematic monitoring of data subjects on a large scale. With respect to Secret Content, data is encrypted at rest using keys not held by the database server. While certain secret creation methods do not provide end-to-end encryption, the Processor does not access or categorize Secret Content except in the narrow circumstances described in Section D.4 of the Principal Agreement, and such content is automatically Purged. This assessment is reviewed annually. Data protection inquiries may be directed to: <privacy@onetimesecret.com>.
 
 3.3) The Processor maintains records of processing activities carried out on behalf of the Controller in accordance with Article 30(2) of the GDPR. Such records shall be made available to the Controller or Supervisory Authority upon request.
 
@@ -146,7 +146,7 @@ Taking into account the nature of the processing, Processor shall reasonably ass
 
 7.1) promptly notify Company if it receives a request from a Data Subject under any Data Protection Law in respect of Company Personal Data; and
 
-7.2) ensure that it does not respond to that request except on the documented instructions of Controller or as required by Applicable Laws to which the Processor is subject, in which case Processor shall to the extent permitted by Applicable Laws inform Controller of that legal requirement before the Contracted Processor responds to the request.
+7.2) ensure that it does not respond to that request except on the documented instructions of Controller or as required by applicable laws to which the Processor is subject, in which case Processor shall to the extent permitted by applicable laws inform Controller of that legal requirement before the Contracted Processor responds to the request.
 
 7.3) The Parties acknowledge that the technical design of the Services may limit the practical exercise of certain Data Subject rights with respect to Secret Content specifically. Secrets are encrypted and are automatically Purged after viewing or expiration. As a result:
 
@@ -172,7 +172,7 @@ Processor shall provide reasonable assistance to Company with any data protectio
 
 ## 10. Deletion or return of Company Personal Data
 
-In case of cessation of any Service involving the Processing of Company Personal Data, the Processor shall delete all Company Personal Data to the extent permitted by applicable laws and in accordance with Processor’s Terms and Conditions and Privacy Policy. Should the Company require a copy of their data, they must request it before the deletion of their account; requests made after the account has been deleted can no longer be considered.
+In case of cessation of any Service involving the Processing of Company Personal Data, the Processor shall delete all Company Personal Data to the extent permitted by applicable laws and in accordance with Processor’s Terms of Service and Privacy Statement. Should the Company require a copy of their data, they may request it within the Operational Retention Period following cancellation or termination, consistent with Section J.3 of the Terms of Service; requests made after that period expires can no longer be honoured.
 
 Unless required by applicable law, Processor shall retain Account Data for the duration of the Agreement plus the Operational Retention Period thereafter to facilitate any requested data exports. Backup copies shall be maintained for the Backup Retention Period, after which they will be automatically deleted in accordance with our standard procedures.
 
@@ -206,9 +206,11 @@ a) *Billing data* (limited to payment and invoicing information) is processed by
 
 b) *Transient edge-network TLS termination.* On the multi-tenant Services, Cloudflare (for the Processor's regional service domains) and Approximated (for customer Custom Domains on the multi-tenant paid tiers) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is re-encrypted for transit into the appropriate regional environment for processing. Single-tenant deployments (e.g. Global Elite) do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by the Processor within the Company's selected region.
 
+c\) *Geo-located encrypted backups (Global Elite).* For Global Elite deployments, geo-located encrypted backups are stored in AWS S3 (EU: Frankfurt, Ireland) with automatic expiration after thirty (30) days, as listed in Schedule A. For Global Elite deployments located outside the EU, this constitutes a standing exception to regional data residency. Backups are encrypted before upload, and decryption keys are not held by the storage provider, consistent with Schedule C.
+
 12.3) not engage in automated individual decision-making, including profiling, as defined under Article 22 of the GDPR, in connection with Company Personal Data.
 
-12.4) impose the same obligations on any sub-processors engaged under this Agreement.
+12.4) impose the same obligations on any Subprocessors engaged under this Agreement.
 
 ## 13. General Terms
 
@@ -234,9 +236,9 @@ The obligations of the Processor under this Agreement shall survive the terminat
 
 Notwithstanding the completion of the Engagement, termination of the Principal Agreement or of this Agreement, the obligations of the Processor relating to confidentiality in Section 13 shall continue to apply to any Confidential Information disclosed prior to such termination.
 
-## 15. Change in Privacy Laws
+## 15. Change in Data Protection Laws
 
-Notwithstanding anything to the contrary in the Agreement (including this DPA), in the event of a change in Privacy Laws or a determination or order by a government authority or competent court affecting this DPA or the lawfulness of any processing activities under this DPA, we reserve the right to make any amendments to this DPA as are reasonably necessary to ensure continued compliance with Privacy Laws or compliance with any such orders.
+Notwithstanding anything to the contrary in the Agreement (including this DPA), in the event of a change in Data Protection Laws or a determination or order by a government authority or competent court affecting this DPA or the lawfulness of any processing activities under this DPA, we reserve the right to make any amendments to this DPA as are reasonably necessary to ensure continued compliance with Data Protection Laws or compliance with any such orders.
 
 ## Frequently Asked Questions
 
@@ -256,7 +258,7 @@ Service tier affects subprocessor availability and architecture:
 
 *Global Elite (Premium Tier):* customers receive logically dedicated environments (e.g., secrets.yourcompany.com) with isolated application stacks and database instances, though underlying cloud resources may be virtualized.
 
-*Identity Plus (Mid-Tier)*: operates on multi-tenant infrastructure (e.g., eu.onetimesecret.com) with secure compartmentalization between customers. Custom domain functionality requires third-party network infrastructure that terminates SSL/TLS connections outside the Processor's direct control, as detailed in the Network & Security category below.
+*Multi-tenant tiers (Basic, Identity Plus, Team Plus, and any successor or variant tiers)*: operate on multi-tenant infrastructure (e.g., eu.onetimesecret.com) with secure compartmentalization between customers. Custom domain functionality requires third-party network infrastructure that terminates SSL/TLS connections outside the Processor's direct control, as detailed in the Network & Security category below.
 
 Where multiple subprocessors appear within a category, they represent alternatives unless explicitly stated as additive. Core subprocessors (those not marked optional) apply to all service tiers.
 
@@ -265,8 +267,8 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |  |  |  |  |  |  |
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Hetzner* | EU (Germany, Finland) | All | 𐄂 | Computing resources for internal infrastructure, single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
-| *UpCloud* | UK (London) or EU (Helsinki, Amsterdam, Frankfurt) | All | ✔ | Computing resources for single tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
+| *Hetzner* | EU (Germany, Finland); US (Oregon) | All | 𐄂 | Computing resources for internal infrastructure, single-tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
+| *UpCloud* | UK (London) or EU (Helsinki, Amsterdam, Frankfurt) | All | ✔ | Computing resources for single-tenant and multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
 | *NorthFlank* | UK (London) or EU (Netherlands) | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
 | *DigitalOcean* | EU or CA (Toronto) | All | ✔ | Container hosting, CI/CD services, managed databases, and computing resources | Account info, app data, network-level web traffic data, IP addresses |
 | *Catalyst Cloud* | NZ (Porirua) | All | ✔ | Computing resources for multi-tenant hosting environments | Account info, app data, network-level web traffic data, IP addresses |
@@ -303,7 +305,7 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |  |  |  |  |  |  |
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Stripe* | US/EU | All | 𐄂 | Payment processing, invoicing, fraud detection, tax reporting, payment links, checkout services. | Account info, app data, network traffic |
+| *Stripe* | US | All | 𐄂 | Payment processing, invoicing, fraud detection, tax reporting, payment links, checkout services. | Account info, app data, network traffic |
 
 ### *Subprocessor Entity Details*
 
@@ -352,7 +354,7 @@ Configuration documentation is retained for the duration of the service agreemen
 
 ## Schedule C - Technical and Organizational Security Measures
 
-This Schedule describes the technical and organizational measures implemented by the Processor pursuant to Article 32 of the GDPR to ensure a level of security appropriate to the risk.
+This Schedule describes the technical and organizational measures implemented by the Processor pursuant to Article 32 of the GDPR to ensure a level of security appropriate to the risk. The Processor's publicly published [Technical and Organisational Measures document](https://onetimesecret.com/toms) is maintained in sync with this Schedule and carries the governing description of each control.
 
 ### 1. Cryptographic Measures
 
@@ -378,7 +380,7 @@ User passphrases and account credentials are protected using adaptive one-way ha
 - Salt: Randomly generated per credential, stored with the hash
 - Timing-safe comparison: Verification uses constant-time comparison to prevent timing attacks
 
-New credentials are hashed with Argon2id. Credentials last used before April 2026 may retain a legacy bcrypt hash; a legacy hash is verified and upgraded to Argon2id on the next successful authentication.
+New credentials are hashed with Argon2id. Accounts with no successful sign-in since April 2026 may retain a legacy bcrypt hash; a legacy hash is verified and upgraded to Argon2id on the next successful authentication.
 
 *1.3 Cryptographic Key Isolation*
 
@@ -407,8 +409,8 @@ Backup data is encrypted using GPG with 4096-bit keys prior to storage. Encrypti
 ### 3. Backup Retention and Geographic Controls
 
 - Local encrypted backups are retained for seven (7) days
-- Geo-located encrypted backups are stored in AWS S3 (Frankfurt, EU) with automatic expiration after thirty (30) days
-- Backup storage locations align with the regional data isolation policy described in Section 12 of the Principal DPA
+- Geo-located encrypted backups (Global Elite) are stored in AWS S3 (EU: Frankfurt, Ireland) with automatic expiration after thirty (30) days
+- Backup storage locations align with the regional data isolation policy described in Section 12 of the Principal DPA, subject to the exceptions set out in Section 12.2
 
 ### 4. Encryption in Transit
 
@@ -419,6 +421,7 @@ All data transmitted between clients and the Processor's infrastructure is prote
 - Administrative access to production systems requires multi-factor authentication
 - Access to cryptographic key material is restricted to essential operational processes
 - Personnel with system access are bound by confidentiality obligations per Section 3 of the Principal DPA
+- On the multi-tenant Service, customer-configured IP-address and CIDR-range access filtering is enforced at the application layer; on single-tenant deployments, network-level IP-range filtering may be available depending on the hosting provider
 
 ### 6. Organizational Measures
 

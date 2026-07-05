@@ -1,6 +1,6 @@
 # Retention and backup periods across policy documents
 # Source: ADR-001-retention-source-of-truth.md
-# Updated: 2026-07-02
+# Updated: 2026-07-05 (line references refreshed after consistency fixes)
 
 definitions:
   backup_retention_period:
@@ -22,24 +22,24 @@ document_references:
   toms:
     local_backups:
       value: 7 days
-      line: 102
+      line: 106
       note: Subset of backup_retention_period; faster recovery tier
     geo_backups_global_elite:
       value: 30 days
-      line: 102
-      location: AWS S3 Frankfurt
+      line: 106
+      location: AWS S3 (EU: Frankfurt, Ireland)
     backup_retention_period:
       value: 30 days
-      line: 106
-      refs: DPA §12
+      line: 110
+      refs: DPA §12 (subject to §12.2 exceptions, incl. (c))
     operational_retention_period:
       value: 30 days
-      line: 116
+      line: 120
       refs: null
     account_data_deletion:
       active: 30 days
       backup: 30 days
-      line: 150
+      line: 155
       refs: DPA §10
 
   dpa:
@@ -66,30 +66,31 @@ document_references:
   privacy_statement:
     server_request_logs:
       value: up to 30 days
-      line: 139
+      line: 141
       refs: ToS B.6
     backup_retention:
       value: up to 30 days
-      line: 153
+      line: 67
       refs: ToS B.6
+      note: Secret Content lifecycle sentence; geo-backup exception at line 181
     account_data_deletion:
       active: up to 30 days
       backup: up to 30 days
-      line: 229
+      line: 232
       refs: ToS J.3
     privacy_response:
       value: 30 days
       extendable: +30 days
-      line: 206
+      line: 209
     inactive_account_notice:
       value: 30 days
-      line: 233
+      line: 236
     policy_change_notice:
       value: 30 days
-      line: 253
+      line: 256
     subprocessor_notice:
       value: 30 days
-      line: 159
+      line: 117
 
   tos:
     ip_request_logs:
@@ -112,7 +113,7 @@ document_references:
     refund_window:
       value: 30 days
       lines: [381, 382, 384]
-      section: I.2
+      section: I.3
 
 exceptions:
   billing_records:
@@ -122,5 +123,10 @@ exceptions:
 
   local_backups:
     retention: 7 days
-    source: TOMs line 102
+    source: TOMs line 106
     note: Operational tier within 30-day ceiling
+
+  configuration_documentation:
+    retention: service agreement + 5 years post-termination
+    source: DPA Schedule B §4 (line 351)
+    note: Single-tenant/Global Elite audit records; not subject to 30-day consolidation
