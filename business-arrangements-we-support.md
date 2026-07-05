@@ -1,6 +1,3 @@
-# business-arrengements-we-support.md
----
-
 # Business Arrangements We Support
 
 Draft policy page / ToS section for Onetime Secret. Written to be read by customers, not lawyers. Standalone; pairs with `billing-payer-decoupling.md`.
@@ -27,7 +24,7 @@ In every arrangement, the person who controls the payment method and the people 
 
 Identity Plus and Team Plus organizations get unlimited custom domains, and we mean it. Point as many domains as you like at your organization: brands, regional TLDs, product names. A domain that shares your organization's members and sign-in is an alias, and aliases are free in any quantity.
 
-A domain becomes something different when it carries its own identity provider and its own scoped members. At that point it isn't another name for your organization; it is functionally a separate tenant, which usually means a separate client. That's not a violation, it's a signal, and we built the path for it: **promote the domain to its own organization**. The spin-out carries the domain's SSO connection, members, and branding into a new organization under your existing billing account, prorated. Your client gets real isolation, you get one more line on the same invoice.
+A domain becomes something different when it carries its own identity provider and its own scoped members. At that point it isn't another name for your organization; it is functionally a separate tenant, which usually means a separate client. That's not a violation, it's a signal: **that client should have its own organization**. Set one up under your existing billing account, carrying its own SSO connection, members, and branding, so your client gets real isolation and you get one more line on the same invoice. If you'd like help moving an existing domain into its own organization, ask us.
 
 ## The one boundary
 
