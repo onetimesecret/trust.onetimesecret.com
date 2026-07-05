@@ -1,0 +1,74 @@
+name: trust-site
+
+# Build (and optionally publish) the trust.onetimesecret.com static site from
+# trust-site-mockups/. Node is pinned via trust-site-mockups/.nvmrc (v24) so the
+# Astro build is reproducible; pnpm is pinned to the v9 line to match the
+# lockfile (lockfileVersion 9.0).
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "trust-site-mockups/**"
+      - ".github/workflows/trust-site.yml"
+  pull_request:
+    paths:
+      - "trust-site-mockups/**"
+      - ".github/workflows/trust-site.yml"
+  # Publishing is manual until the production host is wired (see deploy job).
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: trust-site-mockups
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # pnpm must be installed before setup-node so its pnpm cache can resolve.
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: trust-site-mockups/.nvmrc
+          cache: pnpm
+          cache-dependency-path: trust-site-mockups/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trust-site-dist
+          path: trust-site-mockups/dist
+          if-no-files-found: error
+
+      # Prepared for GitHub Pages publishing; only consumed by the deploy job.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: trust-site-mockups/dist
+
+  # Neutral GitHub Pages publish, kept manual (workflow_dispatch) on purpose:
+  # trust.onetimesecret.com is expected to be served from the production CDN
+  # (BunnyCDN, matching the other public sites), not Pages. Swap this job for a
+  # CDN-upload step once the host and its credentials are confirmed. Until then
+  # this validates the publish path without auto-deploying anywhere.
+  deploy:
+    if: github.event_name == 'workflow_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
