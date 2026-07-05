@@ -1,0 +1,83 @@
+---
+import TrustLayout from '../layouts/TrustLayout.astro';
+
+const offers = [
+  {
+    title: '1. A product that minimizes what you must trust.',
+    body: 'Encrypted at rest with the key material separated from the stored data, read once, destroyed. The strongest control is one that doesn’t depend on our procedures.',
+  },
+  {
+    title: '2. Source code you can read.',
+    body: 'Open source since 2012, with public commit history. An auditor samples; you can read everything.',
+  },
+  {
+    title: '3. A completed HECVAT 4.1.5.',
+    body: 'The higher-ed vendor assessment, answered in full and dated — it covers most of what a SOC 2 questionnaire asks.',
+  },
+  {
+    title: '4. Direct answers from the person who built it.',
+    body: 'Send your VendorSec questionnaire. Written answers from the operator within five business days — not a compliance portal.',
+  },
+  {
+    title: '5. A published penetration test (planned).',
+    body: 'Commissioned independently and published in full, in the tradition of open-source audit reports.',
+  },
+];
+
+const notHere = [
+  '"Built on SOC 2-compliant infrastructure" — inherited compliance isn’t ours to claim.',
+  'A perpetual "certification in progress" badge.',
+  'GDPR or CCPA dressed up as certifications — they’re laws we comply with, not awards.',
+  'Framework names formatted to look like attestations.',
+];
+---
+
+<TrustLayout
+  title="Assurance without certification"
+  description="Onetime Secret's SOC 2 position, plainly: what we offer instead of certification, and what you will not find here."
+  active="assurance"
+>
+  <div class="page" style="max-width: 668px;">
+    <div class="kicker">Our position on certification</div>
+    <h1>Assurance without<br />certification</h1>
+    <div class="prose">
+      <p>
+        We are a one-person company. A SOC 2 audit is, in large part, a test of administrative
+        capacity: policy binders, evidence collection, auditor management. Ours would attest
+        that one person follows procedures the same person wrote. We'd rather spend that
+        capacity on the product — and answer your security questions directly, in writing.
+      </p>
+      <p>
+        So this page carries no badges, no "SOC 2 in progress" ribbon, and no compliance logos
+        inherited from our hosting providers. Their audits cover them, not us. Here is what we
+        offer instead:
+      </p>
+    </div>
+
+    <div class="rule-list" style="margin-top: 18px;">
+      {offers.map((o) => (
+        <div class="rule-row" style="display: block; padding: 18px 0;">
+          <span class="row-title">{o.title}</span>
+          <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--muted);">{o.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="callout" style="margin-top: 36px; padding: 24px 28px;">
+      <div class="callout-label">Our SOC 2 position, plainly</div>
+      <p style="font-size: 16px; color: var(--ink);">
+        We are not SOC 2 audited. We will pursue certification when customer demand justifies
+        the cost. Until then, the HECVAT, our DPA, and this record are the basis of our
+        assurance — and if that is a hard blocker for your organization, we would rather you
+        know now than after procurement.
+      </p>
+    </div>
+
+    <section style="margin-top: 36px;">
+      <div class="kicker left" style="margin-bottom: 14px;">What you will not find here</div>
+      <div style="font-size: 15.5px; line-height: 1.95; color: var(--muted); font-style: italic;">
+        {notHere.map((line) => <div>{line}</div>)}
+      </div>
+    </section>
+  </div>
+</TrustLayout>

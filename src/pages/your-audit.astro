@@ -1,0 +1,77 @@
+---
+import TrustLayout from '../layouts/TrustLayout.astro';
+import { trust } from '../lib/trust';
+
+const controlLanguage =
+  'Credentials and other sensitive values are never transmitted in persistent channels (email, chat). They are shared via one-time links (Onetime Secret) that are encrypted at rest, expire automatically, and are destroyed after a single retrieval, ensuring no sensitive value remains recoverable from communication history.';
+---
+
+<TrustLayout
+  title="Citing Onetime Secret in your audit"
+  description="Control mappings and paste-ready language for citing Onetime Secret in your SOC 2, ISO 27001, or HECVAT response."
+  active="audit"
+>
+  <div class="page" style="max-width: 708px;">
+    <div class="kicker">A control you can cite</div>
+    <h1 style="font-size: 38px;">Citing Onetime Secret<br />in your audit</h1>
+    <p class="lede">
+      We may not hold certifications — but using ephemeral links instead of emailing credentials
+      is a control <em>you</em> can cite in your own SOC 2, ISO 27001, or HECVAT response. The
+      mappings, then the language, ready to paste.
+    </p>
+
+    <div class="rule-list" style="margin-top: 40px;">
+      {trust.auditMappings.map((m) => (
+        <div class="rule-row" style="justify-content: flex-start; gap: 22px;">
+          <div style="min-width: 170px;">
+            <div style="font: 600 14px var(--sans);">{m.framework}</div>
+            <div style="font: 400 12px var(--mono); color: var(--rust); margin-top: 2px;">{m.control}</div>
+          </div>
+          <p style="margin: 0; font-size: 15px; line-height: 1.65; color: var(--muted);">{m.how}</p>
+        </div>
+      ))}
+    </div>
+
+    <section style="margin-top: 44px;">
+      <div class="kicker left" style="margin-bottom: 14px;">Paste-ready control language</div>
+      <div class="callout" style="margin-top: 0; padding: 24px 28px;">
+        <p id="control-language" style="font-size: 15.5px; line-height: 1.75; font-style: italic;">
+          "{controlLanguage}"
+        </p>
+        <div style="margin-top: 16px;">
+          <button
+            id="copy-control"
+            type="button"
+            data-language={controlLanguage}
+            style="font: 600 12px var(--sans); border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 8px 18px; cursor: pointer;"
+          >Copy</button>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top: 36px;">
+      <div class="kicker left" style="margin-bottom: 14px;">Evidence for your auditor</div>
+      <p style="margin: 0; font-size: 16px; line-height: 1.75; color: var(--body);">
+        Auditors want artifacts, not assertions. Useful ones: this page (dated), our
+        <a href="https://onetimesecret.com/privacy">Privacy Statement</a> and
+        <a href="https://onetimesecret.com/dpa">DPA</a>, the open-source repository, and — for
+        self-hosted installations — your own deployment configuration. If your auditor has
+        questions we can answer directly, put them in touch.
+      </p>
+    </section>
+  </div>
+
+  <script>
+    const button = document.getElementById('copy-control') as HTMLButtonElement | null;
+    button?.addEventListener('click', async () => {
+      const text = button.dataset.language ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = 'Copied ✓';
+        setTimeout(() => (button.textContent = 'Copy'), 1600);
+      } catch {
+        button.textContent = 'Select & copy above';
+      }
+    });
+  </script>
+</TrustLayout>

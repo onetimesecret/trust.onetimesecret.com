@@ -1,197 +1,177 @@
-# Remaining decisions
-
-Decisions and verifications that block publication and need Delano. One item
-per line. Everything else in ERRATA.md is unblocked drafting work.
-
-
-
-## Legal position (blocks the most downstream text)
-
-- [x] Decision CP-1: Pick one controller/processor position for Organization member data — the live Privacy Statement (line 55) says the Organization owner/admin is the GDPR controller with Onetime Secret as processor (matching the DPA's model), but the ToS review (IC-1) removed that same claim as "factually incorrect — Onetime Secret remains the controller." One position must hold across ToS, PP, and DPA before publication. (ERRATA.md header finding 1)
-
-Background: I edited the ToS but possibly inadvertently added to the confusion. The way it was written, it sounded to me like we were conflating "Organization" as in, one of our core data model and "Organization" as in, a legal entity that uses our service. That is all I was trying to clarify; I wasn't expressing any opinions.
-
-The term "Organization" is overloaded so for disambiguation:
-
-* GDPR & DPA language, controller/processor: our customers are the controller and we are the processor. My background note explains where this confusion came from. Our pre-existing DPA was already correct about this.
-* Protecting our Subscription/billing arrangements: Organization as in our data model entity is a one to one with subscription. 
-
-DECISION: our customers are the controller and we are the processor.  Our pre-existing DPA was already correct about this.
-
-
-
-
-
-## Substantive scope judgments
-
-
-### Decision DPA-3: 
-- [x] Decision DPA-3: The Privacy Statement's no-sell/no-share commitment carries the qualifier "not for their commercial purposes" — decide whether that qualifier is intentional scope-narrowing; if not, remove it. (onetime-dpa-review-tasks.md DPA-3)
-
-This item is poorly labelled (related to the confusion I mention above); it has nothing to do with the DPA or GDPR. 
-
-DECISION: We bill at the organization data record level. The Organization owner is the one who is responsible for the subscription and billing. This is a separate concern from the GDPR controller/processor relationship. This relates directly to the "**Business arrangements we support.**" section in ERRATA-1. 
-
-DECISION (2026-07-02, the qualifier question itself): Remove the "for their commercial purposes" qualifier. We do not sell, rent, or trade Account Data — absolute, no qualifier. We do not share it with any third party except in the situations the section already lists (subprocessors for the stated reasons, corporate transactions, Compelled Disclosure, or with permission). Applied to the Privacy Statement "How we share" opening paragraph; sharing is scoped by the enumerated situations rather than by a commercial-purposes qualifier.
-
-
-
-
-
-### Decision INACT-1:
-
-- [x] Decision INACT-1: Inactive-account removal — attempt email notice to the registered address before removing, or keep "removal may occur automatically and without separate notice"? (Privacy review-tasks TODO-12; drafted text ready either way)
-
-DECISION: WE WILL GIVE NOTICE. Draft the clause(s) based on the following:
-
-Use notice-attempt language, and make it concrete rather than aspirational. The strongest, least-attackable formulation I'd suggest, modeled on the Apple/Google pattern:
-
-> We will attempt to notify you via the email address associated with your account at least [N] days before suspending or deleting an account that has been inactive for [M] months. If the account remains inactive after that period, we may suspend or delete it and its associated data. Notice is a courtesy; our failure to send or your failure to receive it does not prevent deletion, but we will make a reasonable attempt.
-
-A few refinements worth considering:
-
-Make notice a "best-efforts" obligation, not a condition precedent. Saying "we'll try to notify you" rather than "we won't delete until you've been notified" preserves your ability to act while still being defensible. This is the actual legal posture Google and Apple take — they send notice as a matter of policy, not as a contractual precondition that would let users block deletion by ignoring email.
-Define "inactive" precisely (e.g., "no successful login for 12 months"). Vague "extended period as we determine" language (à la Humana Community, cited in TermsFeed) is the other common weakness 1.
-Carve out data-export/grace period if you can — even a "you may request an export for 30 days after notice" clause materially changes the user-rights feel without much operational cost.
-
-
-
-### Decision INACT-2:
-- [x] Decision INACT-2: Confirm five years as the inactivity window (regulation and our own policy may change across it; draft says "may," not "will," so the number is the only open variable). (Privacy review-tasks TODO-12)
-
-DECISION: 5 years i.e. 60 months.
-
-
-
-### Decision TODO-23:
-
-- [x] Decision TODO-23: Approve (or edit) the drafted "Network-level access controls" clause stating that single-tenant deployments may offer IP-range filtering depending on the hosting provider — a contractual availability statement, held for individual review. (ToS review-tasks TODO-23)
-
-
-DECISION:  multi-tenant Service, CIDR/IP filtering is enforced at the application layer; single tenant deployments may offer IP-range filtering depending on the hosting provider. whichever is available we will clearly label. 
-
-
-
-
-## Code verification (needs the application repo, outside site-policy)
-
-
-### Verify TODO-20a:
-
-- [x] Verify TODO-20a: Confirm in the application code that Incoming Secrets protects configured recipient email addresses as claimed (address handled as a hashed value; only a display name rendered in the form) before any mechanism language goes into the ToS; TODO-20's "best effort" wording already covers the liability core without it. (ToS review-tasks TODO-20a)
-
-
-DECISION: YES without any ambiguity, Incoming Secrets protects email addresses.
-
-
-- [x] Verify TODO-23a: Confirm that on the multi-tenant Service, CIDR/IP filtering is enforced at the application layer (vs network or edge) before that implementation detail is drafted into the ToS. (ToS review-tasks TODO-23a)
-
-DECISION:  multi-tenant Service, CIDR/IP filtering is enforced at the application layer; single tenant deployments may offer IP-range filtering depending on the hosting provider. whichever is available we will clearly label. 
-
-
-
-## Facts only you have
-
-
-### Facts TLS-1:
-
-- [x] Facts TLS-1: For the edge-TLS-termination exception (Cloudflare on regional entry domains; Approximated on paid-tier Custom Domains), state which regions/surfaces can drop the exception and roughly when — the per-surface restructure of PP/DPA text can proceed without this, but any elimination claim can't. (ERRATA.md item 5)
-
-
-DECISION: Do not include elimination claim in the PP/DPA text. The exception is a fact of the current architecture and will remain so for the foreseeable future. We will not make any claims about eliminating this exception in the documentation. We will update the documents in the future when that is taking place. 
-
-Be clear about: Cloudflare on regional domains only (eu.onetimesecret.com) and for the protection of the service. Use a custom domain is off cloudflare and on Approximated. We already added good language around edge-network TLS termination.
-
-
-
-## Carried over from the deleted review-tasks files (2026-07-02 final audit)
-
-The three onetime-*-review-tasks.md files were audited and deleted; their full
-content remains in git history (last committed state: commit 8d02ba6). Open
-items that survived the audit:
-
-- [x] Decision HASH-1: DPA Schedule C §1.2 and PP say unqualified "credentials
-  are hashed with Argon2id", but the code-verified state (DPA review-tasks
-  XD-1) was: Argon2id is the default for NEW credentials; legacy BCrypt
-  (cost 12) hashes are retained for verification. Either confirm legacy
-  hashes have been fully migrated (draft is then accurate) or qualify the
-  sentence (e.g. "new credentials are hashed with Argon2id; legacy hashes
-  are verified and upgraded on next use"). Related fact worth keeping: the
-  crypto claims were verified against Familia v2.3.3.
-
-  DECISION (2026-07-02): Legacy bcrypt hashes remain for accounts with no
-  successful sign-in since April 2026; upgrade to Argon2id happens on the
-  next successful authentication. Qualified sentence applied to DPA Schedule
-  C §1.2, PP security section, and TOMs §2 (Technical).
-
-- [x] Decision TODO-20b: The Incoming Secrets mechanism was code-verified
-  (TODO-20a above), but the drafted mechanism sentence was never applied to
-  ToS E.2: "configured email addresses are not rendered in the submission
-  form; only a display name is shown, and the address itself is handled as
-  a hashed value." Apply it to E.2, or affirm the omission as intentional
-  (defensible under the TODO-9 preference to keep implementation detail out
-  of binding text).
-
-  DECISION (2026-07-02): Confirmed — configured destinations are protected
-  by hashing. Mechanism sentence applied to ToS E.2.
-
-- [x] Decision DEF-1: ToS A.11 defines Verified Email Address as a *domain*
-  while E.2 treats it as an *address* at that domain. Tighten one or accept
-  the looseness. (ToS review-tasks lines 263/354, only recorded there.)
-
-  DECISION (2026-07-02): Leave as is; the looseness is accepted.
-
-Note (no action): TODO-15 deliberately omits any resale price term — resale
-price maintenance (RPM) caution; prior-art research survives as
-0616-onetime-terms-resale-prior-art.md.txt.
-
-
-
-## From the ERRATA audits (2026-07-02)
-
-- [ ] Task DOCS-1 (cross-repo, blocks deleting ERRATA-3.md and ERRATA.md):
-  the principles-page changes (heading "Our No-Email Philosophy" → "Our
-  Minimal-Email Philosophy", the three-category email taxonomy, the
-  no-tracking-in-email commitment, and the "preferences live in browser
-  storage, not cookies" clarification for data-minimization.md) were applied
-  only to a working copy `principles.md` that was deleted in commit e3aed13
-  and never ported to the live docs repo
-  (`/Users/d/Projects/dev/onetimesecret/docs.onetimesecret.com`,
-  src/content/docs/en/principles/privacy-first.md, communication.md,
-  data-minimization.md). Recover the drafted text with
-  `git show e3aed13^:principles.md` and port it.
-
-- [x] Decision BA-1: business-arrangements-we-support.md line 30 asserts a
-  "promote domain to organization" capability whose existence was never
-  code-verified. Verify the feature or reword before that page is published.
-  Note the BA page is the sole home of several ERRATA-1 commitments
+# Remaining decisions and open items
+
+Single consolidated tracker for the 2026 site-policy revision. Supersedes the
+former `ERRATA.md`, `ERRATA-3.md`, `FINALIZATION-july1.md`, and
+`FINALIZATION-july2.md` working files (removed 2026-07-05; their full
+append-only detail remains in git history). Business-arrangements research that
+lived in `ERRATA-1.md` moved to `research/business-arrangements-rationale.md`.
+
+Two parts: **Part 1 — Open items** (still actionable) and **Part 2 — Decisions
+of record** (resolved and applied; kept for institutional memory).
+
+---
+
+## Part 1 — Open items
+
+### DOCS-1 (cross-repo, non-blocking here)
+
+The principles-page changes were drafted against a working copy `principles.md`
+that was deleted in commit `e3aed13` and never ported to the live docs repo
+(`docs.onetimesecret.com`,
+`src/content/docs/en/principles/{privacy-first,communication,data-minimization}.md`).
+Recover the drafted text with `git show e3aed13^:principles.md` and port:
+
+- Heading "Our No-Email Philosophy" → "Our Minimal-Email Philosophy".
+- The three-category email taxonomy (carried forward below so this file is
+  self-sufficient once the ERRATA files are gone).
+- The no-tracking-in-email commitment (no tracking pixels, no click-tracking).
+- The "preferences live in browser storage, not cookies" clarification for
+  `data-minimization.md`.
+
+Email taxonomy to port (source text, formerly ERRATA-3):
+
+- **Transactional** — secret links, account, and billing notices. Inherent to
+  the service; no opt-out.
+- **Service and security notices** — security advisories, breach
+  notifications, policy-change notices, deprecations. Sent when needed,
+  including when legally required; not marketing.
+- **Product news** — feature announcements and similar. Strictly opt-in,
+  one-click unsubscribe, rare.
+
+PP wording ("We never send unsolicited marketing email, and no email we send
+contains tracking pixels or click-tracking links" plus the three categories)
+is already applied in this repo; DOCS-1 is only the port of the matching
+principles-page copy to the docs repo.
+
+### PP-1 (non-blocking, tidy when convenient)
+
+PP "Information from website browsers" lists "regional environment selection"
+among collected data, but code verification found no client-side persistence
+for region, and the Cookies section folds localStorage into "cookies (and
+similar technologies)". Adjacent to, not contradicted by, the code — tighten
+when convenient.
+
+### TC-1 (future)
+
+The CC0 license pointers in ToS G.3 and the PP License section deliberately
+point at the GitHub repository for now; swap in the real trust-centre URL when
+one exists. (The authoritative-source references were already reworded to
+"trust centre"; only the live URL swap remains.)
+
+### Counsel review before publication (from the 2026-07-02 finalization pass)
+
+These are deviations from market-standard drafting that are defensible but
+warrant a lawyer's sign-off. None block internal review; all block final
+publication.
+
+- **Subprocessor objection is a no-questions-asked exit.** DPA §6.2 omits the
+  market-standard "reasonable data-protection grounds" gate: any objection to
+  a new subprocessor, for any reason, triggers the sole remedy (terminate the
+  affected Services without penalty inside the 30-day window). Defensible
+  because the remedy is self-executing, but §6.2 is silent on whether "without
+  penalty" implies a pro-rata refund of an unused prepaid period. Confirm the
+  intended money outcome and that the deviation is acceptable.
+- **Refund-terms precision.** The 30-day refund window (paid multi-tenant
+  plans, from the most recent billing date; single-tenant defaults to the same
+  "unless a separate agreement says otherwise") needs: (1) explicit scoping to
+  the most recent charge only, so an annual subscriber on day 29 can't read it
+  as a full-year refund; (2) a check against the I.2 proration rules for a
+  double-dip path (upgrade → prorated credit → refund); (3) confirmation that
+  Global Elite agreements actually carve out provisioning/setup costs, or that
+  the ToS default does; (4) alignment of the three exit paths (refund window,
+  subprocessor objection, ordinary cancellation) to consistent money outcomes;
+  (5) no conflict with mandatory EU/UK 14-day cooling-off rights under BC
+  governing law; and coupon/nonprofit-price interaction.
+- **TOMs resilience note (optional).** TOMs §3 Availability currently states
+  local encrypted backups (7 days) plus geo-located encrypted backups (Global
+  Elite) in AWS S3 Frankfurt with 30-day expiry. Consider stating the backup
+  posture against the 3-2-1-1-0 rule if we want the resilience story to read
+  as an explicit standard rather than an ad-hoc description.
+
+---
+
+## Part 2 — Decisions of record (resolved and applied)
+
+These were decided during the 2026 revision and are already applied to the
+policy documents. Kept here as the durable decision ledger; the full
+review-note history is in git.
+
+- **CP-1 — controller/processor position.** Our customers (the legal entity
+  behind an Organization) are the controller; we are the processor. The DPA was
+  already correct (Company = Controller). PP swept to match; ToS defers to the
+  DPA via B.3 "Member data". The "Organization" overload was the source of the
+  confusion: GDPR/DPA language uses controller/processor; the subscription/
+  billing entity is the Organization data-model record (1:1 with subscription).
+
+- **DPA-3 — no-sell/no-share qualifier.** Removed the "for their commercial
+  purposes" qualifier from the PP. We do not sell, rent, or trade Account Data
+  — absolute. Sharing is scoped only by the enumerated situations (subprocessors
+  for stated reasons, corporate transactions, Compelled Disclosure, or with
+  permission).
+
+- **INACT-1 / INACT-2 — inactive accounts.** Best-efforts email notice at least
+  30 days before removal (courtesy, not a precondition), with a 30-day
+  post-notice export window; inactivity = no successful sign-in for five years
+  (60 months); signing in resets the period. Applied to the PP "Data retention
+  and deletion" section.
+
+- **TODO-23 / 23a — network-level access controls.** Multi-tenant CIDR/IP
+  filtering is enforced at the application layer (code-verified); single-tenant
+  deployments may offer IP-range filtering depending on the hosting provider;
+  whichever is available is clearly labelled. Applied to ToS B.6.
+
+- **TLS-1 — edge-TLS-termination exception.** Do not make any elimination
+  claim; the exception is a fact of the current architecture. Cloudflare on
+  regional entry domains only (e.g. `eu.onetimesecret.com`) and for protection
+  of the service; Custom Domains are off Cloudflare and on Approximated; Global
+  Elite excluded. DPA §12.2 and Schedule A aligned to the two transfer
+  exceptions (Stripe billing; transient edge-network TLS termination).
+
+- **HASH-1 — credential hashing.** Legacy bcrypt hashes remain for accounts
+  with no successful sign-in since April 2026; upgrade to Argon2id happens on
+  the next successful authentication. Qualified sentence applied to DPA
+  Schedule C §1.2, PP security section, and TOMs §2. (Crypto claims verified
+  against Familia v2.3.3.)
+
+- **TODO-20a / 20b — Incoming Secrets.** Code-verified that configured
+  recipient email addresses are protected (handled as a hashed value; only a
+  display name rendered in the form). Mechanism sentence applied to ToS E.2.
+
+- **DEF-1 — Verified Email Address.** ToS A.11 defines it as a domain while E.2
+  treats it as an address at that domain. Looseness accepted; left as is.
+
+- **BA-1 — "promote domain to organization".** Do not add the
+  promote-domain-to-organization capability claim to anything published in this
+  revision (feature not code-verified; future planning). The
+  business-arrangements page remains the sole home of several commitments
   (sponsored arrangements, payer decoupling, consolidated invoicing,
-  alias/boundary domains, spin-out path) — it must be retained or those
-  commitments re-homed.
+  alias/boundary domains, spin-out path) — retain or re-home those whenever the
+  page moves toward publication. Page + rationale now live under `research/`.
 
-  DECISION (2026-07-02): Not needed now — future planning. Do not add the
-  promote-domain-to-organization claim to anything published in this
-  revision. The BA page retention note still applies whenever that page
-  moves toward publication.
+- **AWS EU-residency.** DPA entity-details note corrected to "SES and S3; data
+  located in EU regions only (Frankfurt, Ireland)".
 
-- [ ] Follow-up PP-1 (non-blocking): PP "Information from website browsers"
-  lists "regional environment selection" among collected data, but code
-  verification (ERRATA.md ~line 353) found no client-side persistence for
-  region; and the Cookies section folds localStorage into "cookies (and
-  similar technologies)". Adjacent to, not contradicted by, the code — tidy
-  when convenient.
+- **Item 1 — organization/subscription framing.** ToS C.4 rewritten
+  arrangement-first (one Organization = one customer, each carries its own
+  subscription; agencies/resellers/sponsors supported; self-hosting endorsed
+  under the MIT license); the org-per-owner cap reframed as an ops guardrail
+  raised on request. Rationale preserved in
+  `research/business-arrangements-rationale.md`.
 
-- [ ] Task TC-1 (future): CC0 license pointers in ToS G.3 and the PP License
-  section deliberately point at the GitHub repository for now; swap in the
-  real trust-centre URL when one exists (recorded in ERRATA.md ~lines
-  378-385).
+- **Items 2–16 (2026-07-01 batch pass).** Subprocessor change-notice rewritten
+  to notice-with-30-day-objection; email taxonomy applied to the PP;
+  single-tenant "may offer / where offered" framing; privacy contact delta
+  (support@ → privacy@, 45 → 30 days); debugging exception narrowed; plain-
+  language rewrites (soft limits, deliverability, Secret Content exception);
+  hardcoded region counts removed; "trust centre" rename; public-OCI-image
+  operating note in TOMs; one-human-per-login rationale; official-domain list
+  and "Your Responsibilities" (ToS C.9). All reviewer-verified against the
+  files with an anchor check.
 
-Done in this pass (2026-07-02): TOMs §1.3 aligned to the two DPA §12.2
-transfer exceptions; TOMs §7 subprocessor bullet aligned to the DPA §6
-notice-with-objection model; TOMs header switched to "Effective date: TBD on
-release"; DPA URL unified to onetimesecret.com/dpa (ToS B.3); stale PP
-anchors fixed (B.3 #3-organizations, E.2 #2-domain-specific-features);
-DPA-3 qualifier removed from PP (decided by Delano, sell/rent/trade now
-absolute); Catalyst Cloud / DigitalOcean / AWS EMEA rows added to the DPA
-entity-details table; ERRATA-2.md and ERRATA-115.md deleted (citations
-preserved in 0702-errata-research-citations.md.txt).
+- **Metadata / framing.** Both live docs read "Effective date: TBD on release";
+  the 2024-06→2024-10 deltas stay in the full CHANGELOG, not the "what's
+  changed in 2026" notice. DPA URL canonicalized to `onetimesecret.com/dpa`
+  across ToS, PP, and TOMs (the earlier `/info/dpa` mismatch is resolved).
+
+- **FINALIZATION-july1 items.** Cookies vs localStorage split into separate PP
+  paragraphs; "what "dedicated" means" left out by decision.

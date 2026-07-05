@@ -1,0 +1,98 @@
+---
+import TrustLayout from '../layouts/TrustLayout.astro';
+import { trust } from '../lib/trust';
+
+const core = trust.subprocessors.filter((s) => s.core);
+const alternatives = trust.subprocessors.filter((s) => !s.core);
+---
+
+<TrustLayout
+  title="Subprocessors"
+  description="The third parties that may process customer data on Onetime Secret's behalf, with a dated change history and our notification policy."
+  active="subs"
+>
+  <div class="page" style="max-width: 728px;">
+    <div class="kicker">Who touches your data, and since when</div>
+    <h1 style="font-size: 38px;">Subprocessors</h1>
+    <p class="lede">
+      These are the third parties that may process customer data on our behalf. When the list
+      changes, every account holder gets an email thirty days before the change takes effect —
+      long enough to object, and we mean it: object and you may end the affected services
+      without penalty. The canonical, contractual list is
+      <a href="https://onetimesecret.com/dpa">Schedule A of our DPA</a>; this page mirrors it
+      and never replaces the email notice.
+    </p>
+    <p style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 18px 0 0;">
+      <a href="/trust.yaml">diff this list as trust.yaml</a> ·
+      <a href="https://github.com/onetimesecret/site-policy">view history in git</a>
+    </p>
+
+    <section style="margin-top: 40px;">
+      <div class="kicker left" style="margin-bottom: 6px;">Core — all service tiers</div>
+      <div class="rule-list">
+        {core.map((s) => (
+          <div class="rule-row" style="display: block; padding: 20px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;">
+              <span style="font: 600 16px var(--sans);">{s.name}</span>
+              <span class="row-meta mono">since {s.since}</span>
+            </div>
+            <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
+              {s.purpose} <em style="color: var(--faint);">— {s.location}</em>
+              {s.note && <em style="color: var(--faint);"> · {s.note}</em>}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-top: 40px;">
+      <div class="kicker left" style="margin-bottom: 6px;">Alternatives — engaged per region, tier, or feature</div>
+      <div class="rule-list">
+        {alternatives.map((s) => (
+          <div class="rule-row" style="display: block; padding: 20px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;">
+              <span style="font: 600 16px var(--sans);">{s.name}</span>
+              <span class="row-meta mono">since {s.since}</span>
+            </div>
+            <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
+              {s.purpose} <em style="color: var(--faint);">— {s.location}</em>
+              {s.note && <em style="color: var(--faint);"> · {s.note}</em>}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <p style="font: 400 12.5px/1.6 var(--sans); color: var(--faint); margin: 14px 0 0;">
+      DPAs are in place with each entity. This is the full chain — no undisclosed
+      sub-subprocessors. Self-hosted installations have zero subprocessors.
+    </p>
+
+    <section style="margin-top: 56px;">
+      <div class="kicker left">Change history, newest first</div>
+      {trust.subprocessorChangelog.map((h) => (
+        <div class="rule-row" style="justify-content: flex-start; gap: 22px; border-top: none;">
+          <span class="row-meta mono" style="min-width: 92px; padding-top: 3px;">{h.date}</span>
+          <div>
+            <div style="font: 600 14.5px var(--sans);">
+              <span class={`verb-${h.verb}`} style="text-transform: capitalize;">{h.verb}</span>
+              {' '}{h.title}
+            </div>
+            <p style="margin: 5px 0 0; font-size: 14.5px; line-height: 1.65; color: var(--muted);">{h.note}</p>
+          </div>
+        </div>
+      ))}
+
+      <div class="callout" style="margin-top: 28px;">
+        <div class="callout-label">Notification policy</div>
+        <p>
+          New or replaced subprocessors are announced by email to all account holders and posted
+          here at least thirty days before they process any customer data. During that window
+          you may object and terminate the affected services without penalty. Emergency
+          replacements — say, a provider failing — are announced promptly after the engagement,
+          with reasons given, and the objection window runs from that notice.
+        </p>
+      </div>
+    </section>
+  </div>
+</TrustLayout>

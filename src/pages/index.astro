@@ -1,0 +1,63 @@
+---
+import TrustLayout from '../layouts/TrustLayout.astro';
+import { trust } from '../lib/trust';
+
+const publicDocs = trust.documents.filter((d) => d.access === 'public').length;
+const requestDocs = trust.documents.filter((d) => d.access === 'request').length;
+const lastChange = trust.subprocessorChangelog[0]?.date ?? trust.meta.updatedAt;
+
+const indexRows = [
+  { href: '/how-it-works', title: 'How it works — secrets, architecture, data flow ↓', meta: `updated ${trust.meta.updatedAt}` },
+  { href: '/subprocessors', title: 'Subprocessors & change history', meta: `changed ${lastChange}` },
+  { href: '/documents', title: 'Documents — policy, DPA, HECVAT', meta: `${publicDocs} public · ${requestDocs} on request` },
+  { href: '/assurance', title: 'Assurance without certification', meta: 'our SOC 2 position' },
+  { href: '/your-audit', title: 'Citing Onetime Secret in your audit', meta: 'SOC 2 · ISO 27001 · HECVAT' },
+];
+---
+
+<TrustLayout
+  title="Overview"
+  description="What Onetime Secret does to earn your trust: how secrets are handled, who our subprocessors are, which documents we publish, and how to cite us in your audit."
+  active="overview"
+>
+  <div class="page home" style="max-width: 668px;">
+    <div class="kicker">What we do to earn your trust</div>
+    <h1 style="font-size: 46px; line-height: 1.18; margin-bottom: 34px;">
+      We'd rather show you<br />than certify it.
+    </h1>
+    <div class="prose" style="font-size: 17.5px; line-height: 1.75;">
+      <p>
+        Onetime Secret is a small company. We don't hold a SOC 2 report, and we won't pretend to
+        — no "in progress" badges, no borrowed logos from our hosting providers. What we have
+        instead is a product designed so that trust depends as little as possible on us: secrets
+        are encrypted, read once, and destroyed.
+      </p>
+      <p>
+        This site is our security report, written by us and versioned in public. It covers how
+        secrets are handled, who our subprocessors are and when they changed, which documents we
+        can give you, and exactly how to cite us in your own SOC 2 or ISO 27001 audit.
+      </p>
+      <p>
+        If your vendor review needs something that isn't here, email us. A person answers —
+        usually the person who wrote the code — within five business days.
+      </p>
+    </div>
+
+    <div class="rule-list" style="margin-top: 44px; padding-top: 10px;">
+      {indexRows.map((row) => (
+        <a class="rule-row" href={row.href} style="padding: 15px 0;">
+          <span class="row-title">{row.title}</span>
+          <span class="row-meta">{row.meta}</span>
+        </a>
+      ))}
+    </div>
+
+    <p style="font: 400 13px/1.6 var(--sans); color: var(--faint); margin-top: 52px; text-align: center;">
+      This page is a public git repository ·
+      <a href="https://github.com/onetimesecret/site-policy">view source &amp; history</a> ·
+      <a href="/.well-known/security.txt">security.txt</a> ·
+      <a href={trust.meta.contacts.pgp}>PGP</a> ·
+      <a href="/trust.yaml">trust.yaml</a>
+    </p>
+  </div>
+</TrustLayout>
