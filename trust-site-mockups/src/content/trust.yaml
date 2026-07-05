@@ -1,0 +1,195 @@
+# trust.onetimesecret.com — single source of truth.
+# Every page is a pure render of this file, validated by src/lib/trust-config.ts.
+# Published verbatim at /trust.yaml so procurement tooling diffs a stable file.
+#
+# The canonical contractual subprocessor list lives in DPA Schedule A
+# (onetimesecret.com/dpa); this file mirrors it and supplements — never
+# replaces — the email notice required by DPA §6.1.
+
+meta:
+  name: Onetime Secret
+  updatedAt: "2026-07-03"
+  contacts:
+    email: security@onetimesecret.com
+    sla: "5 business days"
+    pgp: /pgp-key.asc
+
+# Mirrors DPA Schedule A. `core: true` = applies to all service tiers;
+# others are alternatives the Processor may engage per category.
+# TODO(release): confirm `since` dates against infra/billing history
+# (Handoff Spec §7.2) before publishing.
+subprocessors:
+  - name: Hetzner Online GmbH
+    purpose: Computing resources for internal infrastructure, single-tenant and multi-tenant hosting; object storage for encrypted offsite backups.
+    location: EU (Germany, Finland)
+    since: "TBD"
+    core: true
+    note: ISO 27001:2022
+  - name: Cloudflare, Inc.
+    purpose: DNS management for all tiers; on multi-tenant tiers, optional network proxy and TLS termination at the edge for our regional service domains (never for customer Custom Domains).
+    location: Global (US entity)
+    since: "TBD"
+    core: true
+    note: EU-US Data Privacy Framework certified
+  - name: Proton AG (Proton Mail)
+    purpose: Internal communications and customer support email.
+    location: Switzerland
+    since: "TBD"
+    core: true
+  - name: Stripe, Inc.
+    purpose: Payment processing, invoicing, fraud detection, tax reporting — billing details only, never Secret Content.
+    location: US/EU
+    since: "TBD"
+    core: true
+    note: EU-US Data Privacy Framework certified
+  - name: Approximated, Inc.
+    purpose: Custom-domain TLS termination on multi-tenant tiers (Identity Plus, Team Plus).
+    location: Global edge network (US entity)
+    since: "TBD"
+  - name: UpCloud Ltd
+    purpose: Alternative computing resources for single-tenant and multi-tenant hosting.
+    location: UK (London) or EU (Helsinki, Amsterdam, Frankfurt)
+    since: "TBD"
+    note: ISO 27001:2022, SOC 2 Type II, CISPE Code of Conduct member
+  - name: Northflank, Ltd
+    purpose: Alternative container hosting, CI/CD services, managed databases.
+    location: UK (London) or EU (Netherlands)
+    since: "TBD"
+  - name: DigitalOcean, LLC
+    purpose: Alternative container hosting, CI/CD services, managed databases.
+    location: EU or CA (Toronto) regions only
+    since: "TBD"
+  - name: Catalyst Cloud Limited
+    purpose: Computing resources for the New Zealand multi-tenant environment.
+    location: NZ (Porirua)
+    since: "TBD"
+    note: New Zealand holds an EU adequacy decision
+  - name: Amazon Web Services, Inc.
+    purpose: Alternative transactional email (SES, EU region); S3 geo-located encrypted backups for Global Elite deployments.
+    location: EU regions (SES Frankfurt/Ireland for S3)
+    since: "TBD"
+  - name: Lettermint B.V.
+    purpose: Alternative transactional email sending, suppression lists, bounce and complaint handling.
+    location: EU (Netherlands)
+    since: "TBD"
+  - name: BunnyWay d.o.o. (BunnyCDN)
+    purpose: Static websites and encrypted object storage.
+    location: EU (Slovenia)
+    since: "TBD"
+
+# Newest first. Real history predating this site is being reconstructed
+# from the DPA's version history; only verified events are listed.
+subprocessorChangelog:
+  - date: "2026-07-03"
+    verb: updated
+    title: Initial public list
+    note: First publication of the subprocessor list on the trust centre, mirroring DPA Schedule A. Earlier changes predate this page and are recorded in the policy repository's history.
+
+documents:
+  - name: Terms of Service
+    description: The agreement governing hosted use
+    category: policy
+    access: public
+    updatedAt: "TBD on release"
+    action: { label: read, href: "https://onetimesecret.com/terms" }
+  - name: Privacy Statement
+    description: What we collect, why, and for how long
+    category: policy
+    access: public
+    updatedAt: "TBD on release"
+    action: { label: read, href: "https://onetimesecret.com/privacy" }
+  - name: Subprocessor list
+    description: Current list with dated change history
+    category: policy
+    access: public
+    updatedAt: "2026-07-03"
+    action: { label: view, href: "/subprocessors" }
+  - name: Data Processing Agreement (DPA)
+    description: GDPR Art. 28 terms, UK Addendum included — accepted as part of the Terms; countersigned copy on request
+    category: agreement
+    access: public
+    updatedAt: "TBD on release"
+    action: { label: read, href: "https://onetimesecret.com/dpa" }
+  - name: Technical & Organizational Measures (TOMs)
+    description: The GDPR Art. 32 measures behind the DPA, with a shared-responsibility model
+    category: agreement
+    access: public
+    updatedAt: "TBD on release"
+    action: { label: read, href: "https://onetimesecret.com/toms" }
+  - name: HECVAT 4.1.5 (full)
+    description: Higher-ed vendor assessment, answered in full
+    category: assessment
+    access: public
+    updatedAt: "TBD"
+    action: { label: download, href: "/documents/hecvat-4.1.5.xlsx" }
+  - name: VendorSec questionnaires
+    description: We answer yours — prior responses reusable where applicable
+    category: assessment
+    access: request
+    updatedAt: rolling
+    action: { label: email us }
+  - name: Architecture & data-flow notes
+    description: Where secrets live, what is encrypted, what is logged
+    category: technical
+    access: public
+    updatedAt: "TBD"
+    action: { label: read, href: "/how-it-works" }
+  - name: Penetration test report
+    description: Independent test — to be published in full
+    category: technical
+    access: request
+    updatedAt: planned
+    action: { label: notify me }
+
+# The path of a secret. Wording aligned with the Privacy Statement and DPA
+# Schedule C: a passphrase is an access-control gate verified before
+# decryption — it is NOT part of encryption key derivation.
+flow:
+  - step: "01"
+    title: You paste a secret
+    body: It is encrypted in transit over TLS and, on arrival, encrypted at rest with authenticated encryption before it is written anywhere. The key material needed to decrypt is never stored alongside the data — the database tier cannot read what it holds.
+  - step: "02"
+    title: You get a one-time link
+    body: The link points to the encrypted record. We can see that a record exists and when it expires — not what it contains. If you set a passphrase, it must be verified before the secret will decrypt; only a hash of the passphrase is stored, never the passphrase itself.
+  - step: "03"
+    title: The recipient opens it once
+    body: The first successful read returns the secret and destroys the record in the same operation. A second visit finds nothing.
+  - step: "04"
+    title: Or it expires unread
+    body: If no one opens it, the record is purged at expiry. Metadata follows shortly after; encrypted backups age out on a fixed 30-day schedule, in the same regional jurisdiction.
+  - step: "05"
+    title: Nothing recoverable remains
+    body: There is no restore path by design. A leaked link that has already been read is inert — it fails loudly instead of quietly exposing data.
+
+# Seeded from the HECVAT critical-answer library; claims verified against
+# the 2026 Privacy Statement, DPA, and TOMs before publication.
+faqs:
+  - q: Can you read my secrets?
+    a: We don't, and the design keeps the possibility narrow. Secret Content is encrypted at rest and the decryption key material is separated from the database tier. We never access, read, scan, categorize, or analyze Secret Content, with four exceptions stated in the Terms — your express prior consent, the direction of your Organization's owner, a support request you make (access limited to what's needed, confidential, and logged), and secrets addressed to us. A passphrase adds a further gate that must be verified before the secret will decrypt.
+  - q: What happens if you get a subpoena?
+    a: We can only produce what we hold. A secret that has been viewed, expired, or deleted no longer exists — only minimal metadata can be produced. Requests must come from an authority with jurisdiction over the data; for EU-held data that means the GDPR Article 48 route. The full position is in the Privacy Statement's compelled-disclosure section.
+  - q: You have no SOC 2. Why should we trust you?
+    a: Because you do not have to trust us as much. The product minimizes what our procedures can affect, the code has been open source since 2012, and our HECVAT and DPA answer what a questionnaire asks. See Assurance for the full position.
+  - q: What if a subprocessor changes?
+    a: Every account holder is emailed before a new or replacement subprocessor processes any data, with a thirty-day objection window. Object and you may terminate the affected services without penalty. In an emergency — a provider failing — we may engage a replacement first and notify promptly after, with the objection window running from that notice. The dated history is public on the Subprocessors page; the canonical list is DPA Schedule A.
+  - q: Can we avoid subprocessors entirely?
+    a: Yes. Self-hosted installations run on your own infrastructure with zero subprocessors — nothing in the chain but you. The same open-source code runs both our hosted service and your deployment.
+  - q: Who actually answers when we email?
+    a: A person, usually the one who wrote the code, within five business days. Not a ticketing portal, not a compliance chatbot.
+
+auditMappings:
+  - framework: SOC 2
+    control: CC6.1 / CC6.7
+    how: Restricts logical access to transmitted credentials; sensitive values are not persisted in email or chat systems.
+  - framework: ISO 27001
+    control: A.5.14 — information transfer
+    how: A documented secure-transfer mechanism for sensitive information between parties.
+  - framework: ISO 27001
+    control: A.5.17 — authentication info
+    how: Controlled distribution of authentication information; single retrieval with automatic destruction.
+  - framework: HECVAT
+    control: Data handling
+    how: Demonstrates a defined process for credential exchange with third parties and vendors.
+  - framework: GDPR
+    control: Art. 32 — security of processing
+    how: Encryption and data minimization as technical measures; sensitive data not retained in communication logs.

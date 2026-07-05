@@ -1,0 +1,60 @@
+---
+import TrustLayout from '../layouts/TrustLayout.astro';
+import { trust } from '../lib/trust';
+import type { TrustDocument } from '../lib/trust-config';
+
+const groups: { label: string; docs: TrustDocument[] }[] = [
+  { label: 'Policies — public', docs: trust.documents.filter((d) => d.category === 'policy') },
+  { label: 'Agreements & assessments', docs: trust.documents.filter((d) => d.category === 'agreement' || d.category === 'assessment') },
+  { label: 'Technical', docs: trust.documents.filter((d) => d.category === 'technical') },
+];
+
+const mailto = `mailto:${trust.meta.contacts.email}`;
+---
+
+<TrustLayout
+  title="Documents"
+  description="Onetime Secret's policies, DPA, TOMs, and assessments — dated, versioned, public where possible."
+  active="docs"
+>
+  <div class="page" style="max-width: 728px;">
+    <div class="kicker">Dated, versioned, public where possible</div>
+    <h1 style="font-size: 38px;">Documents</h1>
+    <p class="lede center">
+      Everything we can publish, we publish. The rest is a short email away — no NDA theater
+      unless the content genuinely requires it.
+    </p>
+
+    {groups.map((g) => (
+      <section style="margin-top: 48px;">
+        <div class="kicker left" style="margin-bottom: 6px;">{g.label}</div>
+        <div class="rule-list">
+          {g.docs.map((d) => (
+            <div class="rule-row">
+              <div>
+                <div class="row-title">{d.name}</div>
+                <div style="font-size: 14px; font-style: italic; color: var(--faint); margin-top: 3px;">{d.description}</div>
+              </div>
+              <div style="text-align: right;">
+                <div class="row-meta mono">{d.updatedAt}</div>
+                <div style="font: 500 12px var(--sans); margin-top: 3px;" class={d.access === 'public' ? 'access-public' : 'access-request'}>
+                  {d.access === 'public' ? 'public' : 'on request'} ·
+                  <a href={d.action.href ?? mailto} style="color: var(--ink);">{d.action.label}</a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <div class="callout" style="margin-top: 44px;">
+      <div class="callout-label">Planned</div>
+      <p>
+        A commissioned penetration test is planned. The report will be published here in full —
+        findings, severities, remediation — following the open-source practice of releasing
+        complete audit reports rather than summaries.
+      </p>
+    </div>
+  </div>
+</TrustLayout>
