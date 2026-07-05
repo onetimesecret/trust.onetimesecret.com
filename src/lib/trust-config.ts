@@ -61,7 +61,7 @@ export const TrustConfigSchema = z.object({
     name: z.string(),
     updatedAt: z.string(),
     contacts: z.object({
-      email: z.string().email(),
+      email: z.email(),
       sla: z.string(),
       pgp: z.string(),
     }),
