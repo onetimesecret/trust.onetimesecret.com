@@ -2,3 +2,8 @@
 .local
 tmp/
 *.txt
+
+# Astro / Node build artifacts
+node_modules/
+dist/
+.astro/

@@ -1,26 +1,34 @@
 name: trust-site
 
-# Build (and optionally publish) the trust.onetimesecret.com static site from
-# trust-site-mockups/. Node is pinned via trust-site-mockups/.nvmrc (v24) so the
-# Astro build is reproducible; pnpm is pinned to the v9 line to match the
-# lockfile (lockfileVersion 9.0).
+# Build (and optionally publish) the trust.onetimesecret.com static site. The
+# Astro project lives at the repository root. Node is pinned via .nvmrc (v24) so
+# the build is reproducible; pnpm is pinned to the v9 line to match the lockfile
+# (lockfileVersion 9.0).
 
 on:
   push:
     branches: ["**"]
     paths:
-      - "trust-site-mockups/**"
+      - "src/**"
+      - "public/**"
+      - "astro.config.mjs"
+      - "tsconfig.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".nvmrc"
       - ".github/workflows/trust-site.yml"
   pull_request:
     paths:
-      - "trust-site-mockups/**"
+      - "src/**"
+      - "public/**"
+      - "astro.config.mjs"
+      - "tsconfig.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".nvmrc"
       - ".github/workflows/trust-site.yml"
   # Publishing is manual until the production host is wired (see deploy job).
   workflow_dispatch:
-
-defaults:
-  run:
-    working-directory: trust-site-mockups
 
 jobs:
   build:
@@ -35,9 +43,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: trust-site-mockups/.nvmrc
+          node-version-file: .nvmrc
           cache: pnpm
-          cache-dependency-path: trust-site-mockups/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
 
       - run: pnpm install --frozen-lockfile
 
@@ -46,13 +54,13 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: trust-site-dist
-          path: trust-site-mockups/dist
+          path: dist
           if-no-files-found: error
 
       # Prepared for GitHub Pages publishing; only consumed by the deploy job.
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: trust-site-mockups/dist
+          path: dist
 
   # Neutral GitHub Pages publish, kept manual (workflow_dispatch) on purpose:
   # trust.onetimesecret.com is expected to be served from the production CDN
