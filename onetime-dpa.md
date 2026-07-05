@@ -1,6 +1,6 @@
 # Data Processing Agreement - Onetime Secret
 
-Last modified: February 18, 2026
+Effective date: **TBD on release**
 
 This Data Processing Agreement ("*Agreement*" or "*DPA*") forms part of the Contract for Services under Onetime Secret's Terms of Service (the “*Principal Agreement*") between Onetime Secret \#602 - 2892 E 10th Ave Vancouver, British Columbia Canada, Business identification number 77690 5960 (referred to as the "*Processor*") and the Company using the Processor's services (referred to as the "*Company*”).
 
@@ -51,25 +51,23 @@ Unless otherwise defined herein, capitalized terms and expressions used in this 
 
 1.10) "*Global Elite*" means the premium tier service offered by the Processor, which operates on logically separated instances and provides enhanced security and customized solutions for organizations prioritizing privacy and compliance.
 
-1.11) "*Onboarding Questionnaire*" means the form used to collect responses from Global Elite customers at the start of engagement, delivered and collected through a subprocessor (see Schedule A). The link to this questionnaire and its contents may change from time to time.
+1.11) "*Secret*" or "*Secret Content*" means the sensitive information or data that a user intends to share securely through the Processor's service, that is encrypted in transit and at rest, assigned a unique access link, and automatically destroyed after it has been viewed once, after a specified time period has elapsed or after being deleted manually prior to having been received.
 
-1.12) "*Secret*" or "*Secret Content*" means the sensitive information or data that a user intends to share securely through the Processor's service, that is encrypted in transit and at rest, assigned a unique access link, and automatically destroyed after it has been viewed once, after a specified time period has elapsed or after being deleted manually prior to having been received.
+1.12) "*Services*" means the Processor’s secure secret-sharing and sensitive information management platform, including related features, APIs, and ancillary services. The details and pricing of the Services can be found on the Processor’s website.
 
-1.13) "*Services*" means the Processor’s secure secret-sharing and sensitive information management platform, including related features, APIs, and ancillary services. The details and pricing of the Services can be found on the Processor’s website.
+1.13) "*Subprocessor*" means any person appointed by or on behalf of Processor to process Personal Data on behalf of Controller in connection with the Agreement.
 
-1.14) "*Subprocessor*" means any person appointed by or on behalf of Processor to process Personal Data on behalf of Controller in connection with the Agreement.
+1.14) "*Receipt Link*" means the unique URL provided to the creator of a Secret that displays the Secret's status (whether it has been received, expired, or remains pending) and permits the holder to Purge the Secret prior to receipt. The Receipt Link does not provide access to the Secret Content. Unless the Secret is protected by a passphrase, possession of the Receipt Link is sufficient to exercise deletion rights over the associated Secret.
 
-1.15) "*Receipt Link*" means the unique URL provided to the creator of a Secret that displays the Secret's status (whether it has been received, expired, or remains pending) and permits the holder to Purge the Secret prior to receipt. The Receipt Link does not provide access to the Secret Content. Unless the Secret is protected by a passphrase, possession of the Receipt Link is sufficient to exercise deletion rights over the associated Secret.
+1.15) "*Purged*" or "*Purged Secret*" means a Secret that has been viewed by its recipient, has met or exceeded its specified retention period, or has been deleted by the holder of the associated Receipt Link, and is therefore no longer accessible through the Processor's service. For clarity, Purged Secrets may temporarily remain in encrypted backup systems for the Backup Retention Period in accordance with Section 10.
 
-1.16) "*Purged*" or "*Purged Secret*" means a Secret that has been viewed by its recipient, has met or exceeded its specified retention period, or has been deleted by the holder of the associated Receipt Link, and is therefore no longer accessible through the Processor's service. For clarity, Purged Secrets may temporarily remain in encrypted backup systems for the Backup Retention Period in accordance with Section 10.
+1.16) "*Account Data*" means Personal Data associated with a Company's or user's account, including email addresses, authentication credentials, billing information, and usage metadata, but excluding Secret Content.
 
-1.17) "*Account Data*" means Personal Data associated with a Company's or user's account, including email addresses, authentication credentials, billing information, and usage metadata, but excluding Secret Content.
+1.17) "*Backup Retention Period*" means thirty (30) days, being the maximum period during which encrypted backup copies may be retained following deletion from active systems, after which they are automatically deleted.
 
-1.18) "*Backup Retention Period*" means thirty (30) days, being the maximum period during which encrypted backup copies may be retained following deletion from active systems, after which they are automatically deleted.
+1.18) "*Operational Retention Period*" means thirty (30) days, being the standard period applied to: (a) server request logs, error monitoring data, and similar diagnostic information before automatic deletion; and (b) post-termination Account Data retention to facilitate data export requests.
 
-1.19) "*Operational Retention Period*" means thirty (30) days, being the standard period applied to: (a) server request logs, error monitoring data, and similar diagnostic information before automatic deletion; and (b) post-termination Account Data retention to facilitate data export requests.
-
-1.20) "*Subprocessor Notice Period*" means thirty (30) days, being the minimum advance notice provided to the Company before the Processor engages any new Subprocessor.
+1.19) "*Subprocessor Notice Period*" means thirty (30) days, being the period following the Processor's notice of a new or replacement Subprocessor during which the Company may object and terminate the affected Services as described in Section 6.
 
 The terms, "*Commission*", "*Controller*", "*Data Subject*", "*Member State*", "*Personal Data*", "*Personal Data Breach*",\* \*"*Processing*" and "*Supervisory Authority*" shall have the same meaning as in the GDPR or other applicable Data Protection Law, and their cognate terms shall be construed accordingly.
 
@@ -77,9 +75,9 @@ The terms, "*Commission*", "*Controller*", "*Data Subject*", "*Member State*", "
 
 2.1) For the purposes of this Agreement, Company Personal Data comprises two distinct categories with different processing characteristics:
 
-a\) Secret Content: encrypted, ephemeral data that is automatically Purged from active systems and may remain in encrypted backup systems for the Backup Retention Period thereafter; and
+a) Secret Content: encrypted, ephemeral data that is automatically Purged from active systems and may remain in encrypted backup systems for the Backup Retention Period thereafter; and
 
-b\) Account Data: retained for the duration of the Engagement and subject to the deletion provisions in Section 10.
+b) Account Data: retained for the duration of the Engagement and subject to the deletion provisions in Section 10.
 
 The Processor's ability to respond to certain requests or obligations under this Agreement may differ depending on which category of data is involved, as detailed in the relevant sections.
 
@@ -130,9 +128,15 @@ The Processor shall also assess the risks associated with processing activities 
 
 ## 6. Subprocessing
 
-Subject to this Agreement, the Company grants general authorization to the Processor to engage Subprocessors and disclose or transfer Company Personal Data to them. The Company acknowledges and approves the Subprocessors listed in Schedule A to this Agreement, understanding that this list may be updated by the Processor from time to time, in which case the Company shall be informed by the Processor of any changes at least the Subprocessor Notice Period prior to engaging any new Subprocessor, providing the opportunity to object to such engagement. Furthermore, the Company authorizes the Processor to disclose and transfer Personal Data to any company within its corporate group.
+Subject to this Agreement, the Company grants general authorization to the Processor to engage Subprocessors and disclose or transfer Company Personal Data to them. The Company acknowledges and approves the Subprocessors listed in Schedule A to this Agreement, understanding that this list may be updated by the Processor from time to time in accordance with this Section 6. Furthermore, the Company authorizes the Processor to disclose and transfer Personal Data to any company within its corporate group.
 
-Processor ensures that Subprocessors are subject to an agreement with Processor no less restrictive and protective than the present Agreement with respect to the protection of Company Personal Data to the extent applicable to the nature of the services provided by the Subprocessor.
+6.1) *Notice of changes.* The Processor shall give notice of the intended engagement of any new or replacement Subprocessor by email to all account holders, at the addresses associated with their use of the Services under the Principal Agreement. The Processor also maintains a current, dated Subprocessor list, with version history, in its public trust centre (a git-backed repository); that list supplements notice under this Section and does not replace it.
+
+6.2) *Objection and remedy.* If the Company objects to a new or replacement Subprocessor, the Company may, within the Subprocessor Notice Period, terminate the affected Services without penalty. Termination and the return or deletion of Company Personal Data are governed by the Principal Agreement and Section 10 of this Agreement. Such termination is the Company's remedy for an objection; the Processor is not obliged to suspend or reverse the engagement for the Services generally.
+
+6.3) *Emergency engagement.* Where reasonably necessary to preserve the security, availability, or continuity of the Services (for example, replacing a Subprocessor that has failed or suffered a security incident), the Processor may engage a new or replacement Subprocessor before giving notice, and shall notify the Company promptly after the engagement. The Company's objection right under Section 6.2 runs from that notice.
+
+6.4) Processor ensures that Subprocessors are subject to an agreement with Processor no less restrictive and protective than the present Agreement with respect to the protection of Company Personal Data to the extent applicable to the nature of the services provided by the Subprocessor.
 
 ## 7. Data Subject Rights
 
@@ -146,9 +150,9 @@ Taking into account the nature of the processing, Processor shall reasonably ass
 
 7.3) The Parties acknowledge that the technical design of the Services may limit the practical exercise of certain Data Subject rights with respect to Secret Content specifically. Secrets are encrypted and are automatically Purged after viewing or expiration. As a result:
 
-a\) Access requests (Article 15) cannot be fulfilled for Purged Secrets or for Secrets where the Processor cannot verify the requestor's relationship to the Secret;
+a) Access requests (Article 15) cannot be fulfilled for Purged Secrets or for Secrets where the Processor cannot verify the requestor's relationship to the Secret;
 
-b\) Rectification (Article 16) and erasure (Article 17) requests relating to Secret Content may be addressed by the Data Subject or Controller deleting or allowing the Secret to expire;
+b) Rectification (Article 16) and erasure (Article 17) requests relating to Secret Content may be addressed by the Data Subject or Controller deleting or allowing the Secret to expire;
 
 c\) The Processor will cooperate with Data Subject requests relating to account-level Personal Data (such as email addresses and account metadata) in accordance with Sections 7.1 and 7.2.
 
@@ -170,7 +174,7 @@ Processor shall provide reasonable assistance to Company with any data protectio
 
 In case of cessation of any Service involving the Processing of Company Personal Data, the Processor shall delete all Company Personal Data to the extent permitted by applicable laws and in accordance with Processor’s Terms and Conditions and Privacy Policy. Should the Company require a copy of their data, they must request it before the deletion of their account; requests made after the account has been deleted can no longer be considered.
 
-Unless otherwise specified in the Onboarding Questionnaire or required by applicable law, Processor shall retain Account Data for the duration of the Agreement plus the Operational Retention Period thereafter to facilitate any requested data exports. Backup copies shall be maintained for the Backup Retention Period, after which they will be automatically deleted in accordance with our standard procedures.
+Unless required by applicable law, Processor shall retain Account Data for the duration of the Agreement plus the Operational Retention Period thereafter to facilitate any requested data exports. Backup copies shall be maintained for the Backup Retention Period, after which they will be automatically deleted in accordance with our standard procedures.
 
 ## 11. Audit rights
 
@@ -188,15 +192,19 @@ Information and audit rights of Company only arise under section 11 to the exten
 
 12.1) process and store all Data exclusively within the specific geographic region where it was initially collected (EU, UK, or other designated regions) and shall not transfer or authorize the transfer of Data between these distinct regional environments without the prior written consent of the Controller. For clarity:
 
-a\) Data collected from EU data subjects shall remain within EU infrastructure;
+a) Data collected from EU data subjects shall remain within EU infrastructure;
 
-b\) Data collected from UK data subjects shall remain within UK infrastructure;
+b) Data collected from UK data subjects shall remain within UK infrastructure;
 
 c\) Data collected in other regions shall remain within the infrastructure of that specific region.
 
 This regional data localization policy applies throughout the entire processing lifecycle. The Processor maintains segregated regional processing environments (including separate EU and UK environments) and implements technical and organizational measures to prevent unauthorized cross-regional transfers.
 
-12.2) ensure that Company Personal Data collected within a given regional environment is not transferred to infrastructure outside that region, with the following limited exception: billing data (limited to payment and invoicing information) is processed by Stripe, Inc. in the United States, as listed in Schedule A. For Company Personal Data originating from EU, EEA, UK, or Swiss data subjects, this transfer is covered by Stripe's certification under the EU-US Data Privacy Framework, the UK Extension to the EU-US Data Privacy Framework, and the Swiss-US Data Privacy Framework. Where an applicable transfer mechanism is invalidated, the Parties shall cooperate to implement an alternative approved mechanism (such as EU Standard Contractual Clauses, 2021 version) without undue delay.
+12.2) ensure that Company Personal Data collected within a given regional environment is not transferred to infrastructure outside that region, with the following limited exceptions:
+
+a) *Billing data* (limited to payment and invoicing information) is processed by Stripe, Inc. in the United States, as listed in Schedule A. For Company Personal Data originating from EU, EEA, UK, or Swiss data subjects, this transfer is covered by Stripe's certification under the EU-US Data Privacy Framework, the UK Extension to the EU-US Data Privacy Framework, and the Swiss-US Data Privacy Framework. Where an applicable transfer mechanism is invalidated, the Parties shall cooperate to implement an alternative approved mechanism (such as EU Standard Contractual Clauses, 2021 version) without undue delay.
+
+b) *Transient edge-network TLS termination.* On the multi-tenant Services, Cloudflare (for the Processor's regional service domains) and Approximated (for customer Custom Domains on the multi-tenant paid tiers) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is re-encrypted for transit into the appropriate regional environment for processing. Single-tenant deployments (e.g. Global Elite) do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by the Processor within the Company's selected region.
 
 12.3) not engage in automated individual decision-making, including profiling, as defined under Article 22 of the GDPR, in connection with Company Personal Data.
 
@@ -230,19 +238,27 @@ Notwithstanding the completion of the Engagement, termination of the Principal A
 
 Notwithstanding anything to the contrary in the Agreement (including this DPA), in the event of a change in Privacy Laws or a determination or order by a government authority or competent court affecting this DPA or the lawfulness of any processing activities under this DPA, we reserve the right to make any amendments to this DPA as are reasonably necessary to ensure continued compliance with Privacy Laws or compliance with any such orders.
 
+## Frequently Asked Questions
+
+**Can I share this DPA with my compliance, legal, or audit team?** Yes. This DPA is a standard part of our Terms of Service and may be shared freely within your organization and with your auditors, legal advisors, and compliance personnel. It is published publicly, so there is no confidentiality restriction on the document itself.
+
+**How do I get a signed or countersigned copy?** A signature is not required for this DPA to be binding (see the *Acceptance* provision in Section 13). If your organization requires a countersigned copy for its records, contact us at <legal@onetimesecret.com> and we will provide one on request.
+
+**Is this DPA automatically accepted?** Yes. This DPA is automatically incorporated into and forms part of the Principal Agreement upon your acceptance of the Terms of Service. No separate signature or action is required for it to take effect.
+
 ------------------------------------------------------------------------
 
 ## Schedule A - List of Approved Subprocessors
 
-Onetime Secret engages subprocessors based on functional requirements and customer preferences. The subprocessors listed below are organized by purpose; within each category, some are required for service operation while others represent alternatives that Global Elite customers may select during onboarding.
+Onetime Secret engages subprocessors based on functional requirements and customer preferences. The subprocessors listed below are organized by purpose; within each category, some are required for service operation while others represent alternatives that the Processor may engage.
 
 Service tier affects subprocessor availability and architecture:
 
-*Global Elite (Premium Tier):* customers receive logically dedicated environments (e.g., secrets.yourcompany.com) with isolated application stacks and database instances, though underlying cloud resources may be virtualized. These customers may substitute alternative subprocessors within each functional category as documented in their Onboarding Questionnaire.
+*Global Elite (Premium Tier):* customers receive logically dedicated environments (e.g., secrets.yourcompany.com) with isolated application stacks and database instances, though underlying cloud resources may be virtualized.
 
 *Identity Plus (Mid-Tier)*: operates on multi-tenant infrastructure (e.g., eu.onetimesecret.com) with secure compartmentalization between customers. Custom domain functionality requires third-party network infrastructure that terminates SSL/TLS connections outside the Processor's direct control, as detailed in the Network & Security category below.
 
-Where multiple subprocessors appear within a category, they represent alternatives unless explicitly stated as additive. Core subprocessors (Section A) apply to all service tiers.
+Where multiple subprocessors appear within a category, they represent alternatives unless explicitly stated as additive. Core subprocessors (those not marked optional) apply to all service tiers.
 
 ### Infrastructure & Hosting
 
@@ -262,7 +278,8 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
 | *Approximated* | Global edge network | Identity Plus, Team Plus | ✔ | Custom domain with TLS termination | Account info, application data, network-level web traffic data, IP addresses |
-| *CloudFlare* | Global | All | ✔ | Network proxy ("Orange Cloud"), Security services, Custom domain with TLS termination | Account info, application data, network-level web traffic data, IP addresses |
+| *CloudFlare* | Global | All multi-tenant tiers | ✔ | Network proxy ("Orange Cloud"), security services, and TLS termination at the edge for the Processor's regional service domains (e.g. `eu.onetimesecret.com`); not used for customer Custom Domains | Account info, application data, network-level web traffic data, IP addresses |
+| *BunnyCDN* | Global edge network | All | 𐄂 | CDN and static hosting for the Processor's public websites (`onetimesecret.com`, `onetimesecret.dev`) and documentation (`docs.onetimesecret.com`, `docs.onetimesecret.dev`); does not serve Secret Content or Account Data | Network-level web traffic data, IP addresses |
 
 ### Email Services
 
@@ -278,8 +295,8 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |  |  |  |  |  |  |
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Hetzner (Object storage)* | EU (Germany, Finland) | All | ✔ | for | Account info, application data |
-| *AWS (S3)* | EU (Frankfurt, Ireland) | Global Elite | ✔ | S3 storage for geo-located encrypted backups | Account info, application data, |
+| *Hetzner (Object storage)* | EU (Germany, Finland) | All | ✔ | Object storage for encrypted offsite backups | Account info, application data |
+| *AWS (S3)* | EU (Frankfurt, Ireland) | Global Elite | ✔ | S3 storage for geo-located encrypted backups | Account info, application data |
 
 ### Payment Processing
 
@@ -287,13 +304,6 @@ Where multiple subprocessors appear within a category, they represent alternativ
 |----|----|----|----|----|----|
 | **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
 | *Stripe* | US/EU | All | 𐄂 | Payment processing, invoicing, fraud detection, tax reporting, payment links, checkout services. | Account info, app data, network traffic |
-
-### Forms & Data Processing
-
-|  |  |  |  |  |  |
-|----|----|----|----|----|----|
-| **Subprocessor** | **Data Location** | **Tiers** | **Optional** | **Purpose** | **Categories of Data** |
-| *Altcha* | EU | Global Elite | ✔ | Onboarding questionnaire | Account info, app data, network traffic |
 
 ### *Subprocessor Entity Details*
 
@@ -305,11 +315,13 @@ Where multiple subprocessors appear within a category, they represent alternativ
 | **Stripe, Inc.** | 354 Oyster Point Boulevard South San Francisco, CA 94080 United States | US | *EU-US Data Privacy Framework certified* |
 | **Northflank, Ltd** | 20-22 Wenlock Road, London, England N1 7GU, United Kingdom | UK | |
 | **UpCloud Ltd** | Aleksanterinkatu 15 B, 7th floor, 00100 Helsinki, Finland | EU | *UpCloud is ISO 27001:2022, SOC 2 Type II, certified and a member of the CISPE Code of Conduct.* |
+| **DigitalOcean, LLC** | 101 Avenue of the Americas, 10th Floor, New York, NY 10013, United States | US | *Data located in EU or CA regions only* |
+| **Catalyst Cloud Limited** | Level 6, Catalyst House, 150 Willis Street, Te Aro, Wellington 6011, New Zealand (NZBN 9429046115577) | NZ | *New Zealand holds an EU adequacy decision* |
+| **Amazon Web Services, Inc.** | 410 Terry Avenue North, Seattle, WA 98109-5210, United States | US | *SES and S3; data located in US regions only* |
 | **CloudFlare, Inc.** | 101 Townsend Street, San Francisco, CA 94107, United States | US | *EU-US Data Privacy Framework certified* |
-| **Approximated, Inc.** | A Delaware Company. | US | *Multi-tenant only* |
+| **Approximated, Inc.** |2810 North Church Street Wilmington, Delaware 19802, United States | US | *Multi-tenant only* |
+| **BunnyWay d.o.o. (BunnyCDN)** | Dunajska cesta 165, 1000 Ljubljana, Slovenia | EU | *CDN and static hosting for public websites and documentation* |
 
-
-##### 
 
 ------------------------------------------------------------------------
 
@@ -317,24 +329,24 @@ Where multiple subprocessors appear within a category, they represent alternativ
 
 #### *1. Applicability*
 
-This schedule defines how customizations are documented and maintained for *Global Elite* customers. *Identity Plus* deployments operate on standardized configurations without customer-specific modifications.
+This Schedule describes how processing configuration and customization are documented for single-tenant (Global Elite) deployments. Multi-tenant deployments (such as Identity Plus and Team Plus) operate on standardized configurations without customer-specific modifications, and the provisions of this Schedule do not apply to them.
 
-#### *2. Specification*
+#### *2. Configuration*
 
-All Global Elite implementation requirements are captured through our Onboarding Questionnaire (<https://eu.altcha.org/form/1jt133ieuzcT8mgjDdhKt>). The completed questionnaire becomes part of this Agreement and specifies:
+For single-tenant deployments, implementation requirements are captured through the Processor's onboarding process at the start of the engagement. The agreed configuration may specify:
 
-- Selected subprocessors from available alternatives (see Schedule A)
-- Regional hosting preferences
-- Email delivery configuration (including option to disable)
-- Any customer-specific technical requirements
+- Selected Subprocessors from the available alternatives listed in Schedule A;
+- Regional hosting location;
+- Email delivery configuration (including the option to disable outbound email); and
+- Any other customer-specific technical requirements.
 
 #### *3. Documentation*
 
-Customizations are established through the Onboarding Questionnaire and subsequent written correspondence between the parties in accordance with Section 13, except that for this Schedule the Processor may contact the Controller from any @onetimesecret.com address. Such correspondence constitutes the authoritative record of agreed configurations. Where a customer-specific addendum is prepared, it summarizes but does not supersede the underlying correspondence.
+Configuration is established through the onboarding process and subsequent written correspondence between the Parties in accordance with Section 13, except that for the purposes of this Schedule the Processor may also contact the Controller from any @onetimesecret.com address. Such correspondence constitutes the authoritative record of the agreed configuration. Where a customer-specific addendum is prepared, it summarizes but does not supersede the underlying correspondence.
 
 #### *4. Retention*
 
-All customization documentation is maintained for the duration of the service agreement plus five (5) years following termination to support regulatory compliance verification and audit requirements.
+Configuration documentation is retained for the duration of the service agreement plus five (5) years following termination, to support regulatory compliance verification and audit requirements.
 
 ------------------------------------------------------------------------
 
@@ -366,7 +378,7 @@ User passphrases and account credentials are protected using adaptive one-way ha
 - Salt: Randomly generated per credential, stored with the hash
 - Timing-safe comparison: Verification uses constant-time comparison to prevent timing attacks
 
-All credentials are hashed with Argon2id.
+New credentials are hashed with Argon2id. Credentials last used before April 2026 may retain a legacy bcrypt hash; a legacy hash is verified and upgraded to Argon2id on the next successful authentication.
 
 *1.3 Cryptographic Key Isolation*
 
@@ -413,6 +425,7 @@ All data transmitted between clients and the Processor's infrastructure is prote
 - Annual review of cryptographic implementations against current security guidance
 - Incident response procedures as described in Section 8 of the Principal DPA
 - Regular assessment of subprocessor security practices
+- Source code transparency: The core application is published as open-source software, allowing the Company and independent parties to inspect the Processor's data-handling and cryptographic implementations. This provides an additional, verifiable layer of transparency beyond the descriptions in this Schedule.
 
 ------------------------------------------------------------------------
 

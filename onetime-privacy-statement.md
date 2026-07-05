@@ -6,7 +6,7 @@ Effective date: **TBD on release**
 
 Onetime Secret provides a service for securely sharing sensitive information. Managing private data carries significant responsibility, and this policy describes how we handle the information entrusted to our service.
 
-This Privacy Statement applies to our standard hosted service, including the Basic, Identity Plus, and Team Plus tiers. Customers on our Global Elite tier — which provides dedicated, single-tenant deployments — may receive a separate agreement that supplements this Privacy Statement.
+This Privacy Statement applies to our standard hosted service, including the Basic, Identity Plus, and Team Plus tiers. Customers on our Global Elite tier (which provides dedicated, single-tenant deployments) may receive a separate agreement that supplements this Privacy Statement.
 
 This Privacy Statement does not apply to self-hosted deployments of our open-source software. If you operate your own instance, no data processing relationship with us arises in connection with that deployment.
 
@@ -45,20 +45,20 @@ We use Account Data to identify you, to provide the services you have requested,
 
 ### Information from Organization accounts
 
-If you create an Organization account — a workspace shared by multiple users — additional information is processed at the Organization level:
+If you create an Organization account (a workspace shared by multiple users), additional information is processed at the Organization level:
 
 - The Organization's name, billing contact, and tax details
 - A list of members and their roles within the Organization
 - Custom Domains, Verified Email Addresses, SSO configuration, and other settings configured for the Organization
 - An audit log of administrative actions taken within the Organization
 
-The Organization's owner or designated administrator is responsible for the personal data of Organization members in the sense given to a "controller" under the GDPR. We process Organization member data on behalf of the Organization. The Organization-side rules and responsibilities are set out in [Section B.3 of the Terms of Service](https://onetimesecret.com/terms#3-organization-accounts).
+Under data protection law, our customer, the legal entity on whose behalf the Organization is created, is the "controller" of Organization members' personal data, and we process that data on the customer's behalf as a "processor". These roles are defined in our [Data Processing Agreement](https://onetimesecret.com/dpa). The Organization-side rules and responsibilities are set out in [Section B.3 of the Terms of Service](https://onetimesecret.com/terms#3-organizations).
 
 ### Information from Single Sign-On
 
-If your Organization enables SSO, you authenticate via your Organization's identity provider (Google Workspace, Okta, Microsoft Entra ID, or any SAML 2.0 / OIDC provider your Organization configures). We receive a limited set of identity claims — typically your email address, a stable identifier, your display name, and any group memberships your Organization has chosen to share. We do not receive or store your credentials.
+If your Organization enables SSO, you authenticate via your Organization's identity provider (Google Workspace, Okta, Microsoft Entra ID, or any SAML 2.0 / OIDC provider your Organization configures). We receive a limited set of identity claims (typically your email address, a stable identifier, your display name, and any group memberships your Organization has chosen to share). We do not receive or store your credentials.
 
-We log SSO authentication events for security and audit purposes. Retention applies as described in [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) — in summary, up to 30 days. Retention is based on our legitimate interest in security monitoring and audit, and is limited to what is necessary for those purposes.
+We log SSO authentication events for security and audit purposes. Retention applies as described in [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) (in summary, up to 30 days). Retention is based on our legitimate interest in security monitoring and audit, and is limited to what is necessary for those purposes.
 
 If your Organization disables your account at the identity provider, your active sessions are terminated and your access is revoked. Account Data within the Organization is then handled in accordance with the Organization's instructions and the cancellation rules in [Section J of the Terms of Service](https://onetimesecret.com/terms#j-cancellation-and-termination).
 
@@ -70,17 +70,17 @@ If you store sensitive personal information inside a secret, you remain responsi
 
 ### Homepage Secrets and Incoming Secrets
 
-If you have enabled **Homepage Secrets** or **Incoming Secrets** on a Custom Domain (see [Section E.3 of the Terms of Service](https://onetimesecret.com/terms#3-homepage-secrets)), visitors who submit secrets through your Custom Domain are treated, for privacy purposes, in the same way as any other visitor. We do not require these visitors to have an account. Their IP address and request metadata are subject to the same retention period as other server request logs.
+If you have enabled **Homepage Secrets** or **Incoming Secrets** on a Custom Domain (see [Section E.2 of the Terms of Service](https://onetimesecret.com/terms#2-domain-specific-features)), visitors who submit secrets through your Custom Domain are treated, for privacy purposes, in the same way as any other visitor. We do not require these visitors to have an account. Their IP address and request metadata are subject to the same retention period as other server request logs.
 
 If your configuration requires a visitor to identify themselves before submitting a secret (for example, by providing an email address), the information they provide is associated with the resulting secret and forms part of your Account Data. If you have configured Incoming Secrets with designated recipients, recipient email addresses are stored in hashed form to prevent enumeration.
 
 ### Verified Email Addresses
 
-If you configure a Verified Email Address so we can send transactional notifications from an address on your own domain, we record the verification status and the configuration values you set. We do not host your email or read its contents. The DNS records you must publish (and your responsibility for maintaining them) are described in [Section E.2 of the Terms of Service](https://onetimesecret.com/terms#2-verified-email-domains).
+If you configure a Verified Email Address so we can send transactional notifications from an address on your own domain, we record the verification status and the configuration values you set. We do not host your email or read its contents. The DNS records you must publish (and your responsibility for maintaining them) are described in [Section E.2 of the Terms of Service](https://onetimesecret.com/terms#2-domain-specific-features).
 
 ### What we do not collect
 
-We do not intentionally collect sensitive personal information — social security numbers, genetic data, health information, religious information — in your Account Data. We recognize that you might place such information inside a secret. If you do, that information is handled as Secret Content as described above; we do not access it.
+We do not intentionally collect sensitive personal information (such as social security numbers, genetic data, health information, or religious information) in your Account Data. We recognize that you might place such information inside a secret. If you do, that information is handled as Secret Content as described above; we do not access it.
 
 We do not intentionally collect information stored inside a secret. Information in a secret belongs to you, and you are responsible for it and for ensuring that your content complies with our [Terms of Service](https://onetimesecret.com/terms). Onetime Secret personnel do not access secrets except where strictly required for security or business continuity.
 
@@ -88,7 +88,7 @@ If you are a child under the age of 13, you may not have an account on Onetime S
 
 ## How we share the information we collect
 
-We do not share, sell, rent, or trade your Account Data with third parties for their commercial purposes. We do not disclose Account Data outside Onetime Secret except in the situations listed in this section, in the section below on Compelled Disclosure, or with your permission.
+We do not sell, rent, or trade your Account Data. We share it with third parties only in the situations listed in this section (principally with the subprocessors that help us run the service), in the section below on Compelled Disclosure, or with your permission.
 
 We do not share Secret Content with anyone. By design, we don't have meaningful access to it ourselves.
 
@@ -108,23 +108,31 @@ We share Account Data, and in some cases encrypted Secret Content, with a small 
 | Transactional email providers | Delivery of account, notification, and security emails | EU |
 | Regional hosting providers | Application and data hosting within each region | See "Where your data is processed", below |
 
-Cloudflare provides DDoS protection on the regional service domains (the entry points for free usage). Customer Custom Domains on Identity Plus and Team Plus are served via Approximated and are not routed through Cloudflare by us. The customer's own ability to place their Custom Domain behind an edge network of their choice is described in [Section E.1 of the Terms of Service](https://onetimesecret.com/terms#1-custom-domains).
+Cloudflare provides DDoS protection on the regional service domains (the entry points for free usage). Customer Custom Domains on Identity Plus and Team Plus are served via Approximated and are not routed through Cloudflare by us. Depending on your region and plan, we may offer alternatives to this TLS termination arrangement for Custom Domains; contact support to inquire, including if you run into TLS certificate complications with your Custom Domain. The customer's own ability to place their Custom Domain behind an edge network of their choice is described in [Section E.1 of the Terms of Service](https://onetimesecret.com/terms#1-custom-domains).
 
-Hosting providers vary by region (see "Where your data is processed" below for the per-region hosting provider). We maintain a current, detailed list of subprocessors — including legal entity, address, location, purpose, and categories of data processed in our Data Processing Agreement — at [onetimesecret.com/dpa](https://onetimesecret.com/dpa). We update that list when subprocessors change, and we provide advance notice of changes in line with our standard subprocessor notice period of 30 days.
+Hosting providers vary by region (see "Where your data is processed" below for the per-region hosting provider). We maintain a current, dated list of subprocessors (including legal entity, address, location, purpose, and categories of data processed) in our Data Processing Agreement at [onetimesecret.com/dpa](https://onetimesecret.com/dpa). The list is published from our public trust centre (a git-backed repository, currently our [site-policy repository](https://github.com/onetimesecret/site-policy)), so every change is dated and the full history is reviewable.
+
+When we plan to engage a new subprocessor service, we notify all account holders by email. If you object to the change, you can cancel the affected service without penalty during the 30-day notice period; that cancellation is your remedy, and we may still proceed with the change for the service generally. In an emergency (for example, replacing a provider to keep the service secure or available), we may engage a new subprocessor first and notify you promptly afterward; the same objection right runs from that notice. The public list supplements these email notices; it does not replace them.
 
 ### Sharing in connection with a corporate transaction
 
-We may share Account Data if we are involved in a merger, sale, or acquisition. If any such change of ownership happens, we will ensure that it is on terms that preserve the confidentiality of Account Data, and we will notify you on the website or by email before any transfer.
+We may share Account Data if we are involved in a merger, acquisition, or sale of assets. In any such transaction we will require that the recipient preserve the confidentiality of Account Data on terms consistent with this Privacy Statement, and we will notify you on the website or by email.
+
+A corporate transaction does not change how Secret Content is treated. Secret Content remains encrypted, we do not access it, and it is not shared as part of any such transaction. The only circumstances in which Secret Content may be disclosed remain those described elsewhere in this Privacy Statement (see "How we respond to compelled disclosure" below).
+
 
 ## Cookies and tracking
 
 ### Cookies
 
-We use cookies (and similar technologies, such as HTML5 `localStorage` and `sessionStorage`) to keep you logged in, to remember your preferences, and to operate the service. The cookies we set are essential for the operation of the website or are used for performance and functionality. We do not use cookies to track you across other websites.
+We use cookies to keep you logged in. The cookies we set are essential for the operation of the website and are not used for any other purpose. We do not use cookies to track you across other websites.
+
+We use browser storage (HTML5 `localStorage` and `sessionStorage`) to remember your preferences, such as color mode and language, and to operate the service. If you create secrets without signing in, browser storage also keeps a list of your recent receipts (references to the Receipt Links created during your session) so you can find them again. We never store Secret Content itself in your browser storage. This data stays in your browser; it is not a tracking mechanism.
 
 ### No third-party tracking
 
-We do not use third-party analytics, product-tracking, or session-replay services such as Google Analytics, Mixpanel, Segment, Amplitude, Heap, Hotjar, FullStory, PostHog, or Plausible or any other similar service. We do not embed third-party tracking pixels, advertising tags, or social-media tracking. We do not build profiles of individual users or perform behavioral analysis. 
+We do not use third-party analytics, product-tracking, or session-replay services such as Google Analytics, Mixpanel, Segment, Amplitude, Heap, Hotjar, FullStory, or PostHog, or any other similar service. We do not perform first-party behavioral analytics or build profiles of individual users; the only usage data we retain is standard server access logs, and errors are captured by our own self-hosted Sentry instance at catch.onetimesecret.com. We do not embed third-party tracking pixels, advertising tags, or social-media tracking. All site assets (scripts, styles, fonts, and images) are served from our own domains, so rendering our pages does not cause your browser to contact other companies' servers or disclose your visit to them.
+
 
 ### Operational logging
 
@@ -135,14 +143,16 @@ We retain server request logs and error monitoring data for up to 30 days for th
 The technical and organizational security measures applied to the Service are:
 
 - TLS 1.3 in transit, with strong cipher suites
-- AES-256-CBC encryption of Secret Content, with key material that is never stored alongside the encrypted data in the database tier
-- Argon2id for credential hashing, applied to both account passphrases and secret passphrases
+- XChaCha20-Poly1305 authenticated encryption of Secret Content (with AES-256-GCM as an available alternative), with key material that is never stored alongside the encrypted data in the database tier
+- Argon2id for credential hashing, applied to both account passphrases and secret passphrases (legacy hashes are verified and upgraded to Argon2id on the next successful sign-in)
 - LUKS full-disk encryption on production storage
 - GPG 4096-bit asymmetric encryption of backups, with decryption keys held offline
 - Multi-factor authentication for administrative access
 - Strict Content Security Policy, HTTP Strict Transport Security (HSTS), and inclusion in browser HSTS preload lists across all domains
 
-These are summarized here for transparency. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
+These are summarized here for transparency. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security). The defined retention periods (Backup Retention Period, Operational Retention Period) are in [DPA §1.17-1.18](https://onetimesecret.com/dpa#1-definitions-and-interpretation).
+
+Our service runs on open-source software whose source code is publicly available for independent review. This transparency allows security researchers and the public to inspect how Secret Content is encrypted, stored, and handled, rather than relying on our description of these measures alone.
 
 No method of transmission or storage is 100% secure, and we cannot guarantee absolute security.
 
@@ -164,10 +174,10 @@ When you create an account, you choose the regional environment in which your ac
 
 There are two narrow exceptions, both inherent to operating the service:
 
-- **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data — Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
-- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is then forwarded over an encrypted channel into the appropriate regional environment for processing. Global Elite deployments do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by us within the customer's selected region.
+- **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data; Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
+- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is then re-encrypted for transit into the appropriate regional environment for processing. Single tenant deployments (e.g. Global Elite) do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by us within the customer's selected region.
 
-Other than the two exceptions described above, we do not transfer personal data outside the jurisdiction in which it was collected.
+Other than the two exceptions described above, we do not transfer data outside the jurisdiction in which it was collected.
 
 ## Your rights and how to raise concerns
 
@@ -175,7 +185,9 @@ We provide the same baseline of privacy protection to all our users. Some region
 
 ### Europe (EU and EEA) and the United Kingdom
 
-If you are in the EU, EEA, or UK, you have rights under the GDPR or UK GDPR, including the right to access, rectify, or erase your personal data; the right to restrict or object to processing; and the right to data portability. You also have the right to lodge a complaint with your local supervisory authority — the Information Commissioner's Office (ICO) for UK residents, or the supervisory authority in your country of residence for EU/EEA residents.
+If you are in the EU, EEA, or UK, you have rights under the GDPR or UK GDPR, including the right to access, rectify, or erase your personal data; the right to restrict or object to processing; and the right to data portability. You also have the right to lodge a complaint with your local supervisory authority (the Information Commissioner's Office for UK residents, or the supervisory authority in your country of residence for EU/EEA residents).
+
+Where your personal data takes the form of Secret Content, the technical design of the service limits how some of these rights can be exercised in practice. Secrets are encrypted and are automatically purged after they are viewed, after they expire, or when they are deleted via the Receipt Link. As a result: an access request under GDPR Article 15 cannot be fulfilled for a secret that has already been purged, or where we cannot verify your relationship to the secret; rectification under Article 16 and erasure under Article 17 of Secret Content are exercised by you, or by the person who created the secret, deleting the secret via the Receipt Link or allowing it to expire; and we will cooperate with requests relating to account-level personal data, such as your email address and account metadata, as described above and in our Data Processing Agreement. We cannot retrieve, restore, or assist with access to a secret once it has been viewed, expired, or deleted.
 
 ### California
 
@@ -218,13 +230,21 @@ The cancellation and deletion windows for Account Data, including the active rec
 
 We retain billing records for as long as required by applicable tax and accounting law (typically six to ten years), regardless of account deletion. Billing records are limited to invoice metadata and are held by Stripe and in our accounting records.
 
+**Inactive accounts.** An account is inactive when it has had no successful sign-in for five years (60 months). We may remove an inactive account and its associated data as part of the retention practices described in this section. We will attempt to notify you at the email address associated with your account at least 30 days before removing an inactive account; if the account remains inactive after that period, we may remove it. Notice is a reasonable-efforts courtesy, not a precondition; our failure to send it, or your failure to receive it, does not prevent removal. For 30 days after we send notice, you may request an export of your Account Data. Signing in resets the inactivity period.
+
 If you would like to cancel your account or delete your personal information, you may do so from your account dashboard or by emailing [support@onetimesecret.com](mailto:support@onetimesecret.com). We retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.
+
+Our duty of confidentiality with respect to information disclosed to us does not end when your account or agreement with us ends. The confidentiality obligations described in our Data Processing Agreement continue to apply after termination to any confidential information disclosed to us before termination. This continuing obligation does not extend the retention periods described above; your data is still deleted within the windows set out in this section.
 
 ## How we communicate with you
 
-We do not send marketing emails. We may include brief product information in non-security-related transactional emails such as read notifications. These communications are not marketing emails and do not require separate consent.
+We never send unsolicited marketing email, and no email we send contains tracking pixels or click-tracking links. The only delivery signals we receive are those returned by the SMTP layer (such as hard bounces and delivery failures).
 
-We do not embed tracking pixels or track-and-redirect links in any of our emails — transactional or service. The only delivery signals we receive are those returned by the SMTP layer (such as hard bounces and delivery failures).
+The email we send falls into three categories:
+
+- **Transactional**: secret links, account notices, and billing notices. These are inherent to the service; there is no opt-out.
+- **Service and security notices**: security advisories, breach notifications, policy-change notices, and deprecation notices. We send these when needed, including when we are legally required to. They are not marketing.
+- **Product news**: feature announcements and similar updates. Strictly opt-in, rare, and every message includes a one-click unsubscribe.
 
 If you have configured a Verified Email Address for your account or Organization, we may send transactional emails on your behalf from that domain. You remain responsible for ensuring the underlying DNS records you have published are accurate.
 
@@ -232,7 +252,7 @@ If you have configured a Verified Email Address for your account or Organization
 
 We may update this Privacy Statement from time to time. We will provide notice of material changes through the Website at least 30 days before the change takes effect, by posting a notice on our home page or by sending an email to the address associated with your account.
 
-Minor changes that do not affect your rights or our obligations — such as typo corrections, formatting changes, clarifying language, or the addition of a new regional environment that does not change how existing users' data is processed — do not trigger advance notice and do not change the effective date above.
+Minor changes that do not affect your rights or our obligations (such as typo corrections, formatting changes, clarifying language, or the addition of a new regional environment that does not change how existing users' data is processed) do not trigger advance notice and do not change the effective date above.
 
 ## Translations
 
@@ -240,7 +260,7 @@ We make this Privacy Statement available in multiple languages. Our translation 
 
 ## Source of truth
 
-This Privacy Statement is published in our public [site-policy repository](https://github.com/onetimesecret/site-policy). In the event of any discrepancy between the version of this Privacy Statement displayed on the Website and the version in the public repository at the same effective date, the version in the public repository is the authoritative version.
+This Privacy Statement is published in our public trust centre, a git-backed repository, currently our [site-policy repository](https://github.com/onetimesecret/site-policy), where every change is dated and the full history is reviewable. In the event of any discrepancy between the version of this Privacy Statement displayed on the Website and the trust centre version at the same effective date, the trust centre version is the authoritative version.
 
 ## License
 

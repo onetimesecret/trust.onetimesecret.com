@@ -4,7 +4,7 @@ title: Terms of Service
 
 Effective date: **TBD on release**
 
-Thank you for using Onetime Secret. Please read these Terms of Service carefully before accessing or using the service. These Terms govern our standard hosted service across all Basic, Identity Plus, and Team Plus tiers. Customers on our Global Elite tier — which provides dedicated, single-tenant deployments — may sign a separate agreement that supplements these Terms.
+Thank you for using Onetime Secret. Please read these Terms of Service carefully before accessing or using the service. These Terms govern our standard hosted service across all Basic, Identity Plus, and Team Plus tiers. Customers on our Global Elite tier (which provides dedicated, single-tenant deployments) may sign a separate agreement that supplements these Terms.
 
 We may also offer services under related or partner brands (for example, marked "Powered by Onetime Secret" or "by Onetime Secret"). Those services may operate under their own published Terms of Service tailored to the features they provide.
 
@@ -18,7 +18,7 @@ For your convenience we have presented these terms in a short non-binding summar
 | [B. Account Terms](#b-account-terms) | The basic requirements of having an account, including Organizations and Single Sign-On. |
 | [C. Acceptable Use](#c-acceptable-use) | The rules you must follow when using the service. |
 | [D. User-Generated Content](#d-user-generated-content) | You own the content you post. We need a limited licence to operate the service. |
-| [E. Custom Domains, Verified Email Address, and Homepage Secrets](#e-custom-domains-verified-email-domains-and-homepage-secrets) | The rules for the resources you set up on top of your account: custom domains, verified email senders, and homepage secrets. |
+| [E. Custom Domains and Domain-Specific Features](#e-custom-domains-and-domain-specific-features) | The rules for the resources you set up on top of your account: custom domains, verified email senders, and homepage secrets. |
 | [F. Copyright and DMCA Policy](#f-copyright-infringement-and-dmca-policy) | How we handle copyright infringement claims. |
 | [G. Intellectual Property Notice](#g-intellectual-property-notice) | Our rights in the website and service. |
 | [H. API Terms](#h-api-terms) | The rules for using our APIs. |
@@ -44,13 +44,16 @@ These definitions are the canonical source for terminology used in both this Agr
 5. "**Onetime Secret**", "**We**", and "**Us**" refer to Onetime Secret, as well as our affiliates, directors, subsidiaries, contractors, licensors, officers, agents, and employees.
 6. "**Content**" refers to content featured or displayed through the Website, including without limitation text, data, articles, images, photographs, graphics, software, applications, designs, features, and other materials available on the Website or otherwise available through the Service. "**User-Generated Content**" is Content created or uploaded by Users. "**Your Content**" is Content that you create or own.
 7. "**Account Data**" means the personal data associated with your account, including email addresses, authentication credentials or SSO claims, billing information, and usage metadata, but excluding Secret Content.
-8. "**Secret**" or "**Secret Content**" means the information you place inside a secret on the Service. Secret Content is encrypted in transit and at rest, assigned a unique access link, and automatically destroyed on first viewing, on expiry of its specified retention period, or on manual deletion via the Receipt Link — whichever happens first.
+8. "**Secret**" or "**Secret Content**" means the information you place inside a secret on the Service. Secret Content is encrypted in transit and at rest, assigned a unique access link, and automatically destroyed on first viewing, on expiry of its specified retention period, or on manual deletion via the Receipt Link, whichever happens first.
 9. "**Receipt Link**" means the unique URL provided to the creator of a Secret that displays the Secret's status and permits the holder to delete the Secret prior to it being received. Unless the Secret is protected by a passphrase, possession of the Receipt Link is sufficient to delete the associated Secret.
 10. "**Custom Domain**" means a domain you own and configure to point at our Service (for example, `secrets.example.com`). The free plan supports one Custom Domain; paid plans allow additional Custom Domains per the limits described at [onetimesecret.com/pricing](https://onetimesecret.com/pricing).
-11. "**Verified Email Addres**" means a domain for which you have completed our DNS-based verification flow so that we may send transactional email on your behalf from an address at that domain.
+11. "**Verified Email Address**" means a domain for which you have completed our DNS-based verification flow so that we may send transactional email on your behalf from an address at that domain.
 12. "**Homepage Secret**" means a Secret created by a visitor through your Custom Domain's homepage and addressed to you. Homepage Secrets are an optional feature you may enable or disable on each Custom Domain. The page rendered to a recipient retrieving any Secret (whether a Homepage Secret or a standard Secret) is not a defined term and is referred to in plain language where relevant.
-13. "**Organization**" means a multi-user account on the Service, owned by a single legal entity and managed by one or more administrators on behalf of its members.
-14. "**SSO**" means Single Sign-On — authentication of users via your Organization's external identity provider using SAML 2.0, OIDC, or another federation protocol we support.
+13. "**Organization**" means a multi-user account on the Service that represents a single customer (one legal entity), managed by one or more administrators on its behalf. An Organization may be administered by a party other than the customer it represents (for example, a contractor administering an Organization for a client), and each Organization corresponds to a single customer and carries its own subscription.
+14. "**SSO**" means Single Sign-On (authentication of users via your Organization's external identity provider using SAML 2.0, OIDC, or another federation protocol we support).
+15. "**Recipient**" means any person who retrieves, or attempts to retrieve, a Secret using its access link. A recipient need not hold an account. Authenticated recipients (for example an account owner, an invited Organization member, an Organization member signed in through SSO, or an Organization administrator) are also covered under the account types described in [Section B](#b-account-terms). For non-authenticated recipients, possession of the access link is what grants the ability to retrieve a Secret; we do not separately verify the identity of a non-authenticated recipient.
+
+**Surfaces of the Service.** The Service presents distinct surfaces, each with a different audience. The public surface is where a Secret is created and retrieved, and is available to any visitor, including non-authenticated recipients. The workspace is the area available to a signed-in account holder for managing their account, Organizations, and configuration. Session pages may be mixed-use, serving both signed-in and non-authenticated visitors depending on the action. References in this Agreement to a particular surface should be read accordingly.
 
 ## B. Account Terms
 
@@ -68,11 +71,10 @@ We have a few simple rules for accounts on Onetime Secret's Service.
 
 - **Humans only.** You must be a human to create an account. Accounts registered by bots or other automated methods are not permitted.
 - **Machine accounts.** A machine account is an account set up by a human who accepts these Terms on behalf of the account, provides a valid email address, and remains responsible for its actions. A machine account is used exclusively for performing automated tasks. Multiple individuals may direct a machine account, but the account owner is ultimately responsible for the machine's actions. You may maintain no more than one free machine account.
-- **One free personal account.** You may not maintain more than one free personal account. This rule does not apply to membership in Organizations.
-- **Organization.** An account owner may create up to five Organizations. Additional Organizations are available by request.
 - **Age.** You must be at least 13 years old. If you are a resident of a country whose minimum age is older, you are responsible for complying with your country's laws.
-- **One human per login.** Login credentials are intended for individual use and should not be shared. Where multiple people in the same Organization need access, the Organization owner can add them as members of the Organization.
-- **Verifying you are on the official Service.** It is your responsibility to verify you are accessing the Service via an official Onetime Secret domain. Configuring a Custom Domain (see [Section E.1](#1-custom-domains)) is the recommended way to give your users a verifiable, branded entry point and to reduce phishing risk.
+- **One free personal account.** You may not maintain more than one free personal account. This rule does not apply to membership in Organizations.
+- **Organization**. An account owner may create up to five free Organizations. Organizations with their own subscription don't count toward this limit; there is no cap on paid Organizations. The free limit is a housekeeping measure, not a business restriction, and we'll raise it on request. Contractors and agencies managing an Organization per customer are expressly supported (see [Section C.4](#4-service-usage-limits)).
+- **One human per login.** Login credentials are intended for individual use and should not be shared. Per-person logins are what make our privacy and security controls work: secret delivery, access controls, and audit trails all assume that a login identifies one person. Where multiple people in the same Organization need access, the Organization owner can add them as members of the Organization.
 
 ### 3. Organizations
 
@@ -81,8 +83,9 @@ If you create an Organization, the following additional rules apply:
 - **Authority.** The person creating the Organization must have authority to bind the legal entity that owns it. The Organization is the User of the Service and the contracting party with us.
 - **Roles.** The Organization has at least one owner. Owners may add administrators and members. Owners have access to Organization-level configuration, billing, SSO settings, and member management. Administrators have access to audit logs, member management, and plan-specific features (such as Custom Domains and Verified Email Address) but cannot modify billing or SSO configuration.
 - **Member responsibility.** The Organization is responsible for ensuring its members comply with these Terms. The Organization owner is responsible for promptly removing or suspending member access when appropriate (for example, when a member leaves the Organization).
-- **Member data.** Organization owners and administrators have administrative control over member accounts — including the ability to add or remove members, configure access permissions, and view Organization-level audit logs. Data processing roles and responsibilities are defined in our [Data Processing Agreement](https://onetimesecret.com/info/dpa).
+- **Member data.** Organization owners and administrators have administrative control over member accounts, including the ability to add or remove members, configure access permissions, and view Organization-level audit logs. Data processing roles and responsibilities are defined in our [Data Processing Agreement](https://onetimesecret.com/dpa).
 - **Billing.** The Organization is responsible for fees associated with all members and all Organization-level configuration. Member counts are governed by the Organization's plan.
+- **One Organization per customer.** A single account owner may hold more than one Organization (see [Section B.2](#2-account-requirements)). Where an account owner administers Organizations on behalf of distinct customers, each such customer must be represented by its own Organization, and each Organization carries its own subscription. The business arrangements this supports, and the ones that require a separate agreement, are described in [Section C.4](#4-service-usage-limits).
 
 ### 4. Authentication Methods
 
@@ -109,7 +112,7 @@ Where your Organization has enabled SSO:
 
 ### 6. Data Retention and Security
 
-This section is the canonical source for the operational details of how we hold and protect your data. The Privacy Statement summarizes these and refers here.
+This section is the canonical source for the operational details of how we hold and protect your data. The Privacy Statement summarizes these and refers here. The defined retention periods (Backup Retention Period, Operational Retention Period) are in [DPA §1.17-1.18](https://onetimesecret.com/dpa#1-definitions-and-interpretation).
 
 - **IP address and request log retention.** We retain IP addresses and request logs associated with service usage for up to 30 days, after which they are permanently deleted from active systems. Logs may be purged sooner depending on traffic volume.
 - **Secret retrieval.** Due to our security-first design, we cannot retrieve or recover secrets once they have been viewed, expired, or deleted, except as outlined below regarding backups. This ensures your sensitive information remains private and ephemeral.
@@ -119,6 +122,7 @@ This section is the canonical source for the operational details of how we hold 
 
   We do not access backup files to retrieve individual secrets.
 - **Cryptographic and infrastructure measures.** Our technical security measures are described in our [Privacy Statement](https://onetimesecret.com/privacy). Additional detail is available upon request for customers with dedicated deployment arrangements.
+- **Network-level access controls.** On our multi-tenant Service, filtering of access by IP address or CIDR range is enforced at the application layer. On single-tenant deployments, network-level IP-range filtering may be available, depending on the terms and capabilities of the hosting provider chosen for that deployment. Where an access-filtering control is available to you, it is clearly labelled where it is offered.
 
 ### 7. User Account Security
 
@@ -134,7 +138,7 @@ In some situations, third parties' terms may apply to your use of Onetime Secret
 
 ## C. Acceptable Use
 
-**Short version:** *Onetime Secret hosts users from around the world, and that requires good faith. While using the Service, you must follow this Acceptable Use Policy, which includes some restrictions on content you can post, conduct on the service, and other limitations. In short, be excellent to each other.**
+**Short version:** *Onetime Secret hosts users from around the world, and that requires good faith. While using the Service, you must follow this Acceptable Use Policy, which includes some restrictions on content you can post, conduct on the service, and other limitations, as well as a few responsibilities that are yours alone. In short, be excellent to each other.**
 
 ### 1. Compliance with Laws and Regulations
 
@@ -163,11 +167,17 @@ While using Onetime Secret, you agree that you will not:
 
 ### 4. Service Usage Limits
 
-You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the Service, use of the Service, or access to the Service without our express written permission, except as follows:
+The Service is designed to support a variety of business arrangements including direct use, integration into your own applications, and use on behalf of your own customers. The structure underneath all of them is the same: one Organization represents one customer, and each Organization carries its own subscription.
 
-- **Permitted API integration.** You may use our API (subject to [Section H](#h-api-terms)) to integrate the Service into your own applications and to provide functionality to your end users, provided you do not misrepresent the source of the Service or remove attribution where required.
+- **Permitted API integration.** You may use our API (subject to [Section H](#h-api-terms)) to integrate the Service into your own applications and to provide functionality to your end users, provided you do not misrepresent the source of the Service. Each regional environment stores and processes data within its own jurisdiction, and our data-residency commitments apply per region (see [Section B.1](#1-required-information) and the [Privacy Statement](https://onetimesecret.com/privacy)). You are responsible for ensuring your integration meets the data-residency and privacy regulations that apply to you and your customers.
 
-- **Prohibited resale of domain-specific features.** You may not resell, sublicense, or offer as a managed service to third parties any domain-specific functionality — including Custom Domains, Verified Email Addresses, Homepage Secrets, or SSO configuration — without our prior written consent.
+- **Serving your own customers.** You may use the Service for the benefit of your own customers, including as a contractor, agency, or managed-service provider. Set up each customer as its own Organization with its own subscription, so that one Organization corresponds to one customer. You may own and administer all of these Organizations yourself, and a given subscription may be paid by you or directly by your customer. Used this way, no separate agreement is required, and we will raise the Organization limit on request (see [Section B.2](#2-account-requirements)).
+
+- **Running your own instance.** The Onetime Secret application is open source under the MIT license. If none of the hosted arrangements fit, including if you want to operate the software as part of your own offering, you are free to run your own instance. Self-hosted installations are independent of the Service and are not covered by these Terms or operated, supported, or warranted by us.
+
+- **One customer per subscription.** Each subscription covers exactly one customer (one legal entity). Serving multiple distinct customers through a single Organization or subscription defeats the per-customer basis described above and is not permitted.
+
+- **Resale of the hosted Service.** Reselling or sublicensing the hosted Service, providing it to third parties on a service-bureau basis, or white-labeling it as your own hosted offering requires a separate written agreement with us. The same applies to offering domain-specific functionality (Custom Domains, Verified Email Addresses, Homepage Secrets, or SSO configuration) as a managed service to third parties.
 
 ### 5. Scraping
 
@@ -193,9 +203,33 @@ If we determine that your usage of free services is significantly excessive in r
 
 Paid plans do not impose fixed usage ceilings; however, we monitor usage patterns to ensure fair access across our customer base. If your usage is materially outside typical patterns for your plan tier, we will contact you to discuss options, which may include upgrading to a higher tier or an API-specific plan. For programmatic or high-throughput access, see [Section H](#h-api-terms).
 
+**"Unlimited" features.** Where we describe a feature as "unlimited," a soft limit may apply to prevent abuse and to protect the allocation of shared resources against accidental or intentional disruption. A soft limit is not a billing cap: if you reach one through normal use, you can ask us to raise it at no additional charge. Soft limits may also increase over time as part of normal service improvements.
+
 ### 8. User Protection
 
 You agree not to engage in activity that significantly harms our users. We will resolve disputes in favor of protecting our users as a whole.
+
+### 9. Your Responsibilities
+
+Some things only you can do. Alongside the restrictions above, you are responsible for:
+
+- **Verifying you are on the official Service.** It is your responsibility to verify you are accessing the Service via one of our official domains, listed below. Configuring a Custom Domain (see [Section E.1](#1-custom-domains)) is the recommended way to give your users a verifiable, branded entry point and to reduce phishing risk.
+- **Your Custom Domain's DNS records.** Keeping the DNS records for your Custom Domain correct, including the records that determine whether email sent from your verified addresses is delivered (see [Section E](#e-custom-domains-and-domain-specific-features)).
+- **Managing Organization membership.** Adding and removing members, and promptly removing access when someone leaves (see [Section B.3](#3-organizations)).
+- **The content of your Organization's Secrets.** The content of Secrets created by or through your Organization, including through Homepage Secrets and Incoming Secrets where you enable them (see [Section D.1](#1-responsibility-for-user-generated-content) and [Section E.2](#2-domain-specific-features)).
+
+**Official domains.** The official Onetime Secret domains are:
+
+- OnetimeSecret.com and OnetimeSecret.dev
+- Onetime.co and Onetime.dev
+- otshosted.com and otshosted.dev
+- metalbaum.com and metalbaum.dev
+- OnetimeSecretary.com and OnetimeSecretary.dev
+- SecretaryLinks.com (a related brand; see [Section A](#a-definitions))
+
+together with their subdomains, including the regional environments described in [Section A](#a-definitions).
+
+This section does not make our responsibilities yours. Where a feature divides duties between you and us (as the Custom Domain and Verified Email Address terms in [Section E](#e-custom-domains-and-domain-specific-features) do), that division controls.
 
 ## D. User-Generated Content
 
@@ -207,7 +241,7 @@ You may create or upload User-Generated Content while using the Service, includi
 
 ### 2. Onetime Secret May Remove Content
 
-We do not pre-screen User-Generated Content, but we have the right (though not the obligation) to refuse or remove any User-Generated Content that, in our sole discretion, violates these Terms or any other Onetime Secret policy. With respect to Secret Content specifically, our ability to inspect or moderate is limited by design — see [Section D.4](#4-treatment-of-secret-content).
+We do not pre-screen User-Generated Content, but we have the right (though not the obligation) to refuse or remove any User-Generated Content that, in our sole discretion, violates these Terms or any other Onetime Secret policy. With respect to Secret Content specifically, our ability to inspect or moderate is limited by design (see [Section D.4](#4-treatment-of-secret-content)).
 
 ### 3. Ownership and License Grants
 
@@ -221,8 +255,10 @@ This license does not grant Onetime Secret the right to sell your Content or oth
 
 Secret Content is held subject to the technical constraints described in [Section B.6](#6-data-retention-and-security):
 
-- We do not access, read, scan, categorize, or analyze Secret Content, except: (a) with the express prior consent of the content owner; (b) at the direction of an Organization owner acting on behalf of its members, where such access is reasonably necessary for compliance, security, or administrative purposes within that Organization; (c) for debugging, troubleshooting, or demonstration purposes, provided that access is limited to Onetime Secret personnel acting under a duty of confidentiality and is logged for audit purposes; or (d) when the Secret link is addressed to Onetime Secret (for example, sent to a support or team address). Any access under this section is limited in scope and duration to what is reasonably necessary to accomplish the stated purpose.
+- We do not access, read, scan, categorize, or analyze Secret Content, except: (a) with the express prior consent of the content owner; (b) at the direction of an Organization owner acting on behalf of its members, where such access is reasonably necessary for compliance, security, or administrative purposes within that Organization; (c) when you ask us to help debug a problem, in which case we access only what is needed to help you, the access is covered by our duty of confidentiality, and it is logged; or (d) when the Secret link is addressed to Onetime Secret (for example, sent to a support or team address). Any access under this section is limited in scope and duration to what is reasonably necessary to accomplish the stated purpose.
 - Secret Content is automatically purged on first viewing, on expiry, or on deletion via the Receipt Link.
+
+**No guarantee of receipt or delivery.** We do not guarantee that a recipient will be able to access a Secret. Access can be affected by conditions outside our control, including network interruptions, software errors, and operational changes to our systems. Because a Secret is revealed at most once, we cannot also guarantee that its contents are fully received. We do not guarantee that a Secret reaches its intended target. Any person who holds the access link is treated as a Recipient, whether or not they are the person you intended. Where stronger assurance matters, use the additional protections available to you, which may include setting a passphrase, requiring the recipient to sign in, requiring the recipient to be a member of your Organization, or sending the contents across multiple separate Secret links.
 
 ### 5. Feedback
 
@@ -250,12 +286,14 @@ The free plan supports one Custom Domain. Paid plans allow you to configure addi
 
 Availability and configuration options are described at [onetimesecret.com/pricing](https://onetimesecret.com/pricing) and in our product documentation. This is not an exhaustive list; features may be enabled or disabled per plan, region, or Custom Domain.
 
-- **Custom Branding** — Customize your Custom Domain's appearance. You are responsible for ensuring your branding does not infringe third-party rights or mislead visitors.
-- **Homepage Secrets** — Visitors may create Secrets addressed to you via your Custom Domain's homepage. Submissions are subject to [Acceptable Use](#c-acceptable-use); contents are treated as Secret Content.
-- **Incoming Secrets** — Visitors may send Secrets to pre-configured recipients within your Organization. Submissions are subject to [Acceptable Use](#c-acceptable-use).
-- **SSO** — Members authenticate via your Organization's identity provider. See [Section B.5](#5-single-sign-on).
-- **Sign-in Settings** — Configure which authentication methods are available to members of your Organization.
-- **Verified Email Addresses** — We send transactional email on your behalf from an address at your domain. Verification is performed via DNS records you maintain; misuse may result in suspension. 
+- **Custom Branding**: Customize your Custom Domain's appearance. You are responsible for ensuring your branding does not infringe third-party rights or mislead visitors.
+- **Homepage Secrets**: Visitors may create Secrets addressed to you via your Custom Domain's homepage. Submissions are subject to [Acceptable Use](#c-acceptable-use); contents are treated as Secret Content.
+- **Incoming Secrets**: Visitors may send Secrets to pre-configured recipients within your Organization. Submissions are subject to [Acceptable Use](#c-acceptable-use).
+- **SSO**: Members authenticate via your Organization's identity provider. See [Section B.5](#5-single-sign-on).
+- **Sign-in Settings**: Configure which authentication methods are available to members of your Organization.
+- **Verified Email Addresses**: We send transactional email on your behalf from an address at your domain. Verification is performed via DNS records you maintain; misuse may result in suspension. Configuring a deliverable Verified Email Address is your responsibility. If a configured address is not deliverable, this is a matter of configuration on your side. By default, a Verified Email Address is limited to an address at your Custom Domain: you may set the part before the "@", while the domain remains your Custom Domain (for example, `support@secrets.example.com`). Depending on your plan, you may be able to configure an address at another domain you control (for example, `support@example.com`).
+
+**Responsibility for Homepage Secrets and Incoming Secrets.** Where you enable Homepage Secrets or Incoming Secrets, you, as the Organization owner, are responsible for the content created or received through those features and for its compliance with [Acceptable Use](#c-acceptable-use). For Incoming Secrets, we make a best effort to avoid exposing the recipient email addresses you have configured: configured addresses are not rendered in the submission form; only a display name is shown, and the address itself is handled as a hashed value. We are not, however, liable for exposure of a configured email address that results from a defect in the Service or from misconfiguration on your part.
 
 ### 3. Confidentiality of Account Resources
 
@@ -294,11 +332,11 @@ The following names are common law trademarks™ of Onetime Secret:
 - "OneTime Secret"
 - "One-Time Secret"
 - "OneTimeSecret"
-- "Onetime.co"
-- "Onetime.dev"
-- "OnetimeSecret.dev"
 
-Use of any of our trademarks must adhere to our trademark guidelines. Any use that may cause confusion among customers or that disparages Onetime Secret is prohibited. All other trademarks, product names, company names, and logos mentioned on the Website are the property of their respective owners.
+Our official domains are listed in [Section C.9](#9-your-responsibilities).
+
+Use of any of our trademarks must adhere to our trademark guidelines. Any use that may cause confusion among customers, casual users or link recipients or that disparages Onetime Secret is prohibited. All other trademarks, product names, company names, and logos mentioned on the Website are the property of their respective owners.
+
 
 ### 3. License to Onetime Secret Policies
 
@@ -336,14 +374,16 @@ Our pricing and payment terms are available at [onetimesecret.com/pricing](https
 
 ### 3. Billing Schedule and Refunds
 
-Subscriptions are billed in advance — monthly or yearly, depending on the plan you have selected.
+Subscriptions are billed in advance, monthly or yearly, depending on the plan you have selected.
 
 For our **multi-tenant paid plans** (such as Identity Plus, Identity Lite, Team Plus, Team Lite, and any successor or variant multi-tenant tiers):
 
-- **Monthly plans** — refundable within 30 days of the most recent monthly billing date.
-- **Annual plans** — refundable within 30 days of the most recent annual billing date.
+- **Monthly plans**: refundable within 30 days of the most recent monthly billing date.
+- **Annual plans**: refundable within 30 days of the most recent annual billing date.
 
 For our **single-tenant plans** (Global Elite and any other dedicated deployments), which are billed annually only, refund terms are governed by the customer's separate agreement where one is in place. Where no such separate terms have been agreed, refunds are available within 30 days of the most recent billing date.
+
+**Single-tenant deployment options.** Our Global Elite tier provides a manual, high-touch, single-tenant deployment that can be tailored to a customer's requirements. We may also offer automatically provisioned single-tenant deployments, which provide a dedicated environment through an onboarding experience similar to our multi-tenant plans. Where offered, an automatically provisioned single-tenant deployment may consist of a single virtual server running the application and database together, or of separate application and database instances, with configurable resources and a choice of hosting region. The deployment options available to you, including resources and region, are described where the offering is presented.
 
 To request a refund, contact [support@onetimesecret.com](mailto:support@onetimesecret.com). Outside the windows described above, refunds are at our sole discretion and will not be granted except where required by applicable law.
 
@@ -361,6 +401,10 @@ You are responsible for all fees, including taxes, associated with your use of t
 - **Billing cycle.** We bill on the day you first signed up for a paid plan. If you change your plan, your billing day may reset.
 - **Card details.** We do not store your full credit card number on our servers. This information is stored by Stripe in accordance with PCI compliance standards. We retain only a payment token that allows us to process recurring charges.
 
+### 7. Coupons and Promotions
+
+We offer discounts and promotional pricing to certain types of organization, including non-profits, charities, B Corporations, and educational institutions. Eligibility for these discounts is monitored. We reserve the right to suspend or terminate any subscription that uses a coupon or promotion for which the account does not qualify, including where the organization type does not match the discount claimed. We ask that you not apply a coupon or promotion you are not eligible to use.
+
 ## J. Cancellation and Termination
 
 **Short version:** *You may close your account at any time. We will treat your information responsibly when you do.*
@@ -373,7 +417,7 @@ It is your responsibility to properly cancel your account. You can cancel your a
 
 The Organization owner is responsible for cancelling the Organization. Cancelling an Organization disables access for all members of that Organization.
 
-Member accounts within an Organization are tied to the Organization itself — whether the member was added by invitation, automatically associated by matching email domain, or provisioned through SSO. When the Organization is cancelled, the associated member accounts and the secrets, links, and history attached to them are not preserved as standalone personal accounts. Members who wish to continue using Onetime Secret may register a new personal account on their own at any time.
+Member accounts within an Organization are tied to the Organization itself, whether the member was added by invitation, automatically associated by matching email domain, or provisioned through SSO. When the Organization is cancelled, the associated member accounts and the secrets, links, and history attached to them are not preserved as standalone personal accounts. Members who wish to continue using Onetime Secret may register a new personal account on their own at any time.
 
 ### 3. Upon Cancellation
 
@@ -423,6 +467,8 @@ Onetime Secret provides the Website and Service "as is" and "as available," with
 
 We do not warrant that the Service will meet your requirements; that the Service will be uninterrupted, timely, secure, or error-free; that the information provided through the Service is accurate, reliable, or correct; that any defects or errors will be corrected; that the Service will be available at any particular time or location; or that the Service is free of viruses or other harmful components. You assume full responsibility and risk of loss resulting from your downloading or use of files, information, or other material obtained from the Service.
 
+We do not guarantee receipt or delivery of any Secret; see [Section D.4](#4-treatment-of-secret-content).
+
 ## M. Limitation of Liability
 
 **Short version:** *We will not be liable for damages or losses arising from your use or inability to use the service, or otherwise arising under this agreement. Read this section carefully.*
@@ -454,7 +500,7 @@ You agree to indemnify, defend, and hold us harmless from and against any claims
 
 We may modify these Terms from time to time and will post the amended Terms on the Website. We encourage you to review them periodically. If we make any substantial changes, we will notify you by email to the address associated with your account or by posting a prominent notice on our pages. If you do not agree to the amended Terms, you are not authorized to use the Website. Your continued use of the Website after any amendments are posted will be deemed acceptance of the amended Terms.
 
-Minor changes that do not affect your rights or our obligations — such as typo corrections, formatting changes, clarifying language, updates to plan features, or the addition of a new regional environment that does not change how existing users' data is processed — do not trigger advance notice and do not change the effective date above.
+Minor changes that do not affect your rights or our obligations (such as typo corrections, formatting changes, clarifying language, updates to plan features, or the addition of a new regional environment that does not change how existing users' data is processed) do not trigger advance notice and do not change the effective date above.
 
 We reserve the right to refuse our Services to anyone at any time. We also reserve the right to modify or discontinue, temporarily or permanently, the Website (or any part of it) at any time, with or without notice.
 
@@ -480,7 +526,7 @@ In case of any conflict between language versions of this Agreement, the English
 
 ### 5. Source of Truth
 
-This Agreement is published in our public [site-policy repository](https://github.com/onetimesecret/site-policy). In the event of any discrepancy between the version displayed on the Website and the version in the public repository at the same effective date, the version in the public repository is the authoritative version.
+This Agreement is published in our public trust centre, a git-backed repository, currently our [site-policy repository](https://github.com/onetimesecret/site-policy), where every change is dated and the full history is reviewable. In the event of any discrepancy between the version displayed on the Website and the trust centre version at the same effective date, the trust centre version is the authoritative version.
 
 ### 6. Severability, No Waiver, and Survival
 
