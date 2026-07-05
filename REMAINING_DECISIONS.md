@@ -87,6 +87,13 @@ publication.
   Elite) in AWS S3 Frankfurt with 30-day expiry. Consider stating the backup
   posture against the 3-2-1-1-0 rule if we want the resilience story to read
   as an explicit standard rather than an ad-hoc description.
+- **PP Article 48 compelled-disclosure scoping.** The PP's compelled-disclosure
+  section applies GDPR Art. 48 to EU-held data (a third-country order alone is
+  not a sufficient legal basis without an MLAT or similar international
+  agreement). The 2026-06 PP review pass attached a "recommend legal review"
+  note to this language that was never logged here. The same review recommended
+  sign-off on the DPA FAQ section and the source-code-transparency clause;
+  fold all three into the counsel pass.
 
 ---
 
@@ -175,3 +182,27 @@ review-note history is in git.
 
 - **FINALIZATION-july1 items.** Cookies vs localStorage split into separate PP
   paragraphs; "what "dedicated" means" left out by decision.
+
+- **B.2 domain-verification responsibility (rationale of record).** The ToS
+  B.2 bullet making it the user's responsibility to verify they are on an
+  official Onetime Secret domain is a deliberate responsibility-allocation
+  clause, not boilerplate. Three layers: (1) threat model — a secret-sharing
+  service is a prime phishing target, and the MIT-licensed app makes visually
+  identical imposter instances trivial to stand up, so verification shifts to
+  the person at the address bar, the only party positioned to do it; (2)
+  liability boundary — protects against claims arising from secrets disclosed
+  to an imposter site, pairing with the no-guarantee-of-delivery disclaimer;
+  (3) product tie-in — Custom Domains (E.1) give recipients a domain they
+  already trust, narrowing the phishing surface. Placement in B.2 is loose
+  (it is not an account-formation rule); accepted, with the C.9
+  official-domains list as the companion control.
+
+- **CHANGELOG / WHATS-CHANGED drafting calls (2026-07-01).** Both derivative
+  docs excluded everything unapplied or undecided at drafting time; the Secret
+  Content access exceptions are stated plainly rather than softened (a
+  "what's changed" notice that hides a narrowed privacy promise would be worse
+  than the change itself); effective-date placeholders match the live docs.
+  WHATS-CHANGED presents the DPA and TOMs as new publications — the private
+  2026-02-18 DPA lineage appears only as "previously provided to
+  dedicated-deployment customers". Source research preserved in
+  `research/revision-history-2026.md`.

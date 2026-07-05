@@ -59,3 +59,6 @@ pnpm build    # dist/
 6. Set document `updatedAt` dates when the 2026 policy revision gets its
    effective date; update the `view source & history` links if the public
    repo URL differs from `onetimesecret/site-policy`.
+7. Editorial sign-off on the Assurance page framing, carried verbatim from
+   the design mock: "Open source since 2012" and the one-person-company
+   presentation. Confirm both are how we want to present publicly.
