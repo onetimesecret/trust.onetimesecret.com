@@ -1,3 +1,5 @@
+# src/content/trust.yaml
+---
 # trust.onetimesecret.com — single source of truth.
 # Every page is a pure render of this file, validated by src/lib/trust-config.ts.
 # Published verbatim at /trust.yaml so procurement tooling diffs a stable file.

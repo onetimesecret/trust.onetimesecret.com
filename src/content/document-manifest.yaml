@@ -1,3 +1,5 @@
+# src/content/document-manifest.yaml
+---
 # Signoff manifest for the generated policy documents. Hand-maintained:
 # after each counsel/internal signoff, record the reviewed commit hash and
 # date here. The rendered pages display this line so "what did we agree
