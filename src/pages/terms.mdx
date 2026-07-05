@@ -1,6 +1,10 @@
 ---
+layout: '../layouts/PolicyLayout.astro'
+slug: terms
 title: Terms of Service
+description: The agreement governing hosted use of Onetime Secret.
 ---
+import { constants, spelledDays, spelledYears, multiTenantTiers } from '../lib/policy-constants';
 
 Effective date: **TBD on release**
 
@@ -114,9 +118,9 @@ Where your Organization has enabled SSO:
 
 This section is the canonical source for the operational details of how we hold and protect your data. The Privacy Statement summarizes these and refers here. The defined retention periods (Backup Retention Period, Operational Retention Period) are in [DPA §1.17-1.18](https://onetimesecret.com/dpa#1-definitions-and-interpretation).
 
-- **IP address and request log retention.** We retain IP addresses and request logs associated with service usage for up to 30 days, after which they are permanently deleted from active systems. Logs may be purged sooner depending on traffic volume.
+- **IP address and request log retention.** We retain IP addresses and request logs associated with service usage for up to {constants.retention.operational_days} days, after which they are permanently deleted from active systems. Logs may be purged sooner depending on traffic volume.
 - **Secret retrieval.** Due to our security-first design, we cannot retrieve or recover secrets once they have been viewed, expired, or deleted, except as outlined below regarding backups. This ensures your sensitive information remains private and ephemeral.
-- **Backups.** We maintain encrypted backups for disaster recovery. Backups are retained for up to 30 days, after which they are permanently deleted on a rolling basis. When a Secret is received or expires, it is removed from the active database; encrypted Secret Content may still exist in backups for the remainder of the backup retention window. Backups are stored in a secure, isolated environment within the same regional jurisdiction as the data they cover, except that geo-located encrypted backups for Global Elite deployments are stored in AWS S3 in the EU (Frankfurt, Ireland) as described in the [Data Processing Agreement](https://onetimesecret.com/dpa) (Section 12.2 and Schedule C). Backups are accessed only:
+- **Backups.** We maintain encrypted backups for disaster recovery. Backups are retained for up to {constants.retention.backup_days} days, after which they are permanently deleted on a rolling basis. When a Secret is received or expires, it is removed from the active database; encrypted Secret Content may still exist in backups for the remainder of the backup retention window. Backups are stored in a secure, isolated environment within the same regional jurisdiction as the data they cover, except that geo-located encrypted backups for Global Elite deployments are stored in AWS S3 in the EU (Frankfurt, Ireland) as described in the [Data Processing Agreement](https://onetimesecret.com/dpa) (Section 12.2 and Schedule C). Backups are accessed only:
   1. To restore service in the event of a catastrophic failure
   2. To test the integrity of backups for the system as a whole
 
@@ -378,10 +382,10 @@ Subscriptions are billed in advance, monthly or yearly, depending on the plan yo
 
 For our **multi-tenant paid plans** (such as Identity Plus, Identity Lite, Team Plus, Team Lite, and any successor or variant multi-tenant tiers):
 
-- **Monthly plans**: refundable within 30 days of the most recent monthly billing date.
-- **Annual plans**: refundable within 30 days of the most recent annual billing date.
+- **Monthly plans**: refundable within {constants.windows.refund_days} days of the most recent monthly billing date.
+- **Annual plans**: refundable within {constants.windows.refund_days} days of the most recent annual billing date.
 
-For our **single-tenant plans** (Global Elite and any other dedicated deployments), which are billed annually only, refund terms are governed by the customer's separate agreement where one is in place. Where no such separate terms have been agreed, refunds are available within 30 days of the most recent billing date.
+For our **single-tenant plans** (Global Elite and any other dedicated deployments), which are billed annually only, refund terms are governed by the customer's separate agreement where one is in place. Where no such separate terms have been agreed, refunds are available within {constants.windows.refund_days} days of the most recent billing date.
 
 **Single-tenant deployment options.** Our Global Elite tier provides a manual, high-touch, single-tenant deployment that can be tailored to a customer's requirements. We may also offer automatically provisioned single-tenant deployments, which provide a dedicated environment through an onboarding experience similar to our multi-tenant plans. Where offered, an automatically provisioned single-tenant deployment may consist of a single virtual server running the application and database together, or of separate application and database instances, with configurable resources and a choice of hosting region. The deployment options available to you, including resources and region, are described where the offering is presented.
 
@@ -421,15 +425,15 @@ Member accounts within an Organization are tied to the Organization itself, whet
 
 ### 3. Upon Cancellation
 
-We will retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements. Subject to those obligations, we will delete your active account record and the active Content of your account within 30 days of cancellation or termination. Encrypted backup copies may persist for up to a further 30 days before being purged on a rolling basis.
+We will retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements. Subject to those obligations, we will delete your active account record and the active Content of your account within {constants.retention.operational_days} days of cancellation or termination. Encrypted backup copies may persist for up to a further {constants.retention.backup_days} days before being purged on a rolling basis.
 
 Once your account record has been deleted, it cannot be recovered.
 
 Secret Content follows its own lifecycle independent of account cancellation: a Secret remains available to its intended recipient until it is viewed, expires, or is deleted via the Receipt Link, regardless of whether the creating account is later cancelled.
 
-Upon request made within 30 days of cancellation, termination, or downgrade, we will make a reasonable effort to provide an account owner with a copy of their lawful, non-infringing account contents.
+Upon request made within {constants.windows.data_export_days} days of cancellation, termination, or downgrade, we will make a reasonable effort to provide an account owner with a copy of their lawful, non-infringing account contents.
 
-**Inactive accounts.** An account with no successful sign-in for five years (60 months) may be removed as inactive; signing in resets this period. We make best efforts to email notice to the account's address at least 30 days before removal, and for 30 days after that notice you may request an export of your account contents. Details are in the [Privacy Statement](https://onetimesecret.com/privacy)'s "Inactive accounts" section.
+**Inactive accounts.** An account with no successful sign-in for five years (60 months) may be removed as inactive; signing in resets this period. We make best efforts to email notice to the account's address at least {constants.windows.inactive_notice_days} days before removal, and for {constants.windows.data_export_days} days after that notice you may request an export of your account contents. Details are in the [Privacy Statement](https://onetimesecret.com/privacy)'s "Inactive accounts" section.
 
 ### 4. Onetime Secret May Terminate
 

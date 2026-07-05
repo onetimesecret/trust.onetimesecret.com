@@ -1,6 +1,10 @@
 ---
+layout: '../layouts/PolicyLayout.astro'
+slug: privacy
 title: Privacy Statement
+description: What Onetime Secret collects, why, and for how long.
 ---
+import { constants, spelledDays, spelledYears, multiTenantTiers } from '../lib/policy-constants';
 
 Effective date: **TBD on release**
 
@@ -26,7 +30,7 @@ The short version doesn't tell you everything, so please read on for the full pi
 
 If you're browsing the website without an account, we collect the same kind of information most websites collect: browser type, language preference, regional environment selection, color mode preference, request timestamps, and your IP address. We use common technologies including cookies, HTML5 `localStorage` and `sessionStorage`, and server logs.
 
-We use this information to operate the website, to monitor and protect its security, and to understand in aggregate how the service is used. Server request log retention is governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security): in summary, up to 30 days, and sooner depending on traffic volume.
+We use this information to operate the website, to monitor and protect its security, and to understand in aggregate how the service is used. Server request log retention is governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security): in summary, up to {constants.retention.operational_days} days, and sooner depending on traffic volume.
 
 ### Information from users with accounts
 
@@ -58,13 +62,13 @@ Under data protection law, our customer, the legal entity on whose behalf the Or
 
 If your Organization enables SSO, you authenticate via your Organization's identity provider (Google Workspace, Okta, Microsoft Entra ID, or any SAML 2.0 / OIDC provider your Organization configures). We receive a limited set of identity claims (typically your email address, a stable identifier, your display name, and any group memberships your Organization has chosen to share). We do not receive or store your credentials.
 
-We log SSO authentication events for security and audit purposes. Retention applies as described in [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) (in summary, up to 30 days). Retention is based on our legitimate interest in security monitoring and audit, and is limited to what is necessary for those purposes.
+We log SSO authentication events for security and audit purposes. Retention applies as described in [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security) (in summary, up to {constants.retention.operational_days} days). Retention is based on our legitimate interest in security monitoring and audit, and is limited to what is necessary for those purposes.
 
 If your Organization disables your account at the identity provider, your active sessions are terminated and your access is revoked. Account Data within the Organization is then handled in accordance with the Organization's instructions and the cancellation rules in [Section J of the Terms of Service](https://onetimesecret.com/terms#j-cancellation-and-termination).
 
 ### Secret Content
 
-**Secret Content** (defined in [Section A.8 of the Terms of Service](https://onetimesecret.com/terms#a-definitions)) is the information you place inside a secret. It is held separately from Account Data and is encrypted in transit and at rest. We do not access, read, scan, categorize, or analyze Secret Content, except in the narrow circumstances described in [Section D.4 of the Terms of Service](https://onetimesecret.com/terms#4-treatment-of-secret-content). The lifecycle of Secret Content (purge on first viewing, expiry, or manual deletion via the Receipt Link, with up to 30 days of persistence in encrypted backups) is governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
+**Secret Content** (defined in [Section A.8 of the Terms of Service](https://onetimesecret.com/terms#a-definitions)) is the information you place inside a secret. It is held separately from Account Data and is encrypted in transit and at rest. We do not access, read, scan, categorize, or analyze Secret Content, except in the narrow circumstances described in [Section D.4 of the Terms of Service](https://onetimesecret.com/terms#4-treatment-of-secret-content). The lifecycle of Secret Content (purge on first viewing, expiry, or manual deletion via the Receipt Link, with up to {constants.retention.backup_days} days of persistence in encrypted backups) is governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
 
 If you store sensitive personal information inside a secret, you remain responsible for that decision and for compliance with applicable law. We cannot retrieve, restore, or assist with access to a secret once it has been viewed, expired, or deleted.
 
@@ -100,6 +104,8 @@ We do not host advertising on Onetime Secret.
 
 We share Account Data, and in some cases encrypted Secret Content, with a small set of subprocessors that help us run the service. They are contractually bound to handle the data in line with this Privacy Statement.
 
+{/* TODO: render from trust.yaml subprocessors like DPA Schedule A */}
+
 | Subprocessor | Purpose | Location |
 | --- | --- | --- |
 | Cloudflare, Inc. | DNS management, network proxy, security services (including DDoS protection), and TLS termination at the edge for our regional service domains (e.g. `eu.onetimesecret.com`, `ca.onetimesecret.com`), serving all multi-tenant tiers | Global edge network |
@@ -114,7 +120,7 @@ Cloudflare provides DNS management, network proxy, security services, and TLS te
 
 Hosting providers vary by region (see "Where your data is processed" below for the per-region hosting provider). We maintain a current, dated list of subprocessors (including legal entity, address, location, purpose, and categories of data processed) in our Data Processing Agreement at [onetimesecret.com/dpa](https://onetimesecret.com/dpa). The list is published from our public trust centre (a git-backed repository, currently our [site-policy repository](https://github.com/onetimesecret/site-policy)), so every change is dated and the full history is reviewable.
 
-When we plan to engage a new subprocessor service, we notify all account holders by email. If you object to the change, you can cancel the affected service without penalty during the 30-day notice period; that cancellation is your remedy, and we may still proceed with the change for the service generally. In an emergency (for example, replacing a provider to keep the service secure or available), we may engage a new subprocessor first and notify you promptly afterward; the same objection right runs from that notice. The public list supplements these email notices; it does not replace them.
+When we plan to engage a new subprocessor service, we notify all account holders by email. If you object to the change, you can cancel the affected service without penalty during the {constants.retention.subprocessor_notice_days}-day notice period; that cancellation is your remedy, and we may still proceed with the change for the service generally. In an emergency (for example, replacing a provider to keep the service secure or available), we may engage a new subprocessor first and notify you promptly afterward; the same objection right runs from that notice. The public list supplements these email notices; it does not replace them.
 
 ### Sharing in connection with a corporate transaction
 
@@ -138,7 +144,7 @@ We do not use third-party analytics, product-tracking, or session-replay service
 
 ### Operational logging
 
-We retain server request logs and error monitoring data for up to 30 days for the purposes of security monitoring, technical diagnostics, and service improvement. Error monitoring is performed using a self-hosted instance of Sentry within the European Union, with client-side and server-side data scrubbing applied. We do not intentionally collect personal data through error reports, although some may be incidentally captured.
+We retain server request logs and error monitoring data for up to {constants.retention.operational_days} days for the purposes of security monitoring, technical diagnostics, and service improvement. Error monitoring is performed using a self-hosted instance of Sentry within the European Union, with client-side and server-side data scrubbing applied. We do not intentionally collect personal data through error reports, although some may be incidentally captured.
 
 ## How we secure your information
 
@@ -178,7 +184,7 @@ There are three narrow exceptions, all inherent to operating the service:
 
 - **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data; Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
 - **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is then re-encrypted for transit into the appropriate regional environment for processing. Single-tenant deployments (e.g. Global Elite) do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by us within the customer's selected region.
-- **Geo-located backups for Global Elite deployments:** For Global Elite deployments, geo-located encrypted backups are stored in AWS S3 in the EU (Frankfurt, Ireland). Backups are encrypted before upload and expire automatically after 30 days, as described in [DPA §12.2 and Schedule C](https://onetimesecret.com/dpa).
+- **Geo-located backups for Global Elite deployments:** For Global Elite deployments, geo-located encrypted backups are stored in AWS S3 in the EU (Frankfurt, Ireland). Backups are encrypted before upload and expire automatically after {constants.retention.geo_backup_expiry_days} days, as described in [DPA §12.2 and Schedule C](https://onetimesecret.com/dpa).
 
 Other than the three exceptions described above, we do not transfer data outside the jurisdiction in which it was collected.
 
@@ -206,7 +212,7 @@ If you are in a region not listed above, you may still have privacy rights under
 
 ### Raising a concern
 
-If you have a concern about the way we handle your personal data, please email [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com) with the subject line "Privacy Concerns." We aim to respond within 30 days of receiving your request. In complex cases, we may extend this period by up to an additional 30 days, and we will notify you of the extension and the reasons for it.
+If you have a concern about the way we handle your personal data, please email [privacy@onetimesecret.com](mailto:privacy@onetimesecret.com) with the subject line "Privacy Concerns." We aim to respond within {constants.windows.privacy_response_days} days of receiving your request. In complex cases, we may extend this period by up to an additional {constants.windows.privacy_response_extension_days} days, and we will notify you of the extension and the reasons for it.
 
 ## How we respond to compelled disclosure
 
@@ -229,11 +235,11 @@ If you are a member of an Organization, your account is administered by the Orga
 
 ## Data retention and deletion
 
-The cancellation and deletion windows for Account Data, including the active record and encrypted backup retention period, are governed by [Section J.3 of the Terms of Service](https://onetimesecret.com/terms#3-upon-cancellation). In summary: up to 30 days to delete the active account record after cancellation, plus up to a further 30 days for encrypted backup copies.
+The cancellation and deletion windows for Account Data, including the active record and encrypted backup retention period, are governed by [Section J.3 of the Terms of Service](https://onetimesecret.com/terms#3-upon-cancellation). In summary: up to {constants.retention.operational_days} days to delete the active account record after cancellation, plus up to a further {constants.retention.backup_days} days for encrypted backup copies.
 
 We retain billing records for as long as required by applicable tax and accounting law (typically six to ten years), regardless of account deletion. Billing records are limited to invoice metadata and are held by Stripe and in our accounting records.
 
-**Inactive accounts.** An account is inactive when it has had no successful sign-in for five years (60 months). We may remove an inactive account and its associated data as part of the retention practices described in this section. We will attempt to notify you at the email address associated with your account at least 30 days before removing an inactive account; if the account remains inactive after that period, we may remove it. Notice is a reasonable-efforts courtesy, not a precondition; our failure to send it, or your failure to receive it, does not prevent removal. For 30 days after we send notice, you may request an export of your Account Data. Signing in resets the inactivity period.
+**Inactive accounts.** An account is inactive when it has had no successful sign-in for {constants.windows.inactive_account_years} years (60 months). We may remove an inactive account and its associated data as part of the retention practices described in this section. We will attempt to notify you at the email address associated with your account at least {constants.windows.inactive_notice_days} days before removing an inactive account; if the account remains inactive after that period, we may remove it. Notice is a reasonable-efforts courtesy, not a precondition; our failure to send it, or your failure to receive it, does not prevent removal. For {constants.windows.data_export_days} days after we send notice, you may request an export of your Account Data. Signing in resets the inactivity period.
 
 If you would like to cancel your account or delete your personal information, you may do so from your account dashboard or by emailing [support@onetimesecret.com](mailto:support@onetimesecret.com). We retain and use your information as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.
 
@@ -253,7 +259,7 @@ If you have configured a Verified Email Address for your account or Organization
 
 ## Changes to our Privacy Statement
 
-We may update this Privacy Statement from time to time. We will provide notice of material changes through the Website at least 30 days before the change takes effect, by posting a notice on our home page or by sending an email to the address associated with your account.
+We may update this Privacy Statement from time to time. We will provide notice of material changes through the Website at least {constants.windows.policy_change_notice_days} days before the change takes effect, by posting a notice on our home page or by sending an email to the address associated with your account.
 
 Minor changes that do not affect your rights or our obligations (such as typo corrections, formatting changes, clarifying language, or the addition of a new regional environment that does not change how existing users' data is processed) do not trigger advance notice and do not change the effective date above.
 

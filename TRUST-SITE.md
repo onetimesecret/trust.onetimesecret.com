@@ -38,8 +38,10 @@ pnpm build    # dist/
 ## Content rules
 
 - The canonical contractual subprocessor list is **DPA Schedule A**
-  (`onetime-dpa.md`, in this repo); `trust.yaml` mirrors it. Change one, change
-  both — the DPA governs.
+  (`src/pages/dpa.mdx`, rendered at `/dpa`), whose tables are generated from
+  the `subprocessors:` block of `src/content/trust.yaml`. There is one copy
+  of the data; edit `trust.yaml` and both the DPA and the Subprocessors page
+  change together — the rendered DPA governs.
 - Security claims must match the corrected 2026 policy language. In
   particular: a user passphrase is an **access-control gate verified before
   decryption, not a key-derivation input** — do not reintroduce "we cannot

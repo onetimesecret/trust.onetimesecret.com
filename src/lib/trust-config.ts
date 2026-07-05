@@ -7,10 +7,36 @@ import { z } from 'zod';
 
 export const AccessSchema = z.enum(['public', 'request']).default('public');
 
-export const SubprocessorSchema = z.object({
-  name: z.string(),
+// One row in a DPA Schedule A category table. The DPA's Schedule A tables
+// are rendered from these — the contractual list and this file cannot
+// drift because they are the same data.
+export const SubprocessorRoleSchema = z.object({
+  category: z.enum(['infrastructure', 'network', 'email', 'backup', 'payments']),
+  // Row label when it differs from the subprocessor's shortName,
+  // e.g. "AWS (S3)", "Hetzner (Object storage)".
+  label: z.string().optional(),
   purpose: z.string(),
   location: z.string(),
+  tiers: z.string(), // "All", "Global Elite", "Identity Plus, Team Plus", ...
+  optional: z.boolean().default(false),
+  data: z.array(z.string()).nonempty(), // Categories of Data
+});
+
+// DPA Schedule A "Subprocessor Entity Details" row.
+export const SubprocessorEntitySchema = z.object({
+  address: z.string(),
+  jurisdiction: z.string(),
+  comment: z.string().optional(),
+});
+
+export const SubprocessorSchema = z.object({
+  name: z.string(),
+  // Short name used in the Schedule A category tables ("Hetzner");
+  // override per-role with roles[].label where it differs.
+  shortName: z.string(),
+  // Human summary for the trust site's Subprocessors page; the factual
+  // per-category detail lives in roles[].
+  purpose: z.string(),
   // "TBD" until the per-entity engagement dates are confirmed against
   // invoices / infra history (Handoff Spec §7.2).
   since: z.string(),
@@ -18,7 +44,14 @@ export const SubprocessorSchema = z.object({
   // engaged per DPA Schedule A ("alternatives unless stated as additive").
   core: z.boolean().default(false),
   note: z.string().optional(),
+  entity: SubprocessorEntitySchema,
+  roles: z.array(SubprocessorRoleSchema).nonempty(),
 });
+
+// Derived display location: the unique role locations, in order.
+export function subprocessorLocation(s: { roles: Array<{ location: string }> }): string {
+  return [...new Set(s.roles.map((r) => r.location))].join('; ');
+}
 
 export const ChangelogEntrySchema = z.object({
   date: z.string(),

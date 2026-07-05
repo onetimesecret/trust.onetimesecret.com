@@ -1,8 +1,16 @@
+---
+layout: '../layouts/PolicyLayout.astro'
+slug: toms
+title: Technical and Organizational Measures
+description: The GDPR Article 32 measures behind the Onetime Secret DPA, with a shared-responsibility model.
+---
+import { constants, spelledDays, spelledYears, multiTenantTiers } from '../lib/policy-constants';
+
 # Technical and Organizational Measures (TOMs) - Onetime Secret
 
 Effective date: **TBD on release**
 
-This document describes the technical and organizational measures ("TOMs") implemented by Onetime Secret (the "Processor") pursuant to Article 32 of the GDPR to ensure a level of security appropriate to the risk. It supplements Section 4 (Security) and Schedule C of the Onetime Secret [Data Processing Agreement](https://onetimesecret.com/dpa) ("DPA") and is the canonical description of those measures; capitalized terms used but not defined here have the meaning given in the DPA.
+This document describes the technical and organizational measures ("TOMs") implemented by Onetime Secret (the "Processor") pursuant to Article 32 of the GDPR to ensure a level of security appropriate to the risk. It supplements Section 4 (Security) and Schedule C of the Onetime Secret <a href={constants.urls.dpa}>Data Processing Agreement</a> ("DPA") and is the canonical description of those measures; capitalized terms used but not defined here have the meaning given in the DPA.
 
 These measures are reviewed and improved on an ongoing basis, taking into account the state of the art, the cost of implementation, and the nature, scope, context, and purposes of processing. This document is published openly and may be shared freely with your compliance, legal, and audit teams; no confidentiality restriction applies to the document itself.
 
@@ -49,7 +57,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 *Technical:*
 - Production and test/diagnostic environments are separated.
-- Multi-tenant infrastructure (Basic, Identity Plus, Team Plus, and successor or variant tiers) maintains secure compartmentalization between customers; Global Elite customers receive logically dedicated environments with isolated application stacks and database instances.
+- Multi-tenant infrastructure ({multiTenantTiers}) maintains secure compartmentalization between customers; Global Elite customers receive logically dedicated environments with isolated application stacks and database instances.
 - Application and data tiers are architecturally separated: application servers hold the system-level secret required for key derivation; database servers store encrypted Secret Content but do not hold or have access to that secret.
 - The object class and identifier are bound as Additional Authenticated Data (AAD), ensuring ciphertext cannot be transplanted between records.
 
@@ -103,11 +111,11 @@ This document does not apply to self-hosted deployments of the Processor's open-
 *Responsibility: Shared.*
 
 *Technical:*
-- Local encrypted backups retained for seven (7) days; geo-located encrypted backups (Global Elite) stored in AWS S3 (EU: Frankfurt, Ireland) with automatic expiration after thirty (30) days. Both tiers fall within the Backup Retention Period defined in DPA §1.17.
+- Local encrypted backups retained for {spelledDays(constants.retention.local_backup_days)}; geo-located encrypted backups (Global Elite) stored in {constants.infrastructure.geo_backup_location} with automatic expiration after {spelledDays(constants.retention.geo_backup_expiry_days)}. Both tiers fall within the Backup Retention Period defined in DPA §1.17.
 - Backup encryption uses an asymmetric scheme so that compromise of production systems does not expose backup contents.
 - Continuous system hardening against known attack classes, including denial-of-service.
 
-*Organizational:* Backup storage locations align with the regional data isolation policy (DPA §12), subject to the exceptions in DPA §12.2, including exception (c) (Global Elite geo-backups in the EU). Encrypted backup copies of Purged Secrets are retained only for the Backup Retention Period (30 days), after which they are automatically deleted.
+*Organizational:* Backup storage locations align with the regional data isolation policy (DPA §12), subject to the exceptions in DPA §12.2, including exception (c) (Global Elite geo-backups in the EU). Encrypted backup copies of Purged Secrets are retained only for the Backup Retention Period ({constants.retention.backup_days} days), after which they are automatically deleted.
 
 ---
 
@@ -152,7 +160,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 - The Service is data-minimizing by design: Secret Content is ephemeral and automatically Purged on first access or expiration, so the default lifecycle of the most sensitive data is non-retention.
 - No third-party tracking, analytics, cookies, or behavioral profiling is employed, and no automated decision-making is performed (DPA §5, §12.3).
 - Account Data is limited to what is necessary to provide the Service: email address, authentication credentials or SSO claims, billing information, and usage metadata (DPA §1.16).
-- On account deletion, Account Data is deleted following the Operational Retention Period (30 days, retained to facilitate export requests), and encrypted backup copies are removed within the Backup Retention Period (30 days) (DPA §10).
+- On account deletion, Account Data is deleted following the Operational Retention Period ({constants.retention.operational_days} days, retained to facilitate export requests), and encrypted backup copies are removed within the Backup Retention Period ({constants.retention.backup_days} days) (DPA §10).
 
 ---
 
@@ -175,7 +183,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 *Organizational:*
 - Subprocessors are engaged only under data processing agreements no less restrictive or protective than the DPA (DPA §6).
-- The Company is notified by email of any intended new or replacement Subprocessor and has a thirty (30)-day objection window, during which it may terminate the affected services without penalty; in an emergency, a replacement may be engaged first with prompt notice afterward, the objection window running from that notice (DPA §6).
+- The Company is notified by email of any intended new or replacement Subprocessor and has a thirty ({constants.retention.subprocessor_notice_days})-day objection window, during which it may terminate the affected services without penalty; in an emergency, a replacement may be engaged first with prompt notice afterward, the objection window running from that notice (DPA §6).
 - The current list of approved Subprocessors, with data location, purpose, and categories of data, is maintained in Schedule A of the DPA.
 - Subprocessor security practices are assessed on a regular basis.
 

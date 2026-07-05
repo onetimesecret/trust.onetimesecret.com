@@ -1,6 +1,7 @@
 ---
 import TrustLayout from '../layouts/TrustLayout.astro';
 import { trust } from '../lib/trust';
+import { subprocessorLocation } from '../lib/trust-config';
 
 const core = trust.subprocessors.filter((s) => s.core);
 const alternatives = trust.subprocessors.filter((s) => !s.core);
@@ -37,7 +38,7 @@ const alternatives = trust.subprocessors.filter((s) => !s.core);
               <span class="row-meta mono">since {s.since}</span>
             </div>
             <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
-              {s.purpose} <em style="color: var(--faint);">— {s.location}</em>
+              {s.purpose} <em style="color: var(--faint);">— {subprocessorLocation(s)}</em>
               {s.note && <em style="color: var(--faint);"> · {s.note}</em>}
             </p>
           </div>
@@ -55,7 +56,7 @@ const alternatives = trust.subprocessors.filter((s) => !s.core);
               <span class="row-meta mono">since {s.since}</span>
             </div>
             <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
-              {s.purpose} <em style="color: var(--faint);">— {s.location}</em>
+              {s.purpose} <em style="color: var(--faint);">— {subprocessorLocation(s)}</em>
               {s.note && <em style="color: var(--faint);"> · {s.note}</em>}
             </p>
           </div>

@@ -1,0 +1,74 @@
+# Canonical shared facts for the policy documents and the trust site.
+# Every retention period, window, location, and tier list that appears in
+# more than one document lives here; the MDX docs and the trust site
+# interpolate these values at build time. Change a value here and every
+# consumer changes with it — consistency is structural, not audited.
+#
+# Prose stays human-owned in the MDX sources; only the ~15 shared values
+# are interpolated. The DPA remains the governing text; this file is the
+# authoring source that keeps the governing texts in agreement.
+#
+# Supersedes decisions/retention-state.yaml (the audited line-number
+# ledger), per ADR-001 addendum 2026-07-05.
+
+retention:
+  # DPA §1.17 — maximum period for encrypted backup copies after deletion
+  # from active systems. Canonical definition lives in the DPA.
+  backup_days: 30
+  # DPA §1.18 — server request logs, error monitoring, post-termination
+  # Account Data.
+  operational_days: 30
+  # DPA §1.19 — objection window after Processor notice of a new or
+  # replacement Subprocessor.
+  subprocessor_notice_days: 30
+  # TOMs §5 — local encrypted backups; operational tier within the 30-day
+  # ceiling, faster recovery.
+  local_backup_days: 7
+  # DPA §12.2(c) / Schedule C — automatic expiration of Global Elite
+  # geo-located encrypted backups.
+  geo_backup_expiry_days: 30
+
+windows:
+  # ToS I.3
+  refund_days: 30
+  # ToS J.3 — export request honoured within this period of cancellation,
+  # termination, or downgrade.
+  data_export_days: 30
+  # Privacy Statement — response to privacy requests, extendable once.
+  privacy_response_days: 30
+  privacy_response_extension_days: 30
+  # ToS J.3 / Privacy Statement — inactive account lifecycle.
+  inactive_account_years: 5
+  inactive_notice_days: 30
+  # Privacy Statement — material policy changes.
+  policy_change_notice_days: 30
+
+infrastructure:
+  # DPA §12.2(c), Schedule A (Backup & Storage), Schedule C, TOMs §3.
+  geo_backup_location: "AWS S3 (EU: Frankfurt, Ireland)"
+  # DPA Schedule A (Backup & Storage) — offsite encrypted backup storage.
+  offsite_backup_location: "Hetzner object storage, EU (Germany, Finland)"
+
+tiers:
+  # ToS A / PP / DPA Schedule A — the multi-tenant tiers.
+  multi_tenant: [Basic, Identity Plus, Team Plus]
+  multi_tenant_suffix: and any successor or variant tiers
+  premium: Global Elite
+
+security:
+  # Schedule C §1.2 — accounts with no successful sign-in since this date
+  # retain bcrypt-hashed passwords; rehashed on next successful sign-in.
+  bcrypt_cutoff: April 2026
+
+urls:
+  terms: https://onetimesecret.com/terms
+  privacy: https://onetimesecret.com/privacy
+  dpa: https://onetimesecret.com/dpa
+  toms: https://onetimesecret.com/toms
+
+# Retention exceptions — values not subject to the 30-day consolidation.
+exceptions:
+  billing_records: as required by tax law
+  # DPA Schedule B §4 — single-tenant / Global Elite configuration and
+  # audit records.
+  configuration_documentation_years: 5

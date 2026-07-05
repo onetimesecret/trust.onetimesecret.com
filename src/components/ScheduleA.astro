@@ -1,0 +1,93 @@
+---
+// DPA Schedule A tables, rendered from src/content/trust.yaml. The
+// contractual subprocessor list and the trust site's Subprocessors page
+// are the same data — they cannot drift.
+import { trust } from '../lib/trust';
+import type { Subprocessor } from '../lib/trust-config';
+
+const CATEGORIES = [
+  { key: 'infrastructure', heading: 'Infrastructure & Hosting' },
+  { key: 'network', heading: 'Security & Network Services' },
+  { key: 'email', heading: 'Email Services' },
+  { key: 'backup', heading: 'Backup & Storage' },
+  { key: 'payments', heading: 'Payment Processing' },
+] as const;
+
+type Row = {
+  label: string;
+  location: string;
+  tiers: string;
+  optional: boolean;
+  purpose: string;
+  data: string;
+};
+
+function rowsFor(categoryKey: string): Row[] {
+  return trust.subprocessors.flatMap((s: Subprocessor) =>
+    s.roles
+      .filter((r) => r.category === categoryKey)
+      .map((r) => ({
+        label: r.label ?? s.shortName,
+        location: r.location,
+        tiers: r.tiers,
+        optional: r.optional,
+        purpose: r.purpose,
+        data: r.data.join(', '),
+      })),
+  );
+}
+---
+
+{CATEGORIES.map(({ key, heading }) => (
+  <section>
+    <h3>{heading}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Subprocessor</th>
+          <th>Data Location</th>
+          <th>Tiers</th>
+          <th>Optional</th>
+          <th>Purpose</th>
+          <th>Categories of Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rowsFor(key).map((row) => (
+          <tr>
+            <td><em>{row.label}</em></td>
+            <td>{row.location}</td>
+            <td>{row.tiers}</td>
+            <td>{row.optional ? '✔' : '𐄂'}</td>
+            <td>{row.purpose}</td>
+            <td>{row.data}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+))}
+
+<section>
+  <h3>Subprocessor Entity Details</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Jurisdiction</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {trust.subprocessors.map((s) => (
+        <tr>
+          <td><strong>{s.name}</strong></td>
+          <td>{s.entity.address}</td>
+          <td>{s.entity.jurisdiction}</td>
+          <td>{s.entity.comment && <em>{s.entity.comment}</em>}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</section>

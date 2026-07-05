@@ -10,6 +10,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/mdx": "^7.0.2",
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "@fontsource/libre-franklin": "^5.2.8",
