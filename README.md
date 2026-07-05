@@ -1,6 +1,6 @@
 # Onetime Secret Trust Centre
 
-The source for [trust.onetimesecret.com](https://trust.onetimesecret.com) and
+The source for [trust.onetimesecret.com](TRUST-SITE.md) and
 Onetime Secret's policy documents: Terms of Service, Privacy Statement, Data
 Processing Agreement (DPA), and Technical & Organisational Measures (TOMs).
 
