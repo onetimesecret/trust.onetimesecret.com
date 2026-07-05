@@ -150,7 +150,7 @@ The technical and organizational security measures applied to the Service are:
 - Multi-factor authentication for administrative access
 - Strict Content Security Policy, HTTP Strict Transport Security (HSTS), and inclusion in browser HSTS preload lists across all domains
 
-These are summarized here for transparency. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security). The defined retention periods (Backup Retention Period, Operational Retention Period) are in [DPA §1.17-1.18](https://onetimesecret.com/dpa#1-definitions).
+These are summarized here for transparency. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security). The defined retention periods (Backup Retention Period, Operational Retention Period) are in [DPA §1.17-1.18](https://onetimesecret.com/dpa#1-definitions-and-interpretation).
 
 Our service runs on open-source software whose source code is publicly available for independent review. This transparency allows security researchers and the public to inspect how Secret Content is encrypted, stored, and handled, rather than relying on our description of these measures alone.
 

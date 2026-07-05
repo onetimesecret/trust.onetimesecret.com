@@ -1,8 +1,8 @@
-# Technical and Organizational Measures (TOMs) — Onetime Secret
+# Technical and Organizational Measures (TOMs) - Onetime Secret
 
 Effective date: **TBD on release**
 
-This document describes the technical and organizational measures ("TOMs") implemented by Onetime Secret (the "Processor") pursuant to Article 32 of the GDPR to ensure a level of security appropriate to the risk. It supplements Section 4 (Security) and Schedule C of the Onetime Secret [Data Processing Agreement](./onetime-dpa-2026-05-31.md) ("DPA") and is the canonical description of those measures; capitalized terms used but not defined here have the meaning given in the DPA.
+This document describes the technical and organizational measures ("TOMs") implemented by Onetime Secret (the "Processor") pursuant to Article 32 of the GDPR to ensure a level of security appropriate to the risk. It supplements Section 4 (Security) and Schedule C of the Onetime Secret [Data Processing Agreement](https://onetimesecret.com/dpa) ("DPA") and is the canonical description of those measures; capitalized terms used but not defined here have the meaning given in the DPA.
 
 These measures are reviewed and improved on an ongoing basis, taking into account the state of the art, the cost of implementation, and the nature, scope, context, and purposes of processing. This document is published openly and may be shared freely with your compliance, legal, and audit teams; no confidentiality restriction applies to the document itself.
 
@@ -14,7 +14,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 - Personnel with access to Company Personal Data are vetted for reliability and are bound by confidentiality undertakings or statutory obligations of confidentiality (DPA §3).
 - External parties are engaged under confidentiality terms; Subprocessors are engaged only under agreements no less protective than the DPA (DPA §6).
-- The core application **and its CI/security pipeline configuration** are published as open-source software, allowing the Company and independent parties to inspect and verify the Processor's data-handling, cryptographic, and quality controls — a verifiable layer of transparency beyond the descriptions below.
+- The core application **and its CI/security pipeline configuration** are published as open-source software, allowing the Company and independent parties to inspect and verify the Processor's data-handling, cryptographic, and quality controls, a verifiable layer of transparency beyond the descriptions below.
 
 ---
 
@@ -52,19 +52,19 @@ This document does not apply to self-hosted deployments of the Processor's open-
 - Application and data tiers are architecturally separated: application servers hold the system-level secret required for key derivation; database servers store encrypted Secret Content but do not hold or have access to that secret.
 - The object class and identifier are bound as Additional Authenticated Data (AAD), ensuring ciphertext cannot be transplanted between records.
 
-*Organizational:* Regional data isolation policy (DPA §12): Company Personal Data collected within a regional environment is not transferred to infrastructure outside that region, with the two limited exceptions set out in DPA §12.2 — Stripe billing data (covered by the EU-US, UK Extension, and Swiss-US Data Privacy Frameworks, with Standard Contractual Clauses retained as a fallback) and transient edge-network TLS termination on the multi-tenant tiers, with traffic re-encrypted into the regional environment.
+*Organizational:* Regional data isolation policy (DPA §12): Company Personal Data collected within a regional environment is not transferred to infrastructure outside that region, with the two limited exceptions set out in DPA §12.2: Stripe billing data (covered by the EU-US, UK Extension, and Swiss-US Data Privacy Frameworks, with Standard Contractual Clauses retained as a fallback) and transient edge-network TLS termination on the multi-tenant tiers, with traffic re-encrypted into the regional environment.
 
 ### 1.4 Pseudonymization and Encryption (Art. 32(1)(a); Art. 25(1))
 
 *Responsibility: Processor.*
 
-*Technical — Encryption:*
+*Technical (encryption):*
 - **Secret Content at rest:** XChaCha20-Poly1305 authenticated encryption (AES-256-GCM available as an alternative); keys derived with BLAKE2b from a system-level secret not stored alongside the data plus a context string; per-operation random nonce. The encryption key is not stored and must be reconstructed at decryption time; the database server does not hold the key material necessary to decrypt Secret Content.
 - **Passphrase-protected Secrets:** Where supplied, a user passphrase acts as an access-control gate verified before decryption; the passphrase hash is stored separately using Argon2id.
 - **Full-disk encryption:** Production storage volumes are encrypted at the block level using LUKS.
 - **Backups:** Encrypted with GPG using 4096-bit keys; decryption keys are stored offsite and are not present in the production environment.
 
-*Technical — Pseudonymization:* Account-level records are keyed by non-identifying internal identifiers rather than by personal data. On account deletion, Account Data is removed in accordance with §5 below, so retained operational records no longer resolve to an identifiable data subject.
+*Technical (pseudonymization):* Account-level records are keyed by non-identifying internal identifiers rather than by personal data. On account deletion, Account Data is removed in accordance with §5 below, so retained operational records no longer resolve to an identifiable data subject.
 
 *Organizational:* Secret Content is automatically Purged on first access or expiration; the Processor does not access, categorize, or analyze Secret Content. Operational logs apply client- and server-side data scrubbing to minimize incidental personal data.
 
