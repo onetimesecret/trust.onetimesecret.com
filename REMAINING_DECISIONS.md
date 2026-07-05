@@ -9,14 +9,14 @@ per line. Everything else in ERRATA.md is unblocked drafting work.
 
 - [x] Decision CP-1: Pick one controller/processor position for Organization member data — the live Privacy Statement (line 55) says the Organization owner/admin is the GDPR controller with Onetime Secret as processor (matching the DPA's model), but the ToS review (IC-1) removed that same claim as "factually incorrect — Onetime Secret remains the controller." One position must hold across ToS, PP, and DPA before publication. (ERRATA.md header finding 1)
 
-Background: I edited the ToS but possibly inadvertently added to the confusion. The way it was written, it sounded to me like we were conflating "Organization" as in, one of our core data model and "Organization" as in, a legal entity that uses our service. That is all I was trying to clarify; I wasnt expressing any opinions.
+Background: I edited the ToS but possibly inadvertently added to the confusion. The way it was written, it sounded to me like we were conflating "Organization" as in, one of our core data model and "Organization" as in, a legal entity that uses our service. That is all I was trying to clarify; I wasn't expressing any opinions.
 
 The term "Organization" is overloaded so for disambiguation:
 
-* GDPR & DPA language, controller/processor: our customers are the controllor and we are the processer. My background note explains where this confusion came from. Our pre-existing DPA was already correct about this.
+* GDPR & DPA language, controller/processor: our customers are the controller and we are the processor. My background note explains where this confusion came from. Our pre-existing DPA was already correct about this.
 * Protecting our Subscription/billing arrangements: Organization as in our data model entity is a one to one with subscription. 
 
-DECISION: our customers are the controllor and we are the processer.  Our pre-existing DPA was already correct about this.
+DECISION: our customers are the controller and we are the processor.  Our pre-existing DPA was already correct about this.
 
 
 
@@ -42,7 +42,7 @@ DECISION (2026-07-02, the qualifier question itself): Remove the "for their comm
 
 - [x] Decision INACT-1: Inactive-account removal — attempt email notice to the registered address before removing, or keep "removal may occur automatically and without separate notice"? (Privacy review-tasks TODO-12; drafted text ready either way)
 
-DECISION: WE WILL GIVE NOTICE. Draft the clause(s) based on thef following:
+DECISION: WE WILL GIVE NOTICE. Draft the clause(s) based on the following:
 
 Use notice-attempt language, and make it concrete rather than aspirational. The strongest, least-attackable formulation I'd suggest, modeled on the Apple/Google pattern:
 
@@ -161,7 +161,7 @@ price maintenance (RPM) caution; prior-art research survives as
   data-minimization.md). Recover the drafted text with
   `git show e3aed13^:principles.md` and port it.
 
-- [x] Decision BA-1: business-arrengements-we-support.md line 30 asserts a
+- [x] Decision BA-1: business-arrangements-we-support.md line 30 asserts a
   "promote domain to organization" capability whose existence was never
   code-verified. Verify the feature or reword before that page is published.
   Note the BA page is the sole home of several ERRATA-1 commitments
