@@ -2,7 +2,8 @@ name: trust-site
 
 # Build the trust.onetimesecret.com static site. The Astro project lives at the
 # repository root. Node is pinned via .nvmrc (v24) so the build is reproducible;
-# pnpm is pinned to the v9 line to match the lockfile (lockfileVersion 9.0).
+# pnpm is pinned to the v10 line (matching package.json engines block). Both v9
+# and v10 support lockfileVersion 9.0.
 #
 # Build-only for now: every run produces the dist/ artifact. Publishing is
 # deferred until the trust.onetimesecret.com subdomain is claimed and the
@@ -44,7 +45,7 @@ jobs:
       # pnpm must be installed before setup-node so its pnpm cache can resolve.
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - uses: actions/setup-node@v4
         with:
@@ -53,6 +54,8 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
 
       - run: pnpm install --frozen-lockfile
+
+      - run: pnpm check
 
       - run: pnpm build
 
