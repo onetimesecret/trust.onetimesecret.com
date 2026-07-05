@@ -37,6 +37,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 - Access to cryptographic key material is restricted to essential operational processes.
 - User account credentials are protected with Argon2id adaptive one-way hashing (per-credential random salt, constant-time verification). Legacy hashes are verified and upgraded to Argon2id on the next successful authentication.
 - Role- and permission-based access control governs what users may do within their own account.
+- On the multi-tenant Service, customer-configured IP-address/CIDR-range access filtering is enforced at the application layer; on single-tenant deployments, network-level IP-range filtering may be available depending on the hosting provider, and whichever control is available is clearly labelled.
 
 *Organizational:* Access is granted on a least-privilege, need-to-know basis, strictly limited to individuals who require it for the purposes of the Principal Agreement. Personnel with system access are bound by confidentiality obligations (DPA §3).
 
@@ -48,7 +49,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 *Technical:*
 - Production and test/diagnostic environments are separated.
-- Multi-tenant infrastructure (Identity Plus tier) maintains secure compartmentalization between customers; Global Elite customers receive logically dedicated environments with isolated application stacks and database instances.
+- Multi-tenant infrastructure (Basic, Identity Plus, Team Plus, and successor or variant tiers) maintains secure compartmentalization between customers; Global Elite customers receive logically dedicated environments with isolated application stacks and database instances.
 - Application and data tiers are architecturally separated: application servers hold the system-level secret required for key derivation; database servers store encrypted Secret Content but do not hold or have access to that secret.
 - The object class and identifier are bound as Additional Authenticated Data (AAD), ensuring ciphertext cannot be transplanted between records.
 
@@ -78,10 +79,11 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 *Technical:*
 - All data in transit is protected with TLS 1.3 (current configuration verifiable via SSL Labs: [onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=onetimesecret.com&hideResults=on), [eu.onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=eu.onetimesecret.com&hideResults=on), [us.onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=us.onetimesecret.com&hideResults=on), [ca.onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=ca.onetimesecret.com&hideResults=on), [uk.onetimesecret.com](https://www.ssllabs.com/ssltest/analyze.html?d=uk.onetimesecret.com&hideResults=on)).
+- Web-facing endpoints apply a strict Content Security Policy and HTTP Strict Transport Security (HSTS), with all domains included in browser HSTS preload lists.
 - Authenticated encryption (XChaCha20-Poly1305 / AES-256-GCM) provides tamper detection for Secret Content at rest; AAD binding prevents ciphertext being moved between records.
 - All backups are encrypted at rest.
 
-*Organizational:* Data processing agreements with sub-processors to ensure data security and to control measures taken (DPA §6). Data remains within the IaaS Provider infrastructure of its collection region, save for the limited exceptions documented in DPA §12.
+*Organizational:* Data processing agreements with subprocessors to ensure data security and to control measures taken (DPA §6). Data remains within the IaaS Provider infrastructure of its collection region, save for the limited exceptions documented in DPA §12.
 
 ### 2.2 Input Control
 
@@ -101,11 +103,11 @@ This document does not apply to self-hosted deployments of the Processor's open-
 *Responsibility: Shared.*
 
 *Technical:*
-- Local encrypted backups retained for seven (7) days; geo-located encrypted backups (Global Elite) stored in AWS S3 (Frankfurt, EU) with automatic expiration after thirty (30) days. Both tiers fall within the Backup Retention Period defined in DPA §1.17.
+- Local encrypted backups retained for seven (7) days; geo-located encrypted backups (Global Elite) stored in AWS S3 (EU: Frankfurt, Ireland) with automatic expiration after thirty (30) days. Both tiers fall within the Backup Retention Period defined in DPA §1.17.
 - Backup encryption uses an asymmetric scheme so that compromise of production systems does not expose backup contents.
 - Continuous system hardening against known attack classes, including denial-of-service.
 
-*Organizational:* Backup storage locations align with the regional data isolation policy (DPA §12). Encrypted backup copies of Purged Secrets are retained only for the Backup Retention Period (30 days), after which they are automatically deleted.
+*Organizational:* Backup storage locations align with the regional data isolation policy (DPA §12), subject to the exceptions in DPA §12.2, including exception (c) (Global Elite geo-backups in the EU). Encrypted backup copies of Purged Secrets are retained only for the Backup Retention Period (30 days), after which they are automatically deleted.
 
 ---
 
@@ -149,7 +151,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 - The Service is data-minimizing by design: Secret Content is ephemeral and automatically Purged on first access or expiration, so the default lifecycle of the most sensitive data is non-retention.
 - No third-party tracking, analytics, cookies, or behavioral profiling is employed, and no automated decision-making is performed (DPA §5, §12.3).
-- Account Data is limited to what is necessary to provide the Service: email address, authentication credentials, billing information, and usage metadata (DPA §1.16).
+- Account Data is limited to what is necessary to provide the Service: email address, authentication credentials or SSO claims, billing information, and usage metadata (DPA §1.16).
 - On account deletion, Account Data is deleted following the Operational Retention Period (30 days, retained to facilitate export requests), and encrypted backup copies are removed within the Backup Retention Period (30 days) (DPA §10).
 
 ---
@@ -165,7 +167,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 
 ---
 
-## 7. Sub-processor Compliance (Art. 28)
+## 7. Subprocessor Compliance (Art. 28)
 
 *Responsibility: Processor.*
 

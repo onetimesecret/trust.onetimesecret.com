@@ -45,7 +45,7 @@ We use Account Data to identify you, to provide the services you have requested,
 
 ### Information from Organization accounts
 
-If you create an Organization account (a workspace shared by multiple users), additional information is processed at the Organization level:
+If you create an Organization account (a multi-user account representing a single customer), additional information is processed at the Organization level:
 
 - The Organization's name, billing contact, and tax details
 - A list of members and their roles within the Organization
@@ -64,7 +64,7 @@ If your Organization disables your account at the identity provider, your active
 
 ### Secret Content
 
-**Secret Content** (defined in [Section A.8 of the Terms of Service](https://onetimesecret.com/terms#a-definitions)) is the information you place inside a secret. It is held separately from Account Data and is encrypted in transit and at rest. We do not access, read, scan, categorize, or analyze Secret Content. The lifecycle of Secret Content (purge on first viewing, expiry, or manual deletion via the Receipt Link, with up to 30 days of persistence in encrypted backups) is governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
+**Secret Content** (defined in [Section A.8 of the Terms of Service](https://onetimesecret.com/terms#a-definitions)) is the information you place inside a secret. It is held separately from Account Data and is encrypted in transit and at rest. We do not access, read, scan, categorize, or analyze Secret Content, except in the narrow circumstances described in [Section D.4 of the Terms of Service](https://onetimesecret.com/terms#4-treatment-of-secret-content). The lifecycle of Secret Content (purge on first viewing, expiry, or manual deletion via the Receipt Link, with up to 30 days of persistence in encrypted backups) is governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security).
 
 If you store sensitive personal information inside a secret, you remain responsible for that decision and for compliance with applicable law. We cannot retrieve, restore, or assist with access to a secret once it has been viewed, expired, or deleted.
 
@@ -82,7 +82,7 @@ If you configure a Verified Email Address so we can send transactional notificat
 
 We do not intentionally collect sensitive personal information (such as social security numbers, genetic data, health information, or religious information) in your Account Data. We recognize that you might place such information inside a secret. If you do, that information is handled as Secret Content as described above; we do not access it.
 
-We do not intentionally collect information stored inside a secret. Information in a secret belongs to you, and you are responsible for it and for ensuring that your content complies with our [Terms of Service](https://onetimesecret.com/terms). Onetime Secret personnel do not access secrets except where strictly required for security or business continuity.
+We do not intentionally collect information stored inside a secret. Information in a secret belongs to you, and you are responsible for it and for ensuring that your content complies with our [Terms of Service](https://onetimesecret.com/terms). Onetime Secret personnel do not access secrets except in the narrow circumstances described in [Section D.4 of the Terms of Service](https://onetimesecret.com/terms#4-treatment-of-secret-content).
 
 If you are a child under the age of 13, you may not have an account on Onetime Secret. We do not knowingly collect information from children under 13. If we learn that an account belongs to a user under 13, we will close that account.
 
@@ -102,13 +102,15 @@ We share Account Data, and in some cases encrypted Secret Content, with a small 
 
 | Subprocessor | Purpose | Location |
 | --- | --- | --- |
-| Cloudflare, Inc. | DDoS protection on our regional service domains (e.g. `eu.onetimesecret.com`, `ca.onetimesecret.com`), which are the entry points for free usage | Global edge network |
+| Cloudflare, Inc. | DNS management, network proxy, security services (including DDoS protection), and TLS termination at the edge for our regional service domains (e.g. `eu.onetimesecret.com`, `ca.onetimesecret.com`), serving all multi-tenant tiers | Global edge network |
+| BunnyWay d.o.o. (BunnyCDN) | CDN and static hosting for our public websites and documentation (onetimesecret.com, onetimesecret.dev); receives network-level web traffic data and IP addresses; does not serve Secret Content or Account Data | Global edge network |
+| Proton AG (Proton Mail) | Internal communications and customer support; receives email addresses and email content | Switzerland (adequacy decision) |
 | Stripe, Inc. | Payment processing for paid plans | United States (EU-US Data Privacy Framework certified) |
 | Approximated, Inc. | SSL termination for customer Custom Domains on our multi-tenant paid tiers (Identity Plus and Team Plus) | Global edge network |
 | Transactional email providers | Delivery of account, notification, and security emails | EU |
 | Regional hosting providers | Application and data hosting within each region | See "Where your data is processed", below |
 
-Cloudflare provides DDoS protection on the regional service domains (the entry points for free usage). Customer Custom Domains on Identity Plus and Team Plus are served via Approximated and are not routed through Cloudflare by us. Depending on your region and plan, we may offer alternatives to this TLS termination arrangement for Custom Domains; contact support to inquire, including if you run into TLS certificate complications with your Custom Domain. The customer's own ability to place their Custom Domain behind an edge network of their choice is described in [Section E.1 of the Terms of Service](https://onetimesecret.com/terms#1-custom-domains).
+Cloudflare provides DNS management, network proxy, security services, and TLS termination at the edge for the regional service domains, serving all multi-tenant tiers. Customer Custom Domains on Identity Plus and Team Plus are served via Approximated and are not routed through Cloudflare by us. Depending on your region and plan, we may offer alternatives to this TLS termination arrangement for Custom Domains; contact support to inquire, including if you run into TLS certificate complications with your Custom Domain. The customer's own ability to place their Custom Domain behind an edge network of their choice is described in [Section E.1 of the Terms of Service](https://onetimesecret.com/terms#1-custom-domains).
 
 Hosting providers vary by region (see "Where your data is processed" below for the per-region hosting provider). We maintain a current, dated list of subprocessors (including legal entity, address, location, purpose, and categories of data processed) in our Data Processing Agreement at [onetimesecret.com/dpa](https://onetimesecret.com/dpa). The list is published from our public trust centre (a git-backed repository, currently our [site-policy repository](https://github.com/onetimesecret/site-policy)), so every change is dated and the full history is reviewable.
 
@@ -118,7 +120,7 @@ When we plan to engage a new subprocessor service, we notify all account holders
 
 We may share Account Data if we are involved in a merger, acquisition, or sale of assets. In any such transaction we will require that the recipient preserve the confidentiality of Account Data on terms consistent with this Privacy Statement, and we will notify you on the website or by email.
 
-A corporate transaction does not change how Secret Content is treated. Secret Content remains encrypted, we do not access it, and it is not shared as part of any such transaction. The only circumstances in which Secret Content may be disclosed remain those described elsewhere in this Privacy Statement (see "How we respond to compelled disclosure" below).
+A corporate transaction does not change how Secret Content is treated. Secret Content remains encrypted, we do not access it (except in the narrow circumstances described in [Section D.4 of the Terms of Service](https://onetimesecret.com/terms#4-treatment-of-secret-content)), and it is not shared as part of any such transaction. The only circumstances in which Secret Content may be disclosed remain those described elsewhere in this Privacy Statement (see "How we respond to compelled disclosure" below).
 
 
 ## Cookies and tracking
@@ -131,7 +133,7 @@ We use browser storage (HTML5 `localStorage` and `sessionStorage`) to remember y
 
 ### No third-party tracking
 
-We do not use third-party analytics, product-tracking, or session-replay services such as Google Analytics, Mixpanel, Segment, Amplitude, Heap, Hotjar, FullStory, or PostHog, or any other similar service. We do not perform first-party behavioral analytics or build profiles of individual users; the only usage data we retain is standard server access logs, and errors are captured by our own self-hosted Sentry instance at catch.onetimesecret.com. We do not embed third-party tracking pixels, advertising tags, or social-media tracking. All site assets (scripts, styles, fonts, and images) are served from our own domains, so rendering our pages does not cause your browser to contact other companies' servers or disclose your visit to them.
+We do not use third-party analytics, product-tracking, or session-replay services such as Google Analytics, Mixpanel, Segment, Amplitude, Heap, Hotjar, FullStory, or PostHog, or any other similar service. We do not perform first-party behavioral analytics or build profiles of individual users; the only usage data we retain is standard server access logs, and errors are captured by our own self-hosted Sentry instance at catch.onetimesecret.com. We do not embed third-party tracking pixels, advertising tags, or social-media tracking. All site assets (scripts, styles, fonts, and images) are served from our own domains, delivered via our CDN provider (BunnyCDN, listed in our subprocessor table above), so rendering our pages does not cause your browser to contact any third-party tracking or advertising networks.
 
 
 ### Operational logging
@@ -146,11 +148,11 @@ The technical and organizational security measures applied to the Service are:
 - XChaCha20-Poly1305 authenticated encryption of Secret Content (with AES-256-GCM as an available alternative), with key material that is never stored alongside the encrypted data in the database tier
 - Argon2id for credential hashing, applied to both account passphrases and secret passphrases (legacy hashes are verified and upgraded to Argon2id on the next successful sign-in)
 - LUKS full-disk encryption on production storage
-- GPG 4096-bit asymmetric encryption of backups, with decryption keys held offline
+- GPG 4096-bit asymmetric encryption of backups, with decryption keys stored offsite, outside the production environment
 - Multi-factor authentication for administrative access
 - Strict Content Security Policy, HTTP Strict Transport Security (HSTS), and inclusion in browser HSTS preload lists across all domains
 
-These are summarized here for transparency. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security). The defined retention periods (Backup Retention Period, Operational Retention Period) are in [DPA §1.17-1.18](https://onetimesecret.com/dpa#1-definitions-and-interpretation).
+These are summarized here for transparency. The full control catalogue is in our [Technical and Organisational Measures (TOMs)](https://onetimesecret.com/toms) document. The operational rules that bind these measures (including IP and log retention, backup retention and access, Secret Content lifecycle, and any Global Elite-specific cryptographic measures) are governed by [Section B.6 of the Terms of Service](https://onetimesecret.com/terms#6-data-retention-and-security). The defined retention periods (Backup Retention Period, Operational Retention Period) are in [DPA §1.17-1.18](https://onetimesecret.com/dpa#1-definitions-and-interpretation).
 
 Our service runs on open-source software whose source code is publicly available for independent review. This transparency allows security researchers and the public to inspect how Secret Content is encrypted, stored, and handled, rather than relying on our description of these measures alone.
 
@@ -172,12 +174,13 @@ We add further regions from time to time. The authoritative subprocessor list at
 
 When you create an account, you choose the regional environment in which your account lives. Account Data and Secret Content created in a given jurisdiction remain in that region's infrastructure throughout their lifecycle, including encrypted backups. We do not transfer Account Data or Secret Content between regions.
 
-There are two narrow exceptions, both inherent to operating the service:
+There are three narrow exceptions, all inherent to operating the service:
 
 - **Payment processing:** Stripe processes billing data in the United States under the EU-US Data Privacy Framework and equivalent transfer mechanisms for other regions. This applies only to billing data; Account Data outside the billing context, and Secret Content, are not transferred to Stripe.
-- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is then re-encrypted for transit into the appropriate regional environment for processing. Single tenant deployments (e.g. Global Elite) do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by us within the customer's selected region.
+- **Edge networks:** Cloudflare (for our regional domains) and Approximated (for Custom Domains on Identity Plus and Team Plus) operate global edge networks that terminate TLS connections at an edge location close to the visitor, which may be outside the destination region. The decrypted application traffic is then re-encrypted for transit into the appropriate regional environment for processing. Single-tenant deployments (e.g. Global Elite) do not use these third-party edge networks; TLS is terminated on dedicated infrastructure managed by us within the customer's selected region.
+- **Geo-located backups for Global Elite deployments:** For Global Elite deployments, geo-located encrypted backups are stored in AWS S3 in the EU (Frankfurt, Ireland). Backups are encrypted before upload and expire automatically after 30 days, as described in [DPA §12.2 and Schedule C](https://onetimesecret.com/dpa).
 
-Other than the two exceptions described above, we do not transfer data outside the jurisdiction in which it was collected.
+Other than the three exceptions described above, we do not transfer data outside the jurisdiction in which it was collected.
 
 ## Your rights and how to raise concerns
 

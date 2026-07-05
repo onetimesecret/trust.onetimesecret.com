@@ -116,12 +116,12 @@ This section is the canonical source for the operational details of how we hold 
 
 - **IP address and request log retention.** We retain IP addresses and request logs associated with service usage for up to 30 days, after which they are permanently deleted from active systems. Logs may be purged sooner depending on traffic volume.
 - **Secret retrieval.** Due to our security-first design, we cannot retrieve or recover secrets once they have been viewed, expired, or deleted, except as outlined below regarding backups. This ensures your sensitive information remains private and ephemeral.
-- **Backups.** We maintain encrypted backups for disaster recovery. Backups are retained for up to 30 days, after which they are permanently deleted on a rolling basis. When a Secret is received or expires, it is removed from the active database; encrypted Secret Content may still exist in backups for the remainder of the backup retention window. Backups are stored in a secure, isolated environment within the same regional jurisdiction as the data they cover, and are accessed only:
+- **Backups.** We maintain encrypted backups for disaster recovery. Backups are retained for up to 30 days, after which they are permanently deleted on a rolling basis. When a Secret is received or expires, it is removed from the active database; encrypted Secret Content may still exist in backups for the remainder of the backup retention window. Backups are stored in a secure, isolated environment within the same regional jurisdiction as the data they cover, except that geo-located encrypted backups for Global Elite deployments are stored in AWS S3 in the EU (Frankfurt, Ireland) as described in the [Data Processing Agreement](https://onetimesecret.com/dpa) (Section 12.2 and Schedule C). Backups are accessed only:
   1. To restore service in the event of a catastrophic failure
   2. To test the integrity of backups for the system as a whole
 
   We do not access backup files to retrieve individual secrets.
-- **Cryptographic and infrastructure measures.** Our technical security measures are described in our [Privacy Statement](https://onetimesecret.com/privacy). Additional detail is available upon request for customers with dedicated deployment arrangements.
+- **Cryptographic and infrastructure measures.** Our technical security measures are summarized in our [Privacy Statement](https://onetimesecret.com/privacy); the canonical description of the security measures we implement under Article 32 of the GDPR is our [Technical and Organisational Measures (TOMs)](https://onetimesecret.com/toms) document. Additional detail is available upon request for customers with dedicated deployment arrangements.
 - **Network-level access controls.** On our multi-tenant Service, filtering of access by IP address or CIDR range is enforced at the application layer. On single-tenant deployments, network-level IP-range filtering may be available, depending on the terms and capabilities of the hosting provider chosen for that deployment. Where an access-filtering control is available to you, it is clearly labelled where it is offered.
 
 ### 7. User Account Security
@@ -428,6 +428,8 @@ Once your account record has been deleted, it cannot be recovered.
 Secret Content follows its own lifecycle independent of account cancellation: a Secret remains available to its intended recipient until it is viewed, expires, or is deleted via the Receipt Link, regardless of whether the creating account is later cancelled.
 
 Upon request made within 30 days of cancellation, termination, or downgrade, we will make a reasonable effort to provide an account owner with a copy of their lawful, non-infringing account contents.
+
+**Inactive accounts.** An account with no successful sign-in for five years (60 months) may be removed as inactive; signing in resets this period. We make best efforts to email notice to the account's address at least 30 days before removal, and for 30 days after that notice you may request an export of your account contents. Details are in the [Privacy Statement](https://onetimesecret.com/privacy)'s "Inactive accounts" section.
 
 ### 4. Onetime Secret May Terminate
 
