@@ -64,3 +64,7 @@ pnpm build    # dist/
 7. Editorial sign-off on the Assurance page framing, carried verbatim from
    the design mock: "Open source since 2012" and the one-person-company
    presentation. Confirm both are how we want to present publicly.
+8. The production publish must build with `SITE_PHASE=production pnpm build`.
+   The non-production banners are fail-safe: any build that doesn't declare
+   production keeps them (see `src/lib/site-env.ts`) — nothing to remove or
+   edit, just set the variable in the publish job.

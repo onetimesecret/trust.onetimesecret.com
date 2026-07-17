@@ -9,6 +9,7 @@ import '@fontsource/newsreader/600.css';
 import '@fontsource/newsreader/400-italic.css';
 import '@fontsource/ibm-plex-mono/400.css';
 import { manifestFor } from '../lib/manifest';
+import { showPreviewNotices } from '../lib/site-env';
 
 interface Props {
   frontmatter: {
@@ -32,10 +33,12 @@ const doc = manifestFor(slug);
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   </head>
   <body>
-    <div class="preview-banner" role="note" aria-label="Non-production preview notice">
-      <strong>NON-PRODUCTION PREVIEW</strong>
-      <span>Generated policy document preview. Not yet effective — pending counsel review.</span>
-    </div>
+    {showPreviewNotices && (
+      <div class="preview-banner" role="note" aria-label="Non-production preview notice">
+        <strong>NON-PRODUCTION PREVIEW</strong>
+        <span>Generated policy document preview. Not yet effective — pending counsel review.</span>
+      </div>
+    )}
     <main class="doc">
       <slot />
     </main>
