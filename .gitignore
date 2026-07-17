@@ -7,3 +7,10 @@ tmp/
 node_modules/
 dist/
 .astro/
+
+# Never commit env files: Astro auto-loads .env into astro:env, so a committed
+# SITE_PHASE=production would silently disable the non-production banners in
+# every build (src/lib/site-env.ts).
+.env
+.env.*
+!.env.example

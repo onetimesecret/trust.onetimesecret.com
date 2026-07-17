@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import { rm, rmdir } from 'node:fs/promises';
@@ -126,4 +126,18 @@ export default defineConfig({
   site: 'https://trust.onetimesecret.com',
   output: 'static',
   integrations: [sitemap({ filter: sitemapFilter }), mdx(), reconcileAndPrune()],
+  env: {
+    schema: {
+      // Build phase, consumed via src/lib/site-env.ts. Deliberately a free
+      // string with a `preview` default rather than an enum: an enum would
+      // fail the build on a typo, but the fail-safe we want is "anything
+      // other than the exact value `production` keeps the non-production
+      // banners on". Static build, so this resolves once at build time.
+      SITE_PHASE: envField.string({
+        context: 'server',
+        access: 'public',
+        default: 'preview',
+      }),
+    },
+  },
 });

@@ -12,6 +12,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import { trust } from '../lib/trust';
 import { navSections, type SectionKey } from '../lib/sitemap';
+import { showPreviewNotices } from '../lib/site-env';
 
 interface Props {
   title: string;
@@ -39,14 +40,16 @@ const { email, sla, pgp } = trust.meta.contacts;
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   </head>
   <body>
-    <div class="preview-banner" role="note" aria-label="Non-production preview notice">
-      <strong>NON-PRODUCTION PREVIEW</strong>
-      <span>Design preview only. All content is <b>placeholder</b> — not valid legal
-      information, binding policy, or an accurate subprocessor disclosure. No production
-      trust centre exists at this address.</span>
-    </div>
+    {showPreviewNotices && (
+      <div class="preview-banner" role="note" aria-label="Non-production preview notice">
+        <strong>NON-PRODUCTION PREVIEW</strong>
+        <span>Design preview only. All content is <b>placeholder</b> — not valid legal
+        information, binding policy, or an accurate subprocessor disclosure. No production
+        trust centre exists at this address.</span>
+      </div>
+    )}
     <header class="nav">
-      <a class="brand" href="/">Onetime Secret — Trust <span class="brand-flag">· preview</span></a>
+      <a class="brand" href="/">Onetime Secret — Trust {showPreviewNotices && <span class="brand-flag">· preview</span>}</a>
       <nav>
         {navItems.map((item) => (
           <a href={item.href} aria-current={item.key === active ? 'page' : undefined}>{item.label}</a>

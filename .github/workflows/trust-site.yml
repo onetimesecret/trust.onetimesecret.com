@@ -8,9 +8,12 @@ name: trust-site
 # Build-only for now: every run produces the dist/ artifact. Publishing is
 # deferred until the trust.onetimesecret.com subdomain is claimed and the
 # production host (expected: BunnyCDN, matching the other public sites) is
-# wired. To publish, add a job that downloads the trust-site-dist artifact and
-# uploads dist/ to BunnyCDN Storage using repo secrets for the storage-zone and
-# API key.
+# wired. To publish, add a job that runs its own `SITE_PHASE=production pnpm
+# build` and uploads that dist/ to BunnyCDN Storage using repo secrets for the
+# storage-zone and API key. Do NOT reuse the trust-site-dist artifact for
+# publishing: SITE_PHASE is inlined at build time, and the build below
+# intentionally stays preview, so every CI artifact is banner-stamped
+# (src/lib/site-env.ts) and unfit for production by design.
 
 on:
   push:
