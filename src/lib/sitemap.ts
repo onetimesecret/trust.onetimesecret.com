@@ -46,20 +46,20 @@ export interface Section {
 // `published`, so introducing this registry changes nothing until you flip a
 // flag. `/` (overview) is the site root and is never pruned.
 export const sections: Section[] = [
-  { key: 'overview',  href: '/',              navLabel: 'Overview',      status: 'published' },
-  { key: 'how',       href: '/how-it-works',  navLabel: 'How it works',  status: 'published', indexTitle: 'How it works — secrets, architecture, data flow ↓' },
-  { key: 'subs',      href: '/subprocessors', navLabel: 'Subprocessors', status: 'published', indexTitle: 'Subprocessors & change history' },
-  { key: 'docs',      href: '/documents',     navLabel: 'Documents',     status: 'published', indexTitle: 'Documents — policy, DPA, HECVAT' },
-  { key: 'assurance', href: '/assurance',     navLabel: 'Assurance',     status: 'published', indexTitle: 'Assurance without certification' },
-  { key: 'faq',       href: '/faq',           navLabel: 'FAQ',           status: 'published' },
-  { key: 'audit',     href: '/your-audit',    navLabel: 'Your audit',    status: 'published', indexTitle: 'Citing Onetime Secret in your audit' },
+  { key: 'overview',  href: '/',              navLabel: 'Overview',      status: 'draft' },
+  { key: 'how',       href: '/how-it-works',  navLabel: 'How it works',  status: 'draft', indexTitle: 'How it works — secrets, architecture, data flow ↓' },
+  { key: 'subs',      href: '/subprocessors', navLabel: 'Subprocessors', status: 'draft', indexTitle: 'Subprocessors & change history' },
+  { key: 'docs',      href: '/documents',     navLabel: 'Documents',     status: 'draft', indexTitle: 'Documents — policy, DPA, HECVAT' },
+  { key: 'assurance', href: '/assurance',     navLabel: 'Assurance',     status: 'draft', indexTitle: 'Assurance without certification' },
+  { key: 'faq',       href: '/faq',           navLabel: 'FAQ',           status: 'draft' },
+  { key: 'audit',     href: '/your-audit',    navLabel: 'Your audit',    status: 'draft', indexTitle: 'Citing Onetime Secret in your audit' },
   // Generated policy documents (MDX over policy-constants.yaml). Their status
   // gates publication independently of counsel sign-off display (manifest.ts);
   // flip to `unlisted` for a counsel-review lane or `draft` to pull one back.
-  { key: 'terms',     href: '/terms',         status: 'published' },
-  { key: 'privacy',   href: '/privacy',       status: 'published' },
-  { key: 'dpa',       href: '/dpa',           status: 'published' },
-  { key: 'toms',      href: '/toms',          status: 'published' },
+  { key: 'terms',     href: '/terms',         status: 'draft' },
+  { key: 'privacy',   href: '/privacy',       status: 'draft' },
+  { key: 'dpa',       href: '/dpa',           status: 'draft' },
+  { key: 'toms',      href: '/toms',          status: 'draft' },
 ];
 
 // Routes the build emits that are not navigable sections — data endpoints and
