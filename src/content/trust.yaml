@@ -50,8 +50,8 @@ subprocessors:
         tiers: All
         optional: true
         data: [Account info, application data]
-  - name: CloudFlare, Inc.
-    shortName: CloudFlare
+  - name: Cloudflare, Inc.
+    shortName: Cloudflare
     purpose: DNS management for all tiers; on multi-tenant tiers, optional network proxy and TLS termination at the edge for our regional service domains (never for customer Custom Domains).
     since: "TBD"
     core: true
