@@ -1,3 +1,5 @@
+# src/content/policy-constants.yaml
+---
 # Canonical shared facts for the policy documents and the trust site.
 # Every retention period, window, location, and tier list that appears in
 # more than one document lives here; the MDX docs and the trust site

@@ -52,8 +52,8 @@ pnpm build    # dist/
 
 ## Before launch (open items)
 
-1. Claim the `trust.onetimesecret.com` subdomain.
-2. Replace `public/pgp-key.asc` (placeholder) with the real key.
+1. ~Claim the `trust.onetimesecret.com` subdomain.~ It's okay, I know a guy.
+2. ~Replace `public/pgp-key.asc` (placeholder) with the real key.~ Done
 3. Fill the `since:` dates in `trust.yaml` from infra/billing history.
 4. Add the HECVAT 4.1.5 artifact at `public/documents/hecvat-4.1.5.xlsx`
    (or update the document row).
