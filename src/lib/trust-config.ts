@@ -34,7 +34,10 @@ export const RegionSchema = z.object({
 // One row in a DPA Schedule A category table. The DPA's Schedule A tables
 // are rendered from these — the contractual list and this file cannot
 // drift because they are the same data.
-export const SubprocessorServiceSchema = z.object({
+// strictObject across the subprocessor family: a misplaced or misspelled key
+// (e.g. a per-service flag landing at subprocessor level) fails the build
+// instead of being silently stripped.
+export const SubprocessorServiceSchema = z.strictObject({
   category: z.enum(['infrastructure', 'network', 'email', 'backup', 'payments']),
   // Row label when it differs from the subprocessor's shortName,
   // e.g. "AWS (S3)", "Hetzner (Object storage)".
@@ -61,7 +64,7 @@ export const SubprocessorServiceSchema = z.object({
 });
 
 // DPA Schedule A "Subprocessor Entity Details" row.
-export const SubprocessorEntitySchema = z.object({
+export const SubprocessorEntitySchema = z.strictObject({
   address: z.string(),
   // The company's legal home — Schedule A "Jurisdiction" column. About the
   // VENDOR, not the data: it can differ from every service's `location` (AWS =
@@ -86,7 +89,7 @@ export const SubprocessorEntitySchema = z.object({
   comment: z.string().optional(),
 });
 
-export const SubprocessorSchema = z.object({
+export const SubprocessorSchema = z.strictObject({
   name: z.string(),
   // Short name used in the Schedule A category tables ("Hetzner");
   // override per-service with services[].label where it differs.
