@@ -18,6 +18,17 @@ export const RegionSchema = z.object({
   domain: z.string(),
 });
 
+// --- Geography: three fields, three questions. They look redundant but
+// legitimately diverge (e.g. AWS = US company, EU data, serves every
+// region), so all three are kept:
+//   entity.jurisdiction — under whose LAW the company sits (transfer analysis)
+//   roles[].location    — where the DATA physically sits for that role (residency)
+//   roles[].regions     — which of our Regional Domains the role serves (routing)
+// Do NOT restate any of these in note/comment: a "data located in X" note
+// duplicates location/jurisdiction and is the main source of drift. The one
+// fact those free-text fields legitimately carry is transfer basis / adequacy
+// (DPF certification, adequacy decision), which is not yet a structured field.
+
 // One row in a DPA Schedule A category table. The DPA's Schedule A tables
 // are rendered from these — the contractual list and this file cannot
 // drift because they are the same data.
@@ -30,11 +41,19 @@ export const SubprocessorRoleSchema = z.object({
   // Terse role description for diagram nodes ("Compute & hosting",
   // "Edge proxy & TLS"); `purpose` stays Schedule-A verbatim.
   short: z.string(),
+  // Ground-truth prose of where THIS role physically processes/stores data
+  // ("EU (Germany, Finland); US (Oregon)", "Switzerland", "Global edge
+  // network"). Per-role, not per-entity: the entity's displayed location is
+  // derived from the unique role locations (subprocessorLocation). `regions`
+  // below is the machine-checkable encoding of this text.
   location: z.string(),
   tiers: z.string(), // "All", "Global Elite", "Identity Plus, Team Plus", ...
   optional: z.boolean().default(false),
-  // Which regional deployments this role serves: 'global' (pan-region,
-  // engaged regardless of where the data lives) or specific region codes.
+  // Which Regional Domains this role serves — routing key for the trust-site
+  // diagram, NOT a Schedule A column: 'global' (pan-region, engaged regardless
+  // of where the data lives) or specific region codes. This is the structured
+  // encoding of `location` above; the two must agree (see trust.yaml reconcile
+  // TODO). Codes must exist in the top-level `regions` registry.
   regions: z.union([z.literal('global'), z.array(RegionCodeSchema).nonempty()]),
   data: z.array(z.string()).nonempty(), // Categories of Data
 });
@@ -42,7 +61,13 @@ export const SubprocessorRoleSchema = z.object({
 // DPA Schedule A "Subprocessor Entity Details" row.
 export const SubprocessorEntitySchema = z.object({
   address: z.string(),
+  // The company's legal home — Schedule A "Jurisdiction" column. About the
+  // VENDOR, not the data: it can differ from every role's `location` (AWS =
+  // US jurisdiction, EU data). Drives cross-border transfer analysis.
   jurisdiction: z.string(),
+  // Schedule A "Comment" column (contractual). Reserve for facts NOT already
+  // structured elsewhere — certifications, transfer basis / adequacy. Never
+  // geography: "data located in X" duplicates location/jurisdiction and drifts.
   comment: z.string().optional(),
 });
 
@@ -68,6 +93,8 @@ export const SubprocessorSchema = z.object({
   // unique to a bespoke/custom install are recorded as `standby`; that
   // install is governed by its own agreement, not this list.
   engagement: z.enum(['active', 'standby']).default('active'),
+  // Trust-site display note ("Certifications & notes"); falls back to
+  // entity.comment when absent. Same rule as comment: no geography here.
   note: z.string().optional(),
   entity: SubprocessorEntitySchema,
   roles: z.array(SubprocessorRoleSchema).nonempty(),
