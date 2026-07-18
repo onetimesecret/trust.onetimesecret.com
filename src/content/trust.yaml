@@ -70,7 +70,7 @@ regions:
 subprocessors:
   - name: Hetzner Online GmbH
     shortName: Hetzner
-    summary: Computing resources for internal infrastructure, single-tenant and multi-tenant hosting; object storage for encrypted backups; DNS.
+    summary: Computing resources for internal infrastructure; object storage for encrypted backups; DNS.
     since: "2020 for EU; 2024 for US"
     entity:
       address: Industriestr. 25 91710 Gunzenhausen Germany
@@ -81,21 +81,29 @@ subprocessors:
       - category: infrastructure
         purpose: Computing resources for internal infrastructure, single-tenant and multi-tenant hosting environments
         short: Compute & hosting
-        location: EU (Germany, Finland); US (Oregon)
+        location: EU (Germany); US (Oregon)
         tiers: All
         regions: [eu, us]
-        dataCategories: [Account info, app data, network-level web traffic data, IP addresses, DNS]
+        dataCategories: [Account info, app data, network-level web traffic data, IP addresses]
+      - category: infrastructure
+        purpose: DNS Management
+        short: DNS
+        location: EU (Germany); US (Oregon)
+        tiers: All
+        ingress: custom
+        regions: global
+        dataCategories: [DNS Records, DKIM/DMARC/SPF, Source IP Address]
       - category: backup
         label: Hetzner (Object storage)
         purpose: Object storage for encrypted offsite backups, stored in the region of collection
         short: Object storage
-        location: EU (Germany, Finland); US (Oregon)
+        location: EU (Germany); US (Oregon)
         tiers: All
         regions: [eu, us]
         dataCategories: [Account info, application data, backups]
   - name: Cloudflare, Inc.
     shortName: Cloudflare
-    summary: DNS management and DDoS protection for our regional service domains (for example, eu.onetimesecret.com).
+    summary: DNS management and DDoS protection
     since: "2024"
     entity:
       address: 101 Townsend Street, San Francisco, CA 94107, United States
@@ -104,16 +112,18 @@ subprocessors:
     services:
       - category: infrastructure
         purpose: DNS Management
-        short: DNS, DDoS
+        short: DNS
         location: Global
         tiers: All
+        ingress: canonical
         regions: global
-        dataCategories: [DNS Records, DKIM/DMARC/SPF]
+        dataCategories: [DNS Records, DKIM/DMARC/SPF, Source IP Address]
       - category: network
-        purpose: Network proxy ("Orange Cloud"), security services, and TLS termination at the edge for the Processor's regional service domains (e.g. `eu.onetimesecret.com`); not used for customer Custom Domains
-        short: Edge proxy & TLS
-        location: Global
+        purpose: Network proxy ("Orange Cloud"), security services (DDoS protection).
+        short: Edge proxy, WAF
+        location: Global edge network
         tiers: All multi-tenant tiers, when accessed via the regional service domains
+        ingress: canonical
         regions: global
         dataCategories:
           [
@@ -170,10 +180,11 @@ subprocessors:
     services:
       - category: network
         purpose: Custom domain with TLS termination
-        short: Custom-domain TLS
+        short: Edge proxy, Custom-domain TLS
         location: Global edge network
         tiers: Identity, Team
         status: transitioning
+        ingress: custom
         regions: global
         dataCategories:
           [Account info, application data, network-level web traffic data, IP addresses]

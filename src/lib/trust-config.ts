@@ -69,6 +69,14 @@ export const SubprocessorServiceSchema = z.strictObject({
   //                   the dashed "not always there" border in the diagram
   //                   and register
   status: z.enum(["standby", "transitioning"]).optional(),
+  // Front-door column for the region diagram. Omit for anything that
+  // isn't an ingress path (compute, backups, email, payments — those are
+  // placed by category):
+  //   canonical — regional service-domain path (…onetimesecret.com):
+  //               Cloudflare DNS + edge proxy
+  //   custom    — customer custom-domain targets (…onetime.co): the DNS
+  //               authoritative for those targets (Hetzner) + Approximated TLS
+  ingress: z.enum(["canonical", "custom"]).optional(),
   // Which Regional Domains this service serves — routing key for the trust-site
   // diagram, NOT a Schedule A column: 'global' (pan-region, engaged regardless
   // of where the data lives) or specific region codes. This is the structured
