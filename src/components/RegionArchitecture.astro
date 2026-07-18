@@ -50,6 +50,13 @@ const panels = trust.regions.map((region) => {
 ---
 
 <div class="arch" data-arch>
+  <div class="arch-box dashed center">
+    <div class="arch-box-label">The internet</div>
+    <div class="arch-note">People sharing and reading secrets</div>
+  </div>
+
+  <!-- The tabs sit at the fork: the internet above is region-agnostic;
+       everything below is determined by the selected region. -->
   <div class="arch-tabs" role="tablist" aria-label="Choose a region">
     {
       trust.regions.map((region, i) => (
@@ -77,11 +84,6 @@ const panels = trust.regions.map((region) => {
         data-region={p.region.code}
         hidden={i !== 0}
       >
-        <div class="arch-box dashed center">
-          <div class="arch-box-label">The internet</div>
-          <div class="arch-note">People sharing and reading secrets</div>
-        </div>
-
         <div class="arch-cols two">
           <div class="arch-arrow" aria-hidden="true">
             ↓
@@ -240,8 +242,9 @@ const panels = trust.regions.map((region) => {
   .arch-tabs {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 8px;
-    margin-bottom: 18px;
+    margin: 16px 0 4px;
   }
   .arch-tabs button {
     font: 600 12.5px var(--sans);

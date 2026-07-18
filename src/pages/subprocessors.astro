@@ -22,16 +22,17 @@ const standby = trust.subprocessors.filter((s) => s.engagement === "standby");
 
 <TrustLayout
   title="Subprocessors"
-  description="The third parties that may process customer data on Onetime Secret's behalf, with a dated change history and our notification policy."
+  description="The third parties authorized to process customer data on Onetime Secret's behalf, with a dated change history and our notification policy."
   active="subs"
 >
   <div class="page" style="max-width: 728px;">
     <div class="kicker">Our service providers</div>
     <h1 style="font-size: 38px;">Subprocessors</h1>
     <p class="lede">
-      These are the third parties that may process customer data on our behalf. The canonical,
-      contractual list is <a href="/dpa">Schedule A of our DPA</a>; this page mirrors it and never
-      replaces the email notice.
+      These are the third parties authorized to process customer data on our behalf. This page and
+      <a href="/dpa">Schedule A of our DPA</a> are generated from the same source, so the two never
+      diverge. Changes are announced by email — see the <a href="#notification">notification
+      policy</a> below.
     </p>
     <p
       style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 18px 0 0;"
@@ -41,14 +42,6 @@ const standby = trust.subprocessors.filter((s) => s.engagement === "standby");
     </p>
 
     <section id="architecture" style="margin-top: 44px;">
-      <div class="kicker left" style="margin-bottom: 6px;">
-        The region's architecture, one at a time
-      </div>
-      <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 16px;">
-        Pick a region to see what a secret there can touch: the internet at the top, two ingress
-        paths — our regional service domain and customer custom domains — converging on that
-        region's hosting, with backups, email, and payments alongside.
-      </p>
       <RegionArchitecture />
     </section>
 
@@ -132,7 +125,7 @@ const standby = trust.subprocessors.filter((s) => s.engagement === "standby");
         ))
       }
 
-      <div class="callout" style="margin-top: 28px;">
+      <div class="callout" id="notification" style="margin-top: 28px;">
         <div class="callout-label">Notification policy</div>
         <p>
           New or replaced subprocessors are announced by email to all account holders and posted
