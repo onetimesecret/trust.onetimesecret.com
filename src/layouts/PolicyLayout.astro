@@ -1,0 +1,121 @@
+---
+// Layout for the generated policy documents (/terms, /privacy, /dpa,
+// /toms). Deliberately plain: a legal document, not a marketing page.
+// The footer renders the signoff manifest line so each rendered version
+// answers "what did we agree to, and when".
+import '@fontsource/newsreader/400.css';
+import '@fontsource/newsreader/500.css';
+import '@fontsource/newsreader/600.css';
+import '@fontsource/newsreader/400-italic.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import { manifestFor } from '../lib/manifest';
+import { showPreviewNotices } from '../lib/site-env';
+
+interface Props {
+  frontmatter: {
+    slug: string;
+    title: string;
+    description: string;
+  };
+}
+
+const { slug, title, description } = Astro.props.frontmatter;
+const doc = manifestFor(slug);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · Onetime Secret</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    {showPreviewNotices && (
+      <div class="preview-banner" role="note" aria-label="Non-production preview notice">
+        <strong>NON-PRODUCTION PREVIEW</strong>
+        <span>Generated policy document preview. Not yet effective — pending counsel review.</span>
+      </div>
+    )}
+    <main class="doc">
+      <slot />
+    </main>
+    <footer class="doc-manifest">
+      <p>
+        <span class="mono">{doc.title}</span> · effective: {doc.effectiveDate} ·
+        signoff: {doc.signoff.status}{doc.signoff.commit && ` @ ${doc.signoff.commit}`}{doc.signoff.date && ` (${doc.signoff.date})`} ·
+        <a href="https://github.com/onetimesecret/site-policy">source & history</a>
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --serif: 'Newsreader', georgia, serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --ink: #1a1a1a;
+    --muted: #444;
+    --faint: #767676;
+    --rule: #dcdcdc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: #fdfdfc;
+    font: 400 17px/1.7 var(--serif);
+  }
+  .preview-banner {
+    background: #7a1f1f;
+    color: #fff;
+    font: 500 12.5px/1.5 var(--mono);
+    padding: 8px 16px;
+    display: flex;
+    gap: 12px;
+  }
+  .doc {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 20px 64px;
+  }
+  .doc h1 { font-size: 34px; line-height: 1.25; font-weight: 600; }
+  .doc h2 { font-size: 24px; margin-top: 2.2em; font-weight: 600; }
+  .doc h3 { font-size: 19px; margin-top: 1.8em; font-weight: 600; }
+  .doc h4 { font-size: 17px; margin-top: 1.6em; font-weight: 600; }
+  .doc a { color: inherit; }
+  .doc table {
+    border-collapse: collapse;
+    font: 400 13.5px/1.55 var(--mono);
+    margin: 1.2em 0;
+    display: block;
+    overflow-x: auto;
+  }
+  .doc th, .doc td {
+    border: 1px solid var(--rule);
+    padding: 6px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .doc th { font-weight: 500; background: #f4f4f2; }
+  .doc hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5em 0; }
+  .doc blockquote {
+    margin: 1.2em 0;
+    padding-left: 16px;
+    border-left: 3px solid var(--rule);
+    color: var(--muted);
+  }
+  .doc code { font: 400 0.88em var(--mono); }
+  .doc-manifest {
+    border-top: 1px solid var(--rule);
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px 20px 40px;
+    font: 400 12.5px/1.6 var(--mono);
+    color: var(--faint);
+  }
+  .doc-manifest a { color: inherit; }
+  .mono { font-family: var(--mono); }
+</style>

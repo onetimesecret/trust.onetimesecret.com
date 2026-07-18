@@ -1,0 +1,73 @@
+---
+import TrustLayout from '../layouts/TrustLayout.astro';
+import { trust } from '../lib/trust';
+---
+
+<TrustLayout
+  title="How it works"
+  description="A secret's whole life, start to deletion: how secrets are handled, the path of a secret, and what we never see or store."
+  active="how"
+>
+  <div class="page" style="max-width: 688px;">
+    <div class="kicker">What actually happens to a secret</div>
+    <h1>How it works</h1>
+    <p class="lede">
+      A secret's whole life, start to deletion. Nothing here is a diagram of an aspiration — it
+      is what the running code does, and you can read that code.
+    </p>
+
+    <section style="margin-top: 44px;">
+      <div class="kicker left">How secrets are handled</div>
+      <div class="prose" style="font-size: 16.5px; line-height: 1.8;">
+        <p style="margin-bottom: 16px;">
+          <em style="font-weight: 600;">Encrypted before storage.</em> Every secret is encrypted
+          at rest with authenticated encryption, and the key material needed to decrypt is kept
+          apart from the database tier — the datastore cannot read what it holds. If you add a
+          passphrase, it becomes a gate that must be verified before the secret will decrypt,
+          and we store only a hash of it, never the passphrase itself.
+        </p>
+        <p style="margin-bottom: 16px;">
+          <em style="font-weight: 600;">Viewable exactly once.</em> The first read destroys the
+          record. There's no recovery path, on purpose: a compromised link fails loudly rather
+          than silently.
+        </p>
+        <p style="margin-bottom: 16px;">
+          <em style="font-weight: 600;">Expired means deleted.</em> Unviewed secrets are purged
+          at expiry, metadata shortly after, and encrypted backups age out on a fixed 30-day
+          schedule in the same regional jurisdiction.
+        </p>
+        <p>
+          <em style="font-weight: 600;">Open source since 2012.</em> Don't take our word for any
+          of this — read the code, or run it on your own infrastructure with zero subprocessors.
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top: 52px;">
+      <div class="kicker left" style="margin-bottom: 8px;">The path of a secret</div>
+      <div class="rule-list">
+        {trust.flow.map((f) => (
+          <div class="rule-row" style="justify-content: flex-start; gap: 22px; padding: 18px 0;">
+            <span style="font: 400 13px var(--mono); color: var(--rust); min-width: 34px;">{f.step}</span>
+            <div>
+              <div class="row-title">{f.title}</div>
+              <p style="margin: 5px 0 0; font-size: 15px; line-height: 1.68; color: var(--muted);">{f.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="callout">
+      <div class="callout-label">What we never see or store</div>
+      <p>
+        We never store a passphrase in plaintext — only its hash, which lets us verify without
+        knowing it. We do not access, read, scan, categorize, or analyze Secret Content outside
+        the four narrow exceptions stated in our Terms; we do not log secret contents; we do not
+        retain them past a single read or their expiry; and we never place them in email or
+        chat. The recipient's link is the only copy, and it is designed to stop working the
+        moment it is used.
+      </p>
+    </div>
+  </div>
+</TrustLayout>

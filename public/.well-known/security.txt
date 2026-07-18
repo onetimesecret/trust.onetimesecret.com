@@ -1,0 +1,6 @@
+Contact: mailto:security@onetimesecret.com
+Expires: 2027-07-01T00:00:00.000Z
+Encryption: https://trust.onetimesecret.com/pgp-key.asc
+Preferred-Languages: en
+Canonical: https://trust.onetimesecret.com/.well-known/security.txt
+Policy: https://trust.onetimesecret.com/

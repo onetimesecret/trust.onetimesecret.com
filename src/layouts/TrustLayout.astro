@@ -1,0 +1,449 @@
+---
+import "@fontsource/newsreader/400.css";
+import "@fontsource/newsreader/500.css";
+import "@fontsource/newsreader/600.css";
+import "@fontsource/newsreader/400-italic.css";
+import "@fontsource/newsreader/500-italic.css";
+import "@fontsource/libre-franklin/400.css";
+import "@fontsource/libre-franklin/500.css";
+import "@fontsource/libre-franklin/600.css";
+import "@fontsource/libre-franklin/700.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import { trust } from "../lib/trust";
+import { navSections, type SectionKey } from "../lib/sitemap";
+import { showPreviewNotices } from "../lib/site-env";
+
+interface Props {
+  title: string;
+  description: string;
+  active: SectionKey;
+}
+
+const { title, description, active } = Astro.props;
+
+// Nav is derived from the section registry — only `published` sections with a
+// navLabel appear (see src/lib/sitemap.ts). An `unlisted` page still renders
+// when visited by direct URL; it just never shows up here.
+const navItems = navSections.map((s) => ({ key: s.key, label: s.navLabel, href: s.href }));
+
+const { email, sla, pgp } = trust.meta.contacts;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · Onetime Secret — Trust</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <script is:inline>
+      // Stamp the stored theme before first paint so there is no flash.
+      // Absent a stored choice, prefers-color-scheme drives the palette.
+      (() => {
+        const t = localStorage.getItem("theme");
+        if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body>
+    {
+      showPreviewNotices && (
+        <div class="preview-banner" role="note" aria-label="Non-production preview notice">
+          <strong>NON-PRODUCTION PREVIEW</strong>
+          <span>
+            Design preview only. All content is <b>placeholder</b> — not valid legal information,
+            binding policy, or an accurate subprocessor disclosure. No production trust centre
+            exists at this address.
+          </span>
+        </div>
+      )
+    }
+    <header class="nav">
+      <a class="brand" href="/"
+        >Onetime Secret — Trust {showPreviewNotices && <span class="brand-flag">· preview</span>}</a
+      >
+      <nav>
+        {
+          navItems.map((item) => (
+            <a href={item.href} aria-current={item.key === active ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+        <button
+          type="button"
+          class="theme-toggle"
+          aria-label="Toggle dark mode"
+          title="Toggle theme"
+        >
+          <span class="theme-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <span
+        >© 2026 Onetime Secret · this site is a <a
+          href="https://github.com/onetimesecret/site-policy">public git repository</a
+        ></span
+      >
+      <span>
+        <a href="/.well-known/security.txt">security.txt</a> ·
+        <a href={pgp}>PGP</a> ·
+        <a href={`mailto:${email}`}>{email}</a>.
+      </span>
+    </footer>
+    <script is:inline>
+      // Wire the toggle: flip data-theme against the effective theme
+      // (stamped override, else the OS preference) and persist the choice.
+      (() => {
+        const root = document.documentElement;
+        const btn = document.querySelector(".theme-toggle");
+        if (!btn) return;
+        const effective = () =>
+          root.dataset.theme ||
+          (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        const sync = () => btn.setAttribute("aria-pressed", String(effective() === "dark"));
+        sync();
+        btn.addEventListener("click", () => {
+          const next = effective() === "dark" ? "light" : "dark";
+          root.dataset.theme = next;
+          localStorage.setItem("theme", next);
+          sync();
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    color-scheme: light;
+    --paper: #fffdf8;
+    --ink: #232019;
+    --body: #3a362c;
+    --muted: #5a5447;
+    --faint: #8b8574;
+    --rust: #a3452b;
+    --hairline: #e4ded0;
+    --panel: #f7f3ea;
+    --green: #3d7a46;
+    --amber: #8a6d1f;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "Libre Franklin", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  /* Dark palette — warm, to keep the newsprint feel. Applied when the OS
+     asks for dark (unless overridden to light), and — with higher
+     specificity so it wins either direction — when data-theme is stamped.
+     Keep the two dark blocks in sync. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --paper: #1a1815;
+      --ink: #f0ebe0;
+      --body: #d4cec0;
+      --muted: #a8a290;
+      --faint: #7d786a;
+      --rust: #d47a5c;
+      --hairline: #34302a;
+      --panel: #232019;
+      --green: #6faf76;
+      --amber: #c9a94e;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #1a1815;
+    --ink: #f0ebe0;
+    --body: #d4cec0;
+    --muted: #a8a290;
+    --faint: #7d786a;
+    --rust: #d47a5c;
+    --hairline: #34302a;
+    --panel: #232019;
+    --green: #6faf76;
+    --amber: #c9a94e;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    font-family: var(--serif);
+    color: var(--ink);
+  }
+
+  main {
+    flex: 1;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* ---- non-production preview banner ---- */
+  .preview-banner {
+    background: #6f2617;
+    color: #fdeede;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding: 10px 60px;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #3f130a;
+  }
+  .preview-banner strong {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #ffd9b0;
+  }
+  .preview-banner span {
+    color: #f4d8c4;
+    max-width: 70ch;
+  }
+  .preview-banner b {
+    font-weight: 700;
+    color: #fff;
+  }
+  .brand-flag {
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  /* ---- chrome ---- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--paper);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .brand {
+    font: 500 16px var(--serif);
+    font-style: italic;
+    text-decoration: none;
+  }
+  .nav nav {
+    display: flex;
+    gap: 26px;
+    flex-wrap: wrap;
+    font: 500 13px var(--sans);
+  }
+  .nav nav a {
+    color: var(--faint);
+    text-decoration: none;
+  }
+  .nav nav a:hover {
+    color: var(--ink);
+  }
+  .nav nav a[aria-current="page"] {
+    color: var(--ink);
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--faint);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .theme-toggle:hover {
+    color: var(--ink);
+    border-color: var(--faint);
+  }
+  .theme-toggle-icon::before {
+    content: "☾";
+  }
+  .theme-toggle[aria-pressed="true"] .theme-toggle-icon::before {
+    content: "☀";
+  }
+
+  .footer {
+    border-top: 1px solid var(--hairline);
+    padding: 22px 60px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font: 400 12px var(--sans);
+    color: var(--faint);
+  }
+  .footer a {
+    color: inherit;
+  }
+
+  /* ---- page scaffolding ---- */
+  .page {
+    margin: 0 auto;
+    padding: 72px 24px;
+  }
+  .page.home {
+    padding-top: 80px;
+  }
+
+  .kicker {
+    font: 600 11px var(--sans);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 22px;
+    text-align: center;
+  }
+  .kicker.left {
+    text-align: left;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font: 500 40px/1.2 var(--serif);
+    letter-spacing: -0.015em;
+    margin: 0 0 28px;
+    text-align: center;
+  }
+
+  .lede {
+    font-size: 16.5px;
+    line-height: 1.75;
+    color: var(--body);
+    margin: 0 auto 8px;
+    max-width: 560px;
+  }
+  .lede.center {
+    text-align: center;
+  }
+
+  .prose {
+    font-size: 17px;
+    line-height: 1.78;
+    color: var(--body);
+  }
+  .prose p {
+    margin: 0 0 20px;
+  }
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ---- ruled index / list rows ---- */
+  .rule-list {
+    border-top: 1px solid var(--ink);
+  }
+  .rule-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hairline);
+    align-items: baseline;
+  }
+  a.rule-row,
+  .rule-row a.row-title {
+    text-decoration: none;
+  }
+
+  .row-title {
+    font: 600 15px var(--sans);
+  }
+  .row-meta {
+    font: 400 12px var(--sans);
+    color: var(--faint);
+    white-space: nowrap;
+  }
+  .row-meta.mono {
+    font-family: var(--mono);
+  }
+
+  /* ---- callout panel ---- */
+  .callout {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    padding: 22px 26px;
+    margin-top: 40px;
+  }
+  .callout-label {
+    font: 600 11px var(--sans);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 10px;
+  }
+  .callout p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--body);
+  }
+
+  .access-public {
+    color: var(--green);
+  }
+  .access-request {
+    color: var(--amber);
+  }
+  .verb-added {
+    color: var(--green);
+  }
+  .verb-removed {
+    color: var(--rust);
+  }
+  .verb-updated {
+    color: var(--amber);
+  }
+
+  @media (max-width: 720px) {
+    .nav,
+    .footer,
+    .preview-banner {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    h1 {
+      font-size: 32px;
+    }
+    .rule-row {
+      flex-direction: column;
+      gap: 6px;
+    }
+    .row-meta {
+      white-space: normal;
+    }
+  }
+</style>

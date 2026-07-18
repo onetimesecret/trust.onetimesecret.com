@@ -1,56 +1,68 @@
-# Onetimesecret.com Site Policy
-These are based on [GitHub's site policy](https://github.com/github/site-policy). The original README is below.
+# Onetime Secret Trust Centre
 
----
+The source for [trust.onetimesecret.com](docs/trust-site.md) and
+Onetime Secret's policy documents: Terms of Service, Privacy Statement, Data
+Processing Agreement (DPA), and Technical & Organisational Measures (TOMs).
 
-## Site Policy on GitHub
-The universe of policies and procedures that govern the use of GitHub, open-sourced for your use and inspiration. We created this repository as a place for people to fork, contribute to, and provide feedback on our policies. While this is our official repo of open-sourced policies, it may not reflect the exact policies that are live on GitHub because this site is updated separately from the Help site.
+This repository is public on purpose. The commit history is the changelog:
+if we change a retention period, a subprocessor, or a line of the DPA, the
+diff is here for anyone to review.
 
-### What can I do here?
+## How it fits together
 
-#### First, you can use and adapt our policies!
+Shared facts — retention periods, notice windows, backup locations, the
+subprocessor list — live once, in YAML:
 
-We are proud to offer the policies in this repository under [CC0-1.0](#license). That means that if any of them are useful to you, even in part, you're welcome to use them, without restriction. Of course, keep in mind that we wrote these policies as they apply to GitHub, so you'll need to make sure the content applies to what you're using it for, and adapt it as appropriate. See the [license section](#license) for use guidelines.
+- `src/content/policy-constants.yaml` — retention periods, windows, tiers, locations
+- `src/content/trust.yaml` — subprocessors and trust-site content, published verbatim at `/trust.yaml`
+- `src/content/document-manifest.yaml` — per-document signoff record (status, commit, date)
 
-Because we are providing these policies to our community, we believe it is only responsible to also provide the history and insight that a repository of commits, pull requests, and issues can offer. Over time, the repository's commits, pull requests, and issues will allow anyone wanting to use our policies to see the discussions and alterations that have gone into them.
+The documents themselves are human-written prose in
+`src/pages/{terms,privacy,dpa,toms}.mdx` that interpolates those values at
+build time, so a fact can't drift between the DPA and the Privacy Statement.
+The DPA's Schedule A tables and the trust site's Subprocessors page render
+from the same data. Details in [docs/how-this-site-works.md](docs/how-this-site-works.md).
 
-#### Second, you can contribute to making our policies even better.
+## Repository layout
 
-We host collaborative development on GitHub's site policies, procedures, and guidelines here. That means you’re welcome to provide feedback via a pull request or by opening an issue. When opening an issue, please look over the [Contribution Guidelines](CONTRIBUTING.md). This will help us respond to your concern more quickly.
+Three classes of file, three homes:
 
-### That seems like great power! What about the great responsibility?
+- **Reader-facing** — the rendered documents (`src/pages/*.mdx`), their
+  shared facts (`src/content/*.yaml`), plus [CHANGELOG.md](CHANGELOG.md)
+  (cumulative record of substantive policy changes, by effective date) and
+  [WHATS-CHANGED.md](WHATS-CHANGED.md) (plain-language summary of the
+  current revision, replaced each cycle).
+- **Records** — dated and immutable once written: decision records in
+  [`decisions/`](docs/decisions/), self-review records in
+  [`reviews/`](docs/reviews/), and dated research runs in
+  [`research/YYYY/`](docs/research/). Superseded by newer dated files, never
+  rewritten.
+- **Working documents** — living files, updated in place:
+  [REMAINING_DECISIONS.md](REMAINING_DECISIONS.md) (the open-items tracker
+  for the 2026 revision), topical rationale notes in
+  [`research/`](docs/research/), and site documentation in [`docs/`](docs/).
 
-That's easy: just be responsible. Follow our [Code of Conduct](CODE_OF_CONDUCT.md), and help us maintain a respectful environment for all contributors.
+## Building locally
 
-#### There are a few things you should _not_ post in this repository:
+Astro, fully static — no accounts, no analytics, no runtime.
 
-- Please don't post legal complaints or ask for technical support. We may not respond to issues promptly. If you need help, [contact Support](https://github.com/contact) and they'll get you an answer.
--	Please avoid hypotheticals. We can't give you legal advice, which means we often can't tell you if a hypothetical situation would or wouldn't be a violation of our policies. We also can't tell you what you should or shouldn't do. We can tell you how we interpret our policies.
-- Please don't give other users legal advice, to avoid confusion.
+```sh
+pnpm install
+pnpm build    # dist/; fails loudly on any schema violation
+pnpm dev      # local preview
+```
 
-### How often will GitHub review these policies?
+## Feedback
 
-We continually review and modify the policies in this repository. Our review and modification process allows for discussion about upcoming changes before they go into effect and lets our community rely on our policies. Of course, GitHub may alter our policies outside that schedule if necessary, such as when we have new product releases.
-
-#### What's the process?
-
-Policies will be open for [discussion and feedback](CONTRIBUTING.md) throughout the year. You can expect that someone from GitHub's legal department will see your feedback, but we might not respond immediately. If you need an immediate answer on a legal matter, [contact Support](https://github.com/contact).
-
-When _we_ open a pull request, in most cases, we'll leave it open for 24 hours before the changes go into effect. Comments on and review of our pull requests are welcome, just like in any open source project. For material changes to our [Privacy Statement](https://docs.github.com/github/site-policy/github-privacy-statement#changes-to-our-privacy-statement) or [Terms of Service](https://docs.github.com/github/site-policy/github-terms-of-service#q-changes-to-these-terms) (including our Acceptable Use Policies), we'll post the updates 30 days before they go into effect, as stated in those docs. (We had previously applied a 30-day comment period for most docs in this repo but found that we tend to get feedback soon after we post the changes and were unnecessarily delaying ships.)
-
-For those who are following this repository, the posting of the updated policy will provide a notice of any modifications to the policy. Please note, links will not resolve in the rendering of the policies in this repository.
+Questions or corrections are welcome as issues. We can't offer legal advice,
+and issues here aren't a support channel — for account help, see
+[onetimesecret.com/feedback](https://onetimesecret.com/feedback). The
+rendered documents on our site govern; this repository is how they're made.
 
 ## License
 
-[CC0-1.0](LICENSE.md). Note that CC0-1.0 does not grant any trademark permissions.
-
-You're under no legal obligation to do so, but in the spirit of transparency and collaboration these policies are developed and shared with, you're encouraged to:
-
-- Share your adapted policies under CC0-1.0 or other open terms
-- Make your adaptations transparent by using a public repo to show changes you've made
-- [Let us know](CONTRIBUTING.md#help-wanted) how you're using adapted policies
-
-## The official legal disclaimer part:
-
-- The information in this repository is for informational purposes only and is not intended to convey or constitute legal advice. It is not intended as a solicitation, and your use of this information does not create an attorney-client relationship between you and GitHub. GitHub is not a law firm. (You know that, though, right?)
-- These policies and procedures may not suit your organization's needs. Please consult a lawyer if you want to adopt these policies for your own uses.
+Document text is available under [CC0-1.0](LICENSE.md) (no trademark
+permissions granted), in the tradition of
+[GitHub's site-policy](https://github.com/github/site-policy) repo this one
+began from. These documents were written for Onetime Secret — adapt with
+care, and with your own lawyer.

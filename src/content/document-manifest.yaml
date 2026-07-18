@@ -1,0 +1,40 @@
+# src/content/document-manifest.yaml
+---
+# Signoff manifest for the generated policy documents. Hand-maintained:
+# after each counsel/internal signoff, record the reviewed commit hash and
+# date here. The rendered pages display this line so "what did we agree
+# to" is answerable per version — pair each effective date with a tagged
+# rendered snapshot (frozen HTML or PDF) at that commit.
+documents:
+  - slug: terms
+    title: Terms of Service
+    source: src/pages/terms.mdx
+    effectiveDate: TBD on release
+    signoff:
+      status: pending-counsel
+      commit: null
+      date: null
+  - slug: privacy
+    title: Privacy Statement
+    source: src/pages/privacy.mdx
+    effectiveDate: TBD on release
+    signoff:
+      status: pending-counsel
+      commit: null
+      date: null
+  - slug: dpa
+    title: Data Processing Agreement
+    source: src/pages/dpa.mdx
+    effectiveDate: TBD on release
+    signoff:
+      status: pending-counsel
+      commit: null
+      date: null
+  - slug: toms
+    title: Technical and Organizational Measures
+    source: src/pages/toms.mdx
+    effectiveDate: TBD on release
+    signoff:
+      status: pending-counsel
+      commit: null
+      date: null

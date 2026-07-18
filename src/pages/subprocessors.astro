@@ -1,0 +1,198 @@
+---
+import RegionArchitecture from "../components/RegionArchitecture.astro";
+import RegisterEntry from "../components/RegisterEntry.astro";
+import TrustLayout from "../layouts/TrustLayout.astro";
+import { trust } from "../lib/trust";
+
+// The full register below is the one-stop reference: every subprocessor
+// once, with every DPA Schedule A field on the page — legal jurisdiction,
+// registered address, per-service category, Categories of Data, service
+// tiers, and location. The per-region diagram above owns the "one region
+// at a time" view; the register never partitions by region, so nothing a
+// reviewer needs is behind a toggle or a link to the DPA.
+//
+// The main register is the customer-secret-flow subprocessors: engaged today
+// and NOT operational. Everything else lands in one flat "used internally"
+// transparency list below, in the compact tool-card format: subprocessors
+// outside the secret flow (Proton support mail — still Schedule A; standby
+// hosts approved in advance) alongside tooling that processes no Company
+// Personal Data at all (source control, CI, DNS).
+// Bespoke/custom installs are covered by their own agreements — see the
+// notice below — so any provider unique to them sits in standby, unlabeled.
+const registerActive = trust.subprocessors.filter(
+  (s) => s.engagement === "active" && !s.operational,
+);
+const internalList = [
+  ...trust.subprocessors
+    .filter((s) => s.operational || s.engagement === "standby")
+    .map((s) => ({
+      name: s.name,
+      jurisdiction: s.entity.jurisdiction,
+      use: s.summary,
+      note: s.note ?? s.entity.comment,
+    })),
+  ...trust.internalTools,
+];
+---
+
+<TrustLayout
+  title="Subprocessors"
+  description="The third parties authorized to process customer data on Onetime Secret's behalf, with a dated change history and our notification policy."
+  active="subs"
+>
+  <div class="page" style="max-width: 728px;">
+    <div class="kicker">Our service providers</div>
+    <h1 style="font-size: 38px;">Subprocessors</h1>
+    <p class="lede">
+      These are the third parties authorized to process customer data on our behalf. This page and <a
+        href="/dpa">Schedule A of our DPA</a
+      > are generated from the same source to avoid diverging. Major changes like additions are announced
+      by email (see the <a href="#notification"> notification policy</a> at the end of the page).
+    </p>
+    <p
+      style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 18px 0 0;"
+    >
+      <a href="/trust.yaml">diff this list as trust.yaml</a> ·&nbsp;
+      <a href="https://github.com/onetimesecret/trust.onetimesecret.com">view history in git</a>
+    </p>
+
+    <section id="architecture" style="margin-top: 44px;">
+      <RegionArchitecture />
+    </section>
+
+    <section id="register" style="margin-top: 48px;">
+      <div class="kicker left" style="margin-bottom: 6px;">
+        The full register — every field, no click-through
+      </div>
+      <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
+        One entry per subprocessor, listing everything the contract records: the legal entity and
+        its jurisdiction, the regions it serves, and — for each service — the categories of data it
+        touches, the service tiers it applies to, and where it runs. Every service listed is in
+        continuous use unless flagged otherwise.
+      </p>
+
+      <div class="reg">
+        {registerActive.map((s) => <RegisterEntry s={s} />)}
+      </div>
+    </section>
+
+    {
+      internalList.length > 0 && (
+        <section id="internal" style="margin-top: 52px;">
+          <div class="kicker left" style="margin-bottom: 6px;">
+            Internal Tools — listed for transparency
+          </div>
+          <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
+            These providers run parts of our own operations — company and support email, internal
+            infrastructure, source control, CI, and DNS — but they sit{" "}
+            <strong>outside the path a customer secret takes</strong>, so they stay out of the
+            diagram above. Those that process Company Personal Data or are approved in advance as
+            customer-region hosts remain in <a href="/dpa">Schedule A</a>; the rest are not
+            subprocessors at all. We disclose them so the picture is complete, not cut off at the
+            production boundary.
+          </p>
+          <div class="tools">
+            {internalList.map((t) => (
+              <div class="tool">
+                <div class="tool-head">
+                  <span class="tool-name">{t.name}</span>
+                  {t.jurisdiction && <span class="tool-juris mono">{t.jurisdiction}</span>}
+                </div>
+                <p class="tool-use">{t.use}</p>
+                {t.note && <p class="tool-note">{t.note}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <section style="margin-top: 56px;">
+      <div class="kicker left">Change history, newest first</div>
+      {
+        trust.subprocessorChangelog.map((h) => (
+          <div class="rule-row" style="justify-content: flex-start; gap: 22px; border-top: none;">
+            <span class="row-meta mono" style="min-width: 92px; padding-top: 3px;">
+              {h.date}
+            </span>
+            <div>
+              <div style="font: 600 14.5px var(--sans);">
+                <span class={`verb-${h.verb}`} style="text-transform: capitalize;">
+                  {h.verb}
+                </span>{" "}
+                {h.title}
+              </div>
+              <p style="margin: 5px 0 0; font-size: 14.5px; line-height: 1.65; color: var(--muted);">
+                {h.note}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </section>
+
+    <section style="margin-top: 56px;">
+      <div class="kicker left">Notices</div>
+      <div class="callout" id="notification" style="margin-top: 20px;">
+        <div class="callout-label">Notification policy</div>
+        <p>
+          New or replaced subprocessors are announced by email to all account holders and posted
+          here, opening a thirty-day objection window. During that window you may object and
+          terminate the affected services without penalty. Emergency replacements — say, a provider
+          failing — are announced promptly after the engagement, with reasons given, and the
+          objection window runs from that notice.
+        </p>
+      </div>
+      <div class="callout" style="margin-top: 16px;">
+        <div class="callout-label">Bespoke &amp; custom installations</div>
+        <p>
+          This page describes our standard hosted service. Dedicated, bespoke, and custom
+          deployments are governed by their own agreement or agreements — either ones already in
+          place that <strong>predate</strong> this list, or one-to-one Data Processing Agreements we may
+          sign that <strong>supersede</strong> it. For any such deployment, that agreement's subprocessor
+          terms control, not this page. Self-hosted installations run with zero subprocessors.
+        </p>
+      </div>
+    </section>
+  </div>
+</TrustLayout>
+
+<style>
+  /* Register entry styles live in RegisterEntry.astro (scoped per entry). */
+  .reg {
+    border-top: 1px solid var(--ink);
+  }
+
+  /* "Internal Tools" list — lighter than a register entry: name + use +
+     optional note only. */
+  .tools {
+    border-top: 1px solid var(--hairline);
+  }
+  .tool {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .tool-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .tool-name {
+    font: 600 15.5px var(--sans);
+    color: var(--ink);
+  }
+  .tool-juris {
+    font: 400 11.5px var(--mono);
+    color: var(--faint);
+  }
+  .tool-use {
+    margin: 6px 0 0;
+    font: 400 13.5px/1.6 var(--sans);
+    color: var(--muted);
+  }
+  .tool-note {
+    margin: 5px 0 0;
+    font: 400 12.5px/1.55 var(--sans);
+    color: var(--faint);
+  }
+</style>

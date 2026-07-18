@@ -1,0 +1,69 @@
+name: trust-site
+
+# Build the trust.onetimesecret.com static site. The Astro project lives at the
+# repository root. Node is pinned via .nvmrc (v24) so the build is reproducible;
+# pnpm is pinned to the v10 line (matching package.json engines block). Both v9
+# and v10 support lockfileVersion 9.0.
+#
+# Build-only for now: every run produces the dist/ artifact. Publishing is
+# deferred until the trust.onetimesecret.com subdomain is claimed and the
+# production host (expected: BunnyCDN, matching the other public sites) is
+# wired. To publish, add a job that runs its own `SITE_PHASE=production pnpm
+# build` and uploads that dist/ to BunnyCDN Storage using repo secrets for the
+# storage-zone and API key. Do NOT reuse the trust-site-dist artifact for
+# publishing: SITE_PHASE is inlined at build time, and the build below
+# intentionally stays preview, so every CI artifact is banner-stamped
+# (src/lib/site-env.ts) and unfit for production by design.
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "astro.config.mjs"
+      - "tsconfig.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".nvmrc"
+      - ".github/workflows/trust-site.yml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "public/**"
+      - "astro.config.mjs"
+      - "tsconfig.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".nvmrc"
+      - ".github/workflows/trust-site.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # pnpm must be installed before setup-node so its pnpm cache can resolve.
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm check
+
+      - run: pnpm build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trust-site-dist
+          path: dist
+          if-no-files-found: error

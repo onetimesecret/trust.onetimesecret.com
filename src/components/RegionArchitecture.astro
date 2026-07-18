@@ -1,0 +1,696 @@
+---
+import { trust } from "../lib/trust";
+import type { RegionCode, Subprocessor } from "../lib/trust-config";
+
+// The per-region architecture diagram: internet at the top, then the two
+// ingress paths — the regional service domain (Cloudflare) and customer
+// custom domains (Approximated, never Cloudflare) — converging on the
+// region's hosting, with backups, email, and payments alongside. Every
+// node is a service row from trust.yaml, so the diagram mirrors DPA
+// Schedule A by construction.
+
+type Service = Subprocessor["services"][number];
+type Slot = { s: Subprocessor; r: Service };
+
+// The diagram is "what a secret here can touch" — the customer secret flow.
+// Two kinds of provider are kept out of it:
+//   • standby (whole-vendor or per-service) — process no customer data yet;
+//   • operational — run our own operations, not the secret flow (Proton Mail
+//     support/company email, internal infra) even when active.
+// Both live in the "used internally" section of the register instead.
+// Transitioning services stay on the diagram with the dashed border.
+const services: Slot[] = trust.subprocessors
+  .filter((s) => s.engagement === "active" && !s.operational)
+  .flatMap((s) => s.services.filter((r) => r.status !== "standby").map((r) => ({ s, r })));
+
+const inRegion = ({ r }: Slot, code: RegionCode) =>
+  r.regions === "global" || r.regions.includes(code);
+
+// Ingress routing is declared per service via `ingress` in trust.yaml:
+//   canonical — regional service-domain path (Cloudflare DNS + edge proxy)
+//   custom    — custom-domain targets (Hetzner DNS + Approximated TLS)
+// Anything without `ingress` is placed by category, so hosting excludes
+// the DNS rows here (no more Cloudflare/Hetzner special-casing). BunnyCDN's
+// network service has no ingress and isn't infrastructure, so it stays off
+// the diagram and appears in the full register below.
+const nodeSub = (r: Service) =>
+  `${r.short} · ${r.tiers === "All" ? r.location : /tiers?$/i.test(r.tiers) ? r.tiers : `${r.tiers} only`}`;
+
+const panels = trust.regions.map((region) => {
+  const here = services.filter((slot) => inRegion(slot, region.code));
+  return {
+    region,
+    serviceIngress: here.filter(({ r }) => r.ingress === "canonical"),
+    customIngress: here.filter(({ r }) => r.ingress === "custom"),
+    hosting: here.filter(({ r }) => r.category === "infrastructure" && !r.ingress),
+    backups: here.filter(({ r }) => r.category === "backup"),
+    email: here.filter(({ r }) => r.category === "email"),
+    payments: here.filter(({ r }) => r.category === "payments"),
+  };
+});
+---
+
+<div class="arch" data-arch>
+  <div class="arch-box dashed center">
+    <div class="arch-box-label">The internet</div>
+    <div class="arch-note">People sharing and reading secrets</div>
+  </div>
+
+  <!-- One arrow off the internet fanning out to every region: stem →
+       rail across the tab centers (measured into --tab-x-*), one
+       arrowhead drop per tab. -->
+  <div class="arch-branch" aria-hidden="true">
+    <i class="branch-stem"></i>
+    <i class="branch-rail"></i>
+    {trust.regions.map((_, i) => <i class="branch-drop" style={`--x: var(--tab-x-${i}, 50%)`} />)}
+  </div>
+
+  <!-- The tabs sit at the fork: the internet above is region-agnostic;
+       everything below is determined by the selected region. -->
+  <div class="arch-tabs" role="tablist" aria-label="Choose a region">
+    {
+      trust.regions.map((region, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`arch-tab-${region.code}`}
+          aria-controls={`arch-${region.code}`}
+          aria-selected={i === 0 ? "true" : "false"}
+          data-region={region.code}
+        >
+          {region.code.toUpperCase()}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    panels.map((p, i) => (
+      <div
+        class="arch-panel"
+        id={`arch-${p.region.code}`}
+        role="tabpanel"
+        aria-labelledby={`arch-tab-${p.region.code}`}
+        data-region={p.region.code}
+        hidden={i !== 0}
+      >
+        <div class="arch-cols two">
+          <!-- Fork: stem drops from the selected tab (x tracked via
+               --fork-x), rail spans the column centers, one arrowhead
+               lands on each ingress path. -->
+          <div class="arch-fork" aria-hidden="true">
+            <i class="fork-stem" />
+            <i class="fork-rail" />
+            <i class="fork-drop left" />
+            <i class="fork-drop right" />
+          </div>
+
+          <div class="arch-box">
+            <div class="arch-box-label">
+              Canonical domain
+              <span class="arch-hint">
+                <button
+                  type="button"
+                  class="arch-hint-btn"
+                  aria-label="Why the canonical domain is fronted by an edge proxy"
+                  aria-describedby={`arch-hint-canonical-${p.region.code}`}>
+                  i
+                </button>
+                <span class="arch-hint-pop" role="tooltip" id={`arch-hint-canonical-${p.region.code}`}>
+                  The region's public entry point — reachable by anyone on the internet, so it
+                  carries the edge protection that filters misuse before traffic reaches our hosting.
+                </span>
+              </span>
+            </div>
+            <div class="arch-domains">
+              <div class="arch-domain mono">{p.region.domain}</div>
+            </div>
+            {p.serviceIngress.map(({ s, r }) => (
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+          </div>
+
+          <div class="arch-box">
+            <div class="arch-box-label">
+              Custom domain targets
+              <span class="arch-hint">
+                <button
+                  type="button"
+                  class="arch-hint-btn"
+                  aria-label="How custom-domain DNS and TLS work"
+                  aria-describedby={`arch-hint-${p.region.code}`}>
+                  i
+                </button>
+                <span class="arch-hint-pop" role="tooltip" id={`arch-hint-${p.region.code}`}>
+                  Your DNS points at one of these. TLS terminates at Approximated today; we're
+                  transitioning to certificates we issue directly.
+                </span>
+              </span>
+            </div>
+            <div class="arch-domains">
+              <div class="arch-domain mono">
+                {p.region.code}.identity.onetime.co<span class="arch-domain-via">via Approximated</span>
+              </div>
+              <div class="arch-domain mono">
+                {p.region.code}.onetime.co<span class="arch-domain-via">direct · transitioning</span>
+              </div>
+            </div>
+            {p.customIngress.map(({ s, r }) => (
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+          </div>
+
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+        </div>
+
+        <div class="arch-box hosting">
+          <div class="arch-box-label">Hosting &amp; compute — {p.region.label}</div>
+          <!-- One full-width node: a single hosting provider per region stands
+               for every production instance we run there — infrastructure we
+               manage directly, unlike the vendor-operated services around it. -->
+          {p.hosting.map(({ s, r }) => (
+            <div class={`arch-node${r.status === "transitioning" ? "" : " managed"}`}>
+              <div class="arch-node-name">{r.label ?? s.shortName}</div>
+              <div class="arch-node-sub">
+                {r.short} · {r.location}
+              </div>
+            </div>
+          ))}
+          <p class="arch-note">
+            Secrets are encrypted at rest here, read once, then destroyed. Key material is separated
+            from the database tier.
+          </p>
+        </div>
+
+        <div class="arch-cols three">
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+
+          <div class="arch-box">
+            <div class="arch-box-label muted">Encrypted backups</div>
+            {p.backups.map(({ s, r }) => (
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+            <p class="arch-note">Automatically expire on a rolling 30-day schedule.</p>
+          </div>
+
+          <div class="arch-box">
+            <div class="arch-box-label muted">Email — addresses &amp; notices only</div>
+            {p.email.map(({ s, r }) => (
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+          </div>
+
+          <div class="arch-box">
+            <div class="arch-box-label muted">Payments — billing only</div>
+            {p.payments.map(({ s, r }) => (
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+            <p class="arch-note"></p>
+          </div>
+        </div>
+
+        <div class="arch-legend">
+          <span>
+            <i class="swatch managed" />
+            Infrastructure we manage
+          </span>
+          <span>
+            <i class="swatch always" />
+            Always in use
+          </span>
+          <span>
+            <i class="swatch" />
+            In transition · tier noted on the node
+          </span>
+          <span class="arch-legend-source">
+            Rendered from trust.yaml · updated {trust.meta.updatedAt}
+          </span>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  // Static tab switcher: every region's panel is pre-rendered; this only
+  // flips `hidden`. With JS off, the noscript rule below shows them all,
+  // hides the internet fan-out, and the fork stem falls back to center.
+  // A `?region=<code>` query param deep-links to a region on load, and
+  // clicking a tab writes the choice back into the URL (replaceState, so
+  // no per-click history entry) — the current view is always shareable.
+  // Geometry vars live on the root: --tab-x-* mark each tab's horizontal
+  // center for the fan-out drops (--tab-x-first/-last bound the rail),
+  // and --fork-x tracks the selected tab for every panel's fork stem.
+  document.querySelectorAll<HTMLElement>("[data-arch]").forEach((root) => {
+    const tabs = root.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+    const setArrowGeometry = () => {
+      const rootBox = root.getBoundingClientRect();
+      const centerPct = (el: Element) => {
+        const box = el.getBoundingClientRect();
+        return `${((box.left + box.width / 2 - rootBox.left) / rootBox.width) * 100}%`;
+      };
+      tabs.forEach((tab, i) => root.style.setProperty(`--tab-x-${i}`, centerPct(tab)));
+      if (tabs.length > 0) {
+        root.style.setProperty("--tab-x-first", centerPct(tabs[0]));
+        root.style.setProperty("--tab-x-last", centerPct(tabs[tabs.length - 1]));
+      }
+      const selected = root.querySelector('[role="tab"][aria-selected="true"]');
+      if (selected) root.style.setProperty("--fork-x", centerPct(selected));
+    };
+    // Activate a region's tab + panel by code; returns false for an unknown
+    // code so callers (deep link, tab click) can leave the default in place.
+    const selectRegion = (code: string) => {
+      const target = [...tabs].find((t) => t.dataset.region === code);
+      if (!target) return false;
+      tabs.forEach((t) => t.setAttribute("aria-selected", String(t === target)));
+      root.querySelectorAll<HTMLElement>(".arch-panel").forEach((panel) => {
+        panel.hidden = panel.dataset.region !== code;
+      });
+      setArrowGeometry();
+      return true;
+    };
+    tabs.forEach((tab) =>
+      tab.addEventListener("click", () => {
+        const code = tab.dataset.region;
+        if (!code || !selectRegion(code)) return;
+        const url = new URL(window.location.href);
+        url.searchParams.set("region", code);
+        history.replaceState(history.state, "", url);
+      }),
+    );
+    // Deep link: /subprocessors?region=ca lands on that region (case-insensitive).
+    const requested = new URLSearchParams(window.location.search).get("region")?.toLowerCase();
+    if (requested) selectRegion(requested);
+    setArrowGeometry();
+    window.addEventListener("resize", setArrowGeometry);
+  });
+</script>
+
+<noscript>
+  <style>
+    .arch-tabs,
+    .arch-branch {
+      display: none;
+    }
+    .arch-panel[hidden] {
+      display: block;
+    }
+    .arch-panel + .arch-panel {
+      margin-top: 40px;
+    }
+  </style>
+</noscript>
+
+<style>
+  .arch {
+    font-family: var(--sans);
+  }
+
+  .arch-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 4px 0;
+  }
+  .arch-tabs button {
+    font: 600 12.5px var(--sans);
+    letter-spacing: 0.04em;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .arch-tabs button:hover {
+    color: var(--ink);
+    border-color: var(--faint);
+  }
+  .arch-tabs button[aria-selected="true"] {
+    border-color: var(--rust);
+    color: var(--rust);
+  }
+
+  .arch-box {
+    border: 1px solid var(--hairline);
+    background: var(--panel);
+    padding: 14px 16px;
+  }
+  .arch-box.dashed {
+    border-style: dashed;
+    background: transparent;
+  }
+  .arch-box.center {
+    text-align: center;
+  }
+
+  .arch-box-label {
+    font: 600 10.5px var(--sans);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 4px;
+  }
+  /* Both ingress labels share a row, but only the custom one carries the
+     15px (i) hint button. Reserve that height on both so the columns'
+     node lists start on the same line. */
+  .arch-cols.two .arch-box-label {
+    display: flex;
+    align-items: center;
+    min-height: 15px;
+  }
+  .arch-box-label.muted {
+    color: var(--faint);
+  }
+
+  /* Info affordance on the label: the custom-domain explainer collapses
+     to an (i) button, revealed on hover or keyboard/tap focus. The full
+     text stays in the DOM (role="tooltip" + aria-describedby) so it's
+     available to assistive tech and crawlers regardless of visual state. */
+  .arch-hint {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .arch-hint-btn {
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--faint);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--faint);
+    font: 600 9.5px var(--sans);
+    letter-spacing: 0;
+    text-transform: none;
+    cursor: help;
+  }
+  .arch-hint-btn:hover,
+  .arch-hint-btn:focus-visible {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .arch-hint-pop {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 5;
+    width: 260px;
+    max-width: 70vw;
+    padding: 10px 12px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font: 400 11.5px/1.55 var(--sans);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--faint);
+  }
+  .arch-hint:hover .arch-hint-pop,
+  .arch-hint:focus-within .arch-hint-pop {
+    display: block;
+  }
+
+  .arch-domain {
+    font: 500 12.5px/1.5 var(--mono);
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+  .arch-domains {
+    /* 12.5px/1.5 pins `lh` to the domain line box for the reserve below. */
+    font: 500 12.5px/1.5 var(--mono);
+    margin-bottom: 10px;
+  }
+  /* The two ingress columns hold a different number of domains (canonical:
+     one, custom: two). Reserve two rows here — plus the 4px inter-row gap —
+     so both columns start their node lists on the same line, replacing the
+     old &nbsp; spacer row with a layout-driven guarantee. */
+  .arch-cols.two .arch-domains {
+    min-height: calc(2lh + 4px);
+  }
+  .arch-domains .arch-domain {
+    margin: 0 0 4px;
+  }
+  .arch-domains .arch-domain:last-child {
+    margin-bottom: 0;
+  }
+  .arch-domain-via {
+    font: 400 10.5px var(--sans);
+    color: var(--faint);
+    letter-spacing: 0;
+    margin-left: 8px;
+  }
+  .mono {
+    font-family: var(--mono);
+  }
+
+  .arch-cols {
+    display: grid;
+    gap: 0 18px;
+  }
+  .arch-cols.two {
+    grid-template-columns: 1fr 1fr;
+  }
+  .arch-cols.three {
+    grid-template-columns: 1fr 1.2fr 1fr;
+  }
+  /* Connectors are drawn from 1px fills, and arrowheads from 45°-rotated
+     1px-border chevrons, so heads and lines carry identical stroke
+     weight — the ↓ glyph renders at font weight and visibly mismatches
+     the hairlines it joins. Vertical lines sit at calc(x - 0.5px) so the
+     1px fill is centered on its coordinate. */
+  .branch-stem,
+  .branch-rail,
+  .branch-drop,
+  .fork-stem,
+  .fork-rail,
+  .fork-drop {
+    position: absolute;
+    display: block;
+    background: var(--faint);
+  }
+  .branch-drop::after,
+  .fork-drop::after,
+  .arch-arrow::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 7px;
+    height: 7px;
+    border-right: 1px solid var(--faint);
+    border-bottom: 1px solid var(--faint);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .arch-arrow {
+    position: relative;
+    height: 26px;
+  }
+  .arch-arrow::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    bottom: 5px;
+    left: calc(50% - 0.5px);
+    width: 1px;
+    background: var(--faint);
+  }
+  .arch-arrow::after {
+    bottom: 5px;
+  }
+
+  /* Internet fan-out: centered stem, rail spanning the region tab
+     centers, one drop per tab (--tab-x-* measured by the tab script). */
+  .arch-branch {
+    position: relative;
+    height: 32px;
+  }
+  .branch-stem {
+    top: 0;
+    left: calc(50% - 0.5px);
+    width: 1px;
+    height: 13px;
+  }
+  .branch-rail {
+    top: 12px;
+    height: 1px;
+    left: var(--tab-x-first, 50%);
+    right: calc(100% - var(--tab-x-last, 50%));
+  }
+  .branch-drop {
+    top: 12px;
+    width: 1px;
+    height: 18px;
+    left: calc(var(--x, 50%) - 0.5px);
+  }
+
+  /* Selected-tab fork: stem at --fork-x (clamped to the rail), rail
+     between the two column centers (each 25% in, offset half the 18px
+     column gap), a drop with an arrowhead onto each ingress path. */
+  .arch-fork {
+    grid-column: 1 / -1;
+    position: relative;
+    height: 38px;
+  }
+  .fork-stem {
+    top: 0;
+    width: 1px;
+    height: 15px;
+    left: clamp(calc(25% - 5px), calc(var(--fork-x, 50%) - 0.5px), calc(75% + 4px));
+    transition: left 0.25s ease;
+  }
+  .fork-rail {
+    top: 14px;
+    height: 1px;
+    left: calc(25% - 4.5px);
+    right: calc(25% - 4.5px);
+  }
+  .fork-drop {
+    top: 14px;
+    width: 1px;
+    height: 18px;
+  }
+  .fork-drop.left {
+    left: calc(25% - 5px);
+  }
+  .fork-drop.right {
+    left: calc(75% + 4px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fork-stem {
+      transition: none;
+    }
+  }
+
+  .arch-node {
+    border: 1px dashed var(--faint);
+    background: var(--paper);
+    padding: 8px 11px;
+    margin-top: 8px;
+  }
+  .arch-node.always {
+    border: 1px solid var(--faint);
+  }
+  .arch-node.managed {
+    border: 2px solid var(--rust);
+  }
+  .arch-node-name {
+    font: 600 13.5px var(--sans);
+    color: var(--ink);
+  }
+  .arch-node-sub {
+    font: 400 11.5px/1.45 var(--sans);
+    color: var(--faint);
+    margin-top: 2px;
+  }
+  .arch-note {
+    font: 400 11.5px/1.55 var(--sans);
+    color: var(--faint);
+    margin: 10px 0 0;
+  }
+
+  .arch-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid var(--hairline);
+    font: 400 11.5px var(--sans);
+    color: var(--faint);
+  }
+  .arch-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .arch-legend-source {
+    margin-left: auto;
+  }
+  .swatch {
+    display: inline-block;
+    width: 14px;
+    height: 10px;
+    border: 1px dashed var(--faint);
+  }
+  .swatch.always {
+    border: 1px solid var(--faint);
+  }
+  .swatch.managed {
+    border: 2px solid var(--rust);
+  }
+
+  @media (max-width: 720px) {
+    .arch-cols.two,
+    .arch-cols.three {
+      grid-template-columns: 1fr;
+    }
+    /* Stacked columns need only one arrow per connector row. */
+    .arch-cols .arch-arrow ~ .arch-arrow {
+      display: none;
+    }
+    /* Columns stack, so the fan-out and the fork each collapse to a
+       single centered arrow drawn on the container's own pseudos. */
+    .arch-branch,
+    .arch-fork {
+      height: 26px;
+    }
+    .arch-branch > *,
+    .arch-fork > * {
+      display: none;
+    }
+    .arch-branch::before,
+    .arch-fork::before {
+      content: "";
+      position: absolute;
+      top: 3px;
+      bottom: 5px;
+      left: calc(50% - 0.5px);
+      width: 1px;
+      background: var(--faint);
+    }
+    .arch-branch::after,
+    .arch-fork::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 5px;
+      width: 7px;
+      height: 7px;
+      border-right: 1px solid var(--faint);
+      border-bottom: 1px solid var(--faint);
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .arch-cols .arch-box {
+      margin-bottom: 12px;
+    }
+    .arch-legend-source {
+      margin-left: 0;
+    }
+  }
+</style>

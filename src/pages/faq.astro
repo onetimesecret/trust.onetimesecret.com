@@ -1,0 +1,38 @@
+---
+import TrustLayout from '../layouts/TrustLayout.astro';
+import { trust } from '../lib/trust';
+
+const { email, sla } = trust.meta.contacts;
+---
+
+<TrustLayout
+  title="FAQ"
+  description="The hard questions a skeptical vendor reviewer actually asks, answered plainly."
+  active="faq"
+>
+  <div class="page" style="max-width: 688px;">
+    <div class="kicker">The hard questions, answered plainly</div>
+    <h1>Interrogate us</h1>
+    <p class="lede">
+      These are the questions a skeptical vendor reviewer actually asks. We'd rather answer them
+      here, in writing, than have them go unasked.
+    </p>
+
+    <div class="rule-list" style="margin-top: 40px;">
+      {trust.faqs.map((f) => (
+        <div class="rule-row" style="display: block; padding: 22px 0;">
+          <div style="font: 500 20px/1.4 var(--serif); color: var(--ink);">{f.q}</div>
+          <p style="margin: 10px 0 0; font-size: 15.5px; line-height: 1.72; color: var(--muted);">{f.a}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="callout" style="margin-top: 36px;">
+      <div class="callout-label">A question we missed?</div>
+      <p>
+        Email <a href={`mailto:${email}`}>{email}</a>. A person answers — usually the person who
+        wrote the code — within {sla}, and if the answer is broadly useful it gets added here.
+      </p>
+    </div>
+  </div>
+</TrustLayout>
