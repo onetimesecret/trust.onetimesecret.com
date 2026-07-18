@@ -13,7 +13,7 @@ These notes are:
 
 ## Layout
 
-Two kinds of file live here, and the distinction is the convention:
+Two kinds of files live here, and the distinction is the convention:
 
 - **Topical rationale** (this directory, undated filenames): living
   reference documents on a subject — e.g. business arrangements, passphrase

@@ -60,7 +60,6 @@ subprocessors:
     purpose: Computing resources for internal infrastructure, single-tenant and multi-tenant hosting; object storage for encrypted backups; DNS.
     since: "2020 for EU; 2024 for US"
     core: true
-    note: ISO 27001:2022 ? Don;t need this twice
     entity:
       address: Industriestr. 25 91710 Gunzenhausen Germany
       jurisdiction: EU w/ US subsidiary
@@ -84,7 +83,7 @@ subprocessors:
         data: [Account info, application data, backups]
   - name: Cloudflare, Inc.
     shortName: Cloudflare
-    purpose: DNS management and DDoS protections for <region>.onetimesecret.com regional service domains.
+    purpose: DNS management and DDoS protection for our regional service domains (for example, eu.onetimesecret.com).
     since: "2024"
     core: true
     note: EU-US Data Privacy Framework certified
