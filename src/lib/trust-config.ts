@@ -7,6 +7,17 @@ import { z } from 'zod';
 
 export const AccessSchema = z.enum(['public', 'request']).default('public');
 
+// The regional multi-tenant deployments (ToS "Regional Domains"). Role
+// `regions` values reference these codes; `global` marks a role engaged
+// for every region (pan-region — e.g. Proton, Stripe).
+export const RegionCodeSchema = z.enum(['eu', 'uk', 'us', 'ca', 'nz']);
+
+export const RegionSchema = z.object({
+  code: RegionCodeSchema,
+  label: z.string(),
+  domain: z.string(),
+});
+
 // One row in a DPA Schedule A category table. The DPA's Schedule A tables
 // are rendered from these — the contractual list and this file cannot
 // drift because they are the same data.
@@ -19,6 +30,9 @@ export const SubprocessorRoleSchema = z.object({
   location: z.string(),
   tiers: z.string(), // "All", "Global Elite", "Identity Plus, Team Plus", ...
   optional: z.boolean().default(false),
+  // Which regional deployments this role serves: 'global' (pan-region,
+  // engaged regardless of where the data lives) or specific region codes.
+  regions: z.union([z.literal('global'), z.array(RegionCodeSchema).nonempty()]),
   data: z.array(z.string()).nonempty(), // Categories of Data
 });
 
@@ -51,6 +65,25 @@ export const SubprocessorSchema = z.object({
 // Derived display location: the unique role locations, in order.
 export function subprocessorLocation(s: { roles: Array<{ location: string }> }): string {
   return [...new Set(s.roles.map((r) => r.location))].join('; ');
+}
+
+export type RegionCode = z.infer<typeof RegionCodeSchema>;
+export type Region = z.infer<typeof RegionSchema>;
+
+type RoleRegions = { regions: 'global' | RegionCode[] };
+
+// Pan-region: every role applies regardless of which region the data lives in.
+export function isPanRegion(s: { roles: RoleRegions[] }): boolean {
+  return s.roles.every((r) => r.regions === 'global');
+}
+
+// The region-specific roles a subprocessor has in a given region
+// (pan-region roles are excluded — they appear in the pan-region list).
+export function rolesForRegion<R extends RoleRegions>(
+  s: { roles: R[] },
+  code: RegionCode,
+): R[] {
+  return s.roles.filter((r) => r.regions !== 'global' && r.regions.includes(code));
 }
 
 export const ChangelogEntrySchema = z.object({
@@ -99,6 +132,7 @@ export const TrustConfigSchema = z.object({
       pgp: z.string(),
     }),
   }),
+  regions: z.array(RegionSchema).nonempty(),
   subprocessors: z.array(SubprocessorSchema),
   subprocessorChangelog: z.array(ChangelogEntrySchema),
   documents: z.array(DocumentSchema),

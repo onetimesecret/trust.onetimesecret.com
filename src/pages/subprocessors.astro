@@ -1,10 +1,15 @@
 ---
 import TrustLayout from '../layouts/TrustLayout.astro';
 import { trust } from '../lib/trust';
-import { subprocessorLocation } from '../lib/trust-config';
+import { isPanRegion, rolesForRegion, subprocessorLocation } from '../lib/trust-config';
 
-const core = trust.subprocessors.filter((s) => s.core);
-const alternatives = trust.subprocessors.filter((s) => !s.core);
+const panRegion = trust.subprocessors.filter(isPanRegion);
+const regional = trust.regions.map((region) => ({
+  region,
+  entries: trust.subprocessors
+    .map((s) => ({ s, roles: rolesForRegion(s, region.code) }))
+    .filter(({ roles }) => roles.length > 0),
+}));
 ---
 
 <TrustLayout
@@ -28,14 +33,21 @@ const alternatives = trust.subprocessors.filter((s) => !s.core);
       <a href="https://github.com/onetimesecret/site-policy">view history in git</a>
     </p>
 
-    <section style="margin-top: 40px;">
-      <div class="kicker left" style="margin-bottom: 6px;">Core — all service tiers</div>
+    <p style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 10px 0 0;">
+      Jump to: <a href="#every-region">Every region</a>
+      {regional.map(({ region }) => (
+        <> · <a href={`#${region.code}`}>{region.code.toUpperCase()}</a></>
+      ))}
+    </p>
+
+    <section id="every-region" style="margin-top: 40px;">
+      <div class="kicker left" style="margin-bottom: 6px;">Every region — engaged regardless of where your data lives</div>
       <div class="rule-list">
-        {core.map((s) => (
+        {panRegion.map((s) => (
           <div class="rule-row" style="display: block; padding: 20px 0;">
             <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;">
               <span style="font: 600 16px var(--sans);">{s.name}</span>
-              <span class="row-meta mono">since {s.since}</span>
+              <span class="row-meta mono">since {s.since}{!s.core && ' · alternative'}</span>
             </div>
             <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
               {s.purpose} <em style="color: var(--faint);">— {subprocessorLocation(s)}</em>
@@ -46,23 +58,33 @@ const alternatives = trust.subprocessors.filter((s) => !s.core);
       </div>
     </section>
 
-    <section style="margin-top: 40px;">
-      <div class="kicker left" style="margin-bottom: 6px;">Alternatives — engaged per region, tier, or feature</div>
-      <div class="rule-list">
-        {alternatives.map((s) => (
-          <div class="rule-row" style="display: block; padding: 20px 0;">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;">
-              <span style="font: 600 16px var(--sans);">{s.name}</span>
-              <span class="row-meta mono">since {s.since}</span>
+    {regional.map(({ region, entries }) => (
+      <section id={region.code} style="margin-top: 40px;">
+        <div class="kicker left" style="margin-bottom: 6px;">
+          {region.label} — <span class="mono">{region.domain}</span>
+        </div>
+        <div class="rule-list">
+          {entries.map(({ s, roles }) => (
+            <div class="rule-row" style="display: block; padding: 20px 0;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;">
+                <span style="font: 600 16px var(--sans);">{s.name}</span>
+                <span class="row-meta mono">
+                  since {s.since}{roles.every((r) => r.optional) && ' · alternative'}
+                </span>
+              </div>
+              {roles.map((r) => (
+                <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
+                  {r.purpose} <em style="color: var(--faint);">— {r.location}</em>
+                </p>
+              ))}
             </div>
-            <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
-              {s.purpose} <em style="color: var(--faint);">— {subprocessorLocation(s)}</em>
-              {s.note && <em style="color: var(--faint);"> · {s.note}</em>}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+        <p style="font: 400 12.5px/1.6 var(--sans); color: var(--faint); margin: 10px 0 0;">
+          Plus every subprocessor in the <a href="#every-region">every-region list</a> above.
+        </p>
+      </section>
+    ))}
 
     <p style="font: 400 12.5px/1.6 var(--sans); color: var(--faint); margin: 14px 0 0;">
       DPAs are in place with each entity. This is the full chain — no undisclosed

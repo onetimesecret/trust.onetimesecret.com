@@ -17,6 +17,17 @@ meta:
     sla: "5 business days"
     pgp: /pgp-key.asc
 
+# The regional multi-tenant deployments (ToS/Privacy Policy "Regional
+# Domains"). Each subprocessor role below declares which of these it
+# serves via `regions`: a list of codes, or `global` for pan-region
+# roles engaged regardless of where the data lives (e.g. Proton, Stripe).
+regions:
+  - { code: eu, label: European Union, domain: eu.onetimesecret.com }
+  - { code: uk, label: United Kingdom, domain: uk.onetimesecret.com }
+  - { code: us, label: United States, domain: us.onetimesecret.com }
+  - { code: ca, label: Canada, domain: ca.onetimesecret.com }
+  - { code: nz, label: Aotearoa New Zealand, domain: nz.onetimesecret.com }
+
 # The canonical subprocessor list. DPA Schedule A's tables are RENDERED
 # from these entries (roles = category-table rows, entity = the entity
 # details table) and the trust site's Subprocessors page derives its
@@ -26,6 +37,9 @@ meta:
 # the Processor may engage per category.
 # TODO(release): confirm `since` dates against infra/billing history
 # (Handoff Spec §7.2) before publishing.
+# TODO(release): confirm per-role `regions` assignments against actual
+# deployment topology — derived from `location` text; in particular
+# whether Hetzner EU object storage receives backups from non-EU regions.
 subprocessors:
   - name: Hetzner Online GmbH
     shortName: Hetzner
@@ -42,6 +56,7 @@ subprocessors:
         purpose: Computing resources for internal infrastructure, single-tenant and multi-tenant hosting environments
         location: EU (Germany, Finland); US (Oregon)
         tiers: All
+        regions: [eu, us]
         data: [Account info, app data, network-level web traffic data, IP addresses]
       - category: backup
         label: Hetzner (Object storage)
@@ -49,6 +64,7 @@ subprocessors:
         location: EU (Germany, Finland)
         tiers: All
         optional: true
+        regions: [eu]
         data: [Account info, application data]
   - name: Cloudflare, Inc.
     shortName: Cloudflare
@@ -65,12 +81,14 @@ subprocessors:
         purpose: DNS Management (does not include "Orange Cloud" proxy)
         location: Global
         tiers: All
+        regions: global
         data: [DNS Records, DKIM/DMARC/SPF]
       - category: network
         purpose: Network proxy ("Orange Cloud"), security services, and TLS termination at the edge for the Processor's regional service domains (e.g. `eu.onetimesecret.com`); not used for customer Custom Domains
         location: Global
         tiers: All multi-tenant tiers
         optional: true
+        regions: global
         data: [Account info, application data, network-level web traffic data, IP addresses]
   - name: Proton AG (Proton Mail)
     shortName: Proton Mail
@@ -85,6 +103,7 @@ subprocessors:
         purpose: Internal communications, customer support
         location: Switzerland
         tiers: All
+        regions: global
         data: [Email addresses, email content]
   - name: Stripe, Inc.
     shortName: Stripe
@@ -101,6 +120,7 @@ subprocessors:
         purpose: Payment processing, invoicing, fraud detection, tax reporting, payment links, checkout services.
         location: US
         tiers: All
+        regions: global
         data: [Account info, app data, network traffic]
   - name: Approximated, Inc.
     shortName: Approximated
@@ -116,6 +136,7 @@ subprocessors:
         location: Global edge network
         tiers: Identity Plus, Team Plus
         optional: true
+        regions: global
         data: [Account info, application data, network-level web traffic data, IP addresses]
   - name: UpCloud Ltd
     shortName: UpCloud
@@ -132,6 +153,7 @@ subprocessors:
         location: UK (London) or EU (Helsinki, Amsterdam, Frankfurt)
         tiers: All
         optional: true
+        regions: [uk, eu]
         data: [Account info, app data, network-level web traffic data, IP addresses]
   - name: Northflank, Ltd
     shortName: NorthFlank
@@ -146,6 +168,7 @@ subprocessors:
         location: UK (London) or EU (Netherlands)
         tiers: All
         optional: true
+        regions: [uk, eu]
         data: [Account info, app data, network-level web traffic data, IP addresses]
   - name: DigitalOcean, LLC
     shortName: DigitalOcean
@@ -161,6 +184,7 @@ subprocessors:
         location: EU or CA (Toronto)
         tiers: All
         optional: true
+        regions: [eu, ca]
         data: [Account info, app data, network-level web traffic data, IP addresses]
   - name: Catalyst Cloud Limited
     shortName: Catalyst Cloud
@@ -177,6 +201,7 @@ subprocessors:
         location: NZ (Porirua)
         tiers: All
         optional: true
+        regions: [nz]
         data: [Account info, app data, network-level web traffic data, IP addresses]
   - name: Amazon Web Services, Inc.
     shortName: AWS
@@ -193,6 +218,7 @@ subprocessors:
         location: EU
         tiers: All
         optional: true
+        regions: global
         data: [Email addresses, email content, DKIM/DMARC]
       - category: backup
         label: AWS (S3)
@@ -200,6 +226,7 @@ subprocessors:
         location: "EU (Frankfurt, Ireland)"
         tiers: Global Elite
         optional: true
+        regions: global
         data: [Account info, application data]
   - name: Lettermint B.V.
     shortName: Lettermint
@@ -214,6 +241,7 @@ subprocessors:
         location: EU
         tiers: All
         optional: true
+        regions: global
         data: [Email addresses, email content, DKIM/DMARC]
   - name: BunnyWay d.o.o. (BunnyCDN)
     shortName: BunnyCDN
@@ -229,6 +257,7 @@ subprocessors:
         purpose: CDN and static hosting for the Processor's public websites (`onetimesecret.com`, `onetimesecret.dev`) and documentation (`docs.onetimesecret.com`, `docs.onetimesecret.dev`); does not serve Secret Content or Account Data
         location: Global edge network
         tiers: All
+        regions: global
         data: [Network-level web traffic data, IP addresses]
 
 # Newest first. Real history predating this site is being reconstructed
