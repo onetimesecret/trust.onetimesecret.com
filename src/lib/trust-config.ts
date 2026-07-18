@@ -60,6 +60,14 @@ export const SubprocessorSchema = z.object({
   // Core subprocessors apply to all service tiers; alternatives may be
   // engaged per DPA Schedule A ("alternatives unless stated as additive").
   core: z.boolean().default(false),
+  // Engagement is orthogonal to core/optional. `active` = processes data in
+  // the standard multi-tenant / single-tenant service today. `standby` =
+  // vetted and contractually approved (it stays in Schedule A's "List of
+  // Approved Subprocessors"), but processes no customer data yet — disclosed
+  // in advance so the objection window can run before engagement. Providers
+  // unique to a bespoke/custom install are recorded as `standby`; that
+  // install is governed by its own agreement, not this list.
+  engagement: z.enum(['active', 'standby']).default('active'),
   note: z.string().optional(),
   entity: SubprocessorEntitySchema,
   roles: z.array(SubprocessorRoleSchema).nonempty(),

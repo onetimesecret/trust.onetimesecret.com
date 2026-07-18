@@ -12,7 +12,12 @@ import type { RegionCode, Subprocessor } from '../lib/trust-config';
 type Role = Subprocessor['roles'][number];
 type Slot = { s: Subprocessor; r: Role };
 
-const roles: Slot[] = trust.subprocessors.flatMap((s) => s.roles.map((r) => ({ s, r })));
+// Standby subprocessors process no customer data yet, so they never appear
+// in the "what a secret here can touch" flow — they live in the Approved
+// alternates section of the register instead.
+const roles: Slot[] = trust.subprocessors
+  .filter((s) => s.engagement === 'active')
+  .flatMap((s) => s.roles.map((r) => ({ s, r })));
 
 const inRegion = ({ r }: Slot, code: RegionCode) =>
   r.regions === 'global' || r.regions.includes(code);
