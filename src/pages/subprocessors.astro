@@ -1,10 +1,38 @@
 ---
+import RegionArchitecture from '../components/RegionArchitecture.astro';
 import TrustLayout from '../layouts/TrustLayout.astro';
 import { trust } from '../lib/trust';
-import { subprocessorLocation } from '../lib/trust-config';
+import { isPanRegion } from '../lib/trust-config';
+import type { RegionCode, Subprocessor } from '../lib/trust-config';
 
-const core = trust.subprocessors.filter((s) => s.core);
-const alternatives = trust.subprocessors.filter((s) => !s.core);
+// The full register below is the one-stop reference: every subprocessor
+// once, with every DPA Schedule A field on the page — legal jurisdiction,
+// registered address, per-role category, Categories of Data, service
+// tiers, and location. The per-region diagram above owns the "one region
+// at a time" view; the register never partitions by region, so nothing a
+// reviewer needs is behind a toggle or a link to the DPA.
+
+const regionLabel = new Map(trust.regions.map((r) => [r.code, r.label] as const));
+
+// Regions a subprocessor serves: pan-region roles ("global") engage
+// everywhere; otherwise the union of the region codes across its roles,
+// in the canonical trust.regions order.
+function regionsServed(s: Subprocessor): 'all' | RegionCode[] {
+  if (isPanRegion(s)) return 'all';
+  const codes = new Set<RegionCode>();
+  for (const r of s.roles) if (r.regions !== 'global') for (const c of r.regions) codes.add(c);
+  return trust.regions.map((r) => r.code).filter((c) => codes.has(c));
+}
+
+const categoryLabel: Record<Subprocessor['roles'][number]['category'], string> = {
+  infrastructure: 'Infrastructure',
+  network: 'Network',
+  email: 'Email',
+  backup: 'Backup',
+  payments: 'Payments',
+};
+
+const register = trust.subprocessors.map((s) => ({ s, regions: regionsServed(s) }));
 ---
 
 <TrustLayout
@@ -28,46 +56,85 @@ const alternatives = trust.subprocessors.filter((s) => !s.core);
       <a href="https://github.com/onetimesecret/site-policy">view history in git</a>
     </p>
 
-    <section style="margin-top: 40px;">
-      <div class="kicker left" style="margin-bottom: 6px;">Core — all service tiers</div>
-      <div class="rule-list">
-        {core.map((s) => (
-          <div class="rule-row" style="display: block; padding: 20px 0;">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;">
-              <span style="font: 600 16px var(--sans);">{s.name}</span>
-              <span class="row-meta mono">since {s.since}</span>
-            </div>
-            <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
-              {s.purpose} <em style="color: var(--faint);">— {subprocessorLocation(s)}</em>
-              {s.note && <em style="color: var(--faint);"> · {s.note}</em>}
-            </p>
-          </div>
-        ))}
-      </div>
+    <section id="architecture" style="margin-top: 44px;">
+      <div class="kicker left" style="margin-bottom: 6px;">The region's architecture, one at a time</div>
+      <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 16px;">
+        Pick a region to see what a secret there can touch: the internet at the top, two
+        ingress paths — our regional service domain and customer custom domains — converging
+        on that region's hosting, with backups, email, and payments alongside.
+      </p>
+      <RegionArchitecture />
     </section>
 
-    <section style="margin-top: 40px;">
-      <div class="kicker left" style="margin-bottom: 6px;">Alternatives — engaged per region, tier, or feature</div>
-      <div class="rule-list">
-        {alternatives.map((s) => (
-          <div class="rule-row" style="display: block; padding: 20px 0;">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;">
-              <span style="font: 600 16px var(--sans);">{s.name}</span>
-              <span class="row-meta mono">since {s.since}</span>
+    <section id="register" style="margin-top: 48px;">
+      <div class="kicker left" style="margin-bottom: 6px;">The full register — every field, no click-through</div>
+      <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
+        One entry per subprocessor, listing everything the contract records: the legal
+        entity and its jurisdiction, the regions it serves, and — for each role — the
+        categories of data it touches, the service tiers it applies to, and where it runs.
+        This is the same data as <a href="https://onetimesecret.com/dpa">Schedule A of the DPA</a>,
+        rendered from <a href="/trust.yaml">trust.yaml</a>.
+      </p>
+
+      <div class="reg">
+        {register.map(({ s, regions }) => (
+          <article class="reg-entry">
+            <header class="reg-head">
+              <div>
+                <span class="reg-name">{s.name}</span>
+                {s.shortName !== s.name && <span class="reg-alias mono">{s.shortName}</span>}
+              </div>
+              <span class="row-meta mono">
+                since {s.since} · {s.core ? 'Core' : 'Alternative'}
+              </span>
+            </header>
+
+            <dl class="reg-meta">
+              <div><dt>Jurisdiction</dt><dd>{s.entity.jurisdiction}</dd></div>
+              <div>
+                <dt>Regions</dt>
+                <dd class="reg-regions">
+                  {regions === 'all'
+                    ? <span class="reg-chip all">All regions</span>
+                    : regions.map((c) => (
+                        <span class="reg-chip" title={regionLabel.get(c)}>{c.toUpperCase()}</span>
+                      ))}
+                </dd>
+              </div>
+              <div><dt>Registered address</dt><dd>{s.entity.address}</dd></div>
+              {(s.note ?? s.entity.comment) && (
+                <div><dt>Certifications &amp; notes</dt><dd>{s.note ?? s.entity.comment}</dd></div>
+              )}
+            </dl>
+
+            <div class="reg-roles">
+              {s.roles.map((r) => (
+                <div class="reg-role">
+                  <div class="reg-role-head">
+                    <span class={`reg-cat cat-${r.category}`}>{categoryLabel[r.category]}</span>
+                    <span class="reg-role-label">{r.label ?? s.shortName}</span>
+                    <span class={`reg-flag ${r.optional ? 'opt' : 'always'}`}>
+                      {r.optional ? 'May be engaged' : 'Always in use'}
+                    </span>
+                  </div>
+                  <p class="reg-purpose">{r.purpose}</p>
+                  <dl class="reg-role-facts">
+                    <div><dt>Data</dt><dd>{r.data.join(', ')}</dd></div>
+                    <div><dt>Tiers</dt><dd>{r.tiers}</dd></div>
+                    <div><dt>Location</dt><dd>{r.location}</dd></div>
+                  </dl>
+                </div>
+              ))}
             </div>
-            <p style="margin: 6px 0 0; font-size: 15px; line-height: 1.65; color: var(--muted);">
-              {s.purpose} <em style="color: var(--faint);">— {subprocessorLocation(s)}</em>
-              {s.note && <em style="color: var(--faint);"> · {s.note}</em>}
-            </p>
-          </div>
+          </article>
         ))}
       </div>
-    </section>
 
-    <p style="font: 400 12.5px/1.6 var(--sans); color: var(--faint); margin: 14px 0 0;">
-      DPAs are in place with each entity. This is the full chain — no undisclosed
-      sub-subprocessors. Self-hosted installations have zero subprocessors.
-    </p>
+      <p style="font: 400 12.5px/1.6 var(--sans); color: var(--faint); margin: 18px 0 0;">
+        DPAs are in place with each entity. This is the full chain — no undisclosed
+        sub-subprocessors. Self-hosted installations have zero subprocessors.
+      </p>
+    </section>
 
     <section style="margin-top: 56px;">
       <div class="kicker left">Change history, newest first</div>
@@ -88,7 +155,7 @@ const alternatives = trust.subprocessors.filter((s) => !s.core);
         <div class="callout-label">Notification policy</div>
         <p>
           New or replaced subprocessors are announced by email to all account holders and posted
-          here at least thirty days before they process any customer data. During that window
+          here, opening a thirty-day objection window. During that window
           you may object and terminate the affected services without penalty. Emergency
           replacements — say, a provider failing — are announced promptly after the engagement,
           with reasons given, and the objection window runs from that notice.
@@ -97,3 +164,116 @@ const alternatives = trust.subprocessors.filter((s) => !s.core);
     </section>
   </div>
 </TrustLayout>
+
+<style>
+  .reg { border-top: 1px solid var(--ink); }
+  .reg-entry {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .reg-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .reg-name { font: 600 17px var(--sans); color: var(--ink); }
+  .reg-alias { font: 400 12px var(--mono); color: var(--faint); margin-left: 9px; }
+
+  .reg-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 28px;
+    margin: 14px 0 0;
+  }
+  .reg-meta > div { display: flex; flex-direction: column; gap: 2px; }
+  .reg-meta dt {
+    font: 600 10px var(--sans);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .reg-meta dd {
+    margin: 0;
+    font: 400 13.5px/1.55 var(--sans);
+    color: var(--muted);
+  }
+
+  .reg-regions { display: flex; flex-wrap: wrap; gap: 5px; }
+  .reg-chip {
+    font: 600 10.5px var(--mono);
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline);
+    color: var(--muted);
+  }
+  .reg-chip.all { border-color: var(--rust); color: var(--rust); letter-spacing: 0.02em; }
+
+  .reg-roles { margin-top: 16px; display: grid; gap: 12px; }
+  .reg-role {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-left: 2px solid var(--rust);
+    padding: 12px 14px;
+  }
+  .reg-role-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+  }
+  .reg-cat {
+    font: 600 9.5px var(--sans);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    color: var(--faint);
+  }
+  .reg-role-label { font: 600 13.5px var(--sans); color: var(--ink); }
+  .reg-flag {
+    margin-left: auto;
+    font: 600 10px var(--sans);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .reg-flag.always { color: var(--rust); }
+  .reg-flag.opt { color: var(--faint); }
+
+  .reg-purpose {
+    margin: 9px 0 0;
+    font: 400 13.5px/1.6 var(--sans);
+    color: var(--muted);
+  }
+
+  .reg-role-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px 20px;
+    margin: 11px 0 0;
+    padding-top: 10px;
+    border-top: 1px dashed var(--hairline);
+  }
+  .reg-role-facts > div { display: flex; flex-direction: column; gap: 1px; }
+  .reg-role-facts dt {
+    font: 600 9.5px var(--sans);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .reg-role-facts dd {
+    margin: 0;
+    font: 400 12.5px/1.5 var(--sans);
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .reg-meta { grid-template-columns: 1fr; }
+    .reg-head { flex-direction: column; gap: 4px; }
+    .reg-flag { margin-left: 0; }
+  }
+</style>

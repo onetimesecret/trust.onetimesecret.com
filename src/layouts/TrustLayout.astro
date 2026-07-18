@@ -38,6 +38,14 @@ const { email, sla, pgp } = trust.meta.contacts;
     <title>{title} · Onetime Secret — Trust</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <script is:inline>
+      // Stamp the stored theme before first paint so there is no flash.
+      // Absent a stored choice, prefers-color-scheme drives the palette.
+      (() => {
+        const t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      })();
+    </script>
   </head>
   <body>
     {showPreviewNotices && (
@@ -54,6 +62,9 @@ const { email, sla, pgp } = trust.meta.contacts;
         {navItems.map((item) => (
           <a href={item.href} aria-current={item.key === active ? 'page' : undefined}>{item.label}</a>
         ))}
+        <button type="button" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <span class="theme-toggle-icon" aria-hidden="true"></span>
+        </button>
       </nav>
     </header>
 
@@ -69,11 +80,32 @@ const { email, sla, pgp } = trust.meta.contacts;
         <a href={`mailto:${email}`}>{email}</a> · replies within {sla}
       </span>
     </footer>
+    <script is:inline>
+      // Wire the toggle: flip data-theme against the effective theme
+      // (stamped override, else the OS preference) and persist the choice.
+      (() => {
+        const root = document.documentElement;
+        const btn = document.querySelector('.theme-toggle');
+        if (!btn) return;
+        const effective = () =>
+          root.dataset.theme ||
+          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const sync = () => btn.setAttribute('aria-pressed', String(effective() === 'dark'));
+        sync();
+        btn.addEventListener('click', () => {
+          const next = effective() === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          localStorage.setItem('theme', next);
+          sync();
+        });
+      })();
+    </script>
   </body>
 </html>
 
 <style is:global>
   :root {
+    color-scheme: light;
     --paper: #fffdf8;
     --ink: #232019;
     --body: #3a362c;
@@ -87,6 +119,39 @@ const { email, sla, pgp } = trust.meta.contacts;
     --serif: 'Newsreader', Georgia, serif;
     --sans: 'Libre Franklin', system-ui, sans-serif;
     --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  /* Dark palette — warm, to keep the newsprint feel. Applied when the OS
+     asks for dark (unless overridden to light), and — with higher
+     specificity so it wins either direction — when data-theme is stamped.
+     Keep the two dark blocks in sync. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      color-scheme: dark;
+      --paper: #1a1815;
+      --ink: #f0ebe0;
+      --body: #d4cec0;
+      --muted: #a8a290;
+      --faint: #7d786a;
+      --rust: #d47a5c;
+      --hairline: #34302a;
+      --panel: #232019;
+      --green: #6faf76;
+      --amber: #c9a94e;
+    }
+  }
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --paper: #1a1815;
+    --ink: #f0ebe0;
+    --body: #d4cec0;
+    --muted: #a8a290;
+    --faint: #7d786a;
+    --rust: #d47a5c;
+    --hairline: #34302a;
+    --panel: #232019;
+    --green: #6faf76;
+    --amber: #c9a94e;
   }
 
   * { box-sizing: border-box; }
@@ -161,6 +226,25 @@ const { email, sla, pgp } = trust.meta.contacts;
   .nav nav a { color: var(--faint); text-decoration: none; }
   .nav nav a:hover { color: var(--ink); }
   .nav nav a[aria-current='page'] { color: var(--ink); }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--faint);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--faint); }
+  .theme-toggle-icon::before { content: '☾'; }
+  .theme-toggle[aria-pressed='true'] .theme-toggle-icon::before { content: '☀'; }
 
   .footer {
     border-top: 1px solid var(--hairline);
