@@ -1,6 +1,6 @@
 ---
-import { trust } from '../lib/trust';
-import type { RegionCode, Subprocessor } from '../lib/trust-config';
+import { trust } from "../lib/trust";
+import type { RegionCode, Subprocessor } from "../lib/trust-config";
 
 // The per-region architecture diagram: internet at the top, then the two
 // ingress paths — the regional service domain (Cloudflare) and customer
@@ -9,30 +9,30 @@ import type { RegionCode, Subprocessor } from '../lib/trust-config';
 // node is a role row from trust.yaml, so the diagram mirrors DPA
 // Schedule A by construction.
 
-type Role = Subprocessor['roles'][number];
+type Role = Subprocessor["roles"][number];
 type Slot = { s: Subprocessor; r: Role };
 
 // Standby subprocessors process no customer data yet, so they never appear
 // in the "what a secret here can touch" flow — they live in the Approved
 // alternates section of the register instead.
 const roles: Slot[] = trust.subprocessors
-  .filter((s) => s.engagement === 'active')
+  .filter((s) => s.engagement === "active")
   .flatMap((s) => s.roles.map((r) => ({ s, r })));
 
 const inRegion = ({ r }: Slot, code: RegionCode) =>
-  r.regions === 'global' || r.regions.includes(code);
+  r.regions === "global" || r.regions.includes(code);
 
 // Ingress identification is by provider: Cloudflare's two roles (DNS,
 // optional edge proxy) are the service-domain path; Approximated is the
 // custom-domain path. BunnyCDN's network role serves only the public
 // marketing/docs sites — no customer data path — so it stays off the
 // diagram and appears in the full list below.
-const isDns = ({ s, r }: Slot) => s.shortName === 'Cloudflare' && r.category === 'infrastructure';
-const isProxy = ({ s, r }: Slot) => s.shortName === 'Cloudflare' && r.category === 'network';
-const isCustomIngress = ({ s }: Slot) => s.shortName === 'Approximated';
+const isDns = ({ s, r }: Slot) => s.shortName === "Cloudflare" && r.category === "infrastructure";
+const isProxy = ({ s, r }: Slot) => s.shortName === "Cloudflare" && r.category === "network";
+const isCustomIngress = ({ s }: Slot) => s.shortName === "Approximated";
 
 const nodeSub = (r: Role) =>
-  `${r.short} · ${r.tiers === 'All' ? r.location : /tiers?$/i.test(r.tiers) ? r.tiers : `${r.tiers} only`}`;
+  `${r.short} · ${r.tiers === "All" ? r.location : /tiers?$/i.test(r.tiers) ? r.tiers : `${r.tiers} only`}`;
 
 const panels = trust.regions.map((region) => {
   const here = roles.filter((slot) => inRegion(slot, region.code));
@@ -40,148 +40,176 @@ const panels = trust.regions.map((region) => {
     region,
     serviceIngress: here.filter((x) => isDns(x) || isProxy(x)),
     customIngress: here.filter(isCustomIngress),
-    hosting: here.filter((slot) => slot.r.category === 'infrastructure' && !isDns(slot)),
-    backups: here.filter(({ r }) => r.category === 'backup'),
-    email: here.filter(({ r }) => r.category === 'email'),
-    payments: here.filter(({ r }) => r.category === 'payments'),
+    hosting: here.filter((slot) => slot.r.category === "infrastructure" && !isDns(slot)),
+    backups: here.filter(({ r }) => r.category === "backup"),
+    email: here.filter(({ r }) => r.category === "email"),
+    payments: here.filter(({ r }) => r.category === "payments"),
   };
 });
 ---
 
 <div class="arch" data-arch>
   <div class="arch-tabs" role="tablist" aria-label="Choose a region">
-    {trust.regions.map((region, i) => (
-      <button
-        type="button"
-        role="tab"
-        id={`arch-tab-${region.code}`}
-        aria-controls={`arch-${region.code}`}
-        aria-selected={i === 0 ? 'true' : 'false'}
-        data-region={region.code}
-      >{region.code.toUpperCase()}</button>
-    ))}
+    {
+      trust.regions.map((region, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`arch-tab-${region.code}`}
+          aria-controls={`arch-${region.code}`}
+          aria-selected={i === 0 ? "true" : "false"}
+          data-region={region.code}
+        >
+          {region.code.toUpperCase()}
+        </button>
+      ))
+    }
   </div>
 
-  {panels.map((p, i) => (
-    <div
-      class="arch-panel"
-      id={`arch-${p.region.code}`}
-      role="tabpanel"
-      aria-labelledby={`arch-tab-${p.region.code}`}
-      data-region={p.region.code}
-      hidden={i !== 0}
-    >
-      <div class="arch-box dashed center">
-        <div class="arch-box-label">The internet</div>
-        <div class="arch-note">People sharing and reading secrets</div>
-      </div>
-
-      <div class="arch-cols two">
-        <div class="arch-arrow" aria-hidden="true">↓</div>
-        <div class="arch-arrow" aria-hidden="true">↓</div>
-
-        <div class="arch-box">
-          <div class="arch-box-label">Regional service domain</div>
-          <div class="arch-domain mono">{p.region.domain}</div>
-          {p.serviceIngress.map(({ s, r }) => (
-            <div class={`arch-node${r.optional ? '' : ' always'}`}>
-              <div class="arch-node-name">{r.label ?? s.shortName}</div>
-              <div class="arch-node-sub">{nodeSub(r)}</div>
-            </div>
-          ))}
+  {
+    panels.map((p, i) => (
+      <div
+        class="arch-panel"
+        id={`arch-${p.region.code}`}
+        role="tabpanel"
+        aria-labelledby={`arch-tab-${p.region.code}`}
+        data-region={p.region.code}
+        hidden={i !== 0}
+      >
+        <div class="arch-box dashed center">
+          <div class="arch-box-label">The internet</div>
+          <div class="arch-note">People sharing and reading secrets</div>
         </div>
 
-        <div class="arch-box">
-          <div class="arch-box-label">Customer custom domains</div>
-          <div class="arch-domain mono">*.onetime.co · secrets.yourco.com</div>
-          {p.customIngress.map(({ s, r }) => (
-            <div class={`arch-node${r.optional ? '' : ' always'}`}>
-              <div class="arch-node-name">{r.label ?? s.shortName}</div>
-              <div class="arch-node-sub">{nodeSub(r)}</div>
-            </div>
-          ))}
+        <div class="arch-cols two">
+          <div class="arch-arrow" aria-hidden="true">
+            ↓
+          </div>
+          <div class="arch-arrow" aria-hidden="true">
+            ↓
+          </div>
+
+          <div class="arch-box">
+            <div class="arch-box-label">Regional domains</div>
+            <div class="arch-domain mono">{p.region.domain}</div>
+            {p.serviceIngress.map(({ s, r }) => (
+              <div class={`arch-node${r.optional ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+          </div>
+
+          <div class="arch-box">
+            <div class="arch-box-label">Custom domain targets</div>
+            <div class="arch-domain mono">*.onetime.co · secrets.yourco.com</div>
+            {p.customIngress.map(({ s, r }) => (
+              <div class={`arch-node${r.optional ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+            <p class="arch-note">
+              Your DNS points here. TLS terminates at Approximated — custom-domain traffic is never
+              proxied through Cloudflare.
+            </p>
+          </div>
+
+          <div class="arch-arrow" aria-hidden="true">
+            ↓
+          </div>
+          <div class="arch-arrow" aria-hidden="true">
+            ↓
+          </div>
+        </div>
+
+        <div class="arch-box hosting">
+          <div class="arch-box-label">Hosting &amp; compute — {p.region.label}</div>
+          <div class="arch-node-grid">
+            {p.hosting.map(({ s, r }) => (
+              <div class={`arch-node${r.optional ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">
+                  {r.short} · {r.location}
+                </div>
+              </div>
+            ))}
+          </div>
           <p class="arch-note">
-            Your DNS points here. TLS terminates at Approximated — custom-domain
-            traffic is never proxied through Cloudflare.
+            Secrets are encrypted at rest here, read once, then destroyed. Key material is separated
+            from the database tier.
           </p>
         </div>
 
-        <div class="arch-arrow" aria-hidden="true">↓</div>
-        <div class="arch-arrow" aria-hidden="true">↓</div>
-      </div>
+        <div class="arch-cols three">
+          <div class="arch-arrow" aria-hidden="true">
+            ↓
+          </div>
+          <div class="arch-arrow" aria-hidden="true">
+            ↓
+          </div>
+          <div class="arch-arrow" aria-hidden="true">
+            ↓
+          </div>
 
-      <div class="arch-box hosting">
-        <div class="arch-box-label">Hosting &amp; compute — {p.region.label}</div>
-        <div class="arch-node-grid">
-          {p.hosting.map(({ s, r }) => (
-            <div class={`arch-node${r.optional ? '' : ' always'}`}>
-              <div class="arch-node-name">{r.label ?? s.shortName}</div>
-              <div class="arch-node-sub">{r.short} · {r.location}</div>
-            </div>
-          ))}
-        </div>
-        <p class="arch-note">
-          Secrets are encrypted at rest here, read once, then destroyed. Key
-          material is separated from the database tier.
-        </p>
-      </div>
+          <div class="arch-box">
+            <div class="arch-box-label muted">Encrypted backups</div>
+            {p.backups.map(({ s, r }) => (
+              <div class={`arch-node${r.optional ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+            <p class="arch-note">Age out on a fixed 30-day schedule, same jurisdiction.</p>
+          </div>
 
-      <div class="arch-cols three">
-        <div class="arch-arrow" aria-hidden="true">↓</div>
-        <div class="arch-arrow" aria-hidden="true">↓</div>
-        <div class="arch-arrow" aria-hidden="true">↓</div>
+          <div class="arch-box">
+            <div class="arch-box-label muted">Email — addresses &amp; notices only</div>
+            {p.email.map(({ s, r }) => (
+              <div class={`arch-node${r.optional ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+          </div>
 
-        <div class="arch-box">
-          <div class="arch-box-label muted">Encrypted backups</div>
-          {p.backups.map(({ s, r }) => (
-            <div class={`arch-node${r.optional ? '' : ' always'}`}>
-              <div class="arch-node-name">{r.label ?? s.shortName}</div>
-              <div class="arch-node-sub">{nodeSub(r)}</div>
-            </div>
-          ))}
-          <p class="arch-note">Age out on a fixed 30-day schedule, same jurisdiction.</p>
-        </div>
-
-        <div class="arch-box">
-          <div class="arch-box-label muted">Email — addresses &amp; notices only</div>
-          {p.email.map(({ s, r }) => (
-            <div class={`arch-node${r.optional ? '' : ' always'}`}>
-              <div class="arch-node-name">{r.label ?? s.shortName}</div>
-              <div class="arch-node-sub">{nodeSub(r)}</div>
-            </div>
-          ))}
+          <div class="arch-box">
+            <div class="arch-box-label muted">Payments — billing only</div>
+            {p.payments.map(({ s, r }) => (
+              <div class={`arch-node${r.optional ? "" : " always"}`}>
+                <div class="arch-node-name">{r.label ?? s.shortName}</div>
+                <div class="arch-node-sub">{nodeSub(r)}</div>
+              </div>
+            ))}
+            <p class="arch-note">Never Secret Content.</p>
+          </div>
         </div>
 
-        <div class="arch-box">
-          <div class="arch-box-label muted">Payments — billing only</div>
-          {p.payments.map(({ s, r }) => (
-            <div class={`arch-node${r.optional ? '' : ' always'}`}>
-              <div class="arch-node-name">{r.label ?? s.shortName}</div>
-              <div class="arch-node-sub">{nodeSub(r)}</div>
-            </div>
-          ))}
-          <p class="arch-note">Never Secret Content.</p>
+        <div class="arch-legend">
+          <span>
+            <i class="swatch always" />
+            Always in use
+          </span>
+          <span>
+            <i class="swatch" />
+            May be engaged · tier noted on the node
+          </span>
+          <span class="arch-legend-source">Rendered from trust.yaml · mirrors DPA Schedule A</span>
         </div>
       </div>
-
-      <div class="arch-legend">
-        <span><i class="swatch always"></i>Always in use</span>
-        <span><i class="swatch"></i>May be engaged · tier noted on the node</span>
-        <span class="arch-legend-source">Rendered from trust.yaml · mirrors DPA Schedule A</span>
-      </div>
-    </div>
-  ))}
+    ))
+  }
 </div>
 
 <script>
   // Static tab switcher: every region's panel is pre-rendered; this only
   // flips `hidden`. With JS off, the noscript rule below shows them all.
-  document.querySelectorAll('[data-arch]').forEach((root) => {
+  document.querySelectorAll("[data-arch]").forEach((root) => {
     const tabs = root.querySelectorAll<HTMLButtonElement>('[role="tab"]');
     tabs.forEach((tab) =>
-      tab.addEventListener('click', () => {
-        tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
-        root.querySelectorAll<HTMLElement>('.arch-panel').forEach((panel) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+        root.querySelectorAll<HTMLElement>(".arch-panel").forEach((panel) => {
           panel.hidden = panel.dataset.region !== tab.dataset.region;
         });
       }),
@@ -191,16 +219,29 @@ const panels = trust.regions.map((region) => {
 
 <noscript>
   <style>
-    .arch-tabs { display: none; }
-    .arch-panel[hidden] { display: block; }
-    .arch-panel + .arch-panel { margin-top: 40px; }
+    .arch-tabs {
+      display: none;
+    }
+    .arch-panel[hidden] {
+      display: block;
+    }
+    .arch-panel + .arch-panel {
+      margin-top: 40px;
+    }
   </style>
 </noscript>
 
 <style>
-  .arch { font-family: var(--sans); }
+  .arch {
+    font-family: var(--sans);
+  }
 
-  .arch-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .arch-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
   .arch-tabs button {
     font: 600 12.5px var(--sans);
     letter-spacing: 0.04em;
@@ -211,8 +252,11 @@ const panels = trust.regions.map((region) => {
     color: var(--muted);
     cursor: pointer;
   }
-  .arch-tabs button:hover { color: var(--ink); border-color: var(--faint); }
-  .arch-tabs button[aria-selected='true'] {
+  .arch-tabs button:hover {
+    color: var(--ink);
+    border-color: var(--faint);
+  }
+  .arch-tabs button[aria-selected="true"] {
     border-color: var(--rust);
     color: var(--rust);
   }
@@ -222,9 +266,16 @@ const panels = trust.regions.map((region) => {
     background: var(--panel);
     padding: 14px 16px;
   }
-  .arch-box.dashed { border-style: dashed; background: transparent; }
-  .arch-box.center { text-align: center; }
-  .arch-box.hosting { border-color: var(--rust); }
+  .arch-box.dashed {
+    border-style: dashed;
+    background: transparent;
+  }
+  .arch-box.center {
+    text-align: center;
+  }
+  .arch-box.hosting {
+    border-color: var(--rust);
+  }
 
   .arch-box-label {
     font: 600 10.5px var(--sans);
@@ -233,18 +284,29 @@ const panels = trust.regions.map((region) => {
     color: var(--rust);
     margin-bottom: 4px;
   }
-  .arch-box-label.muted { color: var(--faint); }
+  .arch-box-label.muted {
+    color: var(--faint);
+  }
 
   .arch-domain {
     font: 500 12.5px var(--mono);
     color: var(--ink);
     margin: 0 0 10px;
   }
-  .mono { font-family: var(--mono); }
+  .mono {
+    font-family: var(--mono);
+  }
 
-  .arch-cols { display: grid; gap: 0 18px; }
-  .arch-cols.two { grid-template-columns: 1fr 1fr; }
-  .arch-cols.three { grid-template-columns: 1fr 1.2fr 1fr; }
+  .arch-cols {
+    display: grid;
+    gap: 0 18px;
+  }
+  .arch-cols.two {
+    grid-template-columns: 1fr 1fr;
+  }
+  .arch-cols.three {
+    grid-template-columns: 1fr 1.2fr 1fr;
+  }
   .arch-arrow {
     text-align: center;
     color: var(--faint);
@@ -258,15 +320,26 @@ const panels = trust.regions.map((region) => {
     padding: 8px 11px;
     margin-top: 8px;
   }
-  .arch-node.always { border: 1px solid var(--rust); }
-  .arch-node-name { font: 600 13.5px var(--sans); color: var(--ink); }
-  .arch-node-sub { font: 400 11.5px/1.45 var(--sans); color: var(--faint); margin-top: 2px; }
+  .arch-node.always {
+    border: 1px solid var(--rust);
+  }
+  .arch-node-name {
+    font: 600 13.5px var(--sans);
+    color: var(--ink);
+  }
+  .arch-node-sub {
+    font: 400 11.5px/1.45 var(--sans);
+    color: var(--faint);
+    margin-top: 2px;
+  }
   .arch-node-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 8px;
   }
-  .arch-node-grid .arch-node { margin-top: 0; }
+  .arch-node-grid .arch-node {
+    margin-top: 0;
+  }
 
   .arch-note {
     font: 400 11.5px/1.55 var(--sans);
@@ -284,21 +357,37 @@ const panels = trust.regions.map((region) => {
     font: 400 11.5px var(--sans);
     color: var(--faint);
   }
-  .arch-legend span { display: inline-flex; align-items: center; gap: 6px; }
-  .arch-legend-source { margin-left: auto; }
+  .arch-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .arch-legend-source {
+    margin-left: auto;
+  }
   .swatch {
     display: inline-block;
     width: 14px;
     height: 10px;
     border: 1px dashed var(--faint);
   }
-  .swatch.always { border: 1px solid var(--rust); }
+  .swatch.always {
+    border: 1px solid var(--rust);
+  }
 
   @media (max-width: 720px) {
     .arch-cols.two,
-    .arch-cols.three { grid-template-columns: 1fr; }
-    .arch-cols .arch-arrow:nth-of-type(n + 2) { display: none; }
-    .arch-cols .arch-box { margin-bottom: 12px; }
-    .arch-legend-source { margin-left: 0; }
+    .arch-cols.three {
+      grid-template-columns: 1fr;
+    }
+    .arch-cols .arch-arrow:nth-of-type(n + 2) {
+      display: none;
+    }
+    .arch-cols .arch-box {
+      margin-bottom: 12px;
+    }
+    .arch-legend-source {
+      margin-left: 0;
+    }
   }
 </style>
