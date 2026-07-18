@@ -43,14 +43,6 @@ contains tracking pixels or click-tracking links" plus the three categories)
 is already applied in this repo; DOCS-1 is only the port of the matching
 principles-page copy to the docs repo.
 
-### PP-1 (non-blocking, tidy when convenient)
-
-PP "Information from website browsers" lists "regional environment selection"
-among collected data, but code verification found no client-side persistence
-for region, and the Cookies section folds localStorage into "cookies (and
-similar technologies)". Adjacent to, not contradicted by, the code — tighten
-when convenient.
-
 ### TC-1 (future)
 
 The CC0 license pointers in ToS G.3 and the PP License section deliberately
@@ -179,6 +171,11 @@ review-note history is in git.
   the 2024-06→2024-10 deltas stay in the full CHANGELOG, not the "what's
   changed in 2026" notice. DPA URL canonicalized to `onetimesecret.com/dpa`
   across ToS, PP, and TOMs (the earlier `/info/dpa` mismatch is resolved).
+
+- **PP-1 — regional environment selection.** Removed "regional environment
+  selection" from the browser-data list in privacy.mdx; region is determined by
+  which regional domain is visited (server-side/request data), not a persisted
+  browser preference. Fixed in issue #8.
 
 - **FINALIZATION-july1 items.** Cookies vs localStorage split into separate PP
   paragraphs; "what "dedicated" means" left out by decision.
