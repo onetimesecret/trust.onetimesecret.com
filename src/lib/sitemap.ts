@@ -22,11 +22,10 @@
 // that wasn't pruned), so this file cannot silently drift from the deployed
 // site. See the trust:reconcile-and-prune integration in astro.config.mjs.
 
-export type SectionStatus = 'draft' | 'unlisted' | 'published';
+export type SectionStatus = "draft" | "unlisted" | "published";
 
 export type SectionKey =
-  | 'overview' | 'how' | 'subs' | 'docs' | 'assurance' | 'faq' | 'audit'
-  | 'terms' | 'privacy' | 'dpa' | 'toms';
+  "overview" | "how" | "subs" | "docs" | "assurance" | "faq" | "audit" | "terms" | "privacy" | "dpa" | "toms";
 
 export interface Section {
   key: SectionKey;
@@ -46,20 +45,50 @@ export interface Section {
 // `published`, so introducing this registry changes nothing until you flip a
 // flag. `/` (overview) is the site root and is never pruned.
 export const sections: Section[] = [
-  { key: 'overview',  href: '/',              navLabel: 'Overview',      status: 'draft' },
-  { key: 'how',       href: '/how-it-works',  navLabel: 'How it works',  status: 'draft', indexTitle: 'How it works — secrets, architecture, data flow ↓' },
-  { key: 'subs',      href: '/subprocessors', navLabel: 'Subprocessors', status: 'draft', indexTitle: 'Subprocessors & change history' },
-  { key: 'docs',      href: '/documents',     navLabel: 'Documents',     status: 'draft', indexTitle: 'Documents — policy, DPA, HECVAT' },
-  { key: 'assurance', href: '/assurance',     navLabel: 'Assurance',     status: 'draft', indexTitle: 'Assurance without certification' },
-  { key: 'faq',       href: '/faq',           navLabel: 'FAQ',           status: 'draft' },
-  { key: 'audit',     href: '/your-audit',    navLabel: 'Your audit',    status: 'draft', indexTitle: 'Citing Onetime Secret in your audit' },
+  { key: "overview", href: "/", navLabel: "Overview", status: "published" },
+  {
+    key: "how",
+    href: "/how-it-works",
+    navLabel: "How it works",
+    status: "draft",
+    indexTitle: "How it works — secrets, architecture, data flow ↓",
+  },
+  {
+    key: "subs",
+    href: "/subprocessors",
+    navLabel: "Subprocessors",
+    status: "draft",
+    indexTitle: "Subprocessors & change history",
+  },
+  {
+    key: "docs",
+    href: "/documents",
+    navLabel: "Documents",
+    status: "draft",
+    indexTitle: "Documents — policy, DPA, HECVAT",
+  },
+  {
+    key: "assurance",
+    href: "/assurance",
+    navLabel: "Assurance",
+    status: "draft",
+    indexTitle: "Assurance without certification",
+  },
+  { key: "faq", href: "/faq", navLabel: "FAQ", status: "draft" },
+  {
+    key: "audit",
+    href: "/your-audit",
+    navLabel: "Your audit",
+    status: "draft",
+    indexTitle: "Citing Onetime Secret in your audit",
+  },
   // Generated policy documents (MDX over policy-constants.yaml). Their status
   // gates publication independently of counsel sign-off display (manifest.ts);
   // flip to `unlisted` for a counsel-review lane or `draft` to pull one back.
-  { key: 'terms',     href: '/terms',         status: 'draft' },
-  { key: 'privacy',   href: '/privacy',       status: 'draft' },
-  { key: 'dpa',       href: '/dpa',           status: 'draft' },
-  { key: 'toms',      href: '/toms',          status: 'draft' },
+  { key: "terms", href: "/terms", status: "draft" },
+  { key: "privacy", href: "/privacy", status: "draft" },
+  { key: "dpa", href: "/dpa", status: "draft" },
+  { key: "toms", href: "/toms", status: "draft" },
 ];
 
 // Routes the build emits that are not navigable sections — data endpoints and
@@ -67,10 +96,10 @@ export const sections: Section[] = [
 // not routes, and never appear in the build's route table.) The reconciler
 // treats any emitted route not covered by a section OR this list as an orphan
 // and fails the build, so a page can never reach the trust site unaccounted-for.
-export const nonSectionRoutes: readonly string[] = ['/trust.yaml'];
+export const nonSectionRoutes: readonly string[] = ["/trust.yaml"];
 
-const isBuilt = (s: Section) => s.status !== 'draft';
-const isListed = (s: Section) => s.status === 'published';
+const isBuilt = (s: Section) => s.status !== "draft";
+const isListed = (s: Section) => s.status === "published";
 
 // Nav and the overview index advertise only published sections that opted in.
 export const navSections = sections.filter((s) => isListed(s) && s.navLabel);
