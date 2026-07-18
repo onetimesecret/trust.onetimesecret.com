@@ -97,10 +97,7 @@ export const SubprocessorSchema = z.object({
   // "TBD" until the per-entity engagement dates are confirmed against
   // invoices / infra history (Handoff Spec §7.2).
   since: z.string(),
-  // Core subprocessors apply to all service tiers; alternatives may be
-  // engaged per DPA Schedule A ("alternatives unless stated as additive").
-  core: z.boolean().default(false),
-  // Engagement is orthogonal to core/optional. `active` = processes data in
+  // Engagement is orthogonal to per-role `optional`. `active` = processes data in
   // the standard multi-tenant / single-tenant service today. `standby` =
   // vetted and contractually approved (it stays in Schedule A's "List of
   // Approved Subprocessors"), but processes no customer data yet — disclosed

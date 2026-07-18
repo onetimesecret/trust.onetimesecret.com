@@ -44,8 +44,8 @@ const categoryLabel: Record<Subprocessor['roles'][number]['category'], string> =
     </div>
     <span class="row-meta mono">
       {standby
-        ? <>{s.core ? 'Core' : 'Alternative'} · <span class="reg-standby">not yet engaged</span></>
-        : <>since {s.since} · {s.core ? 'Core' : 'Alternative'}</>}
+        ? <span class="reg-standby">not yet engaged</span>
+        : <>since {s.since}</>}
     </span>
   </header>
 
