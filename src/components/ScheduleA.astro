@@ -3,6 +3,7 @@
 // contractual subprocessor list and the trust site's Subprocessors page
 // are the same data — they cannot drift.
 import { trust } from '../lib/trust';
+import { serviceStatus } from '../lib/trust-config';
 import type { Subprocessor } from '../lib/trust-config';
 
 const CATEGORIES = [
@@ -13,11 +14,18 @@ const CATEGORIES = [
   { key: 'payments', heading: 'Payment Processing' },
 ] as const;
 
+// Schedule A "Status" column wording per effective service state.
+const STATUS_LABEL = {
+  active: 'In use',
+  transitioning: 'In transition',
+  standby: 'Approved',
+} as const;
+
 type Row = {
   label: string;
   location: string;
   tiers: string;
-  optional: boolean;
+  status: string;
   purpose: string;
   dataCategories: string;
 };
@@ -30,7 +38,7 @@ function rowsFor(categoryKey: string): Row[] {
         label: r.label ?? s.shortName,
         location: r.location,
         tiers: r.tiers,
-        optional: r.optional,
+        status: STATUS_LABEL[serviceStatus(s, r)],
         purpose: r.purpose,
         dataCategories: r.dataCategories.join(', '),
       })),
@@ -47,7 +55,7 @@ function rowsFor(categoryKey: string): Row[] {
           <th>Subprocessor</th>
           <th>Data Location</th>
           <th>Tiers</th>
-          <th>Optional</th>
+          <th>Status</th>
           <th>Purpose</th>
           <th>Categories of Data</th>
         </tr>
@@ -58,7 +66,7 @@ function rowsFor(categoryKey: string): Row[] {
             <td><em>{row.label}</em></td>
             <td>{row.location}</td>
             <td>{row.tiers}</td>
-            <td>{row.optional ? '✔' : '𐄂'}</td>
+            <td>{row.status}</td>
             <td>{row.purpose}</td>
             <td>{row.dataCategories}</td>
           </tr>
@@ -86,7 +94,7 @@ function rowsFor(categoryKey: string): Row[] {
           <td><strong>{s.name}</strong></td>
           <td>{s.entity.address}</td>
           <td>{s.entity.jurisdiction}</td>
-          <td>{s.entity.transfer}</td>
+          <td>{s.entity.transferBasis}</td>
           <td>{s.entity.comment && <em>{s.entity.comment}</em>}</td>
         </tr>
       ))}

@@ -57,14 +57,14 @@ export const sections: Section[] = [
     key: "subs",
     href: "/subprocessors",
     navLabel: "Subprocessors",
-    status: "draft",
+    status: "published",
     indexTitle: "Subprocessors & change history",
   },
   {
     key: "docs",
     href: "/documents",
     navLabel: "Documents",
-    status: "draft",
+    status: "published",
     indexTitle: "Documents — policy, DPA, HECVAT",
   },
   {

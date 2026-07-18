@@ -5,7 +5,7 @@
 // entry drops the `since` date (it has none yet) and reframes each service flag
 // as "If engaged", since nothing flows through it today.
 import { trust } from '../lib/trust';
-import { isPanRegion } from '../lib/trust-config';
+import { isPanRegion, serviceStatus } from '../lib/trust-config';
 import type { RegionCode, Subprocessor } from '../lib/trust-config';
 
 interface Props {
@@ -51,8 +51,8 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
 
   <dl class="reg-meta">
     <div><dt>Jurisdiction</dt><dd>{s.entity.jurisdiction}</dd></div>
-    {s.entity.transfer && (
-      <div><dt>Transfer basis</dt><dd>{s.entity.transfer}</dd></div>
+    {s.entity.transferBasis && (
+      <div><dt>Transfer basis</dt><dd>{s.entity.transferBasis}</dd></div>
     )}
     <div>
       <dt>Regions</dt>
@@ -76,8 +76,8 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
         <div class="reg-role-head">
           <span class={`reg-cat cat-${r.category}`}>{categoryLabel[r.category]}</span>
           <span class="reg-role-label">{r.label ?? s.shortName}</span>
-          <span class={`reg-flag ${standby ? 'standby' : r.optional ? 'opt' : 'always'}`}>
-            {standby ? 'If engaged' : r.optional ? 'May be engaged' : 'Always in use'}
+          <span class={`reg-flag ${{ active: 'always', transitioning: 'opt', standby: 'standby' }[serviceStatus(s, r)]}`}>
+            {{ active: 'Always in use', transitioning: 'In transition', standby: 'If engaged' }[serviceStatus(s, r)]}
           </span>
         </div>
         <p class="reg-purpose">{r.purpose}</p>

@@ -12,18 +12,19 @@ import type { RegionCode, Subprocessor } from "../lib/trust-config";
 type Service = Subprocessor["services"][number];
 type Slot = { s: Subprocessor; r: Service };
 
-// Standby subprocessors process no customer data yet, so they never appear
-// in the "what a secret here can touch" flow — they live in the Approved
-// alternates section of the register instead.
+// Standby entries (whole-vendor or per-service) process no customer data
+// yet, so they never appear in the "what a secret here can touch" flow —
+// they live in the approved-not-engaged section of the register instead.
+// Transitioning services stay on the diagram with the dashed border.
 const services: Slot[] = trust.subprocessors
   .filter((s) => s.engagement === "active")
-  .flatMap((s) => s.services.map((r) => ({ s, r })));
+  .flatMap((s) => s.services.filter((r) => r.status !== "standby").map((r) => ({ s, r })));
 
 const inRegion = ({ r }: Slot, code: RegionCode) =>
   r.regions === "global" || r.regions.includes(code);
 
 // Ingress identification is by provider: Cloudflare's two services (DNS,
-// optional edge proxy) are the service-domain path; Approximated is the
+// edge proxy) are the service-domain path; Approximated is the
 // custom-domain path. BunnyCDN's network service serves only the public
 // marketing/docs sites — no customer data path — so it stays off the
 // diagram and appears in the full list below.
@@ -93,7 +94,7 @@ const panels = trust.regions.map((region) => {
             <div class="arch-box-label">Regional domains</div>
             <div class="arch-domain mono">{p.region.domain}</div>
             {p.serviceIngress.map(({ s, r }) => (
-              <div class={`arch-node${r.optional ? "" : " always"}`}>
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
                 <div class="arch-node-name">{r.label ?? s.shortName}</div>
                 <div class="arch-node-sub">{nodeSub(r)}</div>
               </div>
@@ -104,7 +105,7 @@ const panels = trust.regions.map((region) => {
             <div class="arch-box-label">Custom domain targets</div>
             <div class="arch-domain mono">*.onetime.co · secrets.yourco.com</div>
             {p.customIngress.map(({ s, r }) => (
-              <div class={`arch-node${r.optional ? "" : " always"}`}>
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
                 <div class="arch-node-name">{r.label ?? s.shortName}</div>
                 <div class="arch-node-sub">{nodeSub(r)}</div>
               </div>
@@ -127,7 +128,7 @@ const panels = trust.regions.map((region) => {
           <div class="arch-box-label">Hosting &amp; compute — {p.region.label}</div>
           <div class="arch-node-grid">
             {p.hosting.map(({ s, r }) => (
-              <div class={`arch-node${r.optional ? "" : " always"}`}>
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
                 <div class="arch-node-name">{r.label ?? s.shortName}</div>
                 <div class="arch-node-sub">
                   {r.short} · {r.location}
@@ -155,7 +156,7 @@ const panels = trust.regions.map((region) => {
           <div class="arch-box">
             <div class="arch-box-label muted">Encrypted backups</div>
             {p.backups.map(({ s, r }) => (
-              <div class={`arch-node${r.optional ? "" : " always"}`}>
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
                 <div class="arch-node-name">{r.label ?? s.shortName}</div>
                 <div class="arch-node-sub">{nodeSub(r)}</div>
               </div>
@@ -166,7 +167,7 @@ const panels = trust.regions.map((region) => {
           <div class="arch-box">
             <div class="arch-box-label muted">Email — addresses &amp; notices only</div>
             {p.email.map(({ s, r }) => (
-              <div class={`arch-node${r.optional ? "" : " always"}`}>
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
                 <div class="arch-node-name">{r.label ?? s.shortName}</div>
                 <div class="arch-node-sub">{nodeSub(r)}</div>
               </div>
@@ -176,7 +177,7 @@ const panels = trust.regions.map((region) => {
           <div class="arch-box">
             <div class="arch-box-label muted">Payments — billing only</div>
             {p.payments.map(({ s, r }) => (
-              <div class={`arch-node${r.optional ? "" : " always"}`}>
+              <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
                 <div class="arch-node-name">{r.label ?? s.shortName}</div>
                 <div class="arch-node-sub">{nodeSub(r)}</div>
               </div>
@@ -192,7 +193,7 @@ const panels = trust.regions.map((region) => {
           </span>
           <span>
             <i class="swatch" />
-            May be engaged · tier noted on the node
+            In transition · tier noted on the node
           </span>
           <span class="arch-legend-source">Rendered from trust.yaml · mirrors DPA Schedule A</span>
         </div>

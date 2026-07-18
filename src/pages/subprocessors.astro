@@ -1,8 +1,8 @@
 ---
-import RegionArchitecture from '../components/RegionArchitecture.astro';
-import RegisterEntry from '../components/RegisterEntry.astro';
-import TrustLayout from '../layouts/TrustLayout.astro';
-import { trust } from '../lib/trust';
+import RegionArchitecture from "../components/RegionArchitecture.astro";
+import RegisterEntry from "../components/RegisterEntry.astro";
+import TrustLayout from "../layouts/TrustLayout.astro";
+import { trust } from "../lib/trust";
 
 // The full register below is the one-stop reference: every subprocessor
 // once, with every DPA Schedule A field on the page — legal jurisdiction,
@@ -12,12 +12,12 @@ import { trust } from '../lib/trust';
 // reviewer needs is behind a toggle or a link to the DPA.
 //
 // Split by engagement: `active` subprocessors process customer data today;
-// `standby` are approved alternates that process none yet (RegisterEntry
-// reframes them). Bespoke/custom installs are covered by their own
-// agreements — see the notice below — so any provider unique to them sits
-// in standby, not active.
-const active = trust.subprocessors.filter((s) => s.engagement === 'active');
-const standby = trust.subprocessors.filter((s) => s.engagement === 'standby');
+// `standby` entries are approved in advance but process none yet
+// (RegisterEntry reframes them). Bespoke/custom installs are covered by
+// their own agreements — see the notice below — so any provider unique to
+// them sits in standby, deliberately unlabeled.
+const active = trust.subprocessors.filter((s) => s.engagement === "active");
+const standby = trust.subprocessors.filter((s) => s.engagement === "standby");
 ---
 
 <TrustLayout
@@ -26,51 +26,42 @@ const standby = trust.subprocessors.filter((s) => s.engagement === 'standby');
   active="subs"
 >
   <div class="page" style="max-width: 728px;">
-    <div class="kicker">Who touches your data, and since when</div>
+    <div class="kicker">Our service providers</div>
     <h1 style="font-size: 38px;">Subprocessors</h1>
     <p class="lede">
-      These are the third parties that may process customer data on our behalf. When the list
-      changes, every account holder gets an email thirty days before the change takes effect —
-      long enough to object, and we mean it: object and you may end the affected services
-      without penalty. The canonical, contractual list is
-      <a href="https://onetimesecret.com/dpa">Schedule A of our DPA</a>; this page mirrors it
-      and never replaces the email notice.
+      These are the third parties that may process customer data on our behalf. The canonical,
+      contractual list is <a href="/dpa">Schedule A of our DPA</a>; this page mirrors it and never
+      replaces the email notice.
     </p>
-    <p style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 18px 0 0;">
+    <p
+      style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 18px 0 0;"
+    >
       <a href="/trust.yaml">diff this list as trust.yaml</a> ·
-      <a href="https://github.com/onetimesecret/site-policy">view history in git</a>
+      <a href="https://github.com/onetimesecret/trust.onetimesecret.com">view history in git</a>
     </p>
-
-    <div class="callout" style="margin-top: 28px;">
-      <div class="callout-label">Bespoke &amp; custom installations</div>
-      <p>
-        This page describes our standard hosted service. Dedicated, bespoke, and custom
-        deployments are governed by their own agreement or agreements — either ones already
-        in place that <strong>predate</strong> this list, or one-to-one Data Processing
-        Agreements we may sign that <strong>supersede</strong> it. For any such deployment,
-        that agreement's subprocessor terms control, not this page. Self-hosted installations
-        run with zero subprocessors.
-      </p>
-    </div>
 
     <section id="architecture" style="margin-top: 44px;">
-      <div class="kicker left" style="margin-bottom: 6px;">The region's architecture, one at a time</div>
+      <div class="kicker left" style="margin-bottom: 6px;">
+        The region's architecture, one at a time
+      </div>
       <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 16px;">
-        Pick a region to see what a secret there can touch: the internet at the top, two
-        ingress paths — our regional service domain and customer custom domains — converging
-        on that region's hosting, with backups, email, and payments alongside.
+        Pick a region to see what a secret there can touch: the internet at the top, two ingress
+        paths — our regional service domain and customer custom domains — converging on that
+        region's hosting, with backups, email, and payments alongside.
       </p>
       <RegionArchitecture />
     </section>
 
     <section id="register" style="margin-top: 48px;">
-      <div class="kicker left" style="margin-bottom: 6px;">The full register — every field, no click-through</div>
+      <div class="kicker left" style="margin-bottom: 6px;">
+        The full register — every field, no click-through
+      </div>
       <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
-        One entry per subprocessor, listing everything the contract records: the legal
-        entity and its jurisdiction, the regions it serves, and — for each service — the
-        categories of data it touches, the service tiers it applies to, and where it runs.
-        This is the same data as <a href="https://onetimesecret.com/dpa">Schedule A of the DPA</a>,
-        rendered from <a href="/trust.yaml">trust.yaml</a>.
+        One entry per subprocessor, listing everything the contract records: the legal entity and
+        its jurisdiction, the regions it serves, and — for each service — the categories of data it
+        touches, the service tiers it applies to, and where it runs. This is the same data as <a
+          href="/dpa">Schedule A of the DPA</a
+        >, rendered from <a href="/trust.yaml">trust.yaml</a>.
       </p>
 
       <div class="reg">
@@ -83,46 +74,72 @@ const standby = trust.subprocessors.filter((s) => s.engagement === 'standby');
       </p>
     </section>
 
-    {standby.length > 0 && (
-      <section id="standby" style="margin-top: 52px;">
-        <div class="kicker left" style="margin-bottom: 6px;">Approved alternates — vetted, not yet engaged</div>
-        <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
-          These providers are contractually approved and disclosed here in advance, but they
-          process <strong>no customer data today</strong> — so they stay out of the diagram
-          above. We list them so the thirty-day objection window can run <em>before</em> we ever
-          engage one, not after. If and when we do, every account holder is emailed first and
-          the change is dated in the history below.
-        </p>
+    {
+      standby.length > 0 && (
+        <section id="standby" style="margin-top: 52px;">
+          <div class="kicker left" style="margin-bottom: 6px;">
+            Approved in advance — vetted, not yet engaged
+          </div>
+          <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
+            These providers are contractually approved and disclosed here in advance, but they
+            process <strong>no customer data today</strong> — so they stay out of the diagram above.
+            We list them so the thirty-day objection window can run <em>before</em> we ever engage
+            one, not after. If and when we do, every account holder is emailed first and the change
+            is dated in the history below.
+          </p>
+          <div class="reg">
+            {standby.map((s) => (
+              <RegisterEntry s={s} />
+            ))}
+          </div>
+        </section>
+      )
+    }
 
-        <div class="reg">
-          {standby.map((s) => <RegisterEntry s={s} />)}
-        </div>
-      </section>
-    )}
+    <section style="margin-top: 56px;">
+      <div class="callout" style="margin-top: 28px;">
+        <div class="callout-label">Bespoke &amp; custom installations</div>
+        <p>
+          This page describes our standard hosted service. Dedicated, bespoke, and custom
+          deployments are governed by their own agreement or agreements — either ones already in
+          place that <strong>predate</strong> this list, or one-to-one Data Processing Agreements we may
+          sign that <strong>supersede</strong> it. For any such deployment, that agreement's subprocessor
+          terms control, not this page. Self-hosted installations run with zero subprocessors.
+        </p>
+      </div>
+    </section>
 
     <section style="margin-top: 56px;">
       <div class="kicker left">Change history, newest first</div>
-      {trust.subprocessorChangelog.map((h) => (
-        <div class="rule-row" style="justify-content: flex-start; gap: 22px; border-top: none;">
-          <span class="row-meta mono" style="min-width: 92px; padding-top: 3px;">{h.date}</span>
-          <div>
-            <div style="font: 600 14.5px var(--sans);">
-              <span class={`verb-${h.verb}`} style="text-transform: capitalize;">{h.verb}</span>
-              {' '}{h.title}
+      {
+        trust.subprocessorChangelog.map((h) => (
+          <div class="rule-row" style="justify-content: flex-start; gap: 22px; border-top: none;">
+            <span class="row-meta mono" style="min-width: 92px; padding-top: 3px;">
+              {h.date}
+            </span>
+            <div>
+              <div style="font: 600 14.5px var(--sans);">
+                <span class={`verb-${h.verb}`} style="text-transform: capitalize;">
+                  {h.verb}
+                </span>{" "}
+                {h.title}
+              </div>
+              <p style="margin: 5px 0 0; font-size: 14.5px; line-height: 1.65; color: var(--muted);">
+                {h.note}
+              </p>
             </div>
-            <p style="margin: 5px 0 0; font-size: 14.5px; line-height: 1.65; color: var(--muted);">{h.note}</p>
           </div>
-        </div>
-      ))}
+        ))
+      }
 
       <div class="callout" style="margin-top: 28px;">
         <div class="callout-label">Notification policy</div>
         <p>
           New or replaced subprocessors are announced by email to all account holders and posted
-          here, opening a thirty-day objection window. During that window
-          you may object and terminate the affected services without penalty. Emergency
-          replacements — say, a provider failing — are announced promptly after the engagement,
-          with reasons given, and the objection window runs from that notice.
+          here, opening a thirty-day objection window. During that window you may object and
+          terminate the affected services without penalty. Emergency replacements — say, a provider
+          failing — are announced promptly after the engagement, with reasons given, and the
+          objection window runs from that notice.
         </p>
       </div>
     </section>
@@ -131,5 +148,7 @@ const standby = trust.subprocessors.filter((s) => s.engagement === 'standby');
 
 <style>
   /* Register entry styles live in RegisterEntry.astro (scoped per entry). */
-  .reg { border-top: 1px solid var(--ink); }
+  .reg {
+    border-top: 1px solid var(--ink);
+  }
 </style>
