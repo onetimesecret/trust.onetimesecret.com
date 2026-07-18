@@ -55,6 +55,8 @@ const panels = trust.regions.map((region) => {
     <div class="arch-note">People sharing and reading secrets</div>
   </div>
 
+  <div class="arch-arrow" aria-hidden="true">↓</div>
+
   <!-- The tabs sit at the fork: the internet above is region-agnostic;
        everything below is determined by the selected region. -->
   <div class="arch-tabs" role="tablist" aria-label="Choose a region">
@@ -85,11 +87,14 @@ const panels = trust.regions.map((region) => {
         hidden={i !== 0}
       >
         <div class="arch-cols two">
-          <div class="arch-arrow" aria-hidden="true">
-            ↓
-          </div>
-          <div class="arch-arrow" aria-hidden="true">
-            ↓
+          <!-- Fork: stem drops from the selected tab (x tracked via
+               --fork-x), rail spans the column centers, one arrowhead
+               lands on each ingress path. -->
+          <div class="arch-fork" aria-hidden="true">
+            <i class="fork-stem" />
+            <i class="fork-rail" />
+            <span class="fork-head left">↓</span>
+            <span class="fork-head right">↓</span>
           </div>
 
           <div class="arch-box">
@@ -105,7 +110,14 @@ const panels = trust.regions.map((region) => {
 
           <div class="arch-box">
             <div class="arch-box-label">Custom domain targets</div>
-            <div class="arch-domain mono">*.onetime.co · secrets.yourco.com</div>
+            <div class="arch-domains">
+              <div class="arch-domain mono">
+                {p.region.code}.identity.onetime.co<span class="arch-domain-via">via Approximated</span>
+              </div>
+              <div class="arch-domain mono">
+                {p.region.code}.onetime.co<span class="arch-domain-via">direct · transitioning</span>
+              </div>
+            </div>
             {p.customIngress.map(({ s, r }) => (
               <div class={`arch-node${r.status === "transitioning" ? "" : " always"}`}>
                 <div class="arch-node-name">{r.label ?? s.shortName}</div>
@@ -113,8 +125,9 @@ const panels = trust.regions.map((region) => {
               </div>
             ))}
             <p class="arch-note">
-              Your DNS points here. TLS terminates at Approximated — custom-domain traffic is never
-              proxied through Cloudflare.
+              Your DNS points at one of these. TLS terminates at Approximated today; we're
+              transitioning to certificates we issue directly. Custom-domain traffic is never proxied
+              through Cloudflare.
             </p>
           </div>
 
@@ -206,17 +219,30 @@ const panels = trust.regions.map((region) => {
 
 <script>
   // Static tab switcher: every region's panel is pre-rendered; this only
-  // flips `hidden`. With JS off, the noscript rule below shows them all.
-  document.querySelectorAll("[data-arch]").forEach((root) => {
+  // flips `hidden`. With JS off, the noscript rule below shows them all
+  // and the fork stem falls back to center. --fork-x lives on the root so
+  // every panel's fork tracks the selected tab's horizontal position.
+  document.querySelectorAll<HTMLElement>("[data-arch]").forEach((root) => {
     const tabs = root.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+    const setForkX = () => {
+      const tab = root.querySelector('[role="tab"][aria-selected="true"]');
+      if (!tab) return;
+      const rootBox = root.getBoundingClientRect();
+      const tabBox = tab.getBoundingClientRect();
+      const pct = ((tabBox.left + tabBox.width / 2 - rootBox.left) / rootBox.width) * 100;
+      root.style.setProperty("--fork-x", `${pct}%`);
+    };
     tabs.forEach((tab) =>
       tab.addEventListener("click", () => {
         tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
         root.querySelectorAll<HTMLElement>(".arch-panel").forEach((panel) => {
           panel.hidden = panel.dataset.region !== tab.dataset.region;
         });
+        setForkX();
       }),
     );
+    setForkX();
+    window.addEventListener("resize", setForkX);
   });
 </script>
 
@@ -244,7 +270,7 @@ const panels = trust.regions.map((region) => {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    margin: 16px 0 4px;
+    margin: 4px 0;
   }
   .arch-tabs button {
     font: 600 12.5px var(--sans);
@@ -297,6 +323,21 @@ const panels = trust.regions.map((region) => {
     color: var(--ink);
     margin: 0 0 10px;
   }
+  .arch-domains {
+    margin-bottom: 10px;
+  }
+  .arch-domains .arch-domain {
+    margin: 0 0 4px;
+  }
+  .arch-domains .arch-domain:last-child {
+    margin-bottom: 0;
+  }
+  .arch-domain-via {
+    font: 400 10.5px var(--sans);
+    color: var(--faint);
+    letter-spacing: 0;
+    margin-left: 8px;
+  }
   .mono {
     font-family: var(--mono);
   }
@@ -316,6 +357,55 @@ const panels = trust.regions.map((region) => {
     color: var(--faint);
     font-size: 15px;
     padding: 4px 0;
+  }
+
+  /* Selected-tab fork: stem at --fork-x (clamped to the rail), rail
+     between the two column centers (each 25% in, offset half the 18px
+     column gap), arrowheads dropping onto each column. */
+  .arch-fork {
+    grid-column: 1 / -1;
+    position: relative;
+    height: 38px;
+  }
+  .fork-stem,
+  .fork-rail {
+    position: absolute;
+    display: block;
+  }
+  .fork-stem {
+    top: 0;
+    height: 14px;
+    border-left: 1px solid var(--faint);
+    left: clamp(calc(25% - 4.5px), var(--fork-x, 50%), calc(75% + 4.5px));
+    transition: left 0.25s ease;
+  }
+  .fork-rail {
+    top: 14px;
+    left: calc(25% - 4.5px);
+    right: calc(25% - 4.5px);
+    height: 9px;
+    border-top: 1px solid var(--faint);
+    border-left: 1px solid var(--faint);
+    border-right: 1px solid var(--faint);
+  }
+  .fork-head {
+    position: absolute;
+    top: 14px;
+    transform: translateX(-50%);
+    color: var(--faint);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .fork-head.left {
+    left: calc(25% - 4.5px);
+  }
+  .fork-head.right {
+    left: calc(75% + 4.5px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fork-stem {
+      transition: none;
+    }
   }
 
   .arch-node {
@@ -384,8 +474,22 @@ const panels = trust.regions.map((region) => {
     .arch-cols.three {
       grid-template-columns: 1fr;
     }
-    .arch-cols .arch-arrow:nth-of-type(n + 2) {
+    /* Stacked columns need only one arrow per connector row. */
+    .arch-cols .arch-arrow ~ .arch-arrow {
       display: none;
+    }
+    /* Columns stack, so the fork collapses to a single centered arrow. */
+    .arch-fork {
+      height: 26px;
+    }
+    .fork-stem,
+    .fork-rail,
+    .fork-head.right {
+      display: none;
+    }
+    .fork-head.left {
+      left: 50%;
+      top: 0;
     }
     .arch-cols .arch-box {
       margin-bottom: 12px;
