@@ -5,7 +5,8 @@ Service, Privacy Statement, Data Processing Agreement (DPA), and Technical and
 Organizational Measures (TOMs) — organized by effective date, newest first.
 Entries describe how the policies evolved for readers who don't want to read
 diffs; wording polish, formatting, and typo fixes are omitted. The complete
-history is in this repository's git log.
+history is in this repository's git log. A plain-language summary of the
+current revision is in [WHATS-CHANGED.md](./WHATS-CHANGED.md).
 
 These documents began in May 2024 as a fork of [fly.io's site-policy
 repository](https://github.com/superfly/site-policy), itself a fork of

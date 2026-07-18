@@ -347,3 +347,23 @@ Structure and notable content:
   30-day operational + 30-day backup retention.
 - Order control + subprocessor compliance: documented instructions only;
   30 days' advance notice of new subprocessors with objection right.
+
+## Appendix — branch topology snapshot (as of 2026-07-01)
+
+Carried from the former root-level `TIMELINE.md` (removed 2026-07-18; it
+duplicated the Version anchors table above and had gone stale after the
+2026-07-18 branch cleanup). The 2026 revision was developed as a linear
+stack of branches, each a checkpoint further along the same line — 45
+commits atop `main` (`eedf485`, 2024-10-22) at the time of this snapshot:
+
+```
+updates/20260618-2021          -> 2026-07-01  (newest, superset)
+  origin/updated/20260614-1956   -> 2026-06-16
+  integration/2026-update        -> 2026-06-14
+  origin/updates/20260531-1028   -> 2026-06-01
+  main / origin/main             -> 2024-10-22  (published baseline)
+```
+
+The working branches were merged and deleted on 2026-07-18; each checkpoint
+survives as an `archive/*` tag (see Version anchors). Per-commit detail is
+in `git log`.

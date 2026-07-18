@@ -1,0 +1,209 @@
+---
+// One subprocessor entry in the Subprocessors-page register: every DPA
+// Schedule A field on the page, no click-through. Rendered for both the
+// active register and the Approved-alternates (standby) section — a standby
+// entry drops the `since` date (it has none yet) and reframes each role flag
+// as "If engaged", since nothing flows through it today.
+import { trust } from '../lib/trust';
+import { isPanRegion } from '../lib/trust-config';
+import type { RegionCode, Subprocessor } from '../lib/trust-config';
+
+interface Props {
+  s: Subprocessor;
+}
+const { s } = Astro.props;
+const standby = s.engagement === 'standby';
+
+const regionLabel = new Map(trust.regions.map((r) => [r.code, r.label] as const));
+
+// Regions a subprocessor serves: pan-region roles ("global") engage
+// everywhere; otherwise the union of the region codes across its roles,
+// in the canonical trust.regions order.
+function regionsServed(sub: Subprocessor): 'all' | RegionCode[] {
+  if (isPanRegion(sub)) return 'all';
+  const codes = new Set<RegionCode>();
+  for (const r of sub.roles) if (r.regions !== 'global') for (const c of r.regions) codes.add(c);
+  return trust.regions.map((r) => r.code).filter((c) => codes.has(c));
+}
+const regions = regionsServed(s);
+
+const categoryLabel: Record<Subprocessor['roles'][number]['category'], string> = {
+  infrastructure: 'Infrastructure',
+  network: 'Network',
+  email: 'Email',
+  backup: 'Backup',
+  payments: 'Payments',
+};
+---
+
+<article class:list={['reg-entry', { standby }]}>
+  <header class="reg-head">
+    <div>
+      <span class="reg-name">{s.name}</span>
+      {s.shortName !== s.name && <span class="reg-alias mono">{s.shortName}</span>}
+    </div>
+    <span class="row-meta mono">
+      {standby
+        ? <>{s.core ? 'Core' : 'Alternative'} · <span class="reg-standby">not yet engaged</span></>
+        : <>since {s.since} · {s.core ? 'Core' : 'Alternative'}</>}
+    </span>
+  </header>
+
+  <dl class="reg-meta">
+    <div><dt>Jurisdiction</dt><dd>{s.entity.jurisdiction}</dd></div>
+    <div>
+      <dt>Regions</dt>
+      <dd class="reg-regions">
+        {regions === 'all'
+          ? <span class="reg-chip all">All regions</span>
+          : regions.map((c) => (
+              <span class="reg-chip" title={regionLabel.get(c)}>{c.toUpperCase()}</span>
+            ))}
+      </dd>
+    </div>
+    <div><dt>Registered address</dt><dd>{s.entity.address}</dd></div>
+    {(s.note ?? s.entity.comment) && (
+      <div><dt>Certifications &amp; notes</dt><dd>{s.note ?? s.entity.comment}</dd></div>
+    )}
+  </dl>
+
+  <div class="reg-roles">
+    {s.roles.map((r) => (
+      <div class="reg-role">
+        <div class="reg-role-head">
+          <span class={`reg-cat cat-${r.category}`}>{categoryLabel[r.category]}</span>
+          <span class="reg-role-label">{r.label ?? s.shortName}</span>
+          <span class={`reg-flag ${standby ? 'standby' : r.optional ? 'opt' : 'always'}`}>
+            {standby ? 'If engaged' : r.optional ? 'May be engaged' : 'Always in use'}
+          </span>
+        </div>
+        <p class="reg-purpose">{r.purpose}</p>
+        <dl class="reg-role-facts">
+          <div><dt>Data</dt><dd>{r.data.join(', ')}</dd></div>
+          <div><dt>Tiers</dt><dd>{r.tiers}</dd></div>
+          <div><dt>Location</dt><dd>{r.location}</dd></div>
+        </dl>
+      </div>
+    ))}
+  </div>
+</article>
+
+<style>
+  .reg-entry {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .reg-entry.standby { background: var(--panel); }
+
+  .reg-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .reg-name { font: 600 17px var(--sans); color: var(--ink); }
+  .reg-alias { font: 400 12px var(--mono); color: var(--faint); margin-left: 9px; }
+  .reg-standby {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+  }
+
+  .reg-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 28px;
+    margin: 14px 0 0;
+  }
+  .reg-meta > div { display: flex; flex-direction: column; gap: 2px; }
+  .reg-meta dt {
+    font: 600 10px var(--sans);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .reg-meta dd {
+    margin: 0;
+    font: 400 13.5px/1.55 var(--sans);
+    color: var(--muted);
+  }
+
+  .reg-regions { display: flex; flex-wrap: wrap; gap: 5px; }
+  .reg-chip {
+    font: 600 10.5px var(--mono);
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline);
+    color: var(--muted);
+  }
+  .reg-chip.all { border-color: var(--rust); color: var(--rust); letter-spacing: 0.02em; }
+
+  .reg-roles { margin-top: 16px; display: grid; gap: 12px; }
+  .reg-role {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-left: 2px solid var(--rust);
+    padding: 12px 14px;
+  }
+  .reg-entry.standby .reg-role { border-left-color: var(--faint); }
+  .reg-role-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+  }
+  .reg-cat {
+    font: 600 9.5px var(--sans);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    color: var(--faint);
+  }
+  .reg-role-label { font: 600 13.5px var(--sans); color: var(--ink); }
+  .reg-flag {
+    margin-left: auto;
+    font: 600 10px var(--sans);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .reg-flag.always { color: var(--rust); }
+  .reg-flag.opt { color: var(--faint); }
+  .reg-flag.standby { color: var(--faint); }
+
+  .reg-purpose {
+    margin: 9px 0 0;
+    font: 400 13.5px/1.6 var(--sans);
+    color: var(--muted);
+  }
+
+  .reg-role-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px 20px;
+    margin: 11px 0 0;
+    padding-top: 10px;
+    border-top: 1px dashed var(--hairline);
+  }
+  .reg-role-facts > div { display: flex; flex-direction: column; gap: 1px; }
+  .reg-role-facts dt {
+    font: 600 9.5px var(--sans);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .reg-role-facts dd {
+    margin: 0;
+    font: 400 12.5px/1.5 var(--sans);
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .reg-meta { grid-template-columns: 1fr; }
+    .reg-head { flex-direction: column; gap: 4px; }
+    .reg-flag { margin-left: 0; }
+  }
+</style>
