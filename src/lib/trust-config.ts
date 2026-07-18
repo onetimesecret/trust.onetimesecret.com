@@ -27,6 +27,9 @@ export const SubprocessorRoleSchema = z.object({
   // e.g. "AWS (S3)", "Hetzner (Object storage)".
   label: z.string().optional(),
   purpose: z.string(),
+  // Terse role description for diagram nodes ("Compute & hosting",
+  // "Edge proxy & TLS"); `purpose` stays Schedule-A verbatim.
+  short: z.string(),
   location: z.string(),
   tiers: z.string(), // "All", "Global Elite", "Identity Plus, Team Plus", ...
   optional: z.boolean().default(false),

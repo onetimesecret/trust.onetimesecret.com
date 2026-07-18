@@ -1,4 +1,5 @@
 ---
+import RegionArchitecture from '../components/RegionArchitecture.astro';
 import TrustLayout from '../layouts/TrustLayout.astro';
 import { trust } from '../lib/trust';
 import { isPanRegion, rolesForRegion, subprocessorLocation } from '../lib/trust-config';
@@ -33,14 +34,24 @@ const regional = trust.regions.map((region) => ({
       <a href="https://github.com/onetimesecret/site-policy">view history in git</a>
     </p>
 
-    <p style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 10px 0 0;">
-      Jump to: <a href="#every-region">Every region</a>
+    <section id="architecture" style="margin-top: 44px;">
+      <div class="kicker left" style="margin-bottom: 6px;">The region's architecture, one at a time</div>
+      <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 16px;">
+        Pick a region to see what a secret there can touch: the internet at the top, two
+        ingress paths — our regional service domain and customer custom domains — converging
+        on that region's hosting, with backups, email, and payments alongside.
+      </p>
+      <RegionArchitecture />
+    </section>
+
+    <p style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 40px 0 0;">
+      The full contractual list: <a href="#every-region">Every region</a>
       {regional.map(({ region }) => (
         <> · <a href={`#${region.code}`}>{region.code.toUpperCase()}</a></>
       ))}
     </p>
 
-    <section id="every-region" style="margin-top: 40px;">
+    <section id="every-region" style="margin-top: 24px;">
       <div class="kicker left" style="margin-bottom: 6px;">Every region — engaged regardless of where your data lives</div>
       <div class="rule-list">
         {panRegion.map((s) => (
