@@ -180,25 +180,27 @@ subprocessors:
         short: Compute & hosting
         location: UK (London) or EU (Helsinki, Amsterdam, Frankfurt)
         tiers: All
+        core: true
         optional: false
-        regions: [uk, eu]
+        regions: [uk]
         data: [Account info, app data, network-level web traffic data, IP addresses]
   - name: DigitalOcean, LLC
     shortName: DigitalOcean
     purpose: Alternative container hosting, CI/CD services, managed databases.
-    since: "TBD"
+    since: "March 2025"
     entity:
       address: 101 Avenue of the Americas, 10th Floor, New York, NY 10013, United States
       jurisdiction: US
-      comment: Data located in EU or CA regions only
+      comment: Data located in US or CA regions
     roles:
       - category: infrastructure
         purpose: Container hosting, CI/CD services, managed databases, and computing resources
         short: Containers, CI/CD, DBs
-        location: EU or CA (Toronto)
+        location: US (Oregon) or CA (Toronto)
         tiers: All
-        optional: true
-        regions: [eu, ca]
+        core: true
+        optional: false
+        regions: [ca]
         data: [Account info, app data, network-level web traffic data, IP addresses]
   - name: Catalyst Cloud Limited
     shortName: Catalyst Cloud
@@ -215,7 +217,7 @@ subprocessors:
         short: Compute & hosting
         location: NZ (Porirua)
         tiers: All
-        optional: true
+        optional: false
         regions: [nz]
         data: [Account info, app data, network-level web traffic data, IP addresses]
   - name: Amazon Web Services, Inc.
