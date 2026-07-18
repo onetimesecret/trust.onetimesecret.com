@@ -51,6 +51,9 @@ const categoryLabel: Record<Subprocessor['roles'][number]['category'], string> =
 
   <dl class="reg-meta">
     <div><dt>Jurisdiction</dt><dd>{s.entity.jurisdiction}</dd></div>
+    {s.entity.transfer && (
+      <div><dt>Transfer basis</dt><dd>{s.entity.transfer}</dd></div>
+    )}
     <div>
       <dt>Regions</dt>
       <dd class="reg-regions">

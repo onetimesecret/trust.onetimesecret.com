@@ -76,6 +76,7 @@ function rowsFor(categoryKey: string): Row[] {
         <th>Name</th>
         <th>Address</th>
         <th>Jurisdiction</th>
+        <th>Transfer basis</th>
         <th>Comment</th>
       </tr>
     </thead>
@@ -85,6 +86,7 @@ function rowsFor(categoryKey: string): Row[] {
           <td><strong>{s.name}</strong></td>
           <td>{s.entity.address}</td>
           <td>{s.entity.jurisdiction}</td>
+          <td>{s.entity.transfer}</td>
           <td>{s.entity.comment && <em>{s.entity.comment}</em>}</td>
         </tr>
       ))}
