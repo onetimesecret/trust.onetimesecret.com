@@ -95,11 +95,11 @@ subprocessors:
         dataCategories: [DNS Records, DKIM/DMARC/SPF, Source IP Address]
       - category: backup
         label: Hetzner (Object storage)
-        purpose: Object storage for encrypted offsite backups, stored in the region of collection
+        purpose: Object storage for encrypted offsite backups
         short: Object storage
-        location: EU (Germany); US (Oregon)
+        location: EU (Germany)
         tiers: All
-        regions: [eu, us]
+        regions: [eu]
         dataCategories: [Account info, application data, backups]
   - name: Cloudflare, Inc.
     shortName: Cloudflare
@@ -217,18 +217,26 @@ subprocessors:
     services:
       - category: infrastructure
         purpose: Container hosting, CI/CD services, managed databases, and computing resources
-        short: Containers, CI/CD, DBs
+        short: Compute & hosting
         location: CA (Toronto)
         tiers: All
         regions: [ca]
         dataCategories: [Account info, app data, network-level web traffic data, IP addresses]
+      - category: backup
+        label: DigitalOcean (Object storage)
+        purpose: Object storage for encrypted offsite backups
+        short: Object storage
+        location: CA (Toronto)
+        tiers: All
+        regions: [ca]
+        dataCategories: [Account info, application data, backups]
   - name: Catalyst Cloud Limited
     shortName: Catalyst Cloud
     summary: Computing resources for the New Zealand multi-tenant environment.
-    since: "TBD"
+    since: "2025"
     entity:
       address: Level 6, Catalyst House, 150 Willis Street, Te Aro, Wellington 6011, New Zealand (NZBN 9429046115577)
-      jurisdiction: New Zealand
+      jurisdiction: Aotearoa New Zealand
       transferBasis: No cross-border transfer
     services:
       - category: infrastructure
@@ -238,10 +246,18 @@ subprocessors:
         tiers: All
         regions: [nz]
         dataCategories: [Account info, app data, network-level web traffic data, IP addresses]
+      - category: backup
+        label: Catalyst Cloud
+        purpose: Object storage for encrypted offsite backups
+        short: Object storage
+        location: NZ (Porirua)
+        tiers: All
+        regions: [nz]
+        dataCategories: [Account info, application data, backups]
   - name: Amazon Web Services, Inc.
     shortName: AWS
     summary: Transactional email (SES) for the Canada, New Zealand, and United States regions; S3 geo-located encrypted backups for Global Elite deployments.
-    since: "TBD"
+    since: "2020"
     entity:
       address: 410 Terry Avenue North, Seattle, WA 98109-5210, United States
       jurisdiction: US
@@ -262,8 +278,8 @@ subprocessors:
         purpose: S3 storage for geo-located encrypted backups
         short: S3 object storage
         location: "EU (Frankfurt, Ireland)"
-        tiers: Global Elite
-        regions: global
+        tiers: All
+        regions: [us]
         dataCategories: [Account info, application data]
   - name: Lettermint B.V.
     shortName: Lettermint
@@ -308,19 +324,19 @@ subprocessors:
         dataCategories: [Static site assets]
   - name: Northflank, Ltd
     shortName: NorthFlank
-    summary: Container hosting, CI/CD, and managed databases — used for our own internal infrastructure today, and approved in advance as a customer-region host so the objection window can run before any customer data flows to it.
+    summary: Container hosting, CI/CD, and managed databases.
     since: "2025"
     engagement: standby
     # Operational today (internal infra), and a pre-approved customer host:
     # stays in Schedule A as "Approved", out of the diagram, grouped in the
-    # "used internally" section. "If engaged" flags refer to CUSTOMER data.
+    # "used internally" section. Standby engagement refers to CUSTOMER data.
     operational: true
     entity:
       address: 20-22 Wenlock Road, London, England N1 7GU, United Kingdom
       jurisdiction: UK
     services:
       - category: infrastructure
-        purpose: Container hosting, CI/CD services, managed databases, and computing resources
+        purpose: (Internal) Container hosting, CI/CD services, managed databases, and computing resources
         short: Containers, CI/CD, DBs
         location: UK (London) or EU (Netherlands)
         tiers: All
@@ -349,7 +365,7 @@ internalTools:
 # Newest first. Real history predating this site is being reconstructed
 # from the DPA's version history; only verified events are listed.
 subprocessorChangelog:
-  - date: "2026-07-03"
+  - date: "2026-07-18"
     verb: updated
     title: Initial public list
     note: First publication of the subprocessor list on the trust centre, mirroring DPA Schedule A. Earlier changes predate this page and are recorded in the policy repository's history.
