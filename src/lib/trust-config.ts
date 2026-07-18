@@ -18,16 +18,18 @@ export const RegionSchema = z.object({
   domain: z.string(),
 });
 
-// --- Geography: three fields, three questions. They look redundant but
-// legitimately diverge (e.g. AWS = US company, EU data, serves every
-// region), so all three are kept:
+// --- Geography: four fields, four questions. They look redundant but
+// legitimately diverge (e.g. AWS = US company, EU-stored data, serves every
+// region), so all are kept:
 //   entity.jurisdiction — under whose LAW the company sits (transfer analysis)
+//   entity.transfer     — the cross-border transfer / adequacy BASIS (see below)
 //   roles[].location    — where the DATA physically sits for that role (residency)
 //   roles[].regions     — which of our Regional Domains the role serves (routing)
 // Do NOT restate any of these in note/comment: a "data located in X" note
-// duplicates location/jurisdiction and is the main source of drift. The one
-// fact those free-text fields legitimately carry is transfer basis / adequacy
-// (DPF certification, adequacy decision), which is not yet a structured field.
+// duplicates location/jurisdiction and is the main source of drift, and the
+// transfer basis now has its own field. note/comment are for certifications
+// only (ISO 27001, SOC 2, …) — everything geographic or transfer-related is
+// structured above.
 
 // One row in a DPA Schedule A category table. The DPA's Schedule A tables
 // are rendered from these — the contractual list and this file cannot
@@ -63,11 +65,24 @@ export const SubprocessorEntitySchema = z.object({
   address: z.string(),
   // The company's legal home — Schedule A "Jurisdiction" column. About the
   // VENDOR, not the data: it can differ from every role's `location` (AWS =
-  // US jurisdiction, EU data). Drives cross-border transfer analysis.
+  // US jurisdiction, EU-stored data). Drives cross-border transfer analysis.
   jurisdiction: z.string(),
-  // Schedule A "Comment" column (contractual). Reserve for facts NOT already
-  // structured elsewhere — certifications, transfer basis / adequacy. Never
-  // geography: "data located in X" duplicates location/jurisdiction and drifts.
+  // The lawful basis for any cross-border transfer — the single home for the
+  // adequacy fact that used to be smeared across note/comment. Sits next to
+  // jurisdiction because it answers the question jurisdiction raises. Values
+  // follow the DPA §12 framework:
+  //   intra-region          — data stays in its region of collection (§12.1);
+  //                           no restricted transfer
+  //   EU-US DPF             — US vendor certified under the Data Privacy
+  //                           Framework (DPA §12.2(a))
+  //   EU adequacy decision  — vendor in an EU-adequate third country (CH, NZ)
+  //   "… — DPA §12.2(b)/(c)" — the transient-edge and geo-backup exceptions,
+  //                           anchored to their governing clause
+  // Omit only where no processing occurs yet (standby entries).
+  transfer: z.string().optional(),
+  // Schedule A "Comment" column (contractual). Certifications ONLY (ISO 27001,
+  // SOC 2, …). Never geography or transfer basis — both are structured above
+  // (location/regions and transfer); restating them here is the main drift source.
   comment: z.string().optional(),
 });
 
@@ -94,7 +109,8 @@ export const SubprocessorSchema = z.object({
   // install is governed by its own agreement, not this list.
   engagement: z.enum(['active', 'standby']).default('active'),
   // Trust-site display note ("Certifications & notes"); falls back to
-  // entity.comment when absent. Same rule as comment: no geography here.
+  // entity.comment when absent. Same rule as comment: certifications only —
+  // no geography, no transfer basis (those are structured on entity).
   note: z.string().optional(),
   entity: SubprocessorEntitySchema,
   roles: z.array(SubprocessorRoleSchema).nonempty(),
