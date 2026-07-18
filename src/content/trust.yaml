@@ -44,17 +44,20 @@ regions:
 # `transitioning` = engagement being phased in or out (Approximated, while
 # custom-domain TLS moves to our own cert manager) — rendered dashed.
 # Topology confirmed 2026-07-18: Lettermint sends EU+UK mail; AWS SES sends
-# CA/NZ/US mail; Hetzner US backs up to US only; DigitalOcean CA data stays
-# in Toronto; UpCloud UK data stays in London.
+# US mail from us-west-1 and CA+NZ mail from ca-central-1; Hetzner US backs
+# up to US only; DigitalOcean CA data stays in Toronto; UpCloud UK data
+# stays in London.
 # UpCloud (uk), DigitalOcean (ca), Catalyst (nz) MUST stay `active` while
 # their regions are live: each is the sole host for its region.
 # TODO(release): confirm `since` dates against infra/billing history
 # (Handoff Spec §7.2) before publishing.
-# TODO(counsel): DPA §12.2 does not yet enumerate the two mail-into-EU flows
-# (Lettermint UK→EU; AWS SES CA/NZ/US→EU). Flows into the EU raise no
-# restricted transfer under EU law and UK→EU is covered by the UK adequacy
-# regulations, but §12.1's residency promise needs the enumeration — same
-# treatment as the Sentry flow (§12.2(e)). Update ADR-002's inventory too.
+# TODO(counsel): DPA §12.2 does not yet enumerate two mail flows that leave
+# their region of collection: Lettermint UK→EU (flows into the EU raise no
+# restricted transfer under EU law; UK→EU is covered by the UK adequacy
+# regulations) and AWS SES NZ→CA (NZ mail sends from ca-central-1 — needs
+# an NZ IPP 12 analysis, and is a candidate for moving providers anyway).
+# §12.1's residency promise needs both enumerated — same treatment as the
+# Sentry flow (§12.2(e)). Update ADR-002's inventory too.
 # TODO(release): confirm Hetzner US backup location (Oregon assumed, matching
 # compute) and the intended scope/location of BunnyCDN Cloud Storage.
 subprocessors:
@@ -161,7 +164,8 @@ subprocessors:
         tiers: Identity, Team
         status: transitioning
         regions: global
-        dataCategories: [Account info, application data, network-level web traffic data, IP addresses]
+        dataCategories:
+          [Account info, application data, network-level web traffic data, IP addresses]
   - name: UpCloud Ltd
     shortName: UpCloud
     summary: Computing resources for single-tenant and multi-tenant hosting.
@@ -214,18 +218,20 @@ subprocessors:
         dataCategories: [Account info, app data, network-level web traffic data, IP addresses]
   - name: Amazon Web Services, Inc.
     shortName: AWS
-    summary: Transactional email (SES, EU region) for the Canada, New Zealand, and United States regions; S3 geo-located encrypted backups for Global Elite deployments.
+    summary: Transactional email (SES) for the Canada, New Zealand, and United States regions; S3 geo-located encrypted backups for Global Elite deployments.
     since: "TBD"
     entity:
       address: 410 Terry Avenue North, Seattle, WA 98109-5210, United States
       jurisdiction: US
-      transferBasis: "EU-stored — S3 under DPA §12.2(c); SES mail into the EU"
+      transferBasis: "S3 EU-stored — DPA §12.2(c); SES mail sent in-region, except NZ mail via CA (ca-central-1)"
     services:
+      # NZ mail currently sends from ca-central-1 — the one cross-border mail
+      # leg here, and a candidate for moving to another provider.
       - category: email
         label: AWS (SES)
         purpose: SMTP transactional email sending, suppression lists, deliverability metrics, bounce/complaint handling
         short: Transactional email (SES)
-        location: EU
+        location: US (us-west-1) for US mail; CA and NZ (ca-central-1)
         tiers: All
         regions: [ca, nz, us]
         dataCategories: [Email addresses, email content, DKIM/DMARC]
