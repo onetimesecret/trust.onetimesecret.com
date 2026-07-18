@@ -1,6 +1,6 @@
 # Onetime Secret Trust Centre
 
-The source for [trust.onetimesecret.com](TRUST-SITE.md) and
+The source for [trust.onetimesecret.com](docs/trust-site.md) and
 Onetime Secret's policy documents: Terms of Service, Privacy Statement, Data
 Processing Agreement (DPA), and Technical & Organisational Measures (TOMs).
 
@@ -22,6 +22,25 @@ The documents themselves are human-written prose in
 build time, so a fact can't drift between the DPA and the Privacy Statement.
 The DPA's Schedule A tables and the trust site's Subprocessors page render
 from the same data. Details in [docs/how-this-site-works.md](docs/how-this-site-works.md).
+
+## Repository layout
+
+Three classes of file, three homes:
+
+- **Reader-facing** — the rendered documents (`src/pages/*.mdx`), their
+  shared facts (`src/content/*.yaml`), plus [CHANGELOG.md](CHANGELOG.md)
+  (cumulative record of substantive policy changes, by effective date) and
+  [WHATS-CHANGED.md](WHATS-CHANGED.md) (plain-language summary of the
+  current revision, replaced each cycle).
+- **Records** — dated and immutable once written: decision records in
+  [`decisions/`](decisions/), self-review records in
+  [`reviews/`](reviews/), and dated research runs in
+  [`research/YYYY/`](research/). Superseded by newer dated files, never
+  rewritten.
+- **Working documents** — living files, updated in place:
+  [REMAINING_DECISIONS.md](REMAINING_DECISIONS.md) (the open-items tracker
+  for the 2026 revision), topical rationale notes in
+  [`research/`](research/), and site documentation in [`docs/`](docs/).
 
 ## Building locally
 

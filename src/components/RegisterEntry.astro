@@ -1,0 +1,207 @@
+---
+// One subprocessor entry in the Subprocessors-page register: every DPA
+// Schedule A field on the page, no click-through.
+//
+// Layout follows contact-card convention: the registered address sits
+// unlabeled under the legal name (an address is self-identifying), the
+// remaining entity facts share one wrapping line, and each service card is
+// titled by the service (`short`), never the vendor name again. In-use is
+// the register default, stated once on the page — a flag appears only when
+// a service deviates from it.
+import { trust } from '../lib/trust';
+import { isPanRegion, serviceStatus } from '../lib/trust-config';
+import type { RegionCode, Subprocessor } from '../lib/trust-config';
+
+interface Props {
+  s: Subprocessor;
+}
+const { s } = Astro.props;
+// Show the alias only when the legal name doesn't already contain it
+// ("Amazon Web Services, Inc." → AWS; "Hetzner Online GmbH" needs nothing).
+const showAlias = !s.name.toLowerCase().includes(s.shortName.toLowerCase());
+
+const regionLabel = new Map(trust.regions.map((r) => [r.code, r.label] as const));
+
+// Regions a subprocessor serves: pan-region services ("global") engage
+// everywhere; otherwise the union of the region codes across its services,
+// in the canonical trust.regions order.
+function regionsServed(sub: Subprocessor): 'all' | RegionCode[] {
+  if (isPanRegion(sub)) return 'all';
+  const codes = new Set<RegionCode>();
+  for (const r of sub.services) if (r.regions !== 'global') for (const c of r.regions) codes.add(c);
+  return trust.regions.map((r) => r.code).filter((c) => codes.has(c));
+}
+const regions = regionsServed(s);
+
+const categoryLabel: Record<Subprocessor['services'][number]['category'], string> = {
+  infrastructure: 'Infrastructure',
+  network: 'Network',
+  email: 'Email',
+  backup: 'Backup',
+  payments: 'Payments',
+};
+---
+
+<article class="reg-entry">
+  <header class="reg-head">
+    <div class="reg-id">
+      <div>
+        <span class="reg-name">{s.name}</span>
+        {showAlias && <span class="reg-alias mono">{s.shortName}</span>}
+      </div>
+      <div class="reg-addr">{s.entity.address}</div>
+    </div>
+    <span class="row-meta mono">since {s.since}</span>
+  </header>
+
+  <dl class="reg-meta">
+    <div><dt>Corporate jurisdiction</dt><dd>{s.entity.jurisdiction}</dd></div>
+    {s.entity.transferBasis && (
+      <div><dt>Transfer basis</dt><dd>{s.entity.transferBasis}</dd></div>
+    )}
+    <div>
+      <dt>Regions served</dt>
+      <dd class="reg-regions">
+        {regions === 'all'
+          ? <span class="reg-chip all">All regions</span>
+          : regions.map((c) => (
+              <span class="reg-chip" title={regionLabel.get(c)}>{c.toUpperCase()}</span>
+            ))}
+      </dd>
+    </div>
+  </dl>
+  {(s.note ?? s.entity.comment) && <p class="reg-note">{s.note ?? s.entity.comment}</p>}
+
+  <div class="reg-roles">
+    {s.services.map((r) => {
+      const status = serviceStatus(s, r);
+      return (
+        <div class="reg-role">
+          <div class="reg-role-head">
+            <span class={`reg-cat cat-${r.category}`}>{categoryLabel[r.category]}</span>
+            <span class="reg-role-label">{r.short}</span>
+            {status === 'transitioning' && <span class="reg-flag opt">In transition</span>}
+          </div>
+          <p class="reg-purpose">{r.purpose}</p>
+          <dl class="reg-role-facts">
+            <div><dt>Data</dt><dd>{r.dataCategories.join(', ')}</dd></div>
+            <div><dt>Tiers</dt><dd>{r.tiers}</dd></div>
+            <div><dt>Location</dt><dd>{r.location}</dd></div>
+          </dl>
+        </div>
+      );
+    })}
+  </div>
+</article>
+
+<style>
+  .reg-entry {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .reg-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .reg-name { font: 600 17px var(--sans); color: var(--ink); }
+  .reg-alias { font: 400 12px var(--mono); color: var(--faint); margin-left: 9px; }
+  .reg-addr { margin-top: 3px; font: 400 12.5px/1.5 var(--sans); color: var(--faint); }
+
+  .reg-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 26px;
+    margin: 13px 0 0;
+  }
+  .reg-meta > div { display: flex; align-items: baseline; gap: 8px; }
+  .reg-meta dt {
+    font: 600 10px var(--sans);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+  .reg-meta dd {
+    margin: 0;
+    font: 400 13.5px/1.55 var(--sans);
+    color: var(--muted);
+  }
+
+  .reg-note { margin: 8px 0 0; font: 400 12.5px/1.6 var(--sans); color: var(--faint); }
+
+  .reg-regions { display: flex; flex-wrap: wrap; gap: 5px; }
+  .reg-chip {
+    font: 600 10.5px var(--mono);
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline);
+    color: var(--muted);
+  }
+  .reg-chip.all { border-color: var(--rust); color: var(--rust); letter-spacing: 0.02em; }
+
+  .reg-roles { margin-top: 16px; display: grid; gap: 12px; }
+  .reg-role {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-left: 2px solid var(--rust);
+    padding: 12px 14px;
+  }
+  .reg-role-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+  }
+  .reg-cat {
+    font: 600 9.5px var(--sans);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    color: var(--faint);
+  }
+  .reg-role-label { font: 600 13.5px var(--sans); color: var(--ink); }
+  .reg-flag {
+    margin-left: auto;
+    font: 600 10px var(--sans);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .reg-flag.opt { color: var(--faint); }
+
+  .reg-purpose {
+    margin: 9px 0 0;
+    font: 400 13.5px/1.6 var(--sans);
+    color: var(--muted);
+  }
+
+  .reg-role-facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 3px 16px;
+    margin: 10px 0 0;
+  }
+  .reg-role-facts > div { display: contents; }
+  .reg-role-facts dt {
+    font: 600 9.5px/1.9 var(--sans);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .reg-role-facts dd {
+    margin: 0;
+    font: 400 12.5px/1.5 var(--sans);
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .reg-meta { grid-template-columns: 1fr; }
+    .reg-head { flex-direction: column; gap: 4px; }
+    .reg-flag { margin-left: 0; }
+  }
+</style>

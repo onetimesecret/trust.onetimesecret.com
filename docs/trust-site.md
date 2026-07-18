@@ -17,23 +17,8 @@ the changelog, and diffs on the subprocessor list are the trust signal.
 - Fonts are self-hosted via Fontsource — the Privacy Statement commits to
   serving all site assets from our own domains, so no Google Fonts.
 
-```
-src/
-  content/trust.yaml        # single source of truth
-  lib/trust-config.ts       # Zod schema (access: public | request)
-  lib/trust.ts              # load + validate at build time
-  layouts/TrustLayout.astro # nav + footer chrome, design tokens
-  pages/                    # one route per section
-public/
-  .well-known/security.txt  # RFC 9116
-  pgp-key.asc               # PLACEHOLDER — see below
-```
-
-```sh
-pnpm install
-pnpm dev      # local preview
-pnpm build    # dist/
-```
+Architecture, source-file layout, interpolation, and build commands are
+documented in [how-this-site-works.md](./how-this-site-works.md).
 
 ## Content rules
 

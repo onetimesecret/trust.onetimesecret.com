@@ -1,7 +1,11 @@
 .DS_Store
 .local
 tmp/
-*.txt
+
+# Untracked scratch lives in .scratch/, not loose at the root. Promote
+# anything worth keeping to a committed .md in research/ or reviews/.
+.scratch/
+.playwright-mcp/
 
 # Astro / Node build artifacts
 node_modules/
