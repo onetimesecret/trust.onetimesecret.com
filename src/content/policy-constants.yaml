@@ -52,10 +52,15 @@ infrastructure:
   offsite_backup_location: "Hetzner object storage, EU (Germany, Finland)"
 
 tiers:
-  # ToS A / PP / DPA Schedule A — the multi-tenant tiers.
-  multi_tenant: [Basic, Identity Plus, Team Plus]
+  # Keys are deployment-model categories (not price tiers). Values are tier
+  # FAMILY names, not qualified SKUs: "Identity" covers Identity / Identity
+  # Lite / Identity Plus. List the family once; multi_tenant_suffix absorbs
+  # the variants, so new SKUs need no edit here.
+  # ToS A / PP / DPA Schedule A reference the multi-tenant set.
+  multi_tenant: [Basic, Identity, Team] # shared infrastructure
   multi_tenant_suffix: and any successor or variant tiers
-  premium: Global Elite
+  single_tenant: [Isolate] # dedicated, standardized
+  dedicated: [Global Elite] # dedicated + customer-specific configuration
 
 security:
   # Schedule C §1.2 — accounts with no successful sign-in since this date

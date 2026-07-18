@@ -41,9 +41,12 @@ export const PolicyConstantsSchema = z
       .strict(),
     tiers: z
       .object({
-        multi_tenant: z.array(z.string()).nonempty(),
+        // Keys = deployment-model categories; values = tier family names
+        // (not qualified SKUs). See policy-constants.yaml for the rationale.
+        multi_tenant: z.array(z.string()).nonempty(), // shared infra
         multi_tenant_suffix: z.string(),
-        premium: z.string(),
+        single_tenant: z.array(z.string()).nonempty(), // dedicated, standardized
+        dedicated: z.array(z.string()).nonempty(), // dedicated + customer-specific config
       })
       .strict(),
     security: z.object({ bcrypt_cutoff: z.string() }).strict(),
@@ -93,5 +96,5 @@ export function spelledYears(n: number): string {
   return `${word} (${n}) years`;
 }
 
-// "Basic, Identity Plus, Team Plus, and any successor or variant tiers"
+// "Basic, Identity, Team, and any successor or variant tiers"
 export const multiTenantTiers = `${constants.tiers.multi_tenant.join(", ")}, ${constants.tiers.multi_tenant_suffix}`;
