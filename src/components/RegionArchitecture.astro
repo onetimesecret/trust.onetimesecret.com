@@ -106,7 +106,22 @@ const panels = trust.regions.map((region) => {
           </div>
 
           <div class="arch-box">
-            <div class="arch-box-label">Canonical domain</div>
+            <div class="arch-box-label">
+              Canonical domain
+              <span class="arch-hint">
+                <button
+                  type="button"
+                  class="arch-hint-btn"
+                  aria-label="Why the canonical domain is fronted by an edge proxy"
+                  aria-describedby={`arch-hint-canonical-${p.region.code}`}>
+                  i
+                </button>
+                <span class="arch-hint-pop" role="tooltip" id={`arch-hint-canonical-${p.region.code}`}>
+                  The region's public entry point — reachable by anyone on the internet, so it
+                  carries the edge protection that filters misuse before traffic reaches our hosting.
+                </span>
+              </span>
+            </div>
             <div class="arch-domains">
               <div class="arch-domain mono">{p.region.domain}</div>
             </div>
@@ -187,7 +202,7 @@ const panels = trust.regions.map((region) => {
                 <div class="arch-node-sub">{nodeSub(r)}</div>
               </div>
             ))}
-            <p class="arch-note">Age out on a fixed 30-day schedule, same jurisdiction.</p>
+            <p class="arch-note">Automatically expire on a rolling 30-day schedule.</p>
           </div>
 
           <div class="arch-box">
@@ -208,7 +223,7 @@ const panels = trust.regions.map((region) => {
                 <div class="arch-node-sub">{nodeSub(r)}</div>
               </div>
             ))}
-            <p class="arch-note">Never Secret Content.</p>
+            <p class="arch-note"></p>
           </div>
         </div>
 
@@ -238,6 +253,9 @@ const panels = trust.regions.map((region) => {
   // Static tab switcher: every region's panel is pre-rendered; this only
   // flips `hidden`. With JS off, the noscript rule below shows them all,
   // hides the internet fan-out, and the fork stem falls back to center.
+  // A `?region=<code>` query param deep-links to a region on load, and
+  // clicking a tab writes the choice back into the URL (replaceState, so
+  // no per-click history entry) — the current view is always shareable.
   // Geometry vars live on the root: --tab-x-* mark each tab's horizontal
   // center for the fan-out drops (--tab-x-first/-last bound the rail),
   // and --fork-x tracks the selected tab for every panel's fork stem.
@@ -257,15 +275,30 @@ const panels = trust.regions.map((region) => {
       const selected = root.querySelector('[role="tab"][aria-selected="true"]');
       if (selected) root.style.setProperty("--fork-x", centerPct(selected));
     };
+    // Activate a region's tab + panel by code; returns false for an unknown
+    // code so callers (deep link, tab click) can leave the default in place.
+    const selectRegion = (code: string) => {
+      const target = [...tabs].find((t) => t.dataset.region === code);
+      if (!target) return false;
+      tabs.forEach((t) => t.setAttribute("aria-selected", String(t === target)));
+      root.querySelectorAll<HTMLElement>(".arch-panel").forEach((panel) => {
+        panel.hidden = panel.dataset.region !== code;
+      });
+      setArrowGeometry();
+      return true;
+    };
     tabs.forEach((tab) =>
       tab.addEventListener("click", () => {
-        tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
-        root.querySelectorAll<HTMLElement>(".arch-panel").forEach((panel) => {
-          panel.hidden = panel.dataset.region !== tab.dataset.region;
-        });
-        setArrowGeometry();
+        const code = tab.dataset.region;
+        if (!code || !selectRegion(code)) return;
+        const url = new URL(window.location.href);
+        url.searchParams.set("region", code);
+        history.replaceState(history.state, "", url);
       }),
     );
+    // Deep link: /subprocessors?region=ca lands on that region (case-insensitive).
+    const requested = new URLSearchParams(window.location.search).get("region")?.toLowerCase();
+    if (requested) selectRegion(requested);
     setArrowGeometry();
     window.addEventListener("resize", setArrowGeometry);
   });

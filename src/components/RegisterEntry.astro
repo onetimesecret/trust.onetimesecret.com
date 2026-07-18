@@ -1,9 +1,6 @@
 ---
 // One subprocessor entry in the Subprocessors-page register: every DPA
-// Schedule A field on the page, no click-through. Rendered for both the
-// active register and the Approved-alternates (standby) section — a standby
-// entry drops the `since` date (it has none yet) and reframes each service flag
-// as "If engaged", since nothing flows through it today.
+// Schedule A field on the page, no click-through.
 //
 // Layout follows contact-card convention: the registered address sits
 // unlabeled under the legal name (an address is self-identifying), the
@@ -19,7 +16,6 @@ interface Props {
   s: Subprocessor;
 }
 const { s } = Astro.props;
-const standby = s.engagement === 'standby';
 // Show the alias only when the legal name doesn't already contain it
 // ("Amazon Web Services, Inc." → AWS; "Hetzner Online GmbH" needs nothing).
 const showAlias = !s.name.toLowerCase().includes(s.shortName.toLowerCase());
@@ -46,7 +42,7 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
 };
 ---
 
-<article class:list={['reg-entry', { standby }]}>
+<article class="reg-entry">
   <header class="reg-head">
     <div class="reg-id">
       <div>
@@ -55,11 +51,7 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
       </div>
       <div class="reg-addr">{s.entity.address}</div>
     </div>
-    <span class="row-meta mono">
-      {standby
-        ? <span class="reg-standby">not yet engaged</span>
-        : <>since {s.since}</>}
-    </span>
+    <span class="row-meta mono">since {s.since}</span>
   </header>
 
   <dl class="reg-meta">
@@ -88,11 +80,7 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
           <div class="reg-role-head">
             <span class={`reg-cat cat-${r.category}`}>{categoryLabel[r.category]}</span>
             <span class="reg-role-label">{r.short}</span>
-            {status !== 'active' && (
-              <span class={`reg-flag ${status === 'transitioning' ? 'opt' : 'standby'}`}>
-                {status === 'transitioning' ? 'In transition' : 'If engaged'}
-              </span>
-            )}
+            {status === 'transitioning' && <span class="reg-flag opt">In transition</span>}
           </div>
           <p class="reg-purpose">{r.purpose}</p>
           <dl class="reg-role-facts">
@@ -111,8 +99,6 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
     padding: 22px 0;
     border-bottom: 1px solid var(--hairline);
   }
-  .reg-entry.standby { background: var(--panel); }
-
   .reg-head {
     display: flex;
     justify-content: space-between;
@@ -122,11 +108,6 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
   .reg-name { font: 600 17px var(--sans); color: var(--ink); }
   .reg-alias { font: 400 12px var(--mono); color: var(--faint); margin-left: 9px; }
   .reg-addr { margin-top: 3px; font: 400 12.5px/1.5 var(--sans); color: var(--faint); }
-  .reg-standby {
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--faint);
-  }
 
   .reg-meta {
     display: flex;
@@ -168,7 +149,6 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
     border-left: 2px solid var(--rust);
     padding: 12px 14px;
   }
-  .reg-entry.standby .reg-role { border-left-color: var(--faint); }
   .reg-role-head {
     display: flex;
     flex-wrap: wrap;
@@ -193,7 +173,6 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
     text-transform: uppercase;
   }
   .reg-flag.opt { color: var(--faint); }
-  .reg-flag.standby { color: var(--faint); }
 
   .reg-purpose {
     margin: 9px 0 0;

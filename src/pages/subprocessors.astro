@@ -12,18 +12,27 @@ import { trust } from "../lib/trust";
 // reviewer needs is behind a toggle or a link to the DPA.
 //
 // The main register is the customer-secret-flow subprocessors: engaged today
-// and NOT operational. Everything else moves to the "used internally"
-// section below:
-//   • internalSubs — subprocessors outside the secret flow: operational ones
-//     (Proton support mail — still Schedule A) and standby ones (approved in
-//     advance, not yet engaged). Rendered with full detail via RegisterEntry.
-//   • internalTools — tooling that processes NO customer personal data
-//     (source control, CI, DNS); not subprocessors, no Schedule A row.
+// and NOT operational. Everything else lands in one flat "used internally"
+// transparency list below, in the compact tool-card format: subprocessors
+// outside the secret flow (Proton support mail — still Schedule A; standby
+// hosts approved in advance) alongside tooling that processes no Company
+// Personal Data at all (source control, CI, DNS).
 // Bespoke/custom installs are covered by their own agreements — see the
 // notice below — so any provider unique to them sits in standby, unlabeled.
-const registerActive = trust.subprocessors.filter((s) => s.engagement === "active" && !s.operational);
-const internalSubs = trust.subprocessors.filter((s) => s.operational || s.engagement === "standby");
-const internalTools = trust.internalTools;
+const registerActive = trust.subprocessors.filter(
+  (s) => s.engagement === "active" && !s.operational,
+);
+const internalList = [
+  ...trust.subprocessors
+    .filter((s) => s.operational || s.engagement === "standby")
+    .map((s) => ({
+      name: s.name,
+      jurisdiction: s.entity.jurisdiction,
+      use: s.summary,
+      note: s.note ?? s.entity.comment,
+    })),
+  ...trust.internalTools,
+];
 ---
 
 <TrustLayout
@@ -35,15 +44,15 @@ const internalTools = trust.internalTools;
     <div class="kicker">Our service providers</div>
     <h1 style="font-size: 38px;">Subprocessors</h1>
     <p class="lede">
-      These are the third parties authorized to process customer data on our behalf. This page and
-      <a href="/dpa">Schedule A of our DPA</a> are generated from the same source, so the two never
-      diverge. Changes are announced by email — see the <a href="#notification">notification
-      policy</a> below.
+      These are the third parties authorized to process customer data on our behalf. This page and <a
+        href="/dpa">Schedule A of our DPA</a
+      > are generated from the same source to avoid diverging. Additions and major changes are announced
+      by email (see the <a href="#notification"> notification policy</a> at the end of the page).
     </p>
     <p
       style="font: 400 13px/1.6 var(--sans); color: var(--faint); text-align: center; margin: 18px 0 0;"
     >
-      <a href="/trust.yaml">diff this list as trust.yaml</a> ·
+      <a href="/trust.yaml">diff this list as trust.yaml</a> ·&nbsp;
       <a href="https://github.com/onetimesecret/trust.onetimesecret.com">view history in git</a>
     </p>
 
@@ -65,85 +74,38 @@ const internalTools = trust.internalTools;
       <div class="reg">
         {registerActive.map((s) => <RegisterEntry s={s} />)}
       </div>
-
-      <p style="font: 400 12.5px/1.6 var(--sans); color: var(--faint); margin: 18px 0 0;">
-        DPAs are in place with each entity. This is the full chain — no undisclosed
-        sub-subprocessors. Self-hosted installations have zero subprocessors.
-      </p>
     </section>
 
     {
-      (internalSubs.length > 0 || internalTools.length > 0) && (
+      internalList.length > 0 && (
         <section id="internal" style="margin-top: 52px;">
           <div class="kicker left" style="margin-bottom: 6px;">
-            Used internally — listed for transparency
+            Internal Tools — listed for transparency
           </div>
           <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
             These providers run parts of our own operations — company and support email, internal
-            infrastructure, source control, CI, and DNS — but they sit <strong>outside the path a
-            customer secret takes</strong>, so they stay out of the diagram above. We disclose them
-            so the picture is complete, not cut off at the production boundary.
+            infrastructure, source control, CI, and DNS — but they sit{" "}
+            <strong>outside the path a customer secret takes</strong>, so they stay out of the
+            diagram above. Those that process Company Personal Data or are approved in advance as
+            customer-region hosts remain in <a href="/dpa">Schedule A</a>; the rest are not
+            subprocessors at all. We disclose them so the picture is complete, not cut off at the
+            production boundary.
           </p>
-
-          {internalSubs.length > 0 && (
-            <>
-              <div class="kicker left sub">Still disclosed as subprocessors</div>
-              <p style="font: 400 13.5px/1.6 var(--sans); color: var(--faint); margin: 0 0 10px;">
-                Some of these still process Company Personal Data — Proton Mail carries support
-                correspondence — so they remain in <a href="/dpa">Schedule A</a>. Others are approved
-                in advance as customer-region hosts but process no customer data yet; for those the
-                thirty-day objection window runs <em>before</em> we ever engage one, every account
-                holder is emailed first, and the change is dated in the history below. Each service's
-                “If engaged” flag refers to <em>customer</em> data specifically.
-              </p>
-              <div class="reg">
-                {internalSubs.map((s) => (
-                  <RegisterEntry s={s} />
-                ))}
+          <div class="tools">
+            {internalList.map((t) => (
+              <div class="tool">
+                <div class="tool-head">
+                  <span class="tool-name">{t.name}</span>
+                  {t.jurisdiction && <span class="tool-juris mono">{t.jurisdiction}</span>}
+                </div>
+                <p class="tool-use">{t.use}</p>
+                {t.note && <p class="tool-note">{t.note}</p>}
               </div>
-            </>
-          )}
-
-          {internalTools.length > 0 && (
-            <>
-              <div class="kicker left sub" style="margin-top: 30px;">
-                No customer data — internal tooling
-              </div>
-              <p style="font: 400 13.5px/1.6 var(--sans); color: var(--faint); margin: 0 0 10px;">
-                These process <strong>no Company Personal Data</strong> at all — source and build
-                pipelines, DNS records — so they are not subprocessors and carry no Schedule A row.
-                Listed here purely so nothing is hidden.
-              </p>
-              <div class="tools">
-                {internalTools.map((t) => (
-                  <div class="tool">
-                    <div class="tool-head">
-                      <span class="tool-name">{t.name}</span>
-                      {t.jurisdiction && <span class="tool-juris mono">{t.jurisdiction}</span>}
-                    </div>
-                    <p class="tool-use">{t.use}</p>
-                    {t.note && <p class="tool-note">{t.note}</p>}
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+            ))}
+          </div>
         </section>
       )
     }
-
-    <section style="margin-top: 56px;">
-      <div class="callout" style="margin-top: 28px;">
-        <div class="callout-label">Bespoke &amp; custom installations</div>
-        <p>
-          This page describes our standard hosted service. Dedicated, bespoke, and custom
-          deployments are governed by their own agreement or agreements — either ones already in
-          place that <strong>predate</strong> this list, or one-to-one Data Processing Agreements we may
-          sign that <strong>supersede</strong> it. For any such deployment, that agreement's subprocessor
-          terms control, not this page. Self-hosted installations run with zero subprocessors.
-        </p>
-      </div>
-    </section>
 
     <section style="margin-top: 56px;">
       <div class="kicker left">Change history, newest first</div>
@@ -167,8 +129,11 @@ const internalTools = trust.internalTools;
           </div>
         ))
       }
+    </section>
 
-      <div class="callout" id="notification" style="margin-top: 28px;">
+    <section style="margin-top: 56px;">
+      <div class="kicker left">Notices</div>
+      <div class="callout" id="notification" style="margin-top: 20px;">
         <div class="callout-label">Notification policy</div>
         <p>
           New or replaced subprocessors are announced by email to all account holders and posted
@@ -176,6 +141,16 @@ const internalTools = trust.internalTools;
           terminate the affected services without penalty. Emergency replacements — say, a provider
           failing — are announced promptly after the engagement, with reasons given, and the
           objection window runs from that notice.
+        </p>
+      </div>
+      <div class="callout" style="margin-top: 16px;">
+        <div class="callout-label">Bespoke &amp; custom installations</div>
+        <p>
+          This page describes our standard hosted service. Dedicated, bespoke, and custom
+          deployments are governed by their own agreement or agreements — either ones already in
+          place that <strong>predate</strong> this list, or one-to-one Data Processing Agreements we may
+          sign that <strong>supersede</strong> it. For any such deployment, that agreement's subprocessor
+          terms control, not this page. Self-hosted installations run with zero subprocessors.
         </p>
       </div>
     </section>
@@ -188,15 +163,8 @@ const internalTools = trust.internalTools;
     border-top: 1px solid var(--ink);
   }
 
-  /* Sub-heading within the "used internally" section. */
-  .kicker.sub {
-    font-size: 11px;
-    color: var(--faint);
-    margin-bottom: 4px;
-  }
-
-  /* Internal tooling — lighter than a subprocessor entry: no Schedule A
-     fields to show, so name + use + optional note only. */
+  /* "Internal Tools" list — lighter than a register entry: name + use +
+     optional note only. */
   .tools {
     border-top: 1px solid var(--hairline);
   }
