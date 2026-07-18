@@ -6,7 +6,7 @@ import { trust } from '../lib/trust';
 
 // The full register below is the one-stop reference: every subprocessor
 // once, with every DPA Schedule A field on the page — legal jurisdiction,
-// registered address, per-role category, Categories of Data, service
+// registered address, per-service category, Categories of Data, service
 // tiers, and location. The per-region diagram above owns the "one region
 // at a time" view; the register never partitions by region, so nothing a
 // reviewer needs is behind a toggle or a link to the DPA.
@@ -67,7 +67,7 @@ const standby = trust.subprocessors.filter((s) => s.engagement === 'standby');
       <div class="kicker left" style="margin-bottom: 6px;">The full register — every field, no click-through</div>
       <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
         One entry per subprocessor, listing everything the contract records: the legal
-        entity and its jurisdiction, the regions it serves, and — for each role — the
+        entity and its jurisdiction, the regions it serves, and — for each service — the
         categories of data it touches, the service tiers it applies to, and where it runs.
         This is the same data as <a href="https://onetimesecret.com/dpa">Schedule A of the DPA</a>,
         rendered from <a href="/trust.yaml">trust.yaml</a>.

@@ -7,8 +7,8 @@ import { z } from 'zod';
 
 export const AccessSchema = z.enum(['public', 'request']).default('public');
 
-// The regional multi-tenant deployments (ToS "Regional Domains"). Role
-// `regions` values reference these codes; `global` marks a role engaged
+// The regional multi-tenant deployments (ToS "Regional Domains"). Service
+// `regions` values reference these codes; `global` marks a service engaged
 // for every region (pan-region — e.g. Proton, Stripe).
 export const RegionCodeSchema = z.enum(['eu', 'uk', 'us', 'ca', 'nz']);
 
@@ -23,8 +23,8 @@ export const RegionSchema = z.object({
 // region), so all are kept:
 //   entity.jurisdiction — under whose LAW the company sits (transfer analysis)
 //   entity.transfer     — the cross-border transfer / adequacy BASIS (see below)
-//   roles[].location    — where the DATA physically sits for that role (residency)
-//   roles[].regions     — which of our Regional Domains the role serves (routing)
+//   services[].location — where the DATA physically sits for that service (residency)
+//   services[].regions  — which of our Regional Domains the service serves (routing)
 // Do NOT restate any of these in note/comment: a "data located in X" note
 // duplicates location/jurisdiction and is the main source of drift, and the
 // transfer basis now has its own field. note/comment are for certifications
@@ -34,37 +34,37 @@ export const RegionSchema = z.object({
 // One row in a DPA Schedule A category table. The DPA's Schedule A tables
 // are rendered from these — the contractual list and this file cannot
 // drift because they are the same data.
-export const SubprocessorRoleSchema = z.object({
+export const SubprocessorServiceSchema = z.object({
   category: z.enum(['infrastructure', 'network', 'email', 'backup', 'payments']),
   // Row label when it differs from the subprocessor's shortName,
   // e.g. "AWS (S3)", "Hetzner (Object storage)".
   label: z.string().optional(),
   purpose: z.string(),
-  // Terse role description for diagram nodes ("Compute & hosting",
+  // Terse service description for diagram nodes ("Compute & hosting",
   // "Edge proxy & TLS"); `purpose` stays Schedule-A verbatim.
   short: z.string(),
-  // Ground-truth prose of where THIS role physically processes/stores data
+  // Ground-truth prose of where THIS service physically processes/stores data
   // ("EU (Germany, Finland); US (Oregon)", "Switzerland", "Global edge
-  // network"). Per-role, not per-entity: the entity's displayed location is
-  // derived from the unique role locations (subprocessorLocation). `regions`
+  // network"). Per-service, not per-entity: the entity's displayed location is
+  // derived from the unique service locations (subprocessorLocation). `regions`
   // below is the machine-checkable encoding of this text.
   location: z.string(),
   tiers: z.string(), // "All", "Global Elite", "Identity Plus, Team Plus", ...
   optional: z.boolean().default(false),
-  // Which Regional Domains this role serves — routing key for the trust-site
+  // Which Regional Domains this service serves — routing key for the trust-site
   // diagram, NOT a Schedule A column: 'global' (pan-region, engaged regardless
   // of where the data lives) or specific region codes. This is the structured
   // encoding of `location` above; the two must agree (see trust.yaml reconcile
   // TODO). Codes must exist in the top-level `regions` registry.
   regions: z.union([z.literal('global'), z.array(RegionCodeSchema).nonempty()]),
-  data: z.array(z.string()).nonempty(), // Categories of Data
+  dataCategories: z.array(z.string()).nonempty(), // Schedule A "Categories of Data"
 });
 
 // DPA Schedule A "Subprocessor Entity Details" row.
 export const SubprocessorEntitySchema = z.object({
   address: z.string(),
   // The company's legal home — Schedule A "Jurisdiction" column. About the
-  // VENDOR, not the data: it can differ from every role's `location` (AWS =
+  // VENDOR, not the data: it can differ from every service's `location` (AWS =
   // US jurisdiction, EU-stored data). Drives cross-border transfer analysis.
   jurisdiction: z.string(),
   // The lawful basis for any cross-border transfer — the single home for the
@@ -89,15 +89,15 @@ export const SubprocessorEntitySchema = z.object({
 export const SubprocessorSchema = z.object({
   name: z.string(),
   // Short name used in the Schedule A category tables ("Hetzner");
-  // override per-role with roles[].label where it differs.
+  // override per-service with services[].label where it differs.
   shortName: z.string(),
   // Human summary for the trust site's Subprocessors page; the factual
-  // per-category detail lives in roles[].
+  // per-category detail lives in services[].
   purpose: z.string(),
   // "TBD" until the per-entity engagement dates are confirmed against
   // invoices / infra history (Handoff Spec §7.2).
   since: z.string(),
-  // Engagement is orthogonal to per-role `optional`. `active` = processes data in
+  // Engagement is orthogonal to per-service `optional`. `active` = processes data in
   // the standard multi-tenant / single-tenant service today. `standby` =
   // vetted and contractually approved (it stays in Schedule A's "List of
   // Approved Subprocessors"), but processes no customer data yet — disclosed
@@ -110,31 +110,31 @@ export const SubprocessorSchema = z.object({
   // no geography, no transfer basis (those are structured on entity).
   note: z.string().optional(),
   entity: SubprocessorEntitySchema,
-  roles: z.array(SubprocessorRoleSchema).nonempty(),
+  services: z.array(SubprocessorServiceSchema).nonempty(),
 });
 
-// Derived display location: the unique role locations, in order.
-export function subprocessorLocation(s: { roles: Array<{ location: string }> }): string {
-  return [...new Set(s.roles.map((r) => r.location))].join('; ');
+// Derived display location: the unique service locations, in order.
+export function subprocessorLocation(s: { services: Array<{ location: string }> }): string {
+  return [...new Set(s.services.map((r) => r.location))].join('; ');
 }
 
 export type RegionCode = z.infer<typeof RegionCodeSchema>;
 export type Region = z.infer<typeof RegionSchema>;
 
-type RoleRegions = { regions: 'global' | RegionCode[] };
+type ServiceRegions = { regions: 'global' | RegionCode[] };
 
-// Pan-region: every role applies regardless of which region the data lives in.
-export function isPanRegion(s: { roles: RoleRegions[] }): boolean {
-  return s.roles.every((r) => r.regions === 'global');
+// Pan-region: every service applies regardless of which region the data lives in.
+export function isPanRegion(s: { services: ServiceRegions[] }): boolean {
+  return s.services.every((r) => r.regions === 'global');
 }
 
-// The region-specific roles a subprocessor has in a given region
-// (pan-region roles are excluded — they appear in the pan-region list).
-export function rolesForRegion<R extends RoleRegions>(
-  s: { roles: R[] },
+// The region-specific services a subprocessor has in a given region
+// (pan-region services are excluded — they appear in the pan-region list).
+export function servicesForRegion<R extends ServiceRegions>(
+  s: { services: R[] },
   code: RegionCode,
 ): R[] {
-  return s.roles.filter((r) => r.regions !== 'global' && r.regions.includes(code));
+  return s.services.filter((r) => r.regions !== 'global' && r.regions.includes(code));
 }
 
 export const ChangelogEntrySchema = z.object({

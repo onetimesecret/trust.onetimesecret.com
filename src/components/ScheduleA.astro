@@ -19,12 +19,12 @@ type Row = {
   tiers: string;
   optional: boolean;
   purpose: string;
-  data: string;
+  dataCategories: string;
 };
 
 function rowsFor(categoryKey: string): Row[] {
   return trust.subprocessors.flatMap((s: Subprocessor) =>
-    s.roles
+    s.services
       .filter((r) => r.category === categoryKey)
       .map((r) => ({
         label: r.label ?? s.shortName,
@@ -32,7 +32,7 @@ function rowsFor(categoryKey: string): Row[] {
         tiers: r.tiers,
         optional: r.optional,
         purpose: r.purpose,
-        data: r.data.join(', '),
+        dataCategories: r.dataCategories.join(', '),
       })),
   );
 }
@@ -60,7 +60,7 @@ function rowsFor(categoryKey: string): Row[] {
             <td>{row.tiers}</td>
             <td>{row.optional ? '✔' : '𐄂'}</td>
             <td>{row.purpose}</td>
-            <td>{row.data}</td>
+            <td>{row.dataCategories}</td>
           </tr>
         ))}
       </tbody>

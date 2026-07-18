@@ -6,36 +6,36 @@ import type { RegionCode, Subprocessor } from "../lib/trust-config";
 // ingress paths — the regional service domain (Cloudflare) and customer
 // custom domains (Approximated, never Cloudflare) — converging on the
 // region's hosting, with backups, email, and payments alongside. Every
-// node is a role row from trust.yaml, so the diagram mirrors DPA
+// node is a service row from trust.yaml, so the diagram mirrors DPA
 // Schedule A by construction.
 
-type Role = Subprocessor["roles"][number];
-type Slot = { s: Subprocessor; r: Role };
+type Service = Subprocessor["services"][number];
+type Slot = { s: Subprocessor; r: Service };
 
 // Standby subprocessors process no customer data yet, so they never appear
 // in the "what a secret here can touch" flow — they live in the Approved
 // alternates section of the register instead.
-const roles: Slot[] = trust.subprocessors
+const services: Slot[] = trust.subprocessors
   .filter((s) => s.engagement === "active")
-  .flatMap((s) => s.roles.map((r) => ({ s, r })));
+  .flatMap((s) => s.services.map((r) => ({ s, r })));
 
 const inRegion = ({ r }: Slot, code: RegionCode) =>
   r.regions === "global" || r.regions.includes(code);
 
-// Ingress identification is by provider: Cloudflare's two roles (DNS,
+// Ingress identification is by provider: Cloudflare's two services (DNS,
 // optional edge proxy) are the service-domain path; Approximated is the
-// custom-domain path. BunnyCDN's network role serves only the public
+// custom-domain path. BunnyCDN's network service serves only the public
 // marketing/docs sites — no customer data path — so it stays off the
 // diagram and appears in the full list below.
 const isDns = ({ s, r }: Slot) => s.shortName === "Cloudflare" && r.category === "infrastructure";
 const isProxy = ({ s, r }: Slot) => s.shortName === "Cloudflare" && r.category === "network";
 const isCustomIngress = ({ s }: Slot) => s.shortName === "Approximated";
 
-const nodeSub = (r: Role) =>
+const nodeSub = (r: Service) =>
   `${r.short} · ${r.tiers === "All" ? r.location : /tiers?$/i.test(r.tiers) ? r.tiers : `${r.tiers} only`}`;
 
 const panels = trust.regions.map((region) => {
-  const here = roles.filter((slot) => inRegion(slot, region.code));
+  const here = services.filter((slot) => inRegion(slot, region.code));
   return {
     region,
     serviceIngress: here.filter((x) => isDns(x) || isProxy(x)),

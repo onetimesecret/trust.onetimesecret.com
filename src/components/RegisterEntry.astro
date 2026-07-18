@@ -2,7 +2,7 @@
 // One subprocessor entry in the Subprocessors-page register: every DPA
 // Schedule A field on the page, no click-through. Rendered for both the
 // active register and the Approved-alternates (standby) section — a standby
-// entry drops the `since` date (it has none yet) and reframes each role flag
+// entry drops the `since` date (it has none yet) and reframes each service flag
 // as "If engaged", since nothing flows through it today.
 import { trust } from '../lib/trust';
 import { isPanRegion } from '../lib/trust-config';
@@ -16,18 +16,18 @@ const standby = s.engagement === 'standby';
 
 const regionLabel = new Map(trust.regions.map((r) => [r.code, r.label] as const));
 
-// Regions a subprocessor serves: pan-region roles ("global") engage
-// everywhere; otherwise the union of the region codes across its roles,
+// Regions a subprocessor serves: pan-region services ("global") engage
+// everywhere; otherwise the union of the region codes across its services,
 // in the canonical trust.regions order.
 function regionsServed(sub: Subprocessor): 'all' | RegionCode[] {
   if (isPanRegion(sub)) return 'all';
   const codes = new Set<RegionCode>();
-  for (const r of sub.roles) if (r.regions !== 'global') for (const c of r.regions) codes.add(c);
+  for (const r of sub.services) if (r.regions !== 'global') for (const c of r.regions) codes.add(c);
   return trust.regions.map((r) => r.code).filter((c) => codes.has(c));
 }
 const regions = regionsServed(s);
 
-const categoryLabel: Record<Subprocessor['roles'][number]['category'], string> = {
+const categoryLabel: Record<Subprocessor['services'][number]['category'], string> = {
   infrastructure: 'Infrastructure',
   network: 'Network',
   email: 'Email',
@@ -71,7 +71,7 @@ const categoryLabel: Record<Subprocessor['roles'][number]['category'], string> =
   </dl>
 
   <div class="reg-roles">
-    {s.roles.map((r) => (
+    {s.services.map((r) => (
       <div class="reg-role">
         <div class="reg-role-head">
           <span class={`reg-cat cat-${r.category}`}>{categoryLabel[r.category]}</span>
@@ -82,7 +82,7 @@ const categoryLabel: Record<Subprocessor['roles'][number]['category'], string> =
         </div>
         <p class="reg-purpose">{r.purpose}</p>
         <dl class="reg-role-facts">
-          <div><dt>Data</dt><dd>{r.data.join(', ')}</dd></div>
+          <div><dt>Data</dt><dd>{r.dataCategories.join(', ')}</dd></div>
           <div><dt>Tiers</dt><dd>{r.tiers}</dd></div>
           <div><dt>Location</dt><dd>{r.location}</dd></div>
         </dl>
