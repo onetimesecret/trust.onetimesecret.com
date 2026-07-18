@@ -133,12 +133,39 @@ export const SubprocessorSchema = z.strictObject({
   // custom installations" notice covers them generically, and a per-provider
   // bespoke flag would map which vendors serve those installs.
   engagement: z.enum(["active", "standby"]).default("active"),
+  // True when the provider runs our OWN operations (company/support email,
+  // source control, CI, corporate DNS) rather than the customer secret
+  // flow. Operational entries are kept OUT of the region data-flow diagram
+  // and grouped into the Subprocessors page's "used internally" section
+  // instead of the main register. Independent of `engagement`: Proton Mail
+  // is operational AND active (it processes support-email personal data, so
+  // it stays in Schedule A); Northflank is operational AND standby. Providers
+  // that process NO Company Personal Data at all are not subprocessors —
+  // they belong in `internalTools`, not here.
+  operational: z.boolean().optional(),
   // Trust-site display note ("Certifications & notes"); falls back to
   // entity.comment when absent. Same rule as comment: certifications only —
   // no geography, no transfer basis (those are structured on entity).
   note: z.string().optional(),
   entity: SubprocessorEntitySchema,
   services: z.array(SubprocessorServiceSchema).nonempty(),
+});
+
+// Providers we use to run the company that are NOT subprocessors of Company
+// Personal Data — source control, CI, corporate DNS. They have no Schedule A
+// row (no data categories, tiers, or transfer basis to state) and never
+// render into the DPA. Listed on the Subprocessors page purely for
+// transparency, alongside the operational subprocessors. If a tool starts
+// processing Company Personal Data, it graduates into `subprocessors`.
+export const InternalToolSchema = z.strictObject({
+  name: z.string(),
+  // What we use it for, plain language.
+  use: z.string(),
+  // The company's legal home, where known. Transparency only — no transfer
+  // analysis attaches, since no Company Personal Data is processed.
+  jurisdiction: z.string().optional(),
+  // Optional certifications / clarifying note.
+  note: z.string().optional(),
 });
 
 // Derived display location: the unique service locations, in order.
@@ -221,6 +248,7 @@ export const TrustConfigSchema = z.object({
   }),
   regions: z.array(RegionSchema).nonempty(),
   subprocessors: z.array(SubprocessorSchema),
+  internalTools: z.array(InternalToolSchema).default([]),
   subprocessorChangelog: z.array(ChangelogEntrySchema),
   documents: z.array(DocumentSchema),
   faqs: z.array(FaqSchema),
@@ -230,5 +258,6 @@ export const TrustConfigSchema = z.object({
 
 export type TrustConfig = z.infer<typeof TrustConfigSchema>;
 export type Subprocessor = z.infer<typeof SubprocessorSchema>;
+export type InternalTool = z.infer<typeof InternalToolSchema>;
 export type ChangelogEntry = z.infer<typeof ChangelogEntrySchema>;
 export type TrustDocument = z.infer<typeof DocumentSchema>;

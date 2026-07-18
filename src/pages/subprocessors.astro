@@ -11,13 +11,19 @@ import { trust } from "../lib/trust";
 // at a time" view; the register never partitions by region, so nothing a
 // reviewer needs is behind a toggle or a link to the DPA.
 //
-// Split by engagement: `active` subprocessors process customer data today;
-// `standby` entries are approved in advance but process none yet
-// (RegisterEntry reframes them). Bespoke/custom installs are covered by
-// their own agreements — see the notice below — so any provider unique to
-// them sits in standby, deliberately unlabeled.
-const active = trust.subprocessors.filter((s) => s.engagement === "active");
-const standby = trust.subprocessors.filter((s) => s.engagement === "standby");
+// The main register is the customer-secret-flow subprocessors: engaged today
+// and NOT operational. Everything else moves to the "used internally"
+// section below:
+//   • internalSubs — subprocessors outside the secret flow: operational ones
+//     (Proton support mail — still Schedule A) and standby ones (approved in
+//     advance, not yet engaged). Rendered with full detail via RegisterEntry.
+//   • internalTools — tooling that processes NO customer personal data
+//     (source control, CI, DNS); not subprocessors, no Schedule A row.
+// Bespoke/custom installs are covered by their own agreements — see the
+// notice below — so any provider unique to them sits in standby, unlabeled.
+const registerActive = trust.subprocessors.filter((s) => s.engagement === "active" && !s.operational);
+const internalSubs = trust.subprocessors.filter((s) => s.operational || s.engagement === "standby");
+const internalTools = trust.internalTools;
 ---
 
 <TrustLayout
@@ -52,13 +58,12 @@ const standby = trust.subprocessors.filter((s) => s.engagement === "standby");
       <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
         One entry per subprocessor, listing everything the contract records: the legal entity and
         its jurisdiction, the regions it serves, and — for each service — the categories of data it
-        touches, the service tiers it applies to, and where it runs. This is the same data as <a
-          href="/dpa">Schedule A of the DPA</a
-        >, rendered from <a href="/trust.yaml">trust.yaml</a>.
+        touches, the service tiers it applies to, and where it runs. Every service listed is in
+        continuous use unless flagged otherwise.
       </p>
 
       <div class="reg">
-        {active.map((s) => <RegisterEntry s={s} />)}
+        {registerActive.map((s) => <RegisterEntry s={s} />)}
       </div>
 
       <p style="font: 400 12.5px/1.6 var(--sans); color: var(--faint); margin: 18px 0 0;">
@@ -68,23 +73,61 @@ const standby = trust.subprocessors.filter((s) => s.engagement === "standby");
     </section>
 
     {
-      standby.length > 0 && (
-        <section id="standby" style="margin-top: 52px;">
+      (internalSubs.length > 0 || internalTools.length > 0) && (
+        <section id="internal" style="margin-top: 52px;">
           <div class="kicker left" style="margin-bottom: 6px;">
-            Approved in advance — vetted, not yet engaged
+            Used internally — listed for transparency
           </div>
           <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
-            These providers are contractually approved and disclosed here in advance, but they
-            process <strong>no customer data today</strong> — so they stay out of the diagram above.
-            We list them so the thirty-day objection window can run <em>before</em> we ever engage
-            one, not after. If and when we do, every account holder is emailed first and the change
-            is dated in the history below.
+            These providers run parts of our own operations — company and support email, internal
+            infrastructure, source control, CI, and DNS — but they sit <strong>outside the path a
+            customer secret takes</strong>, so they stay out of the diagram above. We disclose them
+            so the picture is complete, not cut off at the production boundary.
           </p>
-          <div class="reg">
-            {standby.map((s) => (
-              <RegisterEntry s={s} />
-            ))}
-          </div>
+
+          {internalSubs.length > 0 && (
+            <>
+              <div class="kicker left sub">Still disclosed as subprocessors</div>
+              <p style="font: 400 13.5px/1.6 var(--sans); color: var(--faint); margin: 0 0 10px;">
+                Some of these still process Company Personal Data — Proton Mail carries support
+                correspondence — so they remain in <a href="/dpa">Schedule A</a>. Others are approved
+                in advance as customer-region hosts but process no customer data yet; for those the
+                thirty-day objection window runs <em>before</em> we ever engage one, every account
+                holder is emailed first, and the change is dated in the history below. Each service's
+                “If engaged” flag refers to <em>customer</em> data specifically.
+              </p>
+              <div class="reg">
+                {internalSubs.map((s) => (
+                  <RegisterEntry s={s} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {internalTools.length > 0 && (
+            <>
+              <div class="kicker left sub" style="margin-top: 30px;">
+                No customer data — internal tooling
+              </div>
+              <p style="font: 400 13.5px/1.6 var(--sans); color: var(--faint); margin: 0 0 10px;">
+                These process <strong>no Company Personal Data</strong> at all — source and build
+                pipelines, DNS records — so they are not subprocessors and carry no Schedule A row.
+                Listed here purely so nothing is hidden.
+              </p>
+              <div class="tools">
+                {internalTools.map((t) => (
+                  <div class="tool">
+                    <div class="tool-head">
+                      <span class="tool-name">{t.name}</span>
+                      {t.jurisdiction && <span class="tool-juris mono">{t.jurisdiction}</span>}
+                    </div>
+                    <p class="tool-use">{t.use}</p>
+                    {t.note && <p class="tool-note">{t.note}</p>}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </section>
       )
     }
@@ -143,5 +186,45 @@ const standby = trust.subprocessors.filter((s) => s.engagement === "standby");
   /* Register entry styles live in RegisterEntry.astro (scoped per entry). */
   .reg {
     border-top: 1px solid var(--ink);
+  }
+
+  /* Sub-heading within the "used internally" section. */
+  .kicker.sub {
+    font-size: 11px;
+    color: var(--faint);
+    margin-bottom: 4px;
+  }
+
+  /* Internal tooling — lighter than a subprocessor entry: no Schedule A
+     fields to show, so name + use + optional note only. */
+  .tools {
+    border-top: 1px solid var(--hairline);
+  }
+  .tool {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .tool-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .tool-name {
+    font: 600 15.5px var(--sans);
+    color: var(--ink);
+  }
+  .tool-juris {
+    font: 400 11.5px var(--mono);
+    color: var(--faint);
+  }
+  .tool-use {
+    margin: 6px 0 0;
+    font: 400 13.5px/1.6 var(--sans);
+    color: var(--muted);
+  }
+  .tool-note {
+    margin: 5px 0 0;
+    font: 400 12.5px/1.55 var(--sans);
+    color: var(--faint);
   }
 </style>

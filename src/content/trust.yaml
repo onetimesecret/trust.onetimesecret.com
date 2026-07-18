@@ -24,8 +24,8 @@ meta:
 regions:
   - { code: eu, label: European Union, domain: eu.onetimesecret.com }
   - { code: uk, label: United Kingdom, domain: uk.onetimesecret.com }
-  - { code: us, label: United States, domain: us.onetimesecret.com }
   - { code: ca, label: Canada, domain: ca.onetimesecret.com }
+  - { code: us, label: United States, domain: us.onetimesecret.com }
   - { code: nz, label: Aotearoa New Zealand, domain: nz.onetimesecret.com }
 
 # The canonical subprocessor list. DPA Schedule A's tables are RENDERED
@@ -37,8 +37,15 @@ regions:
 # vetted, contractually approved provider that processes nothing in the
 # standard service yet. Bespoke-only providers are also plain `standby`,
 # deliberately unlabeled — the page's "Bespoke & custom installations"
-# notice covers them. Standby entries render in a separate section on the
-# Subprocessors page and are kept out of the region data-flow diagram.
+# notice covers them.
+# `operational: true` is a third, independent axis: the provider runs our own
+# operations (company/support email, internal infra) rather than the customer
+# secret flow. Operational entries stay in Schedule A when they process
+# personal data (Proton support mail) or are pre-approved hosts (Northflank),
+# but are kept OUT of the region diagram and grouped into the Subprocessors
+# page's "used internally" section. Providers that process NO Company Personal
+# Data at all are not subprocessors — they live in `internalTools` below.
+# Standby and operational entries are both kept out of the region diagram.
 # Per-service `status` (standby | transitioning) covers a single service of
 # an otherwise active vendor: `standby` = approved-only (BunnyCDN storage),
 # `transitioning` = engagement being phased in or out (Approximated, while
@@ -118,8 +125,12 @@ subprocessors:
           ]
   - name: Proton AG (Proton Mail)
     shortName: Proton Mail
-    summary: Internal communications and customer support email.
+    summary: Company and customer-support email. Support correspondence is Company Personal Data, so Proton stays a Schedule A subprocessor — but no secret ever flows to it, so it sits outside the region diagram.
     since: "2024"
+    # Operational: company/support email, not the customer secret flow. Kept
+    # in Schedule A (support mail is personal data) but out of the diagram and
+    # grouped in the "used internally" section of the Subprocessors page.
+    operational: true
     entity:
       address: Route de la Galaise 32 1228 Plan-les-Ouates, Geneva Switzerland
       jurisdiction: Switzerland
@@ -286,9 +297,13 @@ subprocessors:
         dataCategories: [Static site assets]
   - name: Northflank, Ltd
     shortName: NorthFlank
-    summary: Container hosting, CI/CD services, managed databases.
+    summary: Container hosting, CI/CD, and managed databases — used for our own internal infrastructure today, and approved in advance as a customer-region host so the objection window can run before any customer data flows to it.
     since: "2025"
     engagement: standby
+    # Operational today (internal infra), and a pre-approved customer host:
+    # stays in Schedule A as "Approved", out of the diagram, grouped in the
+    # "used internally" section. "If engaged" flags refer to CUSTOMER data.
+    operational: true
     entity:
       address: 20-22 Wenlock Road, London, England N1 7GU, United Kingdom
       jurisdiction: UK
@@ -300,6 +315,25 @@ subprocessors:
         tiers: All
         regions: [uk, eu]
         dataCategories: [Account info, app data, network-level web traffic data, IP addresses]
+
+# Internal tooling we use to run the company that processes NO Company
+# Personal Data — source control, CI, corporate DNS. These are NOT
+# subprocessors, so they have no Schedule A row and never render into the
+# DPA; they appear on the Subprocessors page purely for transparency,
+# alongside the operational subprocessors. If any of these begins processing
+# Company Personal Data, it graduates into `subprocessors` above.
+# TODO(counsel): confirm the corporate-domain DNS provider(s) and whether
+# GitLab is engaged; fill jurisdictions/notes before publishing.
+internalTools:
+  - name: GitHub, Inc.
+    use: Source-code hosting and CI (GitHub Actions) for our open-source and internal repositories. Secret Content and Account Data never enter source control or build pipelines.
+    jurisdiction: US
+  - name: GitLab Inc.
+    use: Secondary source-code hosting and CI mirror for internal repositories; no Secret Content or Account Data.
+    jurisdiction: US
+  - name: "Corporate DNS — provider TBD"
+    use: Authoritative DNS for our corporate and marketing domains. DNS records only — no Secret Content, Account Data, or other Company Personal Data. The regional service domains (e.g. eu.onetimesecret.com) use Cloudflare, listed as a subprocessor above.
+    jurisdiction: TBD
 
 # Newest first. Real history predating this site is being reconstructed
 # from the DPA's version history; only verified events are listed.
