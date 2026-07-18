@@ -71,11 +71,11 @@ export const SubprocessorEntitySchema = z.object({
   // adequacy fact that used to be smeared across note/comment. Sits next to
   // jurisdiction because it answers the question jurisdiction raises. Values
   // follow the DPA §12 framework:
-  //   intra-region          — data stays in its region of collection (§12.1);
-  //                           no restricted transfer
+  //   No cross-border transfer — data stays in its region of collection
+  //                           (DPA §12.1); no restricted transfer occurs
   //   EU-US DPF             — US vendor certified under the Data Privacy
   //                           Framework (DPA §12.2(a))
-  //   EU adequacy decision  — vendor in an EU-adequate third country (CH, NZ)
+  //   EU adequacy decision  — vendor in an EU-adequate third country (e.g. CH)
   //   "… — DPA §12.2(b)/(c)" — the transient-edge and geo-backup exceptions,
   //                           anchored to their governing clause
   // Omit only where no processing occurs yet (standby entries).
