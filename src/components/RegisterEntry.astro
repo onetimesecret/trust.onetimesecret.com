@@ -4,6 +4,13 @@
 // active register and the Approved-alternates (standby) section — a standby
 // entry drops the `since` date (it has none yet) and reframes each service flag
 // as "If engaged", since nothing flows through it today.
+//
+// Layout follows contact-card convention: the registered address sits
+// unlabeled under the legal name (an address is self-identifying), the
+// remaining entity facts share one wrapping line, and each service card is
+// titled by the service (`short`), never the vendor name again. In-use is
+// the register default, stated once on the page — a flag appears only when
+// a service deviates from it.
 import { trust } from '../lib/trust';
 import { isPanRegion, serviceStatus } from '../lib/trust-config';
 import type { RegionCode, Subprocessor } from '../lib/trust-config';
@@ -13,6 +20,9 @@ interface Props {
 }
 const { s } = Astro.props;
 const standby = s.engagement === 'standby';
+// Show the alias only when the legal name doesn't already contain it
+// ("Amazon Web Services, Inc." → AWS; "Hetzner Online GmbH" needs nothing).
+const showAlias = !s.name.toLowerCase().includes(s.shortName.toLowerCase());
 
 const regionLabel = new Map(trust.regions.map((r) => [r.code, r.label] as const));
 
@@ -38,9 +48,12 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
 
 <article class:list={['reg-entry', { standby }]}>
   <header class="reg-head">
-    <div>
-      <span class="reg-name">{s.name}</span>
-      {s.shortName !== s.name && <span class="reg-alias mono">{s.shortName}</span>}
+    <div class="reg-id">
+      <div>
+        <span class="reg-name">{s.name}</span>
+        {showAlias && <span class="reg-alias mono">{s.shortName}</span>}
+      </div>
+      <div class="reg-addr">{s.entity.address}</div>
     </div>
     <span class="row-meta mono">
       {standby
@@ -50,12 +63,12 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
   </header>
 
   <dl class="reg-meta">
-    <div><dt>Jurisdiction</dt><dd>{s.entity.jurisdiction}</dd></div>
+    <div><dt>Corporate jurisdiction</dt><dd>{s.entity.jurisdiction}</dd></div>
     {s.entity.transferBasis && (
       <div><dt>Transfer basis</dt><dd>{s.entity.transferBasis}</dd></div>
     )}
     <div>
-      <dt>Regions</dt>
+      <dt>Regions served</dt>
       <dd class="reg-regions">
         {regions === 'all'
           ? <span class="reg-chip all">All regions</span>
@@ -64,30 +77,32 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
             ))}
       </dd>
     </div>
-    <div><dt>Registered address</dt><dd>{s.entity.address}</dd></div>
-    {(s.note ?? s.entity.comment) && (
-      <div><dt>Certifications &amp; notes</dt><dd>{s.note ?? s.entity.comment}</dd></div>
-    )}
   </dl>
+  {(s.note ?? s.entity.comment) && <p class="reg-note">{s.note ?? s.entity.comment}</p>}
 
   <div class="reg-roles">
-    {s.services.map((r) => (
-      <div class="reg-role">
-        <div class="reg-role-head">
-          <span class={`reg-cat cat-${r.category}`}>{categoryLabel[r.category]}</span>
-          <span class="reg-role-label">{r.label ?? s.shortName}</span>
-          <span class={`reg-flag ${{ active: 'always', transitioning: 'opt', standby: 'standby' }[serviceStatus(s, r)]}`}>
-            {{ active: 'Always in use', transitioning: 'In transition', standby: 'If engaged' }[serviceStatus(s, r)]}
-          </span>
+    {s.services.map((r) => {
+      const status = serviceStatus(s, r);
+      return (
+        <div class="reg-role">
+          <div class="reg-role-head">
+            <span class={`reg-cat cat-${r.category}`}>{categoryLabel[r.category]}</span>
+            <span class="reg-role-label">{r.short}</span>
+            {status !== 'active' && (
+              <span class={`reg-flag ${status === 'transitioning' ? 'opt' : 'standby'}`}>
+                {status === 'transitioning' ? 'In transition' : 'If engaged'}
+              </span>
+            )}
+          </div>
+          <p class="reg-purpose">{r.purpose}</p>
+          <dl class="reg-role-facts">
+            <div><dt>Data</dt><dd>{r.dataCategories.join(', ')}</dd></div>
+            <div><dt>Tiers</dt><dd>{r.tiers}</dd></div>
+            <div><dt>Location</dt><dd>{r.location}</dd></div>
+          </dl>
         </div>
-        <p class="reg-purpose">{r.purpose}</p>
-        <dl class="reg-role-facts">
-          <div><dt>Data</dt><dd>{r.dataCategories.join(', ')}</dd></div>
-          <div><dt>Tiers</dt><dd>{r.tiers}</dd></div>
-          <div><dt>Location</dt><dd>{r.location}</dd></div>
-        </dl>
-      </div>
-    ))}
+      );
+    })}
   </div>
 </article>
 
@@ -106,6 +121,7 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
   }
   .reg-name { font: 600 17px var(--sans); color: var(--ink); }
   .reg-alias { font: 400 12px var(--mono); color: var(--faint); margin-left: 9px; }
+  .reg-addr { margin-top: 3px; font: 400 12.5px/1.5 var(--sans); color: var(--faint); }
   .reg-standby {
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -113,23 +129,26 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
   }
 
   .reg-meta {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px 28px;
-    margin: 14px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 26px;
+    margin: 13px 0 0;
   }
-  .reg-meta > div { display: flex; flex-direction: column; gap: 2px; }
+  .reg-meta > div { display: flex; align-items: baseline; gap: 8px; }
   .reg-meta dt {
     font: 600 10px var(--sans);
     letter-spacing: 0.11em;
     text-transform: uppercase;
     color: var(--faint);
+    white-space: nowrap;
   }
   .reg-meta dd {
     margin: 0;
     font: 400 13.5px/1.55 var(--sans);
     color: var(--muted);
   }
+
+  .reg-note { margin: 8px 0 0; font: 400 12.5px/1.6 var(--sans); color: var(--faint); }
 
   .reg-regions { display: flex; flex-wrap: wrap; gap: 5px; }
   .reg-chip {
@@ -173,7 +192,6 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
-  .reg-flag.always { color: var(--rust); }
   .reg-flag.opt { color: var(--faint); }
   .reg-flag.standby { color: var(--faint); }
 
@@ -185,15 +203,13 @@ const categoryLabel: Record<Subprocessor['services'][number]['category'], string
 
   .reg-role-facts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 8px 20px;
-    margin: 11px 0 0;
-    padding-top: 10px;
-    border-top: 1px dashed var(--hairline);
+    grid-template-columns: max-content 1fr;
+    gap: 3px 16px;
+    margin: 10px 0 0;
   }
-  .reg-role-facts > div { display: flex; flex-direction: column; gap: 1px; }
+  .reg-role-facts > div { display: contents; }
   .reg-role-facts dt {
-    font: 600 9.5px var(--sans);
+    font: 600 9.5px/1.9 var(--sans);
     letter-spacing: 0.11em;
     text-transform: uppercase;
     color: var(--faint);

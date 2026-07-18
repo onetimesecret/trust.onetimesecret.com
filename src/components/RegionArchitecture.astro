@@ -12,12 +12,15 @@ import type { RegionCode, Subprocessor } from "../lib/trust-config";
 type Service = Subprocessor["services"][number];
 type Slot = { s: Subprocessor; r: Service };
 
-// Standby entries (whole-vendor or per-service) process no customer data
-// yet, so they never appear in the "what a secret here can touch" flow —
-// they live in the approved-not-engaged section of the register instead.
+// The diagram is "what a secret here can touch" — the customer secret flow.
+// Two kinds of provider are kept out of it:
+//   • standby (whole-vendor or per-service) — process no customer data yet;
+//   • operational — run our own operations, not the secret flow (Proton Mail
+//     support/company email, internal infra) even when active.
+// Both live in the "used internally" section of the register instead.
 // Transitioning services stay on the diagram with the dashed border.
 const services: Slot[] = trust.subprocessors
-  .filter((s) => s.engagement === "active")
+  .filter((s) => s.engagement === "active" && !s.operational)
   .flatMap((s) => s.services.filter((r) => r.status !== "standby").map((r) => ({ s, r })));
 
 const inRegion = ({ r }: Slot, code: RegionCode) =>
@@ -55,7 +58,14 @@ const panels = trust.regions.map((region) => {
     <div class="arch-note">People sharing and reading secrets</div>
   </div>
 
-  <div class="arch-arrow" aria-hidden="true">↓</div>
+  <!-- One arrow off the internet fanning out to every region: stem →
+       rail across the tab centers (measured into --tab-x-*), one
+       arrowhead drop per tab. -->
+  <div class="arch-branch" aria-hidden="true">
+    <i class="branch-stem"></i>
+    <i class="branch-rail"></i>
+    {trust.regions.map((_, i) => <i class="branch-drop" style={`--x: var(--tab-x-${i}, 50%)`} />)}
+  </div>
 
   <!-- The tabs sit at the fork: the internet above is region-agnostic;
        everything below is determined by the selected region. -->
@@ -93,8 +103,8 @@ const panels = trust.regions.map((region) => {
           <div class="arch-fork" aria-hidden="true">
             <i class="fork-stem" />
             <i class="fork-rail" />
-            <span class="fork-head left">↓</span>
-            <span class="fork-head right">↓</span>
+            <i class="fork-drop left" />
+            <i class="fork-drop right" />
           </div>
 
           <div class="arch-box">
@@ -131,12 +141,8 @@ const panels = trust.regions.map((region) => {
             </p>
           </div>
 
-          <div class="arch-arrow" aria-hidden="true">
-            ↓
-          </div>
-          <div class="arch-arrow" aria-hidden="true">
-            ↓
-          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-arrow" aria-hidden="true"></div>
         </div>
 
         <div class="arch-box hosting">
@@ -158,15 +164,9 @@ const panels = trust.regions.map((region) => {
         </div>
 
         <div class="arch-cols three">
-          <div class="arch-arrow" aria-hidden="true">
-            ↓
-          </div>
-          <div class="arch-arrow" aria-hidden="true">
-            ↓
-          </div>
-          <div class="arch-arrow" aria-hidden="true">
-            ↓
-          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-arrow" aria-hidden="true"></div>
 
           <div class="arch-box">
             <div class="arch-box-label muted">Encrypted backups</div>
@@ -210,7 +210,9 @@ const panels = trust.regions.map((region) => {
             <i class="swatch" />
             In transition · tier noted on the node
           </span>
-          <span class="arch-legend-source">Rendered from trust.yaml · mirrors DPA Schedule A</span>
+          <span class="arch-legend-source">
+            Rendered from trust.yaml · updated {trust.meta.updatedAt}
+          </span>
         </div>
       </div>
     ))
@@ -219,18 +221,26 @@ const panels = trust.regions.map((region) => {
 
 <script>
   // Static tab switcher: every region's panel is pre-rendered; this only
-  // flips `hidden`. With JS off, the noscript rule below shows them all
-  // and the fork stem falls back to center. --fork-x lives on the root so
-  // every panel's fork tracks the selected tab's horizontal position.
+  // flips `hidden`. With JS off, the noscript rule below shows them all,
+  // hides the internet fan-out, and the fork stem falls back to center.
+  // Geometry vars live on the root: --tab-x-* mark each tab's horizontal
+  // center for the fan-out drops (--tab-x-first/-last bound the rail),
+  // and --fork-x tracks the selected tab for every panel's fork stem.
   document.querySelectorAll<HTMLElement>("[data-arch]").forEach((root) => {
     const tabs = root.querySelectorAll<HTMLButtonElement>('[role="tab"]');
-    const setForkX = () => {
-      const tab = root.querySelector('[role="tab"][aria-selected="true"]');
-      if (!tab) return;
+    const setArrowGeometry = () => {
       const rootBox = root.getBoundingClientRect();
-      const tabBox = tab.getBoundingClientRect();
-      const pct = ((tabBox.left + tabBox.width / 2 - rootBox.left) / rootBox.width) * 100;
-      root.style.setProperty("--fork-x", `${pct}%`);
+      const centerPct = (el: Element) => {
+        const box = el.getBoundingClientRect();
+        return `${((box.left + box.width / 2 - rootBox.left) / rootBox.width) * 100}%`;
+      };
+      tabs.forEach((tab, i) => root.style.setProperty(`--tab-x-${i}`, centerPct(tab)));
+      if (tabs.length > 0) {
+        root.style.setProperty("--tab-x-first", centerPct(tabs[0]));
+        root.style.setProperty("--tab-x-last", centerPct(tabs[tabs.length - 1]));
+      }
+      const selected = root.querySelector('[role="tab"][aria-selected="true"]');
+      if (selected) root.style.setProperty("--fork-x", centerPct(selected));
     };
     tabs.forEach((tab) =>
       tab.addEventListener("click", () => {
@@ -238,17 +248,18 @@ const panels = trust.regions.map((region) => {
         root.querySelectorAll<HTMLElement>(".arch-panel").forEach((panel) => {
           panel.hidden = panel.dataset.region !== tab.dataset.region;
         });
-        setForkX();
+        setArrowGeometry();
       }),
     );
-    setForkX();
-    window.addEventListener("resize", setForkX);
+    setArrowGeometry();
+    window.addEventListener("resize", setArrowGeometry);
   });
 </script>
 
 <noscript>
   <style>
-    .arch-tabs {
+    .arch-tabs,
+    .arch-branch {
       display: none;
     }
     .arch-panel[hidden] {
@@ -352,55 +363,108 @@ const panels = trust.regions.map((region) => {
   .arch-cols.three {
     grid-template-columns: 1fr 1.2fr 1fr;
   }
+  /* Connectors are drawn from 1px fills, and arrowheads from 45°-rotated
+     1px-border chevrons, so heads and lines carry identical stroke
+     weight — the ↓ glyph renders at font weight and visibly mismatches
+     the hairlines it joins. Vertical lines sit at calc(x - 0.5px) so the
+     1px fill is centered on its coordinate. */
+  .branch-stem,
+  .branch-rail,
+  .branch-drop,
+  .fork-stem,
+  .fork-rail,
+  .fork-drop {
+    position: absolute;
+    display: block;
+    background: var(--faint);
+  }
+  .branch-drop::after,
+  .fork-drop::after,
+  .arch-arrow::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 7px;
+    height: 7px;
+    border-right: 1px solid var(--faint);
+    border-bottom: 1px solid var(--faint);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
   .arch-arrow {
-    text-align: center;
-    color: var(--faint);
-    font-size: 15px;
-    padding: 4px 0;
+    position: relative;
+    height: 26px;
+  }
+  .arch-arrow::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    bottom: 5px;
+    left: calc(50% - 0.5px);
+    width: 1px;
+    background: var(--faint);
+  }
+  .arch-arrow::after {
+    bottom: 5px;
+  }
+
+  /* Internet fan-out: centered stem, rail spanning the region tab
+     centers, one drop per tab (--tab-x-* measured by the tab script). */
+  .arch-branch {
+    position: relative;
+    height: 32px;
+  }
+  .branch-stem {
+    top: 0;
+    left: calc(50% - 0.5px);
+    width: 1px;
+    height: 13px;
+  }
+  .branch-rail {
+    top: 12px;
+    height: 1px;
+    left: var(--tab-x-first, 50%);
+    right: calc(100% - var(--tab-x-last, 50%));
+  }
+  .branch-drop {
+    top: 12px;
+    width: 1px;
+    height: 18px;
+    left: calc(var(--x, 50%) - 0.5px);
   }
 
   /* Selected-tab fork: stem at --fork-x (clamped to the rail), rail
      between the two column centers (each 25% in, offset half the 18px
-     column gap), arrowheads dropping onto each column. */
+     column gap), a drop with an arrowhead onto each ingress path. */
   .arch-fork {
     grid-column: 1 / -1;
     position: relative;
     height: 38px;
   }
-  .fork-stem,
-  .fork-rail {
-    position: absolute;
-    display: block;
-  }
   .fork-stem {
     top: 0;
-    height: 14px;
-    border-left: 1px solid var(--faint);
-    left: clamp(calc(25% - 4.5px), var(--fork-x, 50%), calc(75% + 4.5px));
+    width: 1px;
+    height: 15px;
+    left: clamp(calc(25% - 5px), calc(var(--fork-x, 50%) - 0.5px), calc(75% + 4px));
     transition: left 0.25s ease;
   }
   .fork-rail {
     top: 14px;
+    height: 1px;
     left: calc(25% - 4.5px);
     right: calc(25% - 4.5px);
-    height: 9px;
-    border-top: 1px solid var(--faint);
-    border-left: 1px solid var(--faint);
-    border-right: 1px solid var(--faint);
   }
-  .fork-head {
-    position: absolute;
+  .fork-drop {
     top: 14px;
-    transform: translateX(-50%);
-    color: var(--faint);
-    font-size: 15px;
-    line-height: 1.5;
+    width: 1px;
+    height: 18px;
   }
-  .fork-head.left {
-    left: calc(25% - 4.5px);
+  .fork-drop.left {
+    left: calc(25% - 5px);
   }
-  .fork-head.right {
-    left: calc(75% + 4.5px);
+  .fork-drop.right {
+    left: calc(75% + 4px);
   }
   @media (prefers-reduced-motion: reduce) {
     .fork-stem {
@@ -478,18 +542,37 @@ const panels = trust.regions.map((region) => {
     .arch-cols .arch-arrow ~ .arch-arrow {
       display: none;
     }
-    /* Columns stack, so the fork collapses to a single centered arrow. */
+    /* Columns stack, so the fan-out and the fork each collapse to a
+       single centered arrow drawn on the container's own pseudos. */
+    .arch-branch,
     .arch-fork {
       height: 26px;
     }
-    .fork-stem,
-    .fork-rail,
-    .fork-head.right {
+    .arch-branch > *,
+    .arch-fork > * {
       display: none;
     }
-    .fork-head.left {
+    .arch-branch::before,
+    .arch-fork::before {
+      content: "";
+      position: absolute;
+      top: 3px;
+      bottom: 5px;
+      left: calc(50% - 0.5px);
+      width: 1px;
+      background: var(--faint);
+    }
+    .arch-branch::after,
+    .arch-fork::after {
+      content: "";
+      position: absolute;
       left: 50%;
-      top: 0;
+      bottom: 5px;
+      width: 7px;
+      height: 7px;
+      border-right: 1px solid var(--faint);
+      border-bottom: 1px solid var(--faint);
+      transform: translateX(-50%) rotate(45deg);
     }
     .arch-cols .arch-box {
       margin-bottom: 12px;
