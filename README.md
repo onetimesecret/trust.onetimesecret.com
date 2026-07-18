@@ -33,14 +33,14 @@ Three classes of file, three homes:
   [WHATS-CHANGED.md](WHATS-CHANGED.md) (plain-language summary of the
   current revision, replaced each cycle).
 - **Records** — dated and immutable once written: decision records in
-  [`decisions/`](decisions/), self-review records in
-  [`reviews/`](reviews/), and dated research runs in
-  [`research/YYYY/`](research/). Superseded by newer dated files, never
+  [`decisions/`](docs/decisions/), self-review records in
+  [`reviews/`](docs/reviews/), and dated research runs in
+  [`research/YYYY/`](docs/research/). Superseded by newer dated files, never
   rewritten.
 - **Working documents** — living files, updated in place:
   [REMAINING_DECISIONS.md](REMAINING_DECISIONS.md) (the open-items tracker
   for the 2026 revision), topical rationale notes in
-  [`research/`](research/), and site documentation in [`docs/`](docs/).
+  [`research/`](docs/research/), and site documentation in [`docs/`](docs/).
 
 ## Building locally
 

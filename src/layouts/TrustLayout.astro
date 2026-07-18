@@ -1,18 +1,18 @@
 ---
-import '@fontsource/newsreader/400.css';
-import '@fontsource/newsreader/500.css';
-import '@fontsource/newsreader/600.css';
-import '@fontsource/newsreader/400-italic.css';
-import '@fontsource/newsreader/500-italic.css';
-import '@fontsource/libre-franklin/400.css';
-import '@fontsource/libre-franklin/500.css';
-import '@fontsource/libre-franklin/600.css';
-import '@fontsource/libre-franklin/700.css';
-import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/500.css';
-import { trust } from '../lib/trust';
-import { navSections, type SectionKey } from '../lib/sitemap';
-import { showPreviewNotices } from '../lib/site-env';
+import "@fontsource/newsreader/400.css";
+import "@fontsource/newsreader/500.css";
+import "@fontsource/newsreader/600.css";
+import "@fontsource/newsreader/400-italic.css";
+import "@fontsource/newsreader/500-italic.css";
+import "@fontsource/libre-franklin/400.css";
+import "@fontsource/libre-franklin/500.css";
+import "@fontsource/libre-franklin/600.css";
+import "@fontsource/libre-franklin/700.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import { trust } from "../lib/trust";
+import { navSections, type SectionKey } from "../lib/sitemap";
+import { showPreviewNotices } from "../lib/site-env";
 
 interface Props {
   title: string;
@@ -42,27 +42,42 @@ const { email, sla, pgp } = trust.meta.contacts;
       // Stamp the stored theme before first paint so there is no flash.
       // Absent a stored choice, prefers-color-scheme drives the palette.
       (() => {
-        const t = localStorage.getItem('theme');
-        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+        const t = localStorage.getItem("theme");
+        if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
       })();
     </script>
   </head>
   <body>
-    {showPreviewNotices && (
-      <div class="preview-banner" role="note" aria-label="Non-production preview notice">
-        <strong>NON-PRODUCTION PREVIEW</strong>
-        <span>Design preview only. All content is <b>placeholder</b> — not valid legal
-        information, binding policy, or an accurate subprocessor disclosure. No production
-        trust centre exists at this address.</span>
-      </div>
-    )}
+    {
+      showPreviewNotices && (
+        <div class="preview-banner" role="note" aria-label="Non-production preview notice">
+          <strong>NON-PRODUCTION PREVIEW</strong>
+          <span>
+            Design preview only. All content is <b>placeholder</b> — not valid legal information,
+            binding policy, or an accurate subprocessor disclosure. No production trust centre
+            exists at this address.
+          </span>
+        </div>
+      )
+    }
     <header class="nav">
-      <a class="brand" href="/">Onetime Secret — Trust {showPreviewNotices && <span class="brand-flag">· preview</span>}</a>
+      <a class="brand" href="/"
+        >Onetime Secret — Trust {showPreviewNotices && <span class="brand-flag">· preview</span>}</a
+      >
       <nav>
-        {navItems.map((item) => (
-          <a href={item.href} aria-current={item.key === active ? 'page' : undefined}>{item.label}</a>
-        ))}
-        <button type="button" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+        {
+          navItems.map((item) => (
+            <a href={item.href} aria-current={item.key === active ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+        <button
+          type="button"
+          class="theme-toggle"
+          aria-label="Toggle dark mode"
+          title="Toggle theme"
+        >
           <span class="theme-toggle-icon" aria-hidden="true"></span>
         </button>
       </nav>
@@ -73,11 +88,15 @@ const { email, sla, pgp } = trust.meta.contacts;
     </main>
 
     <footer class="footer">
-      <span>© 2026 Onetime Secret · this site is a <a href="https://github.com/onetimesecret/site-policy">public git repository</a></span>
+      <span
+        >© 2026 Onetime Secret · this site is a <a
+          href="https://github.com/onetimesecret/site-policy">public git repository</a
+        ></span
+      >
       <span>
         <a href="/.well-known/security.txt">security.txt</a> ·
         <a href={pgp}>PGP</a> ·
-        <a href={`mailto:${email}`}>{email}</a> · replies within {sla}
+        <a href={`mailto:${email}`}>{email}</a>.
       </span>
     </footer>
     <script is:inline>
@@ -85,17 +104,17 @@ const { email, sla, pgp } = trust.meta.contacts;
       // (stamped override, else the OS preference) and persist the choice.
       (() => {
         const root = document.documentElement;
-        const btn = document.querySelector('.theme-toggle');
+        const btn = document.querySelector(".theme-toggle");
         if (!btn) return;
         const effective = () =>
           root.dataset.theme ||
-          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        const sync = () => btn.setAttribute('aria-pressed', String(effective() === 'dark'));
+          (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        const sync = () => btn.setAttribute("aria-pressed", String(effective() === "dark"));
         sync();
-        btn.addEventListener('click', () => {
-          const next = effective() === 'dark' ? 'light' : 'dark';
+        btn.addEventListener("click", () => {
+          const next = effective() === "dark" ? "light" : "dark";
           root.dataset.theme = next;
-          localStorage.setItem('theme', next);
+          localStorage.setItem("theme", next);
           sync();
         });
       })();
@@ -116,9 +135,9 @@ const { email, sla, pgp } = trust.meta.contacts;
     --panel: #f7f3ea;
     --green: #3d7a46;
     --amber: #8a6d1f;
-    --serif: 'Newsreader', Georgia, serif;
-    --sans: 'Libre Franklin', system-ui, sans-serif;
-    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "Libre Franklin", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
   }
 
   /* Dark palette — warm, to keep the newsprint feel. Applied when the OS
@@ -126,7 +145,7 @@ const { email, sla, pgp } = trust.meta.contacts;
      specificity so it wins either direction — when data-theme is stamped.
      Keep the two dark blocks in sync. */
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
+    :root:not([data-theme="light"]) {
       color-scheme: dark;
       --paper: #1a1815;
       --ink: #f0ebe0;
@@ -140,7 +159,7 @@ const { email, sla, pgp } = trust.meta.contacts;
       --amber: #c9a94e;
     }
   }
-  :root[data-theme='dark'] {
+  :root[data-theme="dark"] {
     color-scheme: dark;
     --paper: #1a1815;
     --ink: #f0ebe0;
@@ -154,7 +173,9 @@ const { email, sla, pgp } = trust.meta.contacts;
     --amber: #c9a94e;
   }
 
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
   body {
     margin: 0;
@@ -166,9 +187,13 @@ const { email, sla, pgp } = trust.meta.contacts;
     color: var(--ink);
   }
 
-  main { flex: 1; }
+  main {
+    flex: 1;
+  }
 
-  a { color: inherit; }
+  a {
+    color: inherit;
+  }
 
   /* ---- non-production preview banner ---- */
   .preview-banner {
@@ -191,8 +216,14 @@ const { email, sla, pgp } = trust.meta.contacts;
     white-space: nowrap;
     color: #ffd9b0;
   }
-  .preview-banner span { color: #f4d8c4; max-width: 70ch; }
-  .preview-banner b { font-weight: 700; color: #fff; }
+  .preview-banner span {
+    color: #f4d8c4;
+    max-width: 70ch;
+  }
+  .preview-banner b {
+    font-weight: 700;
+    color: #fff;
+  }
   .brand-flag {
     font-style: normal;
     font-family: var(--sans);
@@ -222,10 +253,22 @@ const { email, sla, pgp } = trust.meta.contacts;
     font-style: italic;
     text-decoration: none;
   }
-  .nav nav { display: flex; gap: 26px; flex-wrap: wrap; font: 500 13px var(--sans); }
-  .nav nav a { color: var(--faint); text-decoration: none; }
-  .nav nav a:hover { color: var(--ink); }
-  .nav nav a[aria-current='page'] { color: var(--ink); }
+  .nav nav {
+    display: flex;
+    gap: 26px;
+    flex-wrap: wrap;
+    font: 500 13px var(--sans);
+  }
+  .nav nav a {
+    color: var(--faint);
+    text-decoration: none;
+  }
+  .nav nav a:hover {
+    color: var(--ink);
+  }
+  .nav nav a[aria-current="page"] {
+    color: var(--ink);
+  }
 
   .theme-toggle {
     display: inline-flex;
@@ -242,9 +285,16 @@ const { email, sla, pgp } = trust.meta.contacts;
     line-height: 1;
     cursor: pointer;
   }
-  .theme-toggle:hover { color: var(--ink); border-color: var(--faint); }
-  .theme-toggle-icon::before { content: '☾'; }
-  .theme-toggle[aria-pressed='true'] .theme-toggle-icon::before { content: '☀'; }
+  .theme-toggle:hover {
+    color: var(--ink);
+    border-color: var(--faint);
+  }
+  .theme-toggle-icon::before {
+    content: "☾";
+  }
+  .theme-toggle[aria-pressed="true"] .theme-toggle-icon::before {
+    content: "☀";
+  }
 
   .footer {
     border-top: 1px solid var(--hairline);
@@ -256,14 +306,18 @@ const { email, sla, pgp } = trust.meta.contacts;
     font: 400 12px var(--sans);
     color: var(--faint);
   }
-  .footer a { color: inherit; }
+  .footer a {
+    color: inherit;
+  }
 
   /* ---- page scaffolding ---- */
   .page {
     margin: 0 auto;
     padding: 72px 24px;
   }
-  .page.home { padding-top: 80px; }
+  .page.home {
+    padding-top: 80px;
+  }
 
   .kicker {
     font: 600 11px var(--sans);
@@ -273,7 +327,10 @@ const { email, sla, pgp } = trust.meta.contacts;
     margin-bottom: 22px;
     text-align: center;
   }
-  .kicker.left { text-align: left; margin-bottom: 18px; }
+  .kicker.left {
+    text-align: left;
+    margin-bottom: 18px;
+  }
 
   h1 {
     font: 500 40px/1.2 var(--serif);
@@ -289,14 +346,26 @@ const { email, sla, pgp } = trust.meta.contacts;
     margin: 0 auto 8px;
     max-width: 560px;
   }
-  .lede.center { text-align: center; }
+  .lede.center {
+    text-align: center;
+  }
 
-  .prose { font-size: 17px; line-height: 1.78; color: var(--body); }
-  .prose p { margin: 0 0 20px; }
-  .prose p:last-child { margin-bottom: 0; }
+  .prose {
+    font-size: 17px;
+    line-height: 1.78;
+    color: var(--body);
+  }
+  .prose p {
+    margin: 0 0 20px;
+  }
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
 
   /* ---- ruled index / list rows ---- */
-  .rule-list { border-top: 1px solid var(--ink); }
+  .rule-list {
+    border-top: 1px solid var(--ink);
+  }
   .rule-row {
     display: flex;
     justify-content: space-between;
@@ -305,11 +374,22 @@ const { email, sla, pgp } = trust.meta.contacts;
     border-bottom: 1px solid var(--hairline);
     align-items: baseline;
   }
-  a.rule-row, .rule-row a.row-title { text-decoration: none; }
+  a.rule-row,
+  .rule-row a.row-title {
+    text-decoration: none;
+  }
 
-  .row-title { font: 600 15px var(--sans); }
-  .row-meta { font: 400 12px var(--sans); color: var(--faint); white-space: nowrap; }
-  .row-meta.mono { font-family: var(--mono); }
+  .row-title {
+    font: 600 15px var(--sans);
+  }
+  .row-meta {
+    font: 400 12px var(--sans);
+    color: var(--faint);
+    white-space: nowrap;
+  }
+  .row-meta.mono {
+    font-family: var(--mono);
+  }
 
   /* ---- callout panel ---- */
   .callout {
@@ -325,18 +405,45 @@ const { email, sla, pgp } = trust.meta.contacts;
     color: var(--rust);
     margin-bottom: 10px;
   }
-  .callout p { margin: 0; font-size: 15px; line-height: 1.7; color: var(--body); }
+  .callout p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--body);
+  }
 
-  .access-public { color: var(--green); }
-  .access-request { color: var(--amber); }
-  .verb-added { color: var(--green); }
-  .verb-removed { color: var(--rust); }
-  .verb-updated { color: var(--amber); }
+  .access-public {
+    color: var(--green);
+  }
+  .access-request {
+    color: var(--amber);
+  }
+  .verb-added {
+    color: var(--green);
+  }
+  .verb-removed {
+    color: var(--rust);
+  }
+  .verb-updated {
+    color: var(--amber);
+  }
 
   @media (max-width: 720px) {
-    .nav, .footer, .preview-banner { padding-left: 24px; padding-right: 24px; }
-    h1 { font-size: 32px; }
-    .rule-row { flex-direction: column; gap: 6px; }
-    .row-meta { white-space: normal; }
+    .nav,
+    .footer,
+    .preview-banner {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    h1 {
+      font-size: 32px;
+    }
+    .rule-row {
+      flex-direction: column;
+      gap: 6px;
+    }
+    .row-meta {
+      white-space: normal;
+    }
   }
 </style>
