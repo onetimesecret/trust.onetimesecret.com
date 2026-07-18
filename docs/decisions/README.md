@@ -13,6 +13,6 @@ amended with a dated addendum or superseded by a new ADR that links back.
 Review records (consistency reviews, benchmark verifications, watchlists)
 live in [`reviews/`](../reviews/), not here — a review is evidence, not a
 decision. The active open-items tracker is
-[`REMAINING_DECISIONS.md`](../REMAINING_DECISIONS.md) at the repository
+[`REMAINING_DECISIONS.md`](../../REMAINING_DECISIONS.md) at the repository
 root; when the 2026 revision ships, its "Decisions of record" section
 graduates into ADRs here.

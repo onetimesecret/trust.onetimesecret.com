@@ -91,7 +91,7 @@ pnpm dev      # local preview
 
 ## History
 
-Decision record: `decisions/ADR-001-retention-source-of-truth.md`
+Decision record: `docs/decisions/ADR-001-retention-source-of-truth.md`
 (2026-07-05 addendum). Before this architecture, the four documents were
 flat markdown at the repo root and consistency was audited manually
 against a line-number ledger (`decisions/retention-state.yaml`, now

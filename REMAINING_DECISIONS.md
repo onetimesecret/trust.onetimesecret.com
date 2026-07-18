@@ -4,7 +4,7 @@ Single consolidated tracker for the 2026 site-policy revision. Supersedes the
 former `ERRATA.md`, `ERRATA-3.md`, `FINALIZATION-july1.md`, and
 `FINALIZATION-july2.md` working files (removed 2026-07-05; their full
 append-only detail remains in git history). Business-arrangements research that
-lived in `ERRATA-1.md` moved to `research/business-arrangements-rationale.md`.
+lived in `ERRATA-1.md` moved to `docs/research/business-arrangements-rationale.md`.
 
 Two parts: **Part 1 — Open items** (still actionable) and **Part 2 — Decisions
 of record** (resolved and applied; kept for institutional memory).
@@ -145,7 +145,7 @@ review-note history is in git.
   business-arrangements page remains the sole home of several commitments
   (sponsored arrangements, payer decoupling, consolidated invoicing,
   alias/boundary domains, spin-out path) — retain or re-home those whenever the
-  page moves toward publication. Page + rationale now live under `research/`.
+  page moves toward publication. Page + rationale now live under `docs/research/`.
 
 - **AWS EU-residency.** DPA entity-details note corrected to "SES and S3; data
   located in EU regions only (Frankfurt, Ireland)".
@@ -155,7 +155,7 @@ review-note history is in git.
   subscription; agencies/resellers/sponsors supported; self-hosting endorsed
   under the MIT license); the org-per-owner cap reframed as an ops guardrail
   raised on request. Rationale preserved in
-  `research/business-arrangements-rationale.md`.
+  `docs/research/business-arrangements-rationale.md`.
 
 - **Items 2–16 (2026-07-01 batch pass).** Subprocessor change-notice rewritten
   to notice-with-30-day-objection; email taxonomy applied to the PP;
@@ -202,4 +202,4 @@ review-note history is in git.
   WHATS-CHANGED presents the DPA and TOMs as new publications — the private
   2026-02-18 DPA lineage appears only as "previously provided to
   dedicated-deployment customers". Source research preserved in
-  `research/revision-history-2026.md`.
+  `docs/research/revision-history-2026.md`.

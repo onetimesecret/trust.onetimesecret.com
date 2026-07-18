@@ -14,6 +14,6 @@ Conventions:
 
 Decisions that come out of a review belong in [`decisions/`](../decisions/)
 as ADRs; open items go to
-[`REMAINING_DECISIONS.md`](../REMAINING_DECISIONS.md). Research runs that
+[`REMAINING_DECISIONS.md`](../../REMAINING_DECISIONS.md). Research runs that
 feed a review (peer benchmarks, deep-research reports) live in
 [`research/`](../research/).

@@ -26,7 +26,7 @@ Two kinds of files live here, and the distinction is the convention:
 
 `revision-history-2026.md` is the internal phase-by-phase account of how
 the 2026 document set was produced; its reader-facing derivatives are
-[`CHANGELOG.md`](../CHANGELOG.md) (full history) and
-[`WHATS-CHANGED.md`](../WHATS-CHANGED.md) (plain-language notice).
+[`CHANGELOG.md`](../../CHANGELOG.md) (full history) and
+[`WHATS-CHANGED.md`](../../WHATS-CHANGED.md) (plain-language notice).
 Self-review records (consistency reviews, watchlists) live in
 [`reviews/`](../reviews/); decisions in [`decisions/`](../decisions/).
