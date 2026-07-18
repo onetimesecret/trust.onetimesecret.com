@@ -5,7 +5,7 @@
 
 ## Context
 
-The 2026-07-18 peer benchmark (`research/peer-benchmark-2026-legal-docs.md` §2.1)
+The 2026-07-18 peer benchmark (`research/2026/20260718-peer-benchmark-legal-docs.md` §2.1)
 verified that every benchmarked peer DPA — GitHub, Tailscale, PostHog —
 incorporates the 2021 EU Standard Contractual Clauses with explicit module
 selection, the UK IDTA/Addendum, and Swiss FADP adaptations. Our DPA
@@ -37,11 +37,22 @@ mechanism or enumerated basis:
 No other personal-data flow leaves its collection region. Incorporating SCC
 modules would presume an exporter–importer transfer relationship the
 architecture is designed not to create; the honest posture is to enumerate the
-four real flows and their mechanisms, which DPA §12.2 now does in full.
+five real flows and their mechanisms, which DPA §12.2 now does in full.
+
+**Remote administration (not a flow):** support and operational tooling is
+deployed per region; the only cross-region element is Processor staff
+terminals connecting over an authenticated, encrypted VPN into a region to
+administer production. This is not a Chapter V transfer — EDPB Guidelines
+05/2021 require disclosure to a *different* controller or processor, and
+same-entity staff access is instead an Art. 32 security matter (TOMs §1.2:
+MFA, encrypted connections, per-region tooling locality). On the conservative
+reading it would still be covered by Canada's EU adequacy decision (PIPEDA,
+commercial organizations) and the UK adequacy regulations. No §12.2 exception
+is needed; data-at-rest and processing never leave the region.
 
 ## Consequences
 
-- DPA §12.2 enumerates all four exceptions. The Proton correspondence flow was
+- DPA §12.2 enumerates all five exceptions. The Proton correspondence flow was
   added as §12.2(d) with this ADR — previously it appeared in Schedule A
   (global email subprocessor) but was absent from §12.2's exception list,
   which is exactly the kind of ambiguity this ADR exists to remove.
@@ -51,7 +62,10 @@ four real flows and their mechanisms, which DPA §12.2 now does in full.
   confirmed non-EU regions ship error telemetry to the EU Sentry instance
   (scrubbed, leakage possible) — this contradicted §12.1's absolute residency
   promise while being disclosed in §5.3, and was resolved by enumerating it
-  as §12.2(e). Still unmapped: cross-region support-tooling access.
+  as §12.2(e). Second application, same day: support-tooling access confirmed
+  per-region with VPN-only remote administration — resolved as not-a-transfer
+  (see "Remote administration" above), no DPA change needed, locality stated
+  in TOMs §1.2. **The transfer map is complete.**
   (Internal note: the Sentry flow also engages Quebec Law 25 s. 17's
   before-transfer assessment duty for Quebec residents' data — an internal
   PIA, pairs with the Law 25 person-in-charge item.)
@@ -67,5 +81,5 @@ four real flows and their mechanisms, which DPA §12.2 now does in full.
 
 - DPA §12 (Data Transfer), `src/pages/dpa.mdx`
 - Schedule A / subprocessor register, `src/content/trust.yaml`
-- Peer benchmark, `research/peer-benchmark-2026-legal-docs.md` §2.1
+- Peer benchmark, `research/2026/20260718-peer-benchmark-legal-docs.md` §2.1
 - TLS-1 decision of record, `REMAINING_DECISIONS.md` Part 2
