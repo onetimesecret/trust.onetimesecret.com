@@ -64,7 +64,7 @@ export const sections: Section[] = [
     key: "docs",
     href: "/documents",
     navLabel: "Documents",
-    status: "published",
+    status: "unlisted",
     indexTitle: "Documents — policy, DPA, HECVAT",
   },
   {
@@ -74,21 +74,21 @@ export const sections: Section[] = [
     status: "draft",
     indexTitle: "Assurance without certification",
   },
-  { key: "faq", href: "/faq", navLabel: "FAQ", status: "draft" },
+  { key: "faq", href: "/faq", navLabel: "FAQ", status: "unlisted" },
   {
     key: "audit",
     href: "/your-audit",
     navLabel: "Your audit",
-    status: "draft",
+    status: "unlisted",
     indexTitle: "Citing Onetime Secret in your audit",
   },
   // Generated policy documents (MDX over policy-constants.yaml). Their status
   // gates publication independently of counsel sign-off display (manifest.ts);
   // flip to `unlisted` for a counsel-review lane or `draft` to pull one back.
-  { key: "terms", href: "/terms", status: "draft" },
-  { key: "privacy", href: "/privacy", status: "draft" },
-  { key: "dpa", href: "/dpa", status: "draft" },
-  { key: "toms", href: "/toms", status: "draft" },
+  { key: "terms", href: "/terms", status: "unlisted" },
+  { key: "privacy", href: "/privacy", status: "unlisted" },
+  { key: "dpa", href: "/dpa", status: "unlisted" },
+  { key: "toms", href: "/toms", status: "unlisted" },
 ];
 
 // Routes the build emits that are not navigable sections — data endpoints and
