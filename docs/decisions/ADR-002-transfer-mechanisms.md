@@ -5,7 +5,7 @@
 
 ## Context
 
-The 2026-07-18 peer benchmark (`research/2026/20260718-peer-benchmark-legal-docs.md` §2.1)
+The 2026-07-18 peer benchmark (`docs/research/2026/20260718-peer-benchmark-legal-docs.md` §2.1)
 verified that every benchmarked peer DPA — GitHub, Tailscale, PostHog —
 incorporates the 2021 EU Standard Contractual Clauses with explicit module
 selection, the UK IDTA/Addendum, and Swiss FADP adaptations. Our DPA
@@ -82,5 +82,5 @@ is needed; data-at-rest and processing never leave the region.
 
 - DPA §12 (Data Transfer), `src/pages/dpa.mdx`
 - Schedule A / subprocessor register, `src/content/trust.yaml`
-- Peer benchmark, `research/2026/20260718-peer-benchmark-legal-docs.md` §2.1
+- Peer benchmark, `docs/research/2026/20260718-peer-benchmark-legal-docs.md` §2.1
 - TLS-1 decision of record, `REMAINING_DECISIONS.md` Part 2

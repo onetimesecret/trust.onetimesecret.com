@@ -2,7 +2,7 @@
 
 Living register of the external sources the four policy documents and ADR-002
 depend on, with re-check cadence. Extracted from the 2026-07-18 peer-benchmark
-run (`research/2026/20260718-peer-benchmark-legal-docs.md`) and its follow-up
+run (`docs/research/2026/20260718-peer-benchmark-legal-docs.md`) and its follow-up
 verification pass; the report itself is a dated artifact and no longer carries
 URLs — this file is the canonical URL record.
 

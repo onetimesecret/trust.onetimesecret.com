@@ -239,7 +239,7 @@ Recover the drafted text with `git show e3aed13^:principles.md` and port:
   administration is VPN-into-region from staff terminals only (not a
   Chapter V transfer per EDPB Guidelines 05/2021; locality stated in TOMs
   §1.2) — the transfer map is complete. Full reasoning:
-  `decisions/ADR-002-transfer-mechanisms.md`.
+  `docs/decisions/ADR-002-transfer-mechanisms.md`.
 
 - **HASH-1 — credential hashing.** Legacy bcrypt hashes remain for accounts
   with no successful sign-in since April 2026; upgrade to Argon2id happens on
