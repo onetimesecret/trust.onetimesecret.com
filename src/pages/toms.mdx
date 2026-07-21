@@ -41,7 +41,7 @@ This document does not apply to self-hosted deployments of the Processor's open-
 *Responsibility: Shared.*
 
 *Technical:*
-- Administrative access to production systems requires multi-factor authentication and encrypted connections.
+- Administrative access to production systems requires multi-factor authentication and encrypted connections. Support and operational tooling is deployed per regional environment; administrative access from outside a region occurs only from Processor staff terminals connecting over an authenticated, encrypted VPN into that region. Production data is not replicated to, or stored on, infrastructure outside its region for administrative purposes.
 - Access to cryptographic key material is restricted to essential operational processes.
 - User account credentials are protected with Argon2id adaptive one-way hashing (per-credential random salt, constant-time verification). Legacy hashes are verified and upgraded to Argon2id on the next successful authentication.
 - Role- and permission-based access control governs what users may do within their own account.

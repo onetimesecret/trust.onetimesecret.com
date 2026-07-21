@@ -40,6 +40,10 @@ publication.
   Elite) in AWS S3 Frankfurt with 30-day expiry. Consider stating the backup
   posture against the 3-2-1-1-0 rule if we want the resilience story to read
   as an explicit standard rather than an ad-hoc description.
+- **DPA §12.2(e) incidental-capture wording.** Confirm the acknowledgement
+  that error telemetry "may be incidentally captured" despite scrubbing
+  (mirrors the PP's existing honest wording) is acceptable contract drafting
+  rather than an admission to soften.
 - **PP Article 48 compelled-disclosure scoping.** The PP's compelled-disclosure
   section applies GDPR Art. 48 to EU-held data (a third-country order alone is
   not a sufficient legal basis without an MLAT or similar international
@@ -220,6 +224,25 @@ Recover the drafted text with `git show e3aed13^:principles.md` and port:
   of the service; Custom Domains are off Cloudflare and on Approximated; Global
   Elite excluded. DPA §12.2 and Schedule A aligned to the two transfer
   exceptions (Stripe billing; transient edge-network TLS termination).
+
+- **TRANSFER-1 — no SCC/IDTA/FADP incorporation; rationale of record
+  (ADR-002).** The absence of SCC incorporation is deliberate, not an
+  oversight: production data never leaves its collection region, and the only
+  cross-border flows are Stripe (billing data, paying customers only,
+  DPF-covered), Proton (company email and internal documents including
+  support correspondence — never production data or backups — Swiss
+  adequacy), transient edge TLS (TLS-1), Global Elite geo-backups, and
+  centralized error monitoring (self-hosted Sentry, EU — receives scrubbed
+  telemetry from all regions; flow runs *into* the EU so no restricted
+  transfer arises; UK adequacy covers UK→EU). DPA §12.2(d) and (e) were
+  added 2026-07-18 to name the Proton and Sentry flows, which previously
+  appeared in Schedule A / §5.3 but not in §12.2's exception list — §12.1's
+  absolute residency promise contradicted §5.3 for non-EU customers until
+  (e) closed it. Support tooling confirmed per-region the same day; remote
+  administration is VPN-into-region from staff terminals only (not a
+  Chapter V transfer per EDPB Guidelines 05/2021; locality stated in TOMs
+  §1.2) — the transfer map is complete. Full reasoning:
+  `docs/decisions/ADR-002-transfer-mechanisms.md`.
 
 - **HASH-1 — credential hashing.** Legacy bcrypt hashes remain for accounts
   with no successful sign-in since April 2026; upgrade to Argon2id happens on
