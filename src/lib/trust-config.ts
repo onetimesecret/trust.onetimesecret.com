@@ -191,7 +191,8 @@ export const InternalToolSchema = z.strictObject({
 export const AiModelSchema = z.strictObject({
   // Exact model name and version/ID as the vendor publishes it.
   model: z.string(),
-  // Vendor legal name; must match an `internalTools` entry with `ai: true`.
+  // Vendor legal name; must match an `internalTools` entry with `ai: true`
+  // (enforced by the cross-field check on TrustConfigSchema).
   vendor: z.string(),
   // The tool or surface the model is reached through (editor agent, CLI,
   // assistant UI) — the thing that determines what the model can see.
@@ -289,7 +290,22 @@ export const TrustConfigSchema = z.object({
   faqs: z.array(FaqSchema),
   auditMappings: z.array(AuditMappingSchema),
   flow: z.array(FlowStepSchema),
-});
+})
+  // `aiModels[].vendor` is a foreign key into the AI entries of
+  // `internalTools`: a typo would still parse and silently render a model
+  // row with no matching tool, so fail the build instead.
+  .superRefine((cfg, ctx) => {
+    const aiVendors = new Set(cfg.internalTools.filter((t) => t.ai).map((t) => t.name));
+    cfg.aiModels.forEach((m, i) => {
+      if (!aiVendors.has(m.vendor)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["aiModels", i, "vendor"],
+          message: `"${m.vendor}" has no internalTools entry with ai: true`,
+        });
+      }
+    });
+  });
 
 export type TrustConfig = z.infer<typeof TrustConfigSchema>;
 export type Subprocessor = z.infer<typeof SubprocessorSchema>;
