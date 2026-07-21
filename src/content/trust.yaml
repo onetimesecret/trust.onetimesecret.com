@@ -344,7 +344,8 @@ subprocessors:
         dataCategories: [Account info, app data, network-level web traffic data, IP addresses]
 
 # Internal tooling we use to run the company that processes NO Company
-# Personal Data — source control, CI, corporate DNS. These are NOT
+# Personal Data — source control, CI, corporate DNS, and AI-assisted
+# development and research tools. These are NOT
 # subprocessors, so they have no Schedule A row and never render into the
 # DPA; they appear on the Subprocessors page purely for transparency,
 # alongside the operational subprocessors. If any of these begins processing
@@ -353,18 +354,99 @@ subprocessors:
 # GitLab is engaged; fill jurisdictions/notes before publishing.
 internalTools:
   - name: GitHub, Inc.
-    use: Source-code hosting and CI (GitHub Actions) for our open-source and internal repositories. Secret Content and Account Data never enter source control or build pipelines.
+    use: Source-code hosting and CI (GitHub Actions) for our open-source and internal repositories, plus Copilot code review on pull requests. Secret Content and Account Data never enter source control, build pipelines, or Copilot.
     jurisdiction: US
+    ai: true
   - name: GitLab Inc.
     use: Secondary source-code hosting and CI mirror for internal repositories; no Secret Content or Account Data.
     jurisdiction: US
   - name: "Corporate DNS — provider TBD"
     use: Authoritative DNS for our corporate and marketing domains. DNS records only — no Secret Content, Account Data, or other Company Personal Data. The regional service domains (e.g. eu.onetimesecret.com) use Cloudflare, listed as a subprocessor above.
     jurisdiction: TBD
+  # AI tooling, disclosed ahead of any regulatory requirement — see the
+  # "AI tooling" notice on the Subprocessors page. These operate on source
+  # code, documentation, and policy drafts only; never Secret Content,
+  # Account Data, or other Company Personal Data. If that boundary ever
+  # moves (e.g. AI-assisted support touching customer email), the provider
+  # graduates into `subprocessors` and Schedule A BEFORE first use.
+  # TODO(counsel): confirm each provider's account tier and that its terms
+  # exclude our inputs from model training before asserting so in public copy.
+  - name: Anthropic, PBC
+    use: AI models (Claude) used via developer tooling for engineering, documentation, and policy drafting. Operates on source code and drafts — no Secret Content or Account Data.
+    jurisdiction: US
+    ai: true
+  - name: Zed Industries, Inc.
+    use: Code editor and its hosted AI agent, used for development on our repositories. Source code and docs only — no Secret Content or Account Data.
+    jurisdiction: US
+    ai: true
+  - name: Kagi Inc.
+    use: Web search and AI research assistant (Kagi Search, Kagi Assistant) used in engineering and operations research. Queries and public web content only — no Secret Content or Account Data.
+    jurisdiction: US
+    ai: true
+  - name: Tabnam, Inc. (d/b/a Greptile)
+    use: AI code review on pull requests in our repositories (Greptile). Reads source code and diffs only — no Secret Content or Account Data.
+    jurisdiction: US
+    ai: true
+
+# Model-level AI disclosure, rendered on the AI page. Vendor entries above
+# say who we pay; this says what actually processes our source and drafts.
+# No trust-centre convention exists at model level (SafeBase-style AI cards
+# stop at the vendor), so this list sets ours: exact model as the vendor
+# names it, the surface it's reached through, and what we use it for. Keep
+# current as models are adopted or retired — /trust.yaml diffs are the
+# change record. Unverified facts are neutral "TBD" values, never
+# instruction-style placeholders — this file is served verbatim, and
+# scripts/check-trust-placeholders.mjs enforces that in CI. What each TBD
+# needs is in the comment above its entry; all are tracked as AI-1 in
+# REMAINING_DECISIONS.md.
+aiModels:
+  # Fill (AI-1): exact Claude model names/IDs as Anthropic publishes them —
+  # the Claude Code default plus any pinned models. Note needs the account
+  # tier and its training-exclusion terms.
+  - model: "TBD — model list pending verification"
+    vendor: Anthropic, PBC
+    via: Claude Code
+    use: Engineering, documentation, and policy drafting on source code and drafts.
+    note: "Training and retention terms for our account tier pending verification."
+  # Fill (AI-1): which vendors' models the Zed agent is enabled to use on
+  # our account. Note needs Zed's data-control settings and the upstream
+  # providers' training/retention terms.
+  - model: "TBD — model list pending verification"
+    vendor: Zed Industries, Inc.
+    via: Zed editor agent
+    use: AI-assisted development in our repositories.
+    note: "Training and retention terms for our account tier pending verification."
+  # Fill (AI-1): which third-party models are enabled in Kagi Assistant on
+  # our account. Note needs the training/retention position that applies to
+  # Assistant queries (Kagi brokers third-party models).
+  - model: "TBD — model list pending verification"
+    vendor: Kagi Inc.
+    via: Kagi Assistant
+    use: Research in engineering and operations.
+    note: "Training and retention terms for our account tier pending verification."
+  # Fill (AI-1): which third-party models GitHub routes Copilot code review
+  # through on our plan. Note needs the Copilot training-exclusion and
+  # retention terms for our account.
+  - model: "TBD — model list pending verification"
+    vendor: GitHub, Inc.
+    via: GitHub Copilot code review
+    use: Automated review comments on pull requests.
+    note: "Training and retention terms for our account tier pending verification."
+  # Fill (AI-1): which providers Greptile routes reviews through. Note needs
+  # the training/retention position for our repositories.
+  - model: "TBD — model list pending verification"
+    vendor: Tabnam, Inc. (d/b/a Greptile)
+    via: Greptile PR review bot
+    use: Automated first-pass code review on pull requests.
+    note: "Training and retention terms for our account tier pending verification."
 
 # Newest first. Real history predating this site is being reconstructed
 # from the DPA's version history; only verified events are listed.
 subprocessorChangelog:
+  - date: "2026-07-20"
+    verb: updated
+    title: AI tooling disclosed
+    note: Added Anthropic, Zed Industries, Kagi, and Greptile to the internal-tools list and noted Copilot code review under GitHub, with an AI-tooling notice. None process Company Personal Data; disclosed for transparency ahead of any disclosure requirement.
   - date: "2026-07-18"
     verb: updated
     title: Initial public list

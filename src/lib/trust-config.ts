@@ -160,7 +160,8 @@ export const SubprocessorSchema = z.strictObject({
 });
 
 // Providers we use to run the company that are NOT subprocessors of Company
-// Personal Data — source control, CI, corporate DNS. They have no Schedule A
+// Personal Data — source control, CI, corporate DNS, AI-assisted development
+// and research tools. They have no Schedule A
 // row (no data categories, tiers, or transfer basis to state) and never
 // render into the DPA. Listed on the Subprocessors page purely for
 // transparency, alongside the operational subprocessors. If a tool starts
@@ -173,6 +174,32 @@ export const InternalToolSchema = z.strictObject({
   // analysis attaches, since no Company Personal Data is processed.
   jurisdiction: z.string().optional(),
   // Optional certifications / clarifying note.
+  note: z.string().optional(),
+  // True for AI-assisted tools. Groups the entry onto the AI page's
+  // "Employee AI usage" section in addition to the Subprocessors page's
+  // internal-tools list.
+  ai: z.boolean().optional(),
+});
+
+// Model-level AI disclosure, rendered on the AI page. Vendor-level
+// disclosure (`internalTools` with `ai: true`) says who we pay; it doesn't
+// say what actually processes our source and drafts, or under which terms.
+// No trust-centre convention exists for model-level disclosure — the
+// SafeBase-style AI cards stop at the vendor — so this schema sets ours:
+// the exact model as the vendor names it, the surface it's reached
+// through, what we use it for, and any per-model terms note.
+export const AiModelSchema = z.strictObject({
+  // Exact model name and version/ID as the vendor publishes it.
+  model: z.string(),
+  // Vendor legal name; must match an `internalTools` entry with `ai: true`
+  // (enforced by the cross-field check on TrustConfigSchema).
+  vendor: z.string(),
+  // The tool or surface the model is reached through (editor agent, CLI,
+  // assistant UI) — the thing that determines what the model can see.
+  via: z.string(),
+  // What we use it for, plain language.
+  use: z.string(),
+  // Optional per-model terms note (training exclusion, retention).
   note: z.string().optional(),
 });
 
@@ -257,15 +284,32 @@ export const TrustConfigSchema = z.object({
   regions: z.array(RegionSchema).nonempty(),
   subprocessors: z.array(SubprocessorSchema),
   internalTools: z.array(InternalToolSchema).default([]),
+  aiModels: z.array(AiModelSchema).default([]),
   subprocessorChangelog: z.array(ChangelogEntrySchema),
   documents: z.array(DocumentSchema),
   faqs: z.array(FaqSchema),
   auditMappings: z.array(AuditMappingSchema),
   flow: z.array(FlowStepSchema),
-});
+})
+  // `aiModels[].vendor` is a foreign key into the AI entries of
+  // `internalTools`: a typo would still parse and silently render a model
+  // row with no matching tool, so fail the build instead.
+  .superRefine((cfg, ctx) => {
+    const aiVendors = new Set(cfg.internalTools.filter((t) => t.ai).map((t) => t.name));
+    cfg.aiModels.forEach((m, i) => {
+      if (!aiVendors.has(m.vendor)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["aiModels", i, "vendor"],
+          message: `"${m.vendor}" has no internalTools entry with ai: true`,
+        });
+      }
+    });
+  });
 
 export type TrustConfig = z.infer<typeof TrustConfigSchema>;
 export type Subprocessor = z.infer<typeof SubprocessorSchema>;
 export type InternalTool = z.infer<typeof InternalToolSchema>;
+export type AiModel = z.infer<typeof AiModelSchema>;
 export type ChangelogEntry = z.infer<typeof ChangelogEntrySchema>;
 export type TrustDocument = z.infer<typeof DocumentSchema>;

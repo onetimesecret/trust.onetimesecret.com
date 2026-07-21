@@ -25,7 +25,7 @@
 export type SectionStatus = "draft" | "unlisted" | "published";
 
 export type SectionKey =
-  "overview" | "how" | "subs" | "docs" | "assurance" | "faq" | "audit" | "terms" | "privacy" | "dpa" | "toms";
+  "overview" | "how" | "subs" | "docs" | "assurance" | "faq" | "audit" | "ai" | "terms" | "privacy" | "dpa" | "toms";
 
 export interface Section {
   key: SectionKey;
@@ -75,6 +75,13 @@ export const sections: Section[] = [
     indexTitle: "Assurance without certification",
   },
   { key: "faq", href: "/faq", navLabel: "FAQ", status: "unlisted" },
+  {
+    key: "ai",
+    href: "/ai",
+    navLabel: "AI",
+    status: "draft",
+    indexTitle: "AI — where it is and isn't",
+  },
   {
     key: "audit",
     href: "/your-audit",

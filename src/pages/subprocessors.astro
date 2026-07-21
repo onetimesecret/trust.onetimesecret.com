@@ -84,7 +84,8 @@ const internalList = [
           </div>
           <p style="font: 400 14.5px/1.65 var(--sans); color: var(--muted); margin: 0 0 8px;">
             These providers run parts of our own operations — company and support email, internal
-            infrastructure, source control, CI, and DNS — but they sit{" "}
+            infrastructure, source control, CI, DNS, and AI-assisted development and research
+            tools — but they sit{" "}
             <strong>outside the path a customer secret takes</strong>, so they stay out of the
             diagram above. Those that process Company Personal Data or are approved in advance as
             customer-region hosts remain in <a href="/dpa">Schedule A</a>; the rest are not
@@ -141,6 +142,20 @@ const internalList = [
           terminate the affected services without penalty. Emergency replacements — say, a provider
           failing — are announced promptly after the engagement, with reasons given, and the
           objection window runs from that notice.
+        </p>
+      </div>
+      <div class="callout" style="margin-top: 16px;">
+        <div class="callout-label">AI tooling</div>
+        <p>
+          We use AI-assisted tools in engineering, documentation, and research — currently
+          Anthropic's Claude, Zed's editor agent, Kagi Search and Assistant, and, for
+          pull-request review, GitHub Copilot and Greptile — all listed above.
+          They operate on source code, documentation, and drafts, and never on Secret Content,
+          Account Data, or other Company Personal Data. No disclosure rule requires this notice
+          yet; we expect that to change, and we would rather state our practice before it does.
+          If an AI provider ever begins processing Company Personal Data, it becomes a
+          subprocessor: it joins the register above and <a href="/dpa">Schedule A</a>, and the
+          notification policy applies before first use.
         </p>
       </div>
       <div class="callout" style="margin-top: 16px;">
