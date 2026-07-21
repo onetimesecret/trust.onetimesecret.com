@@ -121,6 +121,31 @@ Open:
   consistent with whatever this page states. ISO/IEC 42001 remains the
   certification-track standard — not pursued at our size; vocabulary
   borrowed.
+- **Placeholder exposure:** the `aiModels` ALL-CAPS placeholders and
+  `TODO(counsel)` comments ship publicly at `/trust.yaml` on deploy (the
+  raw route serves the file verbatim; only the `/ai` *page* is
+  draft-pruned). Migration into the draft sidecar is part of DPA-1 /
+  ADR-003.
+
+### DPA-1 — per-row subprocessor DPA disclosure
+
+[ADR-003](docs/decisions/ADR-003-row-level-draft-lifecycle.md)
+(2026-07-20) sets the mechanism: draft row-level data lives in
+`src/content/trust-drafts.yaml`, merged into the config only under the dev
+server; publication is a dated move into `trust.yaml`, with an
+unlisted → published render gate per field. Open:
+
+- Implement the sidecar merge in `src/lib/trust.ts`, the `DpaSchema` on
+  subprocessor rows (`form: vendor-standard | negotiated | not-required`,
+  public `source` link, `verified` date, `status`), and the no-orphans
+  guard for sidecar entry names.
+- Migrate the `aiModels` placeholders and `TODO(counsel)` comments out of
+  `trust.yaml` into the sidecar (see AI-1).
+- Accrete per-subprocessor `dpa` rows in draft as counsel verifies each
+  vendor's terms; publish rows individually as they are confirmed. Blanket
+  flow-down statement on the Subprocessors page can precede per-row data.
+- **Rule:** nothing enters the sidecar that could not be read aloud —
+  NDA-sensitive detail of negotiated DPAs stays out of the repo entirely.
 
 ---
 
