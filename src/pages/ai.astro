@@ -1,0 +1,217 @@
+---
+import TrustLayout from "../layouts/TrustLayout.astro";
+import { trust } from "../lib/trust";
+
+// DRAFT (see src/lib/sitemap.ts): rendered at build, pruned from deploys.
+// ALL-CAPS statements are unfilled facts with the expected content in
+// parentheses — they must all be resolved before this section leaves draft.
+//
+// Section headings deliberately track the SafeBase/Drata trust-center AI
+// cards ("AI Overview", "Employee AI Usage", "AI Security", "AI Training
+// Data") so reviewers filling SafeBase-shaped questionnaires can map 1:1.
+// The model-level list has no convention to follow — vendor-level cards are
+// where the industry stops — so we set one; details live in trust.yaml
+// (`aiModels`), same source the DPA and Subprocessors page draw from.
+const aiTools = trust.internalTools.filter((t) => t.ai);
+const models = trust.aiModels;
+---
+
+<TrustLayout
+  title="AI"
+  description="Where AI is used at Onetime Secret and where it never is: no AI in the product, model-level disclosure of internal tooling, and the boundary we keep."
+  active="ai"
+>
+  <div class="page" style="max-width: 668px;">
+    <div class="kicker">AI at Onetime Secret</div>
+    <h1>Where AI is —<br />and isn't</h1>
+    <div class="prose">
+      <p>
+        There is no AI in the product. Secret Content is never sent to, processed by, or readable
+        by any AI system — ours or a vendor's — and no AI provider appears in the
+        <a href="/subprocessors">subprocessor register</a>. The service has no AI features.
+      </p>
+      <p>
+        We do use AI-assisted tools to build and run the company: engineering, documentation and
+        policy drafting, and research. This page says which tools, which models specifically, and
+        the boundary that keeps them away from customer data. Most AI pages explain the AI in the
+        product; ours exists to show there is none, and to disclose the rest anyway.
+      </p>
+    </div>
+
+    <section style="margin-top: 44px;">
+      <div class="kicker left" style="margin-bottom: 6px;">Employee AI usage — the tools</div>
+      <p class="section-intro">
+        The AI-assisted tools we use internally, from the same
+        <a href="/trust.yaml">trust.yaml</a> that generates the Subprocessors page. They operate
+        on source code, documentation, and policy drafts — never Secret Content, Account Data, or
+        other Company Personal Data.
+      </p>
+      <div class="tools">
+        {
+          aiTools.map((t) => (
+            <div class="tool">
+              <div class="tool-head">
+                <span class="tool-name">{t.name}</span>
+                {t.jurisdiction && <span class="tool-juris mono">{t.jurisdiction}</span>}
+              </div>
+              <p class="tool-use">{t.use}</p>
+              {t.note && <p class="tool-note">{t.note}</p>}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section style="margin-top: 48px;">
+      <div class="kicker left" style="margin-bottom: 6px;">The models, specifically</div>
+      <p class="section-intro">
+        Vendor names say who we pay; they don't say what actually processes our source and
+        drafts, or under which terms. Trust-center convention stops at the vendor, so there is no
+        standard to follow here — we list the models anyway: the exact model as the vendor names
+        it, the surface it's reached through, and what we use it for. Changes to this list are
+        visible as <a href="/trust.yaml">trust.yaml</a> diffs.
+      </p>
+      <div class="models">
+        {
+          models.map((m) => (
+            <div class="model">
+              <div class="model-head">
+                <span class="model-name mono">{m.model}</span>
+              </div>
+              <p class="model-meta">
+                {m.vendor} · via {m.via}
+              </p>
+              <p class="model-use">{m.use}</p>
+              {m.note && <p class="model-note">{m.note}</p>}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section style="margin-top: 48px;">
+      <div class="kicker left" style="margin-bottom: 6px;">AI security — the boundary in practice</div>
+      <div class="prose">
+        <p>
+          The boundary is physical, not just contractual. Development and AI-assisted work happen
+          on separate physical machines from production operations. The production-operations
+          machines have no AI tools installed, and AI features in the software they do run — Zed,
+          for example — are disabled. An AI tool cannot reach production systems or the data on
+          them from the machines it runs on.
+        </p>
+        <p>
+          STATE THE REVIEW PRACTICE FOR AI-ASSISTED CHANGES (whether AI-assisted code and copy
+          pass through the same review and version control as any other change before reaching
+          production, and who signs off).
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top: 48px;">
+      <div class="kicker left" style="margin-bottom: 6px;">AI training data</div>
+      <div class="prose">
+        <p>
+          There is no Onetime Secret model: we develop, train, and fine-tune none, so no customer
+          data can be training data of ours. What remains is vendor-side: whether the providers
+          above may train on our inputs. The per-model terms are recorded in the list above.
+        </p>
+        <p>
+          STATE THE CONFIRMED TRAINING POSITION ACROSS VENDORS (once counsel confirms each
+          account's tier and terms: a single sentence on whether our inputs are excluded from
+          model training everywhere, and any exception).
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top: 56px;">
+      <div class="kicker left">Notices</div>
+      <div class="callout" style="margin-top: 20px;">
+        <div class="callout-label">If the boundary moves</div>
+        <p>
+          If any AI provider ever begins processing Company Personal Data — AI-assisted support
+          touching customer email, say — it becomes a subprocessor <strong>before first use</strong>:
+          it enters the <a href="/subprocessors">register</a> and <a href="/dpa">Schedule A</a>,
+          and the thirty-day notification policy applies.
+        </p>
+      </div>
+      <div class="callout" style="margin-top: 16px;">
+        <div class="callout-label">Why disclose now</div>
+        <p>
+          No rule requires this page. The EU AI Act's transparency obligations (Article 50) cover
+          people interacting with AI systems and synthetic content, not a company's internal use
+          of AI tools, and the GDPR has no AI-specific disclosure duty. We expect that to change,
+          and we would rather state our practice before it does than after.
+        </p>
+      </div>
+    </section>
+  </div>
+</TrustLayout>
+
+<style>
+  .section-intro {
+    font: 400 14.5px/1.65 var(--sans);
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+
+  /* Tool cards — same compact format as the Subprocessors page's
+     internal-tools list. */
+  .tools {
+    border-top: 1px solid var(--hairline);
+  }
+  .tool {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .tool-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .tool-name {
+    font: 600 15.5px var(--sans);
+    color: var(--ink);
+  }
+  .tool-juris {
+    font: 400 11.5px var(--mono);
+    color: var(--faint);
+  }
+  .tool-use {
+    margin: 6px 0 0;
+    font: 400 13.5px/1.6 var(--sans);
+    color: var(--muted);
+  }
+  .tool-note {
+    margin: 5px 0 0;
+    font: 400 12.5px/1.55 var(--sans);
+    color: var(--faint);
+  }
+
+  /* Model list — one row per model: the model ID carries the weight. */
+  .models {
+    border-top: 1px solid var(--hairline);
+  }
+  .model {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .model-name {
+    font: 600 13.5px/1.5 var(--mono);
+    color: var(--ink);
+  }
+  .model-meta {
+    margin: 5px 0 0;
+    font: 400 12.5px var(--sans);
+    color: var(--faint);
+  }
+  .model-use {
+    margin: 6px 0 0;
+    font: 400 13.5px/1.6 var(--sans);
+    color: var(--muted);
+  }
+  .model-note {
+    margin: 5px 0 0;
+    font: 400 12.5px/1.55 var(--sans);
+    color: var(--faint);
+  }
+</style>
