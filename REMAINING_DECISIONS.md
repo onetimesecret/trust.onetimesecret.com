@@ -40,21 +40,10 @@ publication.
   Elite) in AWS S3 Frankfurt with 30-day expiry. Consider stating the backup
   posture against the 3-2-1-1-0 rule if we want the resilience story to read
   as an explicit standard rather than an ad-hoc description.
-- **Conditional SCC incorporation (belt-and-suspenders, optional).** ADR-002
-  (`decisions/ADR-002-transfer-mechanisms.md`) documents why the DPA
-  incorporates no EU SCCs / UK IDTA / Swiss FADP adaptations: regional
-  localization means restricted transfers do not occur in ordinary operation,
-  and each of the four §12.2 exceptions (Stripe billing via DPF; Proton
-  correspondence via Swiss adequacy; transient edge TLS; Global Elite
-  geo-backups) carries a named mechanism or enumerated basis. All three
-  benchmarked peers (GitHub, Tailscale, PostHog) nonetheless include a
-  conditional incorporation clause ("to the extent legally required…").
-  Confirm with counsel whether to add one (PostHog's Module-2-only version is
-  the leanest model) or stand on the documented rationale. At the same time,
-  confirm §12.2(e)'s incidental-capture acknowledgement (error telemetry "may
-  be incidentally captured" despite scrubbing — mirrors the PP's existing
-  honest wording) is acceptable contract drafting rather than an admission to
-  soften.
+- **DPA §12.2(e) incidental-capture wording.** Confirm the acknowledgement
+  that error telemetry "may be incidentally captured" despite scrubbing
+  (mirrors the PP's existing honest wording) is acceptable contract drafting
+  rather than an admission to soften.
 - **PP Article 48 compelled-disclosure scoping.** The PP's compelled-disclosure
   section applies GDPR Art. 48 to EU-held data (a third-country order alone is
   not a sufficient legal basis without an MLAT or similar international
@@ -251,8 +240,6 @@ Recover the drafted text with `git show e3aed13^:principles.md` and port:
   Chapter V transfer per EDPB Guidelines 05/2021; locality stated in TOMs
   §1.2) — the transfer map is complete. Full reasoning:
   `decisions/ADR-002-transfer-mechanisms.md`.
-  Whether to add a conditional SCC clause anyway is a counsel question
-  (Part 1).
 
 - **HASH-1 — credential hashing.** Legacy bcrypt hashes remain for accounts
   with no successful sign-in since April 2026; upgrade to Argon2id happens on

@@ -69,11 +69,12 @@ is needed; data-at-rest and processing never leave the region.
   (Internal note: the Sentry flow also engages Quebec Law 25 s. 17's
   before-transfer assessment duty for Quebec residents' data — an internal
   PIA, pairs with the Law 25 person-in-charge item.)
-- **Counsel question, not decided here:** whether to add a conditional
-  belt-and-suspenders clause ("to the extent a restricted transfer occurs,
-  the 2021 SCCs are incorporated…") as all three peers do. This ADR documents
-  why we believe none is required; it does not preclude adding the
-  conditional clause if counsel prefers. Tracked in `REMAINING_DECISIONS.md`.
+- **Conditional incorporation clause — considered, not adopted (2026-07-20).**
+  All three benchmarked peers include a belt-and-suspenders clause ("to the
+  extent a restricted transfer occurs, the 2021 SCCs are incorporated…"). We
+  do not add one: a conditional clause would presume the exporter–importer
+  relationship the architecture is designed not to create, and every real
+  flow above already carries a named mechanism or enumerated basis.
 - Any new subprocessor or feature that moves personal data across regions
   reopens this decision.
 
