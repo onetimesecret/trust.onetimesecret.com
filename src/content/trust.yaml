@@ -383,8 +383,8 @@ internalTools:
     use: Web search and AI research assistant (Kagi Search, Kagi Assistant) used in engineering and operations research. Queries and public web content only — no Secret Content or Account Data.
     jurisdiction: US
     ai: true
-  - name: Greptile, Inc.
-    use: AI code review on pull requests in our repositories. Reads source code and diffs only — no Secret Content or Account Data.
+  - name: Tabnam, Inc. (d/b/a Greptile)
+    use: AI code review on pull requests in our repositories (Greptile). Reads source code and diffs only — no Secret Content or Account Data.
     jurisdiction: US
     ai: true
 
@@ -417,7 +417,7 @@ aiModels:
     use: Automated review comments on pull requests.
     note: "CONFIRM GITHUB'S COPILOT TERMS FOR OUR ACCOUNT (training exclusion and retention for Copilot code review on our plan)"
   - model: "LIST THE MODELS GREPTILE USES FOR REVIEW (Greptile routes reviews through third-party models; state which apply to our account)"
-    vendor: Greptile, Inc.
+    vendor: Tabnam, Inc. (d/b/a Greptile)
     via: Greptile PR review bot
     use: Automated first-pass code review on pull requests.
     note: "CONFIRM GREPTILE'S UPSTREAM MODEL TERMS (which providers Greptile uses and the training/retention position for our repositories)"
