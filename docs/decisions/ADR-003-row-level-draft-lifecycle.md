@@ -15,7 +15,11 @@ HTML, and because the comments carry the disclosure rationale.
 
 The gap is live: the `aiModels` ALL-CAPS placeholders and `TODO(counsel)`
 comments committed 2026-07-20 would be served publicly at `/trust.yaml` on
-deploy, even though the `/ai` page that renders them is draft-pruned. The
+deploy, even though the `/ai` page that renders them is draft-pruned.
+(Interim mitigation, same day: the placeholders were neutralized to `TBD`
+values and `scripts/check-trust-placeholders.mjs` now fails CI on ALL-CAPS
+placeholder phrases in trust.yaml; the `TODO(counsel)` comments still ship
+until this ADR is implemented.) The
 next tranche of register work — per-subprocessor DPA status (in place,
 vendor-standard vs negotiated, verified date) — needs to accrete over weeks
 of counsel verification without surfacing early.

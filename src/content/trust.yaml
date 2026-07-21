@@ -394,33 +394,51 @@ internalTools:
 # stop at the vendor), so this list sets ours: exact model as the vendor
 # names it, the surface it's reached through, and what we use it for. Keep
 # current as models are adopted or retired — /trust.yaml diffs are the
-# change record. ALL-CAPS values are unfilled facts, not copy.
+# change record. Unverified facts are neutral "TBD" values, never
+# instruction-style placeholders — this file is served verbatim, and
+# scripts/check-trust-placeholders.mjs enforces that in CI. What each TBD
+# needs is in the comment above its entry; all are tracked as AI-1 in
+# REMAINING_DECISIONS.md.
 aiModels:
-  - model: "LIST THE EXACT CLAUDE MODELS IN USE (model names and IDs as Anthropic publishes them, e.g. which Claude Code default and any pinned models)"
+  # Fill (AI-1): exact Claude model names/IDs as Anthropic publishes them —
+  # the Claude Code default plus any pinned models. Note needs the account
+  # tier and its training-exclusion terms.
+  - model: "TBD — model list pending verification"
     vendor: Anthropic, PBC
     via: Claude Code
     use: Engineering, documentation, and policy drafting on source code and drafts.
-    note: "CONFIRM ACCOUNT TIER AND TRAINING-EXCLUSION TERMS (whether our inputs are excluded from model training under our Anthropic account's terms)"
-  - model: "LIST THE MODELS THE ZED AGENT IS CONFIGURED TO USE (Zed's hosted agent offers several vendors' models; state which are enabled on our account)"
+    note: "Training and retention terms for our account tier pending verification."
+  # Fill (AI-1): which vendors' models the Zed agent is enabled to use on
+  # our account. Note needs Zed's data-control settings and the upstream
+  # providers' training/retention terms.
+  - model: "TBD — model list pending verification"
     vendor: Zed Industries, Inc.
     via: Zed editor agent
     use: AI-assisted development in our repositories.
-    note: "CONFIRM ZED DATA-CONTROL SETTINGS AND UPSTREAM MODEL PROVIDERS (which providers Zed routes our requests to, and the training/retention terms that apply)"
-  - model: "LIST THE MODELS ENABLED IN KAGI ASSISTANT (the Assistant exposes multiple third-party models; state which we use)"
+    note: "Training and retention terms for our account tier pending verification."
+  # Fill (AI-1): which third-party models are enabled in Kagi Assistant on
+  # our account. Note needs the training/retention position that applies to
+  # Assistant queries (Kagi brokers third-party models).
+  - model: "TBD — model list pending verification"
     vendor: Kagi Inc.
     via: Kagi Assistant
     use: Research in engineering and operations.
-    note: "CONFIRM KAGI'S UPSTREAM MODEL TERMS (Kagi brokers third-party models; state the training/retention position that applies to Assistant queries)"
-  - model: "LIST THE MODELS COPILOT CODE REVIEW USES (GitHub routes Copilot requests to third-party models; state which apply to code review on our account)"
+    note: "Training and retention terms for our account tier pending verification."
+  # Fill (AI-1): which third-party models GitHub routes Copilot code review
+  # through on our plan. Note needs the Copilot training-exclusion and
+  # retention terms for our account.
+  - model: "TBD — model list pending verification"
     vendor: GitHub, Inc.
     via: GitHub Copilot code review
     use: Automated review comments on pull requests.
-    note: "CONFIRM GITHUB'S COPILOT TERMS FOR OUR ACCOUNT (training exclusion and retention for Copilot code review on our plan)"
-  - model: "LIST THE MODELS GREPTILE USES FOR REVIEW (Greptile routes reviews through third-party models; state which apply to our account)"
+    note: "Training and retention terms for our account tier pending verification."
+  # Fill (AI-1): which providers Greptile routes reviews through. Note needs
+  # the training/retention position for our repositories.
+  - model: "TBD — model list pending verification"
     vendor: Tabnam, Inc. (d/b/a Greptile)
     via: Greptile PR review bot
     use: Automated first-pass code review on pull requests.
-    note: "CONFIRM GREPTILE'S UPSTREAM MODEL TERMS (which providers Greptile uses and the training/retention position for our repositories)"
+    note: "Training and retention terms for our account tier pending verification."
 
 # Newest first. Real history predating this site is being reconstructed
 # from the DPA's version history; only verified events are listed.

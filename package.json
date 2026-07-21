@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "check": "astro check",
+    "check:placeholders": "node scripts/check-trust-placeholders.mjs",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview"

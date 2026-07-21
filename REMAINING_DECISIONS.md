@@ -106,8 +106,9 @@ Open:
   industry convention (cards stop at the vendor), so `trust.yaml` `aiModels`
   sets one: exact model as the vendor names it, vendor, access surface, use,
   per-model terms note. Before flipping the section out of `draft`, resolve
-  every ALL-CAPS placeholder (they mark unfilled facts, expected content in
-  parentheses):
+  every unfilled fact (`TBD` values in `trust.yaml` `aiModels`, expected
+  content in the adjacent comments; ALL-CAPS placeholders in the `/ai` page
+  copy):
   - `trust.yaml` `aiModels`: the exact model lists for Claude Code, the Zed
     agent, Kagi Assistant, GitHub Copilot code review, and Greptile, plus
     per-vendor training/retention terms.
@@ -121,11 +122,13 @@ Open:
   consistent with whatever this page states. ISO/IEC 42001 remains the
   certification-track standard — not pursued at our size; vocabulary
   borrowed.
-- **Placeholder exposure:** the `aiModels` ALL-CAPS placeholders and
-  `TODO(counsel)` comments ship publicly at `/trust.yaml` on deploy (the
-  raw route serves the file verbatim; only the `/ai` *page* is
-  draft-pruned). Migration into the draft sidecar is part of DPA-1 /
-  ADR-003.
+- **Placeholder exposure:** `/trust.yaml` serves the file verbatim and only
+  the `/ai` *page* is draft-pruned, so anything in the file ships on deploy.
+  Mitigated 2026-07-20: the `aiModels` ALL-CAPS placeholders are neutral
+  `TBD` values, and `scripts/check-trust-placeholders.mjs`
+  (`pnpm check:placeholders`, run in CI) fails the build on any ALL-CAPS
+  placeholder phrase in trust.yaml. The `TODO(counsel)` comments still ship;
+  moving them into the draft sidecar is part of DPA-1 / ADR-003.
 
 ### DPA-1 — per-row subprocessor DPA disclosure
 
