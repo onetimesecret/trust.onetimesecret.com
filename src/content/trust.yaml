@@ -486,9 +486,9 @@ documents:
   - name: HECVAT 4.1.5 (full)
     description: Higher-ed vendor assessment, answered in full
     category: assessment
-    access: public
+    access: request
     updatedAt: "TBD"
-    action: { label: download, href: "/documents/hecvat-4.1.5.xlsx" }
+    action: { label: email us }
   - name: VendorSec questionnaires
     description: We answer yours — prior responses reusable where applicable
     category: assessment
