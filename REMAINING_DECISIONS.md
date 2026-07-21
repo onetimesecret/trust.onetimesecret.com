@@ -6,51 +6,12 @@ former `ERRATA.md`, `ERRATA-3.md`, `FINALIZATION-july1.md`, and
 append-only detail remains in git history). Business-arrangements research that
 lived in `ERRATA-1.md` moved to `docs/research/business-arrangements-rationale.md`.
 
-Two parts: **Part 1 — Open items** (still actionable) and **Part 2 — Decisions
+Three parts: **Part 0 - Counsel review**, **Part 1 — Open items** (still actionable) and **Part 2 — Decisions
 of record** (resolved and applied; kept for institutional memory).
 
 ---
 
-## Part 1 — Open items
-
-### DOCS-1 (cross-repo, non-blocking here)
-
-The principles-page changes were drafted against a working copy `principles.md`
-that was deleted in commit `e3aed13` and never ported to the live docs repo
-(`docs.onetimesecret.com`,
-`src/content/docs/en/principles/{privacy-first,communication,data-minimization}.md`).
-Recover the drafted text with `git show e3aed13^:principles.md` and port:
-
-- Heading "Our No-Email Philosophy" → "Our Minimal-Email Philosophy".
-- The three-category email taxonomy (carried forward below so this file is
-  self-sufficient once the ERRATA files are gone).
-- The no-tracking-in-email commitment (no tracking pixels, no click-tracking).
-- The "preferences live in browser storage, not cookies" clarification for
-  `data-minimization.md`.
-
-Email taxonomy to port (source text, formerly ERRATA-3):
-
-- **Transactional** — secret links, account, and billing notices. Inherent to
-  the service; no opt-out.
-- **Service and security notices** — security advisories, breach
-  notifications, policy-change notices, deprecations. Sent when needed,
-  including when legally required; not marketing.
-- **Product news** — feature announcements and similar. Strictly opt-in,
-  one-click unsubscribe, rare.
-
-PP wording ("We never send unsolicited marketing email, and no email we send
-contains tracking pixels or click-tracking links" plus the three categories)
-is already applied in this repo; DOCS-1 is only the port of the matching
-principles-page copy to the docs repo.
-
-### TC-1 (future)
-
-The CC0 license pointers in ToS G.3 and the PP License section deliberately
-point at the GitHub repository for now; swap in the real trust-centre URL when
-one exists. (The authoritative-source references were already reworded to
-"trust centre"; only the live URL swap remains.)
-
-### Counsel review before publication (from the 2026-07-02 finalization pass)
+## Part 0 - Counsel review 
 
 These are deviations from market-standard drafting that are defensible but
 warrant a lawyer's sign-off. None block internal review; all block final
@@ -89,11 +50,113 @@ publication.
 
 ---
 
+## Part 1 — Open items
+
+### DOCS-1 (cross-repo, non-blocking here)
+
+
+Email taxonomy to port (source text, formerly ERRATA-3):
+
+- **Transactional** — secret links, account, and billing notices. Inherent to
+  the service; no opt-out.
+- **Service and security notices** — security advisories, breach
+  notifications, policy-change notices, deprecations. Sent when needed,
+  including when legally required; not marketing.
+- **Product news** — feature announcements and similar. Strictly opt-in,
+  one-click unsubscribe, rare.
+
+PP wording ("We never send unsolicited marketing email, and no email we send
+contains tracking pixels or click-tracking links" plus the three categories)
+is already applied in this repo; DOCS-1 is only the port of the matching
+principles-page copy to the docs repo.
+
+### AI-1 — AI usage disclosure and policy
+
+Baseline shipped 2026-07-20: Anthropic, Zed Industries, Kagi, and Greptile
+added to the trust-site internal-tools list (`trust.yaml`), GitHub's existing
+entry marked for Copilot code review (both used for PR review), an "AI
+tooling" notice added to the Subprocessors page, and a changelog entry
+published. Boundary rule of
+record: AI tools operate on source code, documentation, and policy drafts
+only — never Secret Content, Account Data, or other Company Personal Data. If
+that boundary ever moves (e.g. AI-assisted support touching customer email),
+the provider graduates into `subprocessors` and Schedule A before first use.
+
+No current obligation compels any of this: EU AI Act Art. 50 transparency
+covers people interacting with AI systems and synthetic content, not internal
+productivity use, and GDPR has no AI-specific disclosure duty. We disclose
+ahead of regulation as a matter of practice.
+
+Open:
+
+- **Counsel:** confirm each provider's account tier and that its terms exclude
+  our inputs from model training (Anthropic commercial terms, Zed data
+  controls, Kagi privacy terms, GitHub Copilot terms, Greptile terms) before
+  tightening public copy from "operates on source code and drafts" to an
+  affirmative no-training claim. Mirrored as `TODO(counsel)` in trust.yaml.
+- **`/ai` page — built 2026-07-20, `draft` in `src/lib/sitemap.ts`.** Section
+  headings track the SafeBase/Drata trust-center AI cards (the de facto
+  naming standard: "AI Overview", "Employee AI Usage", "AI Security", "AI
+  Training Data"); Vanta has no structured AI-disclosure convention. Headline
+  is the inverse of the usual page: **no AI in the product** — Secret Content
+  never touches a model. Includes the physical boundary of record: separate
+  physical laptops for dev/AI-assisted work vs production operations;
+  production-ops machines have no AI tools installed and AI features in
+  installed software (e.g. Zed) are disabled. Model-level disclosure has no
+  industry convention (cards stop at the vendor), so `trust.yaml` `aiModels`
+  sets one: exact model as the vendor names it, vendor, access surface, use,
+  per-model terms note. Before flipping the section out of `draft`, resolve
+  every ALL-CAPS placeholder (they mark unfilled facts, expected content in
+  parentheses):
+  - `trust.yaml` `aiModels`: the exact model lists for Claude Code, the Zed
+    agent, Kagi Assistant, GitHub Copilot code review, and Greptile, plus
+    per-vendor training/retention terms.
+  - `/ai` AI-security section: the review practice for AI-assisted changes.
+  - `/ai` training section: the confirmed cross-vendor training position
+    (post-counsel, one sentence).
+  - One generated claim to confirm or correct: "we develop, train, and
+    fine-tune no models."
+  Once the page leaves draft: link it from the Subprocessors "AI tooling"
+  callout and add a changelog entry. Check the HECVAT 4.1.5 AI rows stay
+  consistent with whatever this page states. ISO/IEC 42001 remains the
+  certification-track standard — not pursued at our size; vocabulary
+  borrowed.
+
+---
+
 ## Part 2 — Decisions of record (resolved and applied)
 
 These were decided during the 2026 revision and are already applied to the
 policy documents. Kept here as the durable decision ledger; the full
 review-note history is in git.
+
+- **TC-1 — trust-centre URL swap.** The CC0 license pointers (ToS G.3, PP
+  License) and the three authoritative-source references (PP subprocessor list,
+  PP "Source of truth", ToS "Source of Truth") now point at
+  `https://trust.onetimesecret.com` instead of the interim
+  `github.com/onetimesecret/site-policy` link; the "currently our site-policy
+  repository" hedge is removed. **Publication gate:** `trust.onetimesecret.com`
+  is not yet live (no DNS, sections still "unlisted"), so these five links 404
+  until the trust site deploys to that domain — the domain must resolve before
+  these docs publish. `dpa.mdx` §6.1 was already URL-free ("its public trust
+  centre (a git-backed repository)") and needed no change. Straight swap chosen
+  over dual domain+repo wording; the "git-backed repository / full history
+  reviewable" phrasing now describes the rendered trust site rather than the
+  GitHub repo.
+
+- **Update the principles-page copy.**
+The principles-page changes were drafted against a working copy `principles.md`
+that was deleted in commit `e3aed13` and never ported to the live docs repo
+(`docs.onetimesecret.com`,
+`src/content/docs/en/principles/{privacy-first,communication,data-minimization}.md`).
+Recover the drafted text with `git show e3aed13^:principles.md` and port:
+
+- Heading "Our No-Email Philosophy" → "Our Minimal-Email Philosophy".
+- The three-category email taxonomy (carried forward below so this file is
+  self-sufficient once the ERRATA files are gone).
+- The no-tracking-in-email commitment (no tracking pixels, no click-tracking).
+- The "preferences live in browser storage, not cookies" clarification for
+  `data-minimization.md`.
 
 - **CP-1 — controller/processor position.** Our customers (the legal entity
   behind an Organization) are the controller; we are the processor. The DPA was
