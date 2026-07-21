@@ -1,6 +1,6 @@
 # ADR-002: Regional localization in lieu of Standard Contractual Clauses
 
-**Status:** Accepted
+**Status:** Accepted (amended 2026-07-20 — see Addendum)  
 **Date:** 2026-07-18
 
 ## Context
@@ -69,12 +69,6 @@ is needed; data-at-rest and processing never leave the region.
   (Internal note: the Sentry flow also engages Quebec Law 25 s. 17's
   before-transfer assessment duty for Quebec residents' data — an internal
   PIA, pairs with the Law 25 person-in-charge item.)
-- **Conditional incorporation clause — considered, not adopted (2026-07-20).**
-  All three benchmarked peers include a belt-and-suspenders clause ("to the
-  extent a restricted transfer occurs, the 2021 SCCs are incorporated…"). We
-  do not add one: a conditional clause would presume the exporter–importer
-  relationship the architecture is designed not to create, and every real
-  flow above already carries a named mechanism or enumerated basis.
 - Any new subprocessor or feature that moves personal data across regions
   reopens this decision.
 
@@ -84,3 +78,14 @@ is needed; data-at-rest and processing never leave the region.
 - Schedule A / subprocessor register, `src/content/trust.yaml`
 - Peer benchmark, `docs/research/2026/20260718-peer-benchmark-legal-docs.md` §2.1
 - TLS-1 decision of record, `REMAINING_DECISIONS.md` Part 2
+
+## Addendum — 2026-07-20: conditional incorporation clause considered, not adopted
+
+All three benchmarked peers include a belt-and-suspenders clause ("to the
+extent a restricted transfer occurs, the 2021 SCCs are incorporated…"). We
+do not add one: a conditional clause would presume the exporter–importer
+relationship the architecture is designed not to create, and every real flow
+in the Decision above already carries a named mechanism or enumerated basis.
+This resolves the counsel question tracked in `REMAINING_DECISIONS.md` in the
+same direction as the accepted Decision — no SCC incorporation, conditional or
+otherwise.
