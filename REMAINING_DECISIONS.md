@@ -133,7 +133,37 @@ Open:
 (2026-07-20) sets the mechanism: draft row-level data lives in
 `src/content/trust-drafts.yaml`, merged into the config only under the dev
 server; publication is a dated move into `trust.yaml`, with an
-unlisted → published render gate per field. Open:
+unlisted → published render gate per field.
+
+**Disclosure posture** — durable principles for what and how we share,
+separate from the ADR-003 mechanics; carry these into the decision of
+record when DPA-1 resolves:
+
+1. **Voluntary, accuracy-bound.** No law requires publishing DPA status;
+   the only compliance constraint is that any claim be true and provable.
+   State "in place" only when backed by an executed agreement or a dated
+   terms-acceptance we retain as evidence.
+2. **Whose standard.** Always "vendor's standard DPA" or "our DPA" —
+   never bare "standard terms". That ambiguity is the main
+   misrepresentation risk.
+3. **Dated claims.** Vendors revise standard DPAs unilaterally, so every
+   row carries a `verified` date; undated claims decay silently.
+4. **Existence, never terms.** For negotiated DPAs we disclose the fact,
+   not the content; NDA-sensitive detail never enters the repo at all.
+5. **"Not required" is a stated position, not a blank.** For internal
+   tools processing no Company Personal Data, say so explicitly; empty
+   cells read as omissions.
+6. **Beyond convention, deliberately.** Market norm is a blanket
+   flow-down sentence; per-row status extends the same posture as the
+   model-level AI disclosure — disclose ahead of requirement and set a
+   convention where none exists. The blanket statement should still
+   exist and can precede per-row data.
+7. **Both directions.** The same openness applies upstream: state that
+   our own standard DPA is incorporated into the ToS for all accounts
+   (with negotiated DPAs for enterprise, if true) — reviewers ask both
+   ways.
+
+Open:
 
 - Implement the sidecar merge in `src/lib/trust.ts`, the `DpaSchema` on
   subprocessor rows (`form: vendor-standard | negotiated | not-required`,
