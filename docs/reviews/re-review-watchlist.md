@@ -89,7 +89,7 @@ No dependencies; useful starting points when the annual re-benchmark reruns.
 
 ## 7. Event-driven triggers — no URL, reopen on occurrence
 
-- **Any new subprocessor or cross-region data path** → reopens ADR-002; the new flow must be regionalized or added to DPA §12.2 with a named mechanism. Still unmapped as of 2026-07-18: cross-region support-tooling access.
+- **Any new subprocessor or cross-region data path** → reopens ADR-002; the new flow must be regionalized or added to DPA §12.2 with a named mechanism. As of ADR-002 (2026-07-18) the transfer map is complete: cross-region support-tooling access was resolved as not-a-transfer (VPN-only remote administration, per-region tooling — see ADR-002 "Remote administration").
 - **DPF invalidated or Stripe listing lapses** → §12.2(a) SCC-fallback cooperation clause activates; execute SCCs with Stripe.
 - **Counsel outcomes** on the conditional-SCC clause and §8/§13 liability interaction (`REMAINING_DECISIONS.md`) → update DPA and this list's §3 dependencies.
 - **EU/UK representative appointed** → §2.2 of the report and UK Addendum §3.4 both revise; remove the rep-related checks above.
