@@ -354,8 +354,9 @@ subprocessors:
 # GitLab is engaged; fill jurisdictions/notes before publishing.
 internalTools:
   - name: GitHub, Inc.
-    use: Source-code hosting and CI (GitHub Actions) for our open-source and internal repositories. Secret Content and Account Data never enter source control or build pipelines.
+    use: Source-code hosting and CI (GitHub Actions) for our open-source and internal repositories, plus Copilot code review on pull requests. Secret Content and Account Data never enter source control, build pipelines, or Copilot.
     jurisdiction: US
+    ai: true
   - name: GitLab Inc.
     use: Secondary source-code hosting and CI mirror for internal repositories; no Secret Content or Account Data.
     jurisdiction: US
@@ -382,6 +383,10 @@ internalTools:
     use: Web search and AI research assistant (Kagi Search, Kagi Assistant) used in engineering and operations research. Queries and public web content only — no Secret Content or Account Data.
     jurisdiction: US
     ai: true
+  - name: Greptile, Inc.
+    use: AI code review on pull requests in our repositories. Reads source code and diffs only — no Secret Content or Account Data.
+    jurisdiction: US
+    ai: true
 
 # Model-level AI disclosure, rendered on the AI page. Vendor entries above
 # say who we pay; this says what actually processes our source and drafts.
@@ -406,6 +411,16 @@ aiModels:
     via: Kagi Assistant
     use: Research in engineering and operations.
     note: "CONFIRM KAGI'S UPSTREAM MODEL TERMS (Kagi brokers third-party models; state the training/retention position that applies to Assistant queries)"
+  - model: "LIST THE MODELS COPILOT CODE REVIEW USES (GitHub routes Copilot requests to third-party models; state which apply to code review on our account)"
+    vendor: GitHub, Inc.
+    via: GitHub Copilot code review
+    use: Automated review comments on pull requests.
+    note: "CONFIRM GITHUB'S COPILOT TERMS FOR OUR ACCOUNT (training exclusion and retention for Copilot code review on our plan)"
+  - model: "LIST THE MODELS GREPTILE USES FOR REVIEW (Greptile routes reviews through third-party models; state which apply to our account)"
+    vendor: Greptile, Inc.
+    via: Greptile PR review bot
+    use: Automated first-pass code review on pull requests.
+    note: "CONFIRM GREPTILE'S UPSTREAM MODEL TERMS (which providers Greptile uses and the training/retention position for our repositories)"
 
 # Newest first. Real history predating this site is being reconstructed
 # from the DPA's version history; only verified events are listed.
@@ -413,7 +428,7 @@ subprocessorChangelog:
   - date: "2026-07-20"
     verb: updated
     title: AI tooling disclosed
-    note: Added Anthropic, Zed Industries, and Kagi to the internal-tools list, with an AI-tooling notice. None process Company Personal Data; disclosed for transparency ahead of any disclosure requirement.
+    note: Added Anthropic, Zed Industries, Kagi, and Greptile to the internal-tools list and noted Copilot code review under GitHub, with an AI-tooling notice. None process Company Personal Data; disclosed for transparency ahead of any disclosure requirement.
   - date: "2026-07-18"
     verb: updated
     title: Initial public list
