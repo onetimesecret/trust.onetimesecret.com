@@ -5,7 +5,15 @@ The policy pages are generated from two YAML sources of truth:
 - `src/content/policy-constants.yaml` — retention periods, windows, locations, tiers
 - `src/content/trust.yaml` — subprocessors, controls (mirrors DPA Schedule A)
 
-Three checks, in increasing strength:
+One automated guard and three manual checks, in increasing strength:
+
+## 0. Automated (CI)
+
+`pnpm check:placeholders` (`scripts/check-trust-placeholders.mjs`, run
+by `.github/workflows/trust-site.yml`) fails on ALL-CAPS placeholder
+phrases in `trust.yaml`, which is served verbatim at `/trust.yaml`.
+Neutral `"TBD"` values pass the guard by design; they are tracked in
+`REMAINING_DECISIONS.md`.
 
 ## 1. Structural (free)
 
