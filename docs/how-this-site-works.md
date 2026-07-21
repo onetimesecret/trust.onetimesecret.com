@@ -18,7 +18,7 @@ the YAML; every consumer changes together.
 | File                                     | Holds                                                                                                                                                        | Consumed by                                                                                     |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
 | `src/content/policy-constants.yaml`      | Retention periods, refund/export/notice windows, backup locations, tier lists, bcrypt cutoff, canonical URLs                                                 | All four MDX documents                                                                          |
-| `src/content/trust.yaml`                 | Subprocessor list (role-based: one role per DPA Schedule A table row, plus entity details), trust-site content (flow, FAQs, documents index, audit mappings) | DPA Schedule A tables _and_ the trust site's Subprocessors page — the same data, rendered twice |
+| `src/content/trust.yaml`                 | Subprocessor list (role-based: one role per DPA Schedule A table row, plus entity details), internal tools and AI models (transparency disclosure — no Company Personal Data), the subprocessor changelog, trust-site content (flow, FAQs, documents index, audit mappings) | DPA Schedule A tables _and_ the trust-site pages — the same data, rendered twice; also served verbatim at `/trust.yaml` |
 | `src/content/document-manifest.yaml`     | Per-document signoff record: status, reviewed commit, date                                                                                                   | Footer of every rendered policy document                                                        |
 | `src/pages/{terms,privacy,dpa,toms}.mdx` | The document prose — human-owned, legally reviewed text                                                                                                      | Rendered at `/terms`, `/privacy`, `/dpa`, `/toms`                                               |
 
@@ -49,6 +49,25 @@ Everything else — statutory figures like the 72-hour breach notice,
 section references, one-off numbers — stays literal prose. Reviewability
 is a first-class feature: the MDX must remain readable by lawyers as a
 plain document.
+
+## Content rules
+
+What the site may say — no badges, no analytics, the passphrase claim,
+"the rendered DPA governs" — is recorded in
+[ADR-005](./decisions/ADR-005-trust-site-editorial-posture.md). Read it
+before editing content; violating a principle means superseding the ADR
+first.
+
+## Trust-site pages
+
+The non-MDX pages (`src/pages/*.astro` — home, Subprocessors, AI,
+Documents, FAQ, Assurance, How it works, Your audit) render their
+structured facts — subprocessors, internal tools, AI models, changelog,
+documents index — from `trust.yaml`. Their page copy (headings,
+callouts, editorial framing) is hand-written per page, like the MDX
+prose: the generator guarantees fact consistency, not wording.
+`src/pages/trust.yaml.ts` serves the validated source file verbatim at
+`/trust.yaml` so reviewers can diff data instead of scraping HTML.
 
 ## Schedule A is generated
 
@@ -82,12 +101,28 @@ snapshot is the archival artifact.
   rows, entity for the details table), add a `subprocessorChangelog`
   entry, follow the DPA §6 notice process.
 - **Record a signoff**: update `document-manifest.yaml`, tag the commit.
+- **Verify the wiring**: follow
+  [how-to-trust-but-verify-the-content.md](./how-to-trust-but-verify-the-content.md)
+  — spot-check and mutation-test that facts flow from YAML into the
+  rendered pages.
 
 ```bash
-pnpm build    # generate everything into dist/; fails on any schema violation
-pnpm check    # astro type check
-pnpm dev      # local preview
+pnpm build                # generate everything into dist/; fails on any schema violation
+pnpm check                # astro type check
+pnpm check:placeholders   # no ALL-CAPS placeholder phrases in trust.yaml
+pnpm dev                  # local preview
 ```
+
+## Deployment phases and CI
+
+`src/lib/site-env.ts` reads `SITE_PHASE`. The non-production banners are
+fail-safe: any build that doesn't declare production keeps them, so the
+publish job must run `SITE_PHASE=production pnpm build` — there is
+nothing to remove or edit, only the variable to set. CI
+(`.github/workflows/trust-site.yml`) runs the build, the type check, and
+`pnpm check:placeholders` (`scripts/check-trust-placeholders.mjs`),
+which fails on ALL-CAPS placeholder phrases in `trust.yaml` because that
+file ships verbatim the moment it merges.
 
 ## History
 

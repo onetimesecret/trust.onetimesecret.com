@@ -1,6 +1,6 @@
 # Onetime Secret Trust Centre
 
-The source for [trust.onetimesecret.com](docs/trust-site.md) and
+The source for [trust.onetimesecret.com](https://trust.onetimesecret.com) and
 Onetime Secret's policy documents: Terms of Service, Privacy Statement, Data
 Processing Agreement (DPA), and Technical & Organisational Measures (TOMs).
 
@@ -21,7 +21,9 @@ The documents themselves are human-written prose in
 `src/pages/{terms,privacy,dpa,toms}.mdx` that interpolates those values at
 build time, so a fact can't drift between the DPA and the Privacy Statement.
 The DPA's Schedule A tables and the trust site's Subprocessors page render
-from the same data. Details in [docs/how-this-site-works.md](docs/how-this-site-works.md).
+from the same data. Details in [docs/how-this-site-works.md](docs/how-this-site-works.md);
+to verify that facts really flow from YAML into the rendered output, see
+[docs/how-to-trust-but-verify-the-content.md](docs/how-to-trust-but-verify-the-content.md).
 
 ## Repository layout
 

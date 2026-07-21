@@ -158,6 +158,16 @@ published row must pass its bar. Open:
 - **Rule:** nothing enters the sidecar that could not be read aloud —
   NDA-sensitive detail of negotiated DPAs stays out of the repo entirely.
 
+### SITE-1 — Assurance page framing sign-off
+
+The Assurance page carries two framings verbatim from the design mock:
+"Open source since 2012" and the one-person-company presentation.
+Neither has had editorial sign-off. Decide whether both are how we want
+to present publicly, then adjust the page or record the confirmation.
+(Moved from the retired `docs/trust-site.md` pre-launch checklist;
+editorial posture itself is
+[ADR-005](docs/decisions/ADR-005-trust-site-editorial-posture.md).)
+
 ---
 
 ## Part 2 — Decisions of record (resolved and applied)
