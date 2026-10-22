@@ -23,6 +23,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@types/js-yaml": "^4.0.9",
+    "spotnote": "^0.5.0",
     "typescript": "^6.0.3"
   },
   "engines": {
