@@ -1,0 +1,7 @@
+# pnpm settings. pnpm 11+ no longer reads the "pnpm" field in package.json.
+
+# Dependencies allowed to run install scripts. Any other dependency with an
+# install script fails the install (strictDepBuilds defaults to true).
+allowBuilds:
+  esbuild: true
+  sharp: true
