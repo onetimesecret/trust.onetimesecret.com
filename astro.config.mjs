@@ -3,6 +3,7 @@ import { defineConfig, envField } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import { rm, rmdir } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import {
@@ -12,6 +13,48 @@ import {
   nonSectionRoutes,
   sitemapHrefs,
 } from './src/lib/sitemap';
+
+// Spotnote: optional, dev-only UI feedback for coding agents.
+//
+// Click an element on the dev server, write what should change, and the agent
+// gets its exact file, line and column. The plugin stamps
+// data-spotnote="file:line:col" on elements in .astro files and injects a
+// picker (launcher in the bottom-left corner). It does nothing in
+// `astro build`, so the static output is unchanged.
+// https://github.com/harukikuri/spotnote
+//
+// It is a devDependency, loaded only when installed: a --prod install, or
+// removing the package, leaves this config working.
+//
+// MCP server (optional, once per machine) so a local agent picks up notes as
+// you write them and can reply on them:
+//
+//   claude mcp add --scope user spotnote -- npx -y spotnote-mcp
+//   codex mcp add spotnote -- npx -y spotnote-mcp
+//
+// Then ask the agent: "Watch my Spotnote notes." The server listens on
+// 127.0.0.1:4848 only and saves notes in ~/.spotnote/. If the port is taken,
+// set SPOTNOTE_PORT to the same free port for the agent and for `pnpm dev`.
+// Without it, Enter copies the note as a prompt to paste instead.
+//
+// Off below Astro 7.3. Earlier 7.x releases ship @astrojs/compiler-rs 0.3,
+// which reports element offsets in UTF-8 bytes; spotnote 0.5.0 reads them as
+// string indices, so every non-ASCII character (the "—" and "·" in
+// TrustLayout's <title>, for one) shifts the stamps into the middle of the
+// markup and the page fails to compile. compiler-rs 0.4 (Astro 7.3+) reports
+// UTF-16 offsets. Updating astro switches spotnote on with no other change.
+const [astroMajor, astroMinor] = createRequire(import.meta.url)(
+  'astro/package.json',
+)
+  .version.split('.')
+  .map(Number);
+const spotnote =
+  astroMajor > 7 || (astroMajor === 7 && astroMinor >= 3)
+    ? await import('spotnote').then(
+        (m) => m.default,
+        () => null,
+      )
+    : null;
 
 // Static output only — no SSR, no server runtime. The site is a pure render
 // of src/content/trust.yaml and src/content/policy-constants.yaml (see
@@ -126,6 +169,9 @@ export default defineConfig({
   site: 'https://trust.onetimesecret.com',
   output: 'static',
   integrations: [sitemap({ filter: sitemapFilter }), mdx(), reconcileAndPrune()],
+  vite: {
+    plugins: [spotnote?.()],
+  },
   env: {
     schema: {
       // Build phase, consumed via src/lib/site-env.ts. Deliberately a free
